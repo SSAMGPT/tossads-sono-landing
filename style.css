@@ -563,6 +563,9 @@ body {
     box-shadow: inset 0rem -1.3rem 0.25rem -1rem #fff, inset 0rem 0rem 5rem 0rem rgba(255, 255, 255, 0.3);
     z-index: 2;
     transition: background 0.8s ease;
+    transform: translateZ(0);
+    /* Force hardware acceleration for Safari */
+    -webkit-transform: translateZ(0);
 }
 
 /* Weather Specific Cloud Colors */
@@ -609,10 +612,13 @@ body {
 }
 
 .icon__cloud-svg {
-    display: none;
+    /* DO NOT use display: none; Safari will ignore the inner clipPath */
+    display: block;
+    visibility: hidden;
     position: absolute;
     width: 0;
     height: 0;
+    pointer-events: none;
 }
 
 /* Mobile Responsive */
