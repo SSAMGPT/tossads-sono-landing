@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>소노아임레디 | 가전제품 렌탈 서비스</title>
-    <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="style.css?v=1.2">
     <!-- Splitting.js for Text Animation -->
     <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
     <style>
@@ -16,6 +16,17 @@
             margin: 0;
             padding: 0;
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        .inline-check {
+            height: 1.2em;
+            width: auto;
+            /* 고정 가로폭 대신 자동 비율 허용 */
+            vertical-align: middle;
+            margin-right: 0.4em;
+            transform: translateY(-2px);
+            object-fit: contain;
+            /* 이미지 찌그러짐 원천 방지 */
         }
 
         /* --- STRENGTH & REVIEW SECTION --- */
@@ -199,11 +210,11 @@
         }
 
         .sr-card__title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: #111;
             margin-bottom: 0.8rem;
             font-weight: 700;
-            line-height: 1.3;
+            line-height: 1.35;
         }
 
         .sr-card__desc {
@@ -215,14 +226,40 @@
 
         .sr-card--text-only {
             flex-direction: column;
-            text-align: center;
-            padding: 4.5rem 3rem !important;
+            align-items: flex-start;
+            text-align: left;
+            padding: 4rem 3.5rem !important;
             justify-content: center;
         }
 
         .sr-card--text-only .sr-card__title {
-            font-size: 1.8rem;
+            font-size: 1.15rem;
             margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .sr-card--text-only .sr-card__desc {
+            text-align: left;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .sr-card--text-only {
+                align-items: flex-start;
+                text-align: left;
+                padding: 3rem 2rem !important;
+            }
+
+            .sr-card--text-only .sr-card__title {
+                font-size: 1.5rem;
+            }
+
+            .sr-card--text-only .sr-card__desc {
+                text-align: left;
+            }
         }
 
         .sr-stat-label {
@@ -620,7 +657,7 @@
 
         .promo-grid {
             display: grid;
-            grid-template-columns: 1.5fr 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 3rem;
             max-width: 1200px;
             margin: 0 auto;
@@ -667,10 +704,6 @@
             border-radius: 20px;
             overflow: hidden;
             background: #eee;
-        }
-
-        .promo-card.secondary .promo-card__image {
-            height: 280px;
         }
 
         .promo-card__image img {
@@ -819,14 +852,11 @@
             <!-- Panel 1: 문제 제기 및 답변 -->
             <div class="panel">
                 <div class="panel-content split-layout">
-                    <h2 class="hook-text">가전제품 꼭 목돈 마련해야만<br>구매가 가능할까요?</h2>
-                    <p class="answer-text" style="font-size: calc(var(--font-h1) * 1.4); color: #ff2d78;">
-                        <span class="ans-prefix" style="opacity: 0; display: block;">저희가 드리는 답변은</span>
-                        <span class="no-text-anim" style="display: inline-block; opacity: 0;">
-                            <span class="no-word">No!</span>
-                            <span class="suffix-word">입니다</span>
-                        </span>
-                    </p>
+                    <h2 class="hook-text" data-splitting>가전제품 꼭 목돈 마련해야만<br>구매가 가능할까요?</h2>
+                    <h2 class="answer-text" data-splitting
+                        style="font-size: calc(var(--font-h1) * 1.4); color: #ff2d78; margin-top: 2rem;">
+                        저희가 드리는 답변은<br>No!입니다
+                    </h2>
                 </div>
             </div>
 
@@ -836,7 +866,7 @@
                     <div class="badge-container">
                         <button class="Btn"></button>
                     </div>
-                    <h2 class="hook-text">
+                    <h2 class="hook-text" id="panel2-title" data-splitting>
                         부담스럽지 않은 월 납입으로 가전제품 쓰고 만기 때 환급까지 받을 수 있는 SONO 스마트케어가 있습니다.
                     </h2>
                 </div>
@@ -1475,19 +1505,22 @@
             <div class="sr-grid sr-grid--3col">
                 <div class="sr-card sr-card--text-only" data-effect2>
                     <div class="sr-card__content">
-                        <h3 class="sr-card__title">부당행위 방지 시스템</h3>
+                        <h3 class="sr-card__title"><img src="./showcase_icon_check.png" alt="check"
+                                class="inline-check"> 부당행위 방지 시스템</h3>
                         <p class="sr-card__desc">물품 추가 강요 등의 부당 요구는 일절 하지 않으며, 투명한 문화를 만듭니다.</p>
                     </div>
                 </div>
                 <div class="sr-card sr-card--text-only" data-effect2>
                     <div class="sr-card__content">
-                        <h3 class="sr-card__title">고객 안심 시스템</h3>
+                        <h3 class="sr-card__title"><img src="./showcase_icon_check.png" alt="check"
+                                class="inline-check"> 고객 안심 시스템</h3>
                         <p class="sr-card__desc">장례 접수 후 2시간 이내에 현장에 도착하여 곁을 지켜드립니다.</p>
                     </div>
                 </div>
                 <div class="sr-card sr-card--text-only" data-effect2>
                     <div class="sr-card__content">
-                        <h3 class="sr-card__title">용품 보증 시스템</h3>
+                        <h3 class="sr-card__title"><img src="./showcase_icon_check.png" alt="check"
+                                class="inline-check"> 용품 보증 시스템</h3>
                         <p class="sr-card__desc">규격 용품 외 하위 용품은 일절 사용하지 않으며 정품만을 사용합니다.</p>
                     </div>
                 </div>
@@ -1611,6 +1644,327 @@
             </div>
         </div>
     </section>
+
+    <!-- FAQ Section -->
+    <section class="section--faq" id="faq">
+        <div class="faq__container">
+            <h2 class="faq__title"><span class="faq__title-en">FAQ</span><br>자주 묻는 질문 베스트</h2>
+            <div class="faq__list">
+                <!-- Item 1 -->
+                <div class="faq__item">
+                    <div class="faq__question">
+                        <div class="faq__question-text">
+                            <span>Q1.</span> 소노아임레디는 믿을 만 한가요?
+                        </div>
+                        <div class="faq__icon"></div>
+                    </div>
+                    <div class="faq__answer">
+                        <div class="faq__answer-inner">
+                            A. 네, 업계 최상위 안전장치를 갖췄습니다.<br><br>
+                            <strong>• 고객 선수금 1조원 돌파</strong> (2024.06 기준)<br>
+                            <strong>• 상조보증공제조합 신용평가 1등급</strong><br>
+                            <strong>• 자본금 100억원 설정사</strong><br>
+                            <strong>• 대명소노그룹 계열사</strong> (40년 서비스 기업)<br>
+                            <strong>• 불입금 50% 상조보증공제조합 예치</strong> (법적 보호)<br><br>
+                            <strong>서비스 품질 보증제:</strong><br>
+                            <ul>
+                                <li>물품 추가 강요 금지</li>
+                                <li>2시간 내 현장 도착</li>
+                                <li>규격품 이하 사용 금지</li>
+                            </ul>
+                            → 3가지 약속 위반 시 전액 환불
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="faq__item">
+                    <div class="faq__question">
+                        <div class="faq__question-text">
+                            <span>Q2.</span> 멤버십 / 하이브리드(전환)서비스는 무엇인가요?
+                        </div>
+                        <div class="faq__icon"></div>
+                    </div>
+                    <div class="faq__answer">
+                        <div class="faq__answer-inner">
+                            A. 상조를 안 써도 혜택 받는 소노만의 라이프케어 서비스입니다.<br><br>
+                            <strong>멤버십 서비스 (가입 즉시 이용)</strong><br>
+                            <ul>
+                                <li>소노호텔&리조트 회원 특가 (연 10박)</li>
+                                <li>오션월드, 비발디파크 등 레저시설 우대</li>
+                            </ul>
+                            <br>
+                            <strong>하이브리드(전환) 서비스</strong><br>
+                            장례 대신 원하는 서비스로 1:1 전환 가능<br>
+                            → 해외여행 / 크루즈 / 웨딩 / 어학연수 / 골프 / 레디캐시 등
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="faq__item">
+                    <div class="faq__question">
+                        <div class="faq__question-text">
+                            <span>Q3.</span> 상조서비스 이용 시 제공되는 서비스는 무엇인가요?
+                        </div>
+                        <div class="faq__icon"></div>
+                    </div>
+                    <div class="faq__answer">
+                        <div class="faq__answer-inner">
+                            A. 장례에 필요한 전문 인력 · 용품 · 차량까지 토탈 패키지 제공<br><br>
+                            <strong>기본 포함 항목 (더해피450 기준)</strong><br><br>
+                            <strong>전문 인력</strong><br>
+                            • 장례지도사 1명 + 도우미 5명 (1인 10시간)<br><br>
+                            <strong>장례용품</strong><br>
+                            • 관 (매장용 45mm / 화장용 18mm + 유골함)<br>
+                            • 수의 (대마 100% 기계직)<br>
+                            • 의전용품 (남/여 5벌씩)<br>
+                            • 제단장식(35만원 상당) + 꽃바구니 2개 + 국화 30송이<br>
+                            • 일회용품 300인분제공<br><br>
+                            <strong>의전 차량</strong><br>
+                            • 운구 이송차량 (관내) + 리무진/버스 (왕복 200km)<br><br>
+                            <strong>*미제공 항목</strong><br>
+                            장례식장 빈소/시설 사용료, 식대, 화장장/묘지 비용<br>
+                            → 유족 부담 (단, 물품 추가 강요 금지 원칙)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="faq__item">
+                    <div class="faq__question">
+                        <div class="faq__question-text">
+                            <span>Q4.</span> 내상조그대로 서비스가 뭔가요? 타사 상조도 전환 가능한가요?
+                        </div>
+                        <div class="faq__icon"></div>
+                    </div>
+                    <div class="faq__answer">
+                        <div class="faq__answer-inner">
+                            A. "내상조그대로"는 공정거래위원회가 인정한 상조 소비자 보호제도입니다.<br><br>
+                            만약 기존에 가입한 상조회사가 폐업하거나 등록취소되어 선수금 보전기관(공제조합, 은행 등)에서 피해보상금을 받은 경우, 추가 부담 없이 소노아임레디에서 상조서비스를
+                            계속 이용할 수 있어요.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="faq__item">
+                    <div class="faq__question">
+                        <div class="faq__question-text">
+                            <span>Q5.</span> 장례가 발생되면 어디로 전화하나요?
+                        </div>
+                        <div class="faq__icon"></div>
+                    </div>
+                    <div class="faq__answer">
+                        <div class="faq__answer-inner">
+                            A. 소노아임레디 24시간 컨택센터로 연락주세요.<br><br>
+                            <strong>📞 1588-8511</strong> (365일 24시간 운영)<br><br>
+                            <ul>
+                                <li>전문 상담원이 즉시 안내</li>
+                                <li>2시간 이내 현장 도착 (도서/산간 제외)</li>
+                                <li>사전 상담부터 유족 케어까지 올인원 토탈케어</li>
+                            </ul>
+                            <br>
+                            장례 접수 후 전문 장례지도사가 전 과정을 책임집니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultation Section -->
+    <section class="section--consult" id="consult">
+        <div class="consult__container">
+            <div class="consult__header">
+                <h2 class="consult__title">무료 상담 신청</h2>
+                <p class="consult__subtitle">1분 만에 전문가와 연결</p>
+            </div>
+
+            <div class="consult__card">
+                <form class="consult__form" onsubmit="event.preventDefault(); alert('상담 신청이 완료되었습니다.');">
+                    <div class="consult__row">
+                        <div class="consult__group">
+                            <label for="c_name">이름 <span class="required">*</span></label>
+                            <input type="text" id="c_name" placeholder="이름을 입력해주세요" required>
+                        </div>
+                        <div class="consult__group">
+                            <label for="c_phone">연락처 <span class="required">*</span></label>
+                            <input type="tel" id="c_phone" placeholder="'-' 없이 숫자만 입력" required>
+                        </div>
+                    </div>
+
+                    <div class="consult__group consult__appliance-group">
+                        <label>관심 가전 <span class="required">*</span></label>
+                        <div class="appliance-grid">
+                            <label class="appliance-item">
+                                <input type="radio" name="c_appliance" value="tv" required>
+                                <div class="appliance-box">
+                                    <div class="appliance-img">
+                                        <img src="./3d_tv_icon_f476065d37 1.png" alt="TV">
+                                    </div>
+                                    <span>TV</span>
+                                </div>
+                            </label>
+                            <label class="appliance-item">
+                                <input type="radio" name="c_appliance" value="fridge" required>
+                                <div class="appliance-box">
+                                    <div class="appliance-img">
+                                        <img src="./3d_silver_refrigerator_emoji_0bb3decac4 1.png" alt="냉장고">
+                                    </div>
+                                    <span>냉장고</span>
+                                </div>
+                            </label>
+                            <label class="appliance-item">
+                                <input type="radio" name="c_appliance" value="washer" required>
+                                <div class="appliance-box">
+                                    <div class="appliance-img">
+                                        <img src="./3d_washing_machine_emoji_bdcc46355d 1.png" alt="세탁기">
+                                    </div>
+                                    <span>세탁기</span>
+                                </div>
+                            </label>
+                            <label class="appliance-item">
+                                <input type="radio" name="c_appliance" value="vacuum" required>
+                                <div class="appliance-box">
+                                    <div class="appliance-img">
+                                        <img src="./3d____513178e2e2 1.png" alt="청소기">
+                                    </div>
+                                    <span>청소기</span>
+                                </div>
+                            </label>
+                        </div>
+                        <p class="appliance-notice">* 위 이미지는 단순 참고용으로 실제 제품과 다를 수 있습니다.</p>
+                    </div>
+
+                    <div class="consult__row">
+                        <div class="consult__group" style="width: 100%;">
+                            <label for="c_time">연락 가능 시간 <span class="required">*</span></label>
+                            <select id="c_time" required>
+                                <option value="" disabled selected>선택해주세요</option>
+                                <option value="asap">가장 빠른 시간</option>
+                                <option value="morning">오전(09-12시)</option>
+                                <option value="afternoon">오후(12-18시)</option>
+                                <option value="evening">저녁(18-21시)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="consult__agreement">
+                        <label class="checkbox-container">
+                            <input type="checkbox" required>
+                            <span class="checkmark"></span>
+                            <span class="agree-text">[필수] 개인정보 수집 및 이용 동의</span>
+                        </label>
+                        <button type="button" class="btn-detail">전문 보기</button>
+                    </div>
+
+                    <button type="submit" class="consult__submit">무료 상담 신청하기</button>
+
+                    <div class="consult__notice">
+                        <p>*평일 09-18시 30분 내 연락</p>
+                        <p>*주말 및 공휴일은 익일 연락</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="privacy-modal">
+        <div class="privacy-modal__content">
+            <div class="privacy-modal__header">
+                <h3>개인정보 처리방침</h3>
+                <button type="button" class="privacy-modal__close" id="closePrivacy">&times;</button>
+            </div>
+            <div class="privacy-modal__body">
+                <p>소노아임레디 공식총판 레디앤코(이하 '회사')는 개인정보보호법 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여
+                    다음과 같이 개인정보 처리방침을 수립·공개합니다.</p>
+
+                <h4>1. 개인정보의 처리 목적</h4>
+                <p>회사는 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는 개인정보보호법 제18조에
+                    따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.</p>
+                <ul>
+                    <li>소노아임레디 상조 상품 상담 및 맞춤 안내</li>
+                    <li>고객 상담 업무 및 회원 등록, 모집, 유지, 관리</li>
+                    <li>가입 문의 응대 및 후속 상담 진행</li>
+                </ul>
+
+                <h4>2. 개인정보의 처리 및 보유기간</h4>
+                <p>회사는 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.</p>
+                <p><strong>가. 상담 신청 정보</strong></p>
+                <ul>
+                    <li>수집 항목: 성명, 연락처(휴대전화번호), 상담 희망 내용</li>
+                    <li>보유 근거: 전자상거래 등에서의 소비자보호에 관한 법률</li>
+                    <li>보유 기간: 소비자 불만 또는 분쟁처리에 관한 기록 보존을 위해 3년간 보유</li>
+                </ul>
+                <p><strong>나. 계약 체결 정보 (가입 고객)</strong></p>
+                <ul>
+                    <li>보유 근거: 상법, 전자상거래법</li>
+                    <li>보유 기간: 계약 종료 후 5년</li>
+                </ul>
+
+                <h4>3. 개인정보의 제3자 제공</h4>
+                <p>회사는 정보주체의 개인정보를 제1조(개인정보의 처리 목적)에서 명시한 범위 내에서만 처리하며, 정보주체의 동의, 법률의 특별한 규정 등 개인정보보호법 제17조에 해당하는 경우에만
+                    개인정보를 제3자에게 제공합니다.</p>
+                <ul>
+                    <li>제공받는 자: 소노아임레디 공식총판 레디앤코</li>
+                    <li>제공 목적: 상담 신청 접수 및 상담 진행</li>
+                    <li>제공 항목: 성명, 연락처</li>
+                    <li>보유 및 이용 기간: 상담 완료 후 3년</li>
+                </ul>
+
+                <h4>4. 개인정보 처리의 위탁</h4>
+                <p>회사는 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.</p>
+                <ul>
+                    <li>수탁업체: [별도공지]</li>
+                    <li>위탁 업무 내용: 전화 상담 대행, 고객 응대, DB 관리</li>
+                    <li>위탁 기간: 위탁 계약 종료 시까지</li>
+                </ul>
+
+                <h4>5. 정보주체의 권리·의무 및 행사방법</h4>
+                <p>정보주체는 회사에 대해 언제든지 다음 각 호의 개인정보 보호 관련 권리를 행사할 수 있습니다.</p>
+                <ul>
+                    <li>개인정보 열람 요구</li>
+                    <li>개인정보 오류 등이 있을 경우 정정 요구</li>
+                    <li>개인정보 삭제 요구</li>
+                    <li>개인정보 처리정지 요구</li>
+                </ul>
+                <p>권리 행사는 회사에 대해 서면, 전화, 전자우편 등을 통하여 하실 수 있으며 회사는 이에 대해 지체없이 조치하겠습니다.</p>
+
+                <h4>6. 개인정보의 파기</h4>
+                <p>회사는 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.</p>
+                <p><strong>가. 파기절차</strong></p>
+                <p>불필요한 개인정보는 개인정보 보호책임자의 승인 후 파기합니다.</p>
+                <p><strong>나. 파기방법</strong></p>
+                <ul>
+                    <li>전자적 파일: 복구 및 재생되지 않도록 기술적 방법으로 완전 삭제</li>
+                    <li>종이 문서: 분쇄기로 분쇄하거나 소각</li>
+                </ul>
+
+                <h4>7. 개인정보 보호책임자</h4>
+                <p>회사는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.
+                </p>
+
+                <p><strong>▶ 개인정보 보호책임자</strong></p>
+                <ul>
+                    <li>성명: [김현수 담당자]</li>
+                    <li>연락처: [010-2632-7372]</li>
+                    <li>이메일: [hyunsoo@teamready.co.kr]</li>
+                </ul>
+                <p><strong>▶ 개인정보 보호 담당부서</strong></p>
+                <ul>
+                    <li>부서명: 고객상담센터</li>
+                    <li>연락처: 02-6332-9902</li>
+                </ul>
+                <p>정보주체는 회사의 서비스를 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다.</p>
+
+                <h4>8. 개인정보 처리방침 변경</h4>
+                <p>이 개인정보 처리방침은 2026년 1월 1일부터 적용되며, 법령 및 방침에 따른 변경내용의 추가, 삭제 및 정정이 있는 경우에는 변경사항의 시행 7일 전부터 공지사항을 통하여 고지할
+                    것입니다.</p>
+            </div>
+        </div>
+    </div>
 
     <!-- GSAP & Plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -1840,13 +2194,13 @@
                 trigger: ".hooking-section",
                 pin: true,
                 start: "top top",
-                end: () => `+=${window.innerWidth * 18}`, // 18배로 더욱 느린 호흡 확보
-                scrub: 1,
+                end: () => `+=${window.innerWidth * 10}`, // 18 → 10배로 조정
+                scrub: 0.5, // 1 → 0.5 (지연 절반으로 줄이기)
                 invalidateOnRefresh: true,
                 snap: {
                     snapTo: "labels",
-                    duration: { min: 0.2, max: 0.6 },
-                    delay: 0.1,
+                    duration: { min: 0.2, max: 0.4 },
+                    delay: 0.05,
                     ease: "power1.inOut"
                 },
                 toggleClass: { targets: "body", className: "dark-mode" }
@@ -1854,12 +2208,23 @@
         });
 
         const q1 = panels[0].querySelector('.hook-text');
-        const aPrefix = panels[0].querySelector('.ans-prefix');
-        const aNo = panels[0].querySelector('.no-text-anim');
+        const ans = panels[0].querySelector('.answer-text');
 
-        // 초기 상태 설정
-        gsap.set([q1, aPrefix], { opacity: 0, y: 30 });
-        gsap.set(aNo, { opacity: 0 });
+        // Apply splitting explicitly
+        Splitting({ target: q1 });
+        Splitting({ target: ans });
+
+        const q1Chars = q1.querySelectorAll('.char');
+        const ansChars = ans.querySelectorAll('.char');
+
+        // Initial setup for typography effects
+        q1Chars.forEach(char => gsap.set(char.parentNode, { perspective: 2000 }));
+
+        gsap.set(q1, { opacity: 1 });
+        gsap.set(ans, { opacity: 1 });
+        gsap.set(q1Chars, { opacity: 0 });
+        gsap.set(ansChars, { opacity: 0 });
+
         panels.slice(1).forEach(p => {
             const title = p.querySelector('.hook-text, .target-title, .badge-container');
             const content = p.querySelectorAll('.answer-text, .target-card, .benefit-item');
@@ -1867,53 +2232,119 @@
         });
 
         // --- Narrative Sequence (Panel 1) ---
-        // 1. 질문 먼저 서서히 등장
         hookingTl.addLabel("p1-start");
-        hookingTl.to(q1, { opacity: 1, y: 0, duration: 1.5 });
+
+        // 1. 질문 등장 (Effect 15: Unintelligible) - Slowed down
+        hookingTl.fromTo(q1, { xPercent: -50 }, { xPercent: 0, duration: 5, ease: "power2.out" }, "p1-start");
+
+        hookingTl.fromTo(q1Chars, {
+            transformOrigin: '50% 50% -200px',
+            rotationX: 380,
+            opacity: 0,
+        }, {
+            rotationX: 0,
+            z: 0,
+            opacity: 1,
+            duration: 4,
+            stagger: -0.15,
+            ease: "expo.inOut"
+        }, "p1-start");
+
         hookingTl.addLabel("p1-question"); // 질문 완성 지점
 
         // 2. 한참 머무르기 (질문만 인지하는 충분한 구간)
         hookingTl.to({}, { duration: 3 });
 
-        // 3. 답변 페이드 인 (동서적 순서가 아닌 동시 등장)
-        hookingTl.to([aPrefix, aNo], {
+        hookingTl.addLabel("p1-ans-start");
+
+        // 3. 답변 등장 (Effect 14: Futuristic) - Slowed down
+        hookingTl.fromTo(ans, { xPercent: 50 }, { xPercent: 0, duration: 5, ease: "power2.out" }, "p1-ans-start");
+
+        hookingTl.fromTo(ansChars, {
+            scale: 3,
+            yPercent: -900,
+            opacity: 0
+        }, {
+            scale: 1,
+            yPercent: 0,
             opacity: 1,
-            y: 0,
-            duration: 1.5,
-            onStart: () => {
-                const noText = document.querySelector('.no-text-anim');
-                if (noText) {
-                    noText.style.opacity = "1";
-                    Splitting({ target: noText });
-                }
-            }
-        });
+            duration: 4,
+            stagger: 0.15,
+            ease: "back.out(2)"
+        }, "p1-ans-start");
 
         hookingTl.addLabel("p1-answer");
 
         // 4. 한참 더 머무르기
-        hookingTl.to({}, { duration: 4 });
+        hookingTl.to({}, { duration: 2 });
 
         // 5. 가로 스크롤 메인 트윈 (패널 2부터 끝까지)
+        hookingTl.addLabel("moveStart");
         const moveTween = hookingTl.to(container, {
             x: () => -(container.scrollWidth - window.innerWidth),
             ease: "none",
-            duration: 60 // 이동을 훨씬 더 천천히 진행하도록 대폭 확장
+            duration: 35 // 60 → 35 (적당한 속도감)
         });
 
         // 패널 가로 스크롤 구간에 라벨 추가 (자석 효과를 위한 지점)
-        hookingTl.addLabel("p2", "-=40");
-        hookingTl.addLabel("p3", "-=20");
+        hookingTl.addLabel("p2", "-=23");
+        hookingTl.addLabel("p3", "-=12");
         hookingTl.addLabel("p4", "-=0");
+
+        // --- Panel 2: 핵심 해결책 등장 (Effect 4: Human gratitude) ---
+        const p2Title = document.getElementById('panel2-title');
+        if (p2Title) {
+            Splitting({ target: p2Title });
+            const p2Words = p2Title.querySelectorAll('.word');
+
+            // 1. 부모 컨테이너(p2Title)가 투명해서 아예 안 보이는 현상 방지: 본체는 100% 보이게 강제 복구
+            gsap.set(p2Title, { opacity: 1, y: 0 });
+            // 2. 글자들은 렌더링 초기부터 보이지 않도록 투명 처리
+            const chars = p2Title.querySelectorAll('.char');
+            gsap.set(chars, { opacity: 0 });
+
+            // 3. 개별 단어 단위로 쪼개서 애니메이션 적용 - 완벽한 수학적 타임라인 매핑
+            p2Words.forEach((word) => {
+                const wordChars = word.querySelectorAll('.char');
+
+                // 가로로 퍼지는 거리
+                const spreadDistance = 20;
+
+                // 1단계: 패널 2 진입 (moveStart ~ moveStart+10)
+                // 패널이 화면에 들어오면서 글자들이 모임
+                hookingTl.fromTo(wordChars, {
+                    opacity: 0,
+                    x: (position, _, arr) => spreadDistance * (position - arr.length / 2)
+                }, {
+                    opacity: 1,
+                    x: 0,
+                    ease: 'power2.out',
+                    stagger: { amount: 3, from: 'center' },
+                    duration: 6
+                }, "moveStart+=2");
+
+                // 2단계: 패널 2 퇴장 (moveStart+11에서 사라지기 시작)
+                // 패널이 왼쪽으로 나가기 전에 글자들이 흩어짐
+                hookingTl.to(wordChars, {
+                    opacity: 0,
+                    x: (position, _, arr) => spreadDistance * (position - arr.length / 2),
+                    ease: 'power2.in',
+                    stagger: { amount: 3, from: 'center' },
+                    duration: 4
+                }, "moveStart+=12");
+            });
+        }
 
         // --- 나머지 패널 시네마틱 등장 (가로 스크롤 연동) ---
         panels.slice(1).forEach((panel, i) => {
-            const title = panel.querySelector('.hook-text, .target-title, .badge-container');
+            const title = panel.querySelectorAll('.hook-text, .target-title, .badge-container');
             const content = panel.querySelectorAll('.answer-text, .target-card, .benefit-item');
 
-            // 1. 패널 제목 (통합된 문장) - 화면에 충분히 들어왔을 때 (70% 지점) 시네마틱하게 등장
-            if (title) {
-                gsap.fromTo(title,
+            // 1. 패널 제목들 (Panel 2의 Effect 처리된 title은 영향을 안 받도록 id로 구분)
+            title.forEach(t => {
+                if (t.id === 'panel2-title') return; // 이미 위에서 Effect 처리함
+
+                gsap.fromTo(t,
                     { opacity: 0, y: 30 },
                     {
                         y: 0,
@@ -1928,7 +2359,7 @@
                         }
                     }
                 );
-            }
+            });
 
             // 2. 패널 하단 컨텐츠 (카드/리스트) - 어느정도 진입하여 시선이 머물 때 (30% 지점) 아래에서 위로 등장
             if (content.length > 0) {
@@ -2310,12 +2741,93 @@
             );
         };
 
+        const initFAQ = () => {
+            const questions = document.querySelectorAll('.faq__question');
+
+            questions.forEach(q => {
+                q.addEventListener('click', () => {
+                    const item = q.parentElement;
+                    const isActive = item.classList.contains('active');
+
+                    // Close all others
+                    document.querySelectorAll('.faq__item').forEach(i => {
+                        i.classList.remove('active');
+                        i.querySelector('.faq__answer').style.height = 0;
+                    });
+
+                    // Toggle current
+                    if (!isActive) {
+                        item.classList.add('active');
+                        const answer = item.querySelector('.faq__answer');
+                        answer.style.height = answer.scrollHeight + 'px';
+                    }
+                });
+            });
+
+            // GSAP Animations for FAQ Items
+            const faqTitle = document.querySelector('.faq__title');
+            if (faqTitle) {
+                gsap.from(faqTitle, {
+                    scrollTrigger: {
+                        trigger: '.section--faq',
+                        start: 'top 80%',
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power3.out'
+                });
+            }
+
+            const faqItems = document.querySelectorAll('.faq__item');
+            if (faqItems.length > 0) {
+                gsap.from(faqItems, {
+                    scrollTrigger: {
+                        trigger: '.faq__list',
+                        start: 'top 85%',
+                    },
+                    y: 40,
+                    opacity: 0,
+                    duration: 0.8,
+                    stagger: 0.15,
+                    ease: 'power2.out'
+                });
+            }
+        };
+
+        const initPrivacyModal = () => {
+            const detailBtn = document.querySelector('.btn-detail');
+            const modal = document.getElementById('privacyModal');
+            const closeBtn = document.getElementById('closePrivacy');
+
+            if (detailBtn && modal && closeBtn) {
+                detailBtn.addEventListener('click', () => {
+                    modal.classList.add('is-open');
+                    document.body.style.overflow = 'hidden'; // 스크롤 방지
+                });
+
+                closeBtn.addEventListener('click', () => {
+                    modal.classList.remove('is-open');
+                    document.body.style.overflow = '';
+                });
+
+                window.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('is-open');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+        };
+
         const initApp = () => {
             initPremiumCards();
             initTypographyAnimations();
             initJoinProcessAnimation();
             initReviewCarousel();
             initPromotionAnimation();
+            initFAQ();
+            initPrivacyModal();
         };
 
         initApp();
