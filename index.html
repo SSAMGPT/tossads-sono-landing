@@ -5,10 +5,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>소노아임레디 | 가전제품 렌탈 서비스</title>
-    <link rel="stylesheet" href="style.css?v=1.2">
+    <link rel="stylesheet" href="style.css?v=5.0">
     <!-- Splitting.js for Text Animation -->
     <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
     <style>
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger-menu span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: #1d1d1f;
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Hover Effect: Transform to X */
+        .hamburger-menu:hover span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger-menu:hover span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+
+        .hamburger-menu:hover span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        body.dark-mode .hamburger-menu span {
+            background-color: #f5f5f7;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 5000;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            counter-reset: menucounter;
+        }
+
+        .menu--open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .menu__item {
+            margin: 1.2rem 0;
+            text-align: center;
+        }
+
+        .menu__item-link {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: #1d1d1f;
+            text-decoration: none;
+            transition: color 0.3s;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            position: relative;
+            padding: 0 4rem;
+        }
+
+        .menu__item-link:hover {
+            color: #C5A065;
+        }
+
+        .menu__item-link::before {
+            position: absolute;
+            left: 0;
+            top: 20%;
+            counter-increment: menucounter;
+            content: counters(menucounter, ".", decimal-leading-zero);
+            opacity: 0;
+            font-size: 0.9rem;
+            color: #C5A065;
+            transform: scale3d(0, 0, 0);
+            transition: all 0.3s;
+        }
+
+        .menu__item-link:hover::before {
+            opacity: 1;
+            transform: scale3d(1, 1, 1);
+        }
+
+        .close--menu {
+            position: absolute;
+            top: 2rem;
+            right: 3rem;
+            font-size: 3rem;
+            color: #1d1d1f;
+            z-index: 5001;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu__item-link {
+                font-size: 2.1rem;
+            }
+
+            .close--menu {
+                right: 1.5rem;
+                top: 1.5rem;
+                font-size: 2.5rem;
+            }
+        }
+
+        /* --- FLUID SCALING SYSTEM FOR SMALL MOBILE --- */
+        /* Handles the request to shrink everything proportionally while maintaining shape */
+        @media (max-width: 500px) {
+            html {
+                /* Based on 500px width as reference for 100% scale */
+                font-size: calc(100vw / 500 * 16);
+                -webkit-text-size-adjust: none;
+                text-size-adjust: none;
+            }
+        }
+
+
+
         /* --- GLOBAL & TRANSITIONS --- */
         body {
             background-color: #ffffff;
@@ -78,45 +216,135 @@
 
         .sr-card {
             background: #ffffff;
-            padding: 3rem 2.5rem;
-            border-radius: 28px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+            padding: 3.5rem 2.5rem 2.2rem;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: center;
-            gap: 2rem;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            text-align: center;
+            gap: 0;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
+
         @media (max-width: 768px) {
+
+            /* ── 일반 카드 (아이콘+텍스트 / 텍스트 전용) ── */
             .sr-card {
-                padding: 2.2rem 1.8rem;
-                gap: 1.5rem;
+                padding: 2.5rem 2rem 1.5rem !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                justify-content: flex-start !important;
+                height: auto !important;
+                min-height: unset !important;
+            }
+
+            .sr-card__icon-box {
+                width: 120px !important;
+                height: 120px !important;
+                flex-shrink: 0 !important;
+                margin-bottom: 1.2rem !important;
+            }
+
+            .sr-card__title {
+                font-size: 1.4rem !important;
+            }
+
+            .sr-card__content {
+                width: 100%;
+                text-align: center;
+                padding-bottom: 0 !important;
+                margin-bottom: 0 !important;
+            }
+
+            .sr-card__desc {
+                margin-bottom: 0 !important;
+                font-size: 1rem !important;
+            }
+
+            .sr-card--text-only {
+                padding: 2rem 2rem 1.5rem !important;
+                align-items: center !important;
+                text-align: center !important;
+                justify-content: flex-start !important;
+            }
+
+            /* 신뢰도 카드 아이콘 2.5배 확대 - img 직접 타겟 */
+            .sr-card--text-only .sr-card__icon-box {
+                width: 160px !important;
+                height: 160px !important;
+                margin-bottom: 1rem !important;
+                overflow: visible !important;
+            }
+
+            .sr-card--text-only .sr-card__icon-box img {
+                width: 160px !important;
+                height: 160px !important;
+                object-fit: contain !important;
+                transform: scale(1.5) !important;
+                transform-origin: center center !important;
+            }
+
+            .sr-card--text-only .sr-card__title,
+            .sr-card--text-only .sr-card__desc {
+                text-align: center !important;
+            }
+
+            /* ── 통계 카드 원래 디자인 복원 (덮어쓰기 방지) ── */
+            .sr-card--stat {
+                padding: 4rem 2.8rem !important;
+                min-height: 210px !important;
+                flex-direction: row !important;
+                align-items: flex-start !important;
+                justify-content: flex-start !important;
+                text-align: left !important;
+                height: auto !important;
+                overflow: hidden !important;
+            }
+
+            .sr-card--stat .sr-card__icon-box {
+                position: absolute !important;
+                width: 200px !important;
+                height: 200px !important;
+                bottom: -50px !important;
+                right: -40px !important;
+                margin-bottom: 0 !important;
+                opacity: 0.6 !important;
+            }
+
+            .sr-card--stat .sr-stat-value {
+                font-size: 4rem !important;
+            }
+
+            .sr-card--stat .sr-card__content {
+                text-align: left !important;
             }
         }
 
+
         .sr-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
-            border-color: rgba(197, 160, 101, 0.2);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            border-color: rgba(197, 160, 101, 0.25);
         }
 
         .sr-card__icon-box {
-            flex-shrink: 0;
-            width: 90px;
-            height: 90px;
+            width: 144px;
+            height: 144px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            margin-bottom: 1.5rem;
         }
 
         .sr-card__icon-box img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.08));
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.1));
         }
 
         /* Stats-specific card layout (Edge-Bleed Icon Effect) */
@@ -206,59 +434,61 @@
         }
 
         .sr-card__content {
-            flex: 1;
+            width: 100%;
         }
 
         .sr-card__title {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: #111;
             margin-bottom: 0.8rem;
-            font-weight: 700;
+            font-weight: 800;
             line-height: 1.35;
         }
 
         .sr-card__desc {
             font-size: 1rem;
-            color: #666;
-            line-height: 1.6;
+            color: #888;
+            line-height: 1.7;
             word-break: keep-all;
         }
 
         .sr-card--text-only {
             flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
-            padding: 4rem 3.5rem !important;
-            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 3.5rem 2.5rem !important;
+            justify-content: flex-start;
         }
 
         .sr-card--text-only .sr-card__title {
             font-size: 1.15rem;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            justify-content: center;
+            gap: 0.6rem;
             white-space: nowrap;
         }
 
         .sr-card--text-only .sr-card__desc {
-            text-align: left;
+            text-align: center;
             line-height: 1.7;
         }
 
         @media (max-width: 768px) {
             .sr-card--text-only {
-                align-items: flex-start;
-                text-align: left;
+                align-items: center;
+                text-align: center;
                 padding: 3rem 2rem !important;
             }
 
             .sr-card--text-only .sr-card__title {
-                font-size: 1.5rem;
+                font-size: 1rem;
+                white-space: normal;
             }
 
             .sr-card--text-only .sr-card__desc {
-                text-align: left;
+                text-align: center;
             }
         }
 
@@ -758,6 +988,161 @@
                 font-size: 1.3rem;
             }
         }
+
+        /* Footer */
+        .site-footer {
+            background-color: #f8f9fb;
+            padding: 5rem 0 3rem;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 0.9rem;
+            width: 100%;
+            margin-top: 4rem;
+        }
+
+        .footer__inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .footer__legal {
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer__legal-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.2s;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .footer__legal-btn:hover {
+            color: #C5A065;
+        }
+
+        .footer__legal-divider {
+            color: #ddd;
+            font-size: 0.8rem;
+        }
+
+        .footer__body {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer__brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer__logo {
+            height: 30px;
+            width: auto;
+            object-fit: contain;
+            align-self: flex-start;
+        }
+
+        .footer__company-name {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer__info {
+            max-width: 1000px;
+        }
+
+        .footer__dl {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 3rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer__dl-row {
+            display: flex;
+            gap: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .footer__dl-row dt {
+            font-weight: 800;
+            color: #222;
+            flex-shrink: 0;
+            min-width: 60px;
+        }
+
+        .footer__dl-row dd {
+            margin: 0;
+            color: #666;
+        }
+
+        .footer__copy {
+            padding-top: 3rem;
+            border-top: 1px solid #eee;
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+
+        .notice-modal__content {
+            max-width: 900px !important;
+            width: 95% !important;
+        }
+
+        @media (max-width: 768px) {
+            .site-footer {
+                padding: 4rem 0 3rem;
+            }
+
+            .footer__legal {
+                gap: 1rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .footer__legal-btn {
+                font-size: 0.85rem;
+            }
+
+            .footer__body {
+                gap: 2.5rem;
+            }
+
+            .footer__dl {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .footer__dl-row {
+                flex-direction: row;
+                gap: 0.8rem;
+                font-size: 0.85rem;
+                flex-wrap: wrap;
+            }
+
+            .footer__dl-row dt {
+                min-width: 70px;
+            }
+
+            .footer__copy {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 
@@ -771,11 +1156,16 @@
                     <img src="logo.png" alt="소노아임레디 로고">
                 </picture>
             </a>
+            <div id="openMenu" class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section" id="hero">
         <div class="hero-content">
             <h1 class="hero-title">
                 <span class="typing-text"></span><span class="cursor">|</span>
@@ -846,7 +1236,7 @@
     </section>
 
     <!-- 후킹 섹션 -->
-    <section class="hooking-section">
+    <section class="hooking-section" id="hooking">
         <div class="panels-container">
 
             <!-- Panel 1: 문제 제기 및 답변 -->
@@ -1501,26 +1891,31 @@
                 style="margin-bottom: 5rem; font-size: 1.4rem; letter-spacing: -0.5px; color: #666; opacity: 0.8;">상조
                 서비스 품질 보증제</p>
 
-            <!-- 강점 카드 그리드 2 -->
             <div class="sr-grid sr-grid--3col">
                 <div class="sr-card sr-card--text-only" data-effect2>
+                    <div class="sr-card__icon-box">
+                        <img src="./3d_warning_emoji_same_style_945e5b8eb1 1.png" alt="부당행위 방지">
+                    </div>
                     <div class="sr-card__content">
-                        <h3 class="sr-card__title"><img src="./showcase_icon_check.png" alt="check"
-                                class="inline-check"> 부당행위 방지 시스템</h3>
+                        <h3 class="sr-card__title">부당행위 방지 시스템</h3>
                         <p class="sr-card__desc">물품 추가 강요 등의 부당 요구는 일절 하지 않으며, 투명한 문화를 만듭니다.</p>
                     </div>
                 </div>
                 <div class="sr-card sr-card--text-only" data-effect2>
+                    <div class="sr-card__icon-box">
+                        <img src="./3d_care_icons_same_style_7451fcfc22 1.png" alt="고객 안심">
+                    </div>
                     <div class="sr-card__content">
-                        <h3 class="sr-card__title"><img src="./showcase_icon_check.png" alt="check"
-                                class="inline-check"> 고객 안심 시스템</h3>
+                        <h3 class="sr-card__title">고객 안심 시스템</h3>
                         <p class="sr-card__desc">장례 접수 후 2시간 이내에 현장에 도착하여 곁을 지켜드립니다.</p>
                     </div>
                 </div>
                 <div class="sr-card sr-card--text-only" data-effect2>
+                    <div class="sr-card__icon-box">
+                        <img src="./3d_____66a9a91257 1.png" alt="용품 보증">
+                    </div>
                     <div class="sr-card__content">
-                        <h3 class="sr-card__title"><img src="./showcase_icon_check.png" alt="check"
-                                class="inline-check"> 용품 보증 시스템</h3>
+                        <h3 class="sr-card__title">용품 보증 시스템</h3>
                         <p class="sr-card__desc">규격 용품 외 하위 용품은 일절 사용하지 않으며 정품만을 사용합니다.</p>
                     </div>
                 </div>
@@ -1874,7 +2269,7 @@
     <div id="privacyModal" class="privacy-modal">
         <div class="privacy-modal__content">
             <div class="privacy-modal__header">
-                <h3>개인정보 처리방침</h3>
+                <h3>이용약관 및 개인정보 처리방침</h3>
                 <button type="button" class="privacy-modal__close" id="closePrivacy">&times;</button>
             </div>
             <div class="privacy-modal__body">
@@ -1917,7 +2312,7 @@
                 <h4>4. 개인정보 처리의 위탁</h4>
                 <p>회사는 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.</p>
                 <ul>
-                    <li>수탁업체: [별도공지]</li>
+                    <li>수탁업체: 레디앤코 협력사</li>
                     <li>위탁 업무 내용: 전화 상담 대행, 고객 응대, DB 관리</li>
                     <li>위탁 기간: 위탁 계약 종료 시까지</li>
                 </ul>
@@ -1948,9 +2343,9 @@
 
                 <p><strong>▶ 개인정보 보호책임자</strong></p>
                 <ul>
-                    <li>성명: [김현수 담당자]</li>
-                    <li>연락처: [010-2632-7372]</li>
-                    <li>이메일: [hyunsoo@teamready.co.kr]</li>
+                    <li>성명: 김현수</li>
+                    <li>연락처: 02-6332-9902</li>
+                    <li>이메일: hyunsoo@teamready.co.kr</li>
                 </ul>
                 <p><strong>▶ 개인정보 보호 담당부서</strong></p>
                 <ul>
@@ -1966,11 +2361,104 @@
         </div>
     </div>
 
+    <!-- 주요정보고지사항 Modal -->
+    <div id="noticeModal" class="privacy-modal">
+        <div class="privacy-modal__content notice-modal__content">
+            <div class="privacy-modal__header">
+                <h3>주요정보고지사항</h3>
+                <button type="button" class="privacy-modal__close" id="closeNotice">&times;</button>
+            </div>
+            <div class="privacy-modal__body" style="padding: 0;">
+                <img src="./important_notice.png" alt="주요정보고지사항"
+                    style="width:100%; display:block; border-radius: 0 0 16px 16px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer__inner">
+            <!-- 법적 링크 -->
+            <div class="footer__legal">
+                <button class="footer__legal-btn" id="openPrivacyFooter">이용약관 및 개인정보처리방침</button>
+                <span class="footer__legal-divider">|</span>
+                <button class="footer__legal-btn" id="openNotice">주요정보고지사항</button>
+            </div>
+
+            <!-- 회사 로고 및 정보 -->
+            <div class="footer__body">
+                <div class="footer__brand">
+                    <img src="./logo.png" alt="소노아임레디 공식총판 레디앤코" class="footer__logo">
+                    <p class="footer__company-name">소노아임레디 공식총판 레디앤코</p>
+                </div>
+
+                <div class="footer__info">
+                    <dl class="footer__dl">
+                        <div class="footer__dl-row">
+                            <dt>대표자</dt>
+                            <dd>이강훈</dd>
+                        </div>
+                        <div class="footer__dl-row">
+                            <dt>사업자등록번호</dt>
+                            <dd>249-81-03692</dd>
+                        </div>
+                        <div class="footer__dl-row">
+                            <dt>통신판매업신고번호</dt>
+                            <dd>[통신판매업신고번호]</dd>
+                        </div>
+                        <div class="footer__dl-row">
+                            <dt>주소</dt>
+                            <dd>서울특별시 영등포구 선유로49길 23, 제6층 제616호 (양평동4가, 아이에스비즈타워)</dd>
+                        </div>
+                        <div class="footer__dl-row">
+                            <dt>대표전화</dt>
+                            <dd>1588-2227</dd>
+                        </div>
+                        <div class="footer__dl-row">
+                            <dt>고객센터</dt>
+                            <dd>02-6332-9902</dd>
+                        </div>
+                        <div class="footer__dl-row">
+                            <dt>이메일</dt>
+                            <dd>hyunsoo@teamready.co.kr</dd>
+                        </div>
+                        <div class="footer__dl-row">
+                            <dt>개인정보보호책임자</dt>
+                            <dd>김현수</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- 카피라이트 -->
+            <div class="footer__copy">
+                <p>© 2026 Ready&amp;Co. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <!-- GSAP & Plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
     <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+
+    <!-- Navigation Menu Overlay -->
+    <nav class="menu" id="mainMenu" style="font-family: 'Pretendard', sans-serif;">
+        <button class="close close--menu oh unbutton" id="closeMenu" aria-label="Close menu">
+            <span class="oh__inner">&#10005;</span>
+        </button>
+        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#hero">홈</a></div>
+        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#hooking">소노 스마트케어</a></div>
+        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#membership">멤버십 혜택</a></div>
+        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#strength">고객 후기</a></div>
+        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#join-process">가입 절차</a></div>
+        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#promotion">특별 이벤트</a></div>
+        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#faq">자주 묻는 질문</a></div>
+        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#consult" style="color: #C5A065;">상담
+                신청</a></div>
+    </nav>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
@@ -2555,8 +3043,9 @@
                 }
             });
 
-            // Animate body background for perfect seamless transition
+            // Animate body and header background for perfect seamless transition
             cinematicTl.to("body", { backgroundColor: "#000000", ease: "none" }, 0);
+            cinematicTl.to(".main-header", { backgroundColor: "rgba(0, 0, 0, 0.6)", ease: "none" }, 0);
 
             // Spotlight overlay expansion
             cinematicTl.fromTo(overlay,
@@ -2718,6 +3207,8 @@
 
             // White wash effect
             promoTl.to("body", { backgroundColor: "#ffffff", ease: "none" }, 0);
+            promoTl.to(".main-header", { backgroundColor: "rgba(255, 255, 255, 0.7)", ease: "none" }, 0);
+
             promoTl.fromTo(overlay,
                 { scale: 0, opacity: 0 },
                 { scale: 1, opacity: 1, ease: "none" }, 0
@@ -2797,28 +3288,142 @@
 
         const initPrivacyModal = () => {
             const detailBtn = document.querySelector('.btn-detail');
+            const footerPrivacyBtn = document.getElementById('openPrivacyFooter');
             const modal = document.getElementById('privacyModal');
             const closeBtn = document.getElementById('closePrivacy');
 
-            if (detailBtn && modal && closeBtn) {
-                detailBtn.addEventListener('click', () => {
-                    modal.classList.add('is-open');
-                    document.body.style.overflow = 'hidden'; // 스크롤 방지
-                });
+            const openModal = () => {
+                modal.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            };
 
-                closeBtn.addEventListener('click', () => {
-                    modal.classList.remove('is-open');
-                    document.body.style.overflow = '';
-                });
+            const closeModal = () => {
+                modal.classList.remove('is-open');
+                document.body.style.overflow = '';
+            };
 
+            if (detailBtn) detailBtn.addEventListener('click', openModal);
+            if (footerPrivacyBtn) footerPrivacyBtn.addEventListener('click', openModal);
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeModal);
+            }
+
+            if (modal) {
                 window.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.remove('is-open');
-                        document.body.style.overflow = '';
-                    }
+                    if (e.target === modal) closeModal();
                 });
             }
         };
+
+        const initNoticeModal = () => {
+            const openBtn = document.getElementById('openNotice');
+            const modal = document.getElementById('noticeModal');
+            const closeBtn = document.getElementById('closeNotice');
+
+            const openModal = () => {
+                modal.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeModal = () => {
+                modal.classList.remove('is-open');
+                document.body.style.overflow = '';
+            };
+
+            if (openBtn) openBtn.addEventListener('click', openModal);
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+            if (modal) {
+                window.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal();
+                });
+            }
+        };
+
+        /* Navigation Menu Logic */
+        class NavigationMenu {
+            constructor() {
+                this.menuEl = document.getElementById('mainMenu');
+                this.openBtn = document.getElementById('openMenu');
+                this.closeBtn = document.getElementById('closeMenu');
+                this.menuItems = this.menuEl.querySelectorAll('.menu__item');
+                this.menuLinks = this.menuEl.querySelectorAll('.menu__item-link');
+
+                this.init();
+            }
+
+            init() {
+                if (!this.openBtn) return;
+                this.openBtn.addEventListener('click', () => this.open());
+                if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.close());
+
+                this.menuLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        const targetId = link.getAttribute('href');
+                        if (targetId && targetId.startsWith('#')) {
+                            e.preventDefault();
+                            this.close();
+
+                            const targetEl = targetId === '#' ? document.body : document.querySelector(targetId);
+                            if (targetEl) {
+                                ScrollTrigger.refresh();
+
+                                let scrollPos;
+                                if (targetId === '#hooking') {
+                                    const st = ScrollTrigger.getAll().find(s => s.trigger === targetEl);
+                                    if (st) {
+                                        // Specific logic for pinned narrative section
+                                        const heroHeight = window.innerHeight;
+                                        scrollPos = Math.max(st.start, heroHeight) + 600;
+                                    } else {
+                                        scrollPos = window.pageYOffset + targetEl.getBoundingClientRect().top + 600;
+                                    }
+                                } else if (targetId === '#hero' || targetId === '#') {
+                                    scrollPos = 0;
+                                } else {
+                                    // Standard sections: scroll to bring the top of the element to the top of the viewport
+                                    scrollPos = window.pageYOffset + targetEl.getBoundingClientRect().top;
+                                }
+
+                                gsap.to(window, {
+                                    duration: 1.2,
+                                    scrollTo: { y: scrollPos, autoKill: false },
+                                    ease: "power3.inOut"
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+
+            open() {
+                console.log("Opening menu...");
+                this.menuEl.classList.add('menu--open');
+                document.body.style.overflow = 'hidden';
+
+                const inners = this.menuEl.querySelectorAll('.oh__inner');
+                gsap.killTweensOf(inners);
+
+                gsap.timeline({ defaults: { duration: 1.2, ease: 'expo.out' } })
+                    .set(inners, { y: '150%', rotate: 15 })
+                    .to(inners, { y: '0%', rotate: 0, stagger: 0.05 });
+            }
+
+            close() {
+                console.log("Closing menu...");
+                const inners = this.menuEl.querySelectorAll('.oh__inner');
+
+                gsap.timeline({
+                    defaults: { duration: 0.6, ease: 'power2.inOut' },
+                    onComplete: () => {
+                        this.menuEl.classList.remove('menu--open');
+                        document.body.style.overflow = '';
+                    }
+                })
+                    .to(inners, { y: '-150%', rotate: -5, stagger: 0.02 });
+            }
+        }
 
         const initApp = () => {
             initPremiumCards();
@@ -2828,10 +3433,14 @@
             initPromotionAnimation();
             initFAQ();
             initPrivacyModal();
+            initNoticeModal();
+
+            // Initialize Navigation Menu
+            console.log("Initializing Navigation Menu...");
+            new NavigationMenu();
         };
 
         initApp();
-
 
     </script>
 </body>
