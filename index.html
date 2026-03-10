@@ -2949,27 +2949,69 @@
             const cards = document.querySelectorAll('.prem-card');
             const details = document.querySelectorAll('.prem-detail');
 
+            if (!cards.length || !details.length) return;
+
             const closeAll = () => {
-                details.forEach(d => d.classList.remove('is-open'));
                 cards.forEach(c => c.classList.remove('is-active'));
+                details.forEach(detail => {
+                    if (detail.classList.contains('is-open')) {
+                        gsap.to(detail, {
+                            height: 0,
+                            opacity: 0,
+                            paddingTop: 0,
+                            paddingBottom: 0,
+                            marginTop: 0,
+                            marginBottom: 0,
+                            duration: 0.4,
+                            ease: "power2.inOut",
+                            clearProps: "all",
+                            onComplete: () => detail.classList.remove('is-open')
+                        });
+                    }
+                });
             };
 
             cards.forEach(card => {
-                card.addEventListener('click', () => {
+                card.addEventListener('click', (e) => {
                     const targetId = card.getAttribute('data-target');
                     const target = document.getElementById(targetId);
+                    if (!target) return;
+
                     const isOpen = target.classList.contains('is-open');
 
+                    // If it's already open, just close it
+                    if (isOpen) {
+                        closeAll();
+                        return;
+                    }
+
+                    // Otherwise close others and open this one
                     closeAll();
 
-                    if (!isOpen) {
-                        target.classList.add('is-open');
-                        card.classList.add('is-active');
-                        // 패널이 열린 후 부드럽게 스크롤
-                        setTimeout(() => {
-                            target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                        }, 100);
-                    }
+                    target.classList.add('is-open');
+                    card.classList.add('is-active');
+
+                    // GSAP Animation for opening
+                    gsap.fromTo(target,
+                        { height: 0, opacity: 0, paddingBottom: 0, paddingTop: 0, marginBottom: 0, marginTop: 0 },
+                        {
+                            height: "auto",
+                            opacity: 1,
+                            paddingBottom: "2.5rem",
+                            paddingTop: "2.5rem",
+                            marginBottom: "1rem",
+                            marginTop: "0.5rem",
+                            duration: 0.5,
+                            ease: "power2.out"
+                        }
+                    );
+
+                    // Start scrolling immediately so it feels faster and more responsive
+                    gsap.to(window, {
+                        duration: 0.8,
+                        scrollTo: { y: target, offsetY: 150 },
+                        ease: "power2.out"
+                    });
                 });
             });
 
@@ -2983,7 +3025,6 @@
                 }
             });
         };
-        initPremiumCards();
 
         // --- Typography Animation (Effect 2: Heavenly Pleasure) ---
         const initTypographyAnimations = () => {

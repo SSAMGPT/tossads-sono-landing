@@ -2737,22 +2737,12 @@ body.dark-mode .split-layout .answer-text {
     border: 1.5px solid #e8e8e8;
     border-radius: 20px;
     padding: 0 2.5rem;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.45s cubic-bezier(0.23, 1, 0.32, 1),
-        padding 0.35s ease,
-        opacity 0.35s ease;
+    height: 0;
     opacity: 0;
+    overflow: hidden;
     position: relative;
     text-align: left;
     margin-bottom: 0;
-}
-
-.prem-detail.is-open {
-    max-height: 800px;
-    padding: 2.5rem;
-    opacity: 1;
-    margin-bottom: 1rem;
 }
 
 .prem-detail__close {
