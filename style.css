@@ -554,12 +554,20 @@ body {
     left: 0;
     top: 1rem;
     width: 18rem;
-    height: 12rem;
+    height: 12.5rem;
+    /* Slight height increase to accommodate the newly curved bottom */
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    -webkit-clip-path: url(#cloud-path);
-    clip-path: url(#cloud-path);
+
+    /* Use mask-image instead of clip-path to fix Safari backdrop-filter rectangular background bug */
+    -webkit-mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MzMgMzA1Ij48cGF0aCBkPSJNMTQ2LjUgMjkzIEM2NS42NDQgMjkzIDAgMjI3LjM1NiAwIDE0Ni41IEMwIDY1LjY0NCA2NS42NDQgMCAxNDYuNSAwIEMyMDUuNjQxIDAgMjU2LjY0MyAzNS4xMiAyNzkuNzcyIDg1LjYyNCBDMjkzLjQxNiA3OS40NDUgMzA4LjU1OSA3NiAzMjQuNSA3NiBDMzg0LjM4MyA3NiA0MzMgMTI0LjYxNyA0MzMgMTg0LjUgQzQzMyAyNDQuMzgzIDM4NC4zODMgMjkzIDMyNC41IDI5MyBRIDIzNS41IDMxNSAxNDYuNSAyOTMgWiIgZmlsbD0iYmxhY2siLz48L3N2Zz4=');
+    -webkit-mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MzMgMzA1Ij48cGF0aCBkPSJNMTQ2LjUgMjkzIEM2NS42NDQgMjkzIDAgMjI3LjM1NiAwIDE0Ni41IEMwIDY1LjY0NCA2NS42NDQgMCAxNDYuNSAwIEMyMDUuNjQxIDAgMjU2LjY0MyAzNS4xMiAyNzkuNzcyIDg1LjYyNCBDMjkzLjQxNiA3OS40NDUgMzA4LjU1OSA3NiAzMjQuNSA3NiBDMzg0LjM4MyA3NiA0MzMgMTI0LjYxNyA0MzMgMTg0LjUgQzQzMyAyNDQuMzgzIDM4NC4zODMgMjkzIDMyNC41IDI5MyBRIDIzNS41IDMxNSAxNDYuNSAyOTMgWiIgZmlsbD0iYmxhY2siLz48L3N2Zz4=');
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+
     box-shadow: inset 0rem -1.3rem 0.25rem -1rem #fff, inset 0rem 0rem 5rem 0rem rgba(255, 255, 255, 0.3);
     z-index: 2;
     transition: background 0.8s ease;
