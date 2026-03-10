@@ -558,6 +558,7 @@ body {
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    -webkit-clip-path: url(#cloud-path);
     clip-path: url(#cloud-path);
     box-shadow: inset 0rem -1.3rem 0.25rem -1rem #fff, inset 0rem 0rem 5rem 0rem rgba(255, 255, 255, 0.3);
     z-index: 2;
@@ -582,6 +583,7 @@ body {
     width: 11.9rem;
     border-radius: 50%;
     box-shadow: inset 0rem -1.1rem 0.25rem -1rem #fff, inset 0.45rem 0rem 0.25rem -0.25rem #fff, inset -0.45rem 0.5rem 0.25rem -0.45em #fff, inset 0.25rem 0.25rem 0.5rem 0rem rgba(0, 0, 0, 0.3);
+    -webkit-clip-path: polygon(0 0, 100% 0%, 100% 33%, 50% 30%, 50% 100%, 0% 100%);
     clip-path: polygon(0 0, 100% 0%, 100% 33%, 50% 30%, 50% 100%, 0% 100%);
 }
 
@@ -591,6 +593,7 @@ body {
     height: 8.7rem;
     bottom: 0.1rem;
     right: 0.5rem;
+    -webkit-clip-path: polygon(0 0, 100% 0%, 100% 100%, 50% 100%, 29% 0%);
     clip-path: polygon(0 0, 100% 0%, 100% 100%, 50% 100%, 29% 0%);
 }
 
@@ -605,8 +608,11 @@ body {
     z-index: -1;
 }
 
-.icon__cloud-svg clipPath {
-    transform: scale(0.65);
+.icon__cloud-svg {
+    display: none;
+    position: absolute;
+    width: 0;
+    height: 0;
 }
 
 /* Mobile Responsive */
