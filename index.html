@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>소노아임레디 | 가전제품 렌탈 서비스</title>
-    <link rel="stylesheet" href="style.css?v=5.2">
+    <link rel="stylesheet" href="style.css?v=5.3">
     <!-- Splitting.js for Text Animation -->
     <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
     <style>
@@ -143,6 +143,74 @@
                 -webkit-text-size-adjust: none;
                 text-size-adjust: none;
             }
+        }
+
+        /* --- Final Typography Styles (Integrated into Footer) --- */
+        .footer__top-typo {
+            background-color: #fff;
+            padding: 10vh 0 5vh;
+            /* Reduced padding for tighter fit */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+            width: 100%;
+        }
+
+        .content__title--fx4 {
+            line-height: 0.8;
+            text-align: center;
+            display: inline-flex;
+            /* Use inline-flex to shrink-wrap to SONO's width */
+            flex-direction: column;
+            gap: 0;
+            color: #001A3D;
+            /* Brand Navy Color */
+            margin: 0;
+            position: relative;
+        }
+
+        .font-larger {
+            font-size: 34vw;
+            /* Approx 1.3x larger than original 26vw */
+            display: block;
+            font-weight: 900;
+            letter-spacing: -0.06em;
+            line-height: 0.8;
+            margin-bottom: -1vw;
+            white-space: nowrap;
+        }
+
+        .font-upper {
+            text-transform: uppercase;
+        }
+
+        .font-sub {
+            font-size: 5.5vw;
+            /* Approx 1.3x larger than original 4.2vw to match scaling */
+            display: block;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            width: 100%;
+            /* Fill the width of the parent (SONO) */
+            margin-top: 1.2rem;
+            /* Slightly larger margin to account for scale */
+        }
+
+        /* Perfectly align IMREADY from left edge of S to right edge of O */
+        .content__title--fx4[data-splitting] .font-sub .word {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        /* Center SONO chars */
+        .content__title--fx4[data-splitting] .font-larger .word,
+        .content__title--fx4[data-splitting] .font-larger.word {
+            display: flex;
+            justify-content: center;
         }
 
 
@@ -991,13 +1059,13 @@
 
         /* Footer */
         .site-footer {
-            background-color: #f8f9fb;
+            background-color: #fff !important;
             padding: 5rem 0 3rem;
             border-top: 1px solid #eee;
             color: #666;
             font-size: 0.9rem;
             width: 100%;
-            margin-top: 4rem;
+            margin-top: 0;
         }
 
         .footer__inner {
@@ -2377,6 +2445,14 @@
 
     <!-- Footer -->
     <footer class="site-footer">
+        <!-- Final Typography Animation (Integrated inside footer container) -->
+        <div class="footer__top-typo">
+            <h2 class="content__title--fx4" data-splitting data-effect-sono>
+                <span class="font-larger">SONO</span>
+                <span class="font-upper font-sub">IMREADY</span>
+            </h2>
+        </div>
+
         <div class="footer__inner">
             <!-- 법적 링크 -->
             <div class="footer__legal">
@@ -3466,6 +3542,47 @@
             }
         }
 
+        const initFinalTypoAnimation = () => {
+            const title = document.querySelector('.content__title--fx4[data-effect-sono]');
+            if (!title) return;
+
+            // Initialize splitting for this specific element
+            Splitting({ target: title });
+
+            const words = title.querySelectorAll('.word');
+
+            words.forEach(word => {
+                const chars = word.querySelectorAll('.char');
+                if (!chars.length) return;
+
+                const isSono = word.closest('.font-larger') || word.classList.contains('font-larger');
+                // Use a larger relative offset for the massive SONO text to make it fly in from outside
+                const offset = isSono ? window.innerWidth * 0.8 : 900;
+
+                // Characters move from far spread out (outside screen) to center position
+                gsap.fromTo(chars, {
+                    'will-change': 'opacity, transform',
+                    x: (position, _, arr) => offset * (position - (arr.length - 1) / 2),
+                    opacity: 0
+                },
+                    {
+                        ease: 'power1.inOut',
+                        x: 0,
+                        opacity: 1,
+                        stagger: {
+                            grid: 'auto',
+                            from: 'center'
+                        },
+                        scrollTrigger: {
+                            trigger: word,
+                            start: 'top bottom', // Start as soon as it enters view
+                            end: 'top center', // Complete by the time it reaches center
+                            scrub: true,
+                        }
+                    });
+            });
+        };
+
         const initApp = () => {
             initPremiumCards();
             initTypographyAnimations();
@@ -3475,6 +3592,7 @@
             initFAQ();
             initPrivacyModal();
             initNoticeModal();
+            initFinalTypoAnimation();
 
             // Initialize Navigation Menu
             console.log("Initializing Navigation Menu...");

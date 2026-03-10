@@ -2733,7 +2733,7 @@ body.dark-mode .split-layout .answer-text {
 
 /* Detail Panel */
 .prem-detail {
-    background: #f8f9fb;
+    background: #fff;
     border: 1.5px solid #e8e8e8;
     border-radius: 20px;
     padding: 0 2.5rem;
@@ -2936,7 +2936,7 @@ body.dark-mode .split-layout .answer-text {
 
 /* Review Highlight */
 .sr-review-wrap {
-    background: #f8f9fb;
+    background: #fff;
     border-radius: 24px;
     padding: 6rem 4rem;
     max-width: 900px;
@@ -3003,7 +3003,8 @@ body.dark-mode .split-layout .answer-text {
 /* --- FAQ Section --- */
 .section--faq {
     padding: 10rem 0;
-    background: #f8f9fb;
+    background: #fff;
+    /* Updated to white */
     position: relative;
     z-index: 10;
 }
@@ -3169,7 +3170,8 @@ body.dark-mode .split-layout .answer-text {
 /* --- Consultation Section --- */
 .section--consult {
     padding: 10rem 0 12rem;
-    background: #f8f9fb;
+    background: #fff;
+    /* Updated to white */
     position: relative;
     z-index: 10;
 }
@@ -3203,6 +3205,17 @@ body.dark-mode .split-layout .answer-text {
     border-radius: 20px;
     padding: 5rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    border: 2px solid transparent;
+    /* Match border on hover */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
+}
+
+.consult__card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.08);
+    border-color: #C5A065;
 }
 
 .consult__form {
@@ -3582,7 +3595,7 @@ body.dark-mode .split-layout .answer-text {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #f8f9fb;
+    background: #fff;
 }
 
 .privacy-modal__header h3 {
@@ -3673,9 +3686,11 @@ body.dark-mode .split-layout .answer-text {
 
 /* Footer */
 .site-footer {
-    background-color: #f8f9fb;
+    background-color: #fff;
+    /* Updated to white */
     padding: 5rem 0 3rem;
     border-top: 1px solid #eee;
+    /* Added border to separate from white sections */
     color: #666;
     font-size: 0.9rem;
 }
