@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가전제품 렌탈 서비스</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Splitting.js for Text Animation -->
+    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="logo-mobile.png">
+                    <img src="logo.png" alt="소노아임레디 로고">
+                </picture>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="typing-text"></span><span class="cursor">|</span>
+            </h1>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-weather-icon">
+                <div class="icon">
+                    <!-- 1. 태양 (Sun) -->
+                    <div class="icon__sun weather-item" data-weather="sun">
+                        <div class="icon__sun-lights">
+                            <div class="icon__sun-light"></div>
+                            <div class="icon__sun-light"></div>
+                            <div class="icon__sun-light"></div>
+                            <div class="icon__sun-light"></div>
+                            <div class="icon__sun-light"></div>
+                            <div class="icon__sun-light"></div>
+                            <div class="icon__sun-light"></div>
+                            <div class="icon__sun-light"></div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 비와 번개 (Rain & Thunder) -->
+                    <div class="icon__rain weather-item" data-weather="thunder" style="opacity: 0; display: none;">
+                        <div class="icon__rain-drops"></div>
+                    </div>
+                    <div class="icon__thunder weather-item" data-weather="thunder" style="opacity: 0; display: none;">
+                    </div>
+
+                    <!-- 3. 눈 (Snow) -->
+                    <div class="icon__snow weather-item" data-weather="snow" style="opacity: 0; display: none;">
+                        <div class="icon__snow-flakes"></div>
+                    </div>
+
+                    <!-- 4. 무지개 (Rainbow) -->
+                    <div class="icon__rainbow weather-item" data-weather="rainbow" style="opacity: 0; display: none;">
+                        <div class="icon__rainbow-arc"></div>
+                        <div class="icon__rainbow-arc"></div>
+                        <div class="icon__rainbow-arc"></div>
+                        <div class="icon__rainbow-arc"></div>
+                        <div class="icon__rainbow-arc"></div>
+                        <div class="icon__rainbow-arc"></div>
+                        <div class="icon__rainbow-arc"></div>
+                    </div>
+
+                    <!-- 공통 구름 -->
+                    <div class="icon__cloud">
+                        <div class="icon__cloud-reflect icon__cloud-reflect--1"></div>
+                        <div class="icon__cloud-reflect icon__cloud-reflect--2"></div>
+                        <svg class="icon__cloud-svg" xmlns="http://www.w3.org/2000/svg" style="isolation:isolate"
+                            viewBox="0 0 200 500" width="50%">
+                            <clipPath id="cloud-path">
+                                <path
+                                    d=" M 146.5 293 C 65.644 293 0 227.356 0 146.5 C 0 65.644 65.644 0 146.5 0 C 205.641 0 256.643 35.12 279.772 85.624 C 293.416 79.445 308.559 76 324.5 76 C 384.383 76 433 124.617 433 184.5 C 433 244.383 384.383 293 324.5 293 L 324.5 293 C 324.5 293 324.5 293 324.5 293 L 146.5 293 Z "
+                                    fill="currentColor" />
+                            </clipPath>
+                        </svg>
+                    </div>
+                    <div class="icon__cloud-shadow"></div>
+                </div>
+            </div>
+
+            <!-- Glassmorphism 툴팁 추가 -->
+            <div class="glass-tooltip pos-bottom-center theme-sun">
+                <span class="tooltip-text">햇살 가득한 휴가,<br>여행·리조트 지원 ✈️</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 후킹 섹션 -->
+    <section class="hooking-section">
+        <div class="panels-container">
+
+            <!-- Panel 1: 문제 제기 및 답변 -->
+            <div class="panel">
+                <div class="panel-content split-layout">
+                    <h2 class="hook-text">가전제품 꼭 목돈 마련해야만<br>구매가 가능할까요?</h2>
+                    <p class="answer-text" style="font-size: calc(var(--font-h1) * 1.4); color: #ff2d78;">
+                        <span class="ans-prefix" style="opacity: 0; display: block;">저희가 드리는 답변은</span>
+                        <span class="no-text-anim" style="display: inline-block; opacity: 0;">
+                            <span class="no-word">No!</span>
+                            <span class="suffix-word">입니다</span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Panel 2: 핵심 해결책 -->
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="badge-container">
+                        <button class="Btn"></button>
+                    </div>
+                    <h2 class="hook-text">
+                        부담스럽지 않은 월 납입으로 가전제품 쓰고 만기 때 환급까지 받을 수 있는 SONO 스마트케어가 있습니다.
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Panel 3: 타겟 고객층 대상 메시지 -->
+            <div class="panel">
+                <div class="panel-content">
+                    <h2 class="target-title">가전결합상조<br>이런 분들에게 좋아요!</h2>
+                    <div class="target-cards">
+                        <div class="card target-card">
+                            <span>혼수 준비하면서<br>똑똑한 소비가 필요하신 분</span>
+                            <img src="heart.png" alt="Heart 3D" class="card-icon">
+                        </div>
+                        <div class="card target-card">
+                            <span>가까운 친인척 선물이<br>고민이신 분</span>
+                            <img src="gift.png" alt="Gift 3D" class="card-icon">
+                        </div>
+                        <div class="card target-card">
+                            <span>부모님 효도가전 선물을 고민하면서 목돈 마련이 부담스러운 분</span>
+                            <img src="coin.png" alt="Money 3D" class="card-icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 4: 다양한 혜택 및 추가 안내 -->
+            <div class="panel">
+                <div class="panel-content">
+                    <h2 class="target-title">단순한 렌탈상품? 아닙니다.<br>다양한 혜택이 준비돼 있어요.</h2>
+                    <div class="benefit-list">
+                        <div class="benefit-item">차별화 된 프리미엄 상조 서비스</div>
+                        <div class="benefit-item">연간 10회 리조트, 레저스포츠 멤버십 할인이 가능해요</div>
+                        <div class="benefit-item">크루즈, 여행 등등 8가지의 다양한 하이브리드 전환서비스로 이용 가능해요</div>
+                        <div class="benefit-item">만기 시 낸 돈 그대로 환급까지 가능해요!</div>
+                    </div>
+                    <p class="answer-text" style="font-weight: 800; opacity: 0.8; margin-top: 2rem; color: #fff;">
+                        복수 가입 → 구좌 별로 자유롭게 선택 가능.<br>
+                        만기 환급, 하이브리드, 상조 서비스 中 구좌 별 택1
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <div id="hybrid"
+        style="position: relative; visibility: hidden; height: 0; margin-top: -100px; pointer-events: none;"></div>
+    <section class="section section--benefits" id="membership">
+        <div class="benefits__tabs-nav">
+            <div class="benefits__tabs-container">
+                <button class="benefit-tab active" data-tab="premium">프리미엄 의전 구성</button>
+                <button class="benefit-tab" data-tab="membership">멤버십 혜택</button>
+                <button class="benefit-tab" data-tab="hybrid">하이브리드 전환</button>
+            </div>
+        </div>
+
+        <div class="benefits__content">
+            <!-- Premium Tab Pane -->
+            <div class="tab-pane active" id="pane-premium">
+                <div class="premium__container">
+                    <div class="premium__header">
+                        <p class="premium__subtitle">소노아임레디 상조 서비스가 지원하는</p>
+                        <h2 class="premium__title">프리미엄 의전 구성</h2>
+                        <p class="premium__desc">아래 항목을 클릭하면 세부 구성을 확인할 수 있습니다.</p>
+                    </div>
+
+                    <div class="premium__grid">
+
+                        <!-- 1. 고인용품 및 수시용품 -->
+                        <div class="prem-card" data-target="prem-detail-1">
+                            <div class="prem-card__icon">
+                                <img src="./img/icons/7 card/1.png" alt="고인용품">
+                            </div>
+                            <span class="prem-card__label">고인용품 및<br>수시용품</span>
+                        </div>
+
+                        <!-- 2. 빈소 및 기타용품 -->
+                        <div class="prem-card" data-target="prem-detail-2">
+                            <div class="prem-card__icon">
+                                <img src="./img/icons/7 card/2.png" alt="빈소용품">
+                            </div>
+                            <span class="prem-card__label">빈소 및<br>기타용품</span>
+                        </div>
+
+                        <!-- 3. 의전용품 -->
+                        <div class="prem-card" data-target="prem-detail-3">
+                            <div class="prem-card__icon">
+                                <img src="./img/icons/7 card/3.png" alt="의전용품">
+                            </div>
+                            <span class="prem-card__label">의전용품<br>(상복)</span>
+                        </div>
+
+                        <!-- 4. 제단장식 -->
+                        <div class="prem-card" data-target="prem-detail-4">
+                            <div class="prem-card__icon">
+                                <img src="./img/icons/7 card/4.png" alt="제단장식">
+                            </div>
+                            <span class="prem-card__label">제단장식<br>(꽃장식)</span>
+                        </div>
+
+                        <!-- 5. 차량지원 -->
+                        <div class="prem-card" data-target="prem-detail-5">
+                            <div class="prem-card__icon">
+                                <img src="./img/icons/7 card/5.png" alt="차량지원">
+                            </div>
+                            <span class="prem-card__label">차량지원</span>
+                        </div>
+
+                        <!-- 6. 인력지원 -->
+                        <div class="prem-card" data-target="prem-detail-6">
+                            <div class="prem-card__icon">
+                                <img src="./img/icons/7 card/6.png" alt="인력지원">
+                            </div>
+                            <span class="prem-card__label">인력지원</span>
+                        </div>
+
+                        <!-- 7. 편의서비스 -->
+                        <div class="prem-card" data-target="prem-detail-7">
+                            <div class="prem-card__icon">
+                                <img src="./img/icons/7 card/7.png" alt="편의서비스">
+                            </div>
+                            <span class="prem-card__label">편의서비스</span>
+                        </div>
+
+                    </div><!-- /.premium__grid -->
+
+                    <!-- Detail Panels (accordion) -->
+                    <div class="prem-detail" id="prem-detail-1">
+                        <button class="prem-detail__close" aria-label="닫기">✕</button>
+                        <h4 class="prem-detail__title">고인용품 및 수시용품</h4>
+                        <table class="prem-detail__table">
+                            <tr>
+                                <th>구분</th>
+                                <th>세부 내용</th>
+                            </tr>
+                            <tr>
+                                <td>관 (매장 시)</td>
+                                <td>오동나무 45mm</td>
+                            </tr>
+                            <tr>
+                                <td>관 (화장 또는 탈관 시)</td>
+                                <td>오동나무 18mm, 횡대 또는 유골함 中 택1</td>
+                            </tr>
+                            <tr>
+                                <td>수의</td>
+                                <td>대마 (대마 100%)</td>
+                            </tr>
+                            <tr>
+                                <td>수의 준비 고객</td>
+                                <td>꽃관보 또는 장례의전 도우미 1명</td>
+                            </tr>
+                            <tr>
+                                <td>도포·원삼·천금·지금</td>
+                                <td>수의 제품과 동일제품 제공</td>
+                            </tr>
+                            <tr>
+                                <td>명정·관보·습신·한지 등</td>
+                                <td>규격품 제공</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="prem-detail" id="prem-detail-2">
+                        <button class="prem-detail__close" aria-label="닫기">✕</button>
+                        <h4 class="prem-detail__title">빈소 및 기타용품</h4>
+                        <table class="prem-detail__table">
+                            <tr>
+                                <th>구분</th>
+                                <th>세부 내용</th>
+                            </tr>
+                            <tr>
+                                <td>빈소용품</td>
+                                <td>향, 초, 부의록, 축문, 위패 (필요량 일체)</td>
+                            </tr>
+                            <tr>
+                                <td>대여용품</td>
+                                <td>향로, 촛대, 잔대 (대여품)</td>
+                            </tr>
+                            <tr>
+                                <td>기타용품</td>
+                                <td>완장, 상장, 운구용장갑 (필요량 일체)</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="prem-detail" id="prem-detail-3">
+                        <button class="prem-detail__close" aria-label="닫기">✕</button>
+                        <h4 class="prem-detail__title">의전용품 (상복)</h4>
+                        <table class="prem-detail__table">
+                            <tr>
+                                <th>구분</th>
+                                <th>세부 내용</th>
+                            </tr>
+                            <tr>
+                                <td>현대식 — 남성/여성</td>
+                                <td>총 5벌 제공</td>
+                            </tr>
+                            <tr>
+                                <td>전통식 — 바지저고리·삼베치마 등</td>
+                                <td>필요량 일체 제공</td>
+                            </tr>
+                            <tr>
+                                <td>전통식 — 두루마기·치마저고리 등</td>
+                                <td>필요량 일체 제공</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="prem-detail" id="prem-detail-4">
+                        <button class="prem-detail__close" aria-label="닫기">✕</button>
+                        <h4 class="prem-detail__title">제단장식 (꽃장식)</h4>
+                        <table class="prem-detail__table">
+                            <tr>
+                                <th>구분</th>
+                                <th>세부 내용</th>
+                            </tr>
+                            <tr>
+                                <td>생화꽃 제단장식</td>
+                                <td>제단 꽃장식 35만원 상당 제공</td>
+                            </tr>
+                            <tr>
+                                <td>헌화용 국화</td>
+                                <td>30송이 제공</td>
+                            </tr>
+                            <tr>
+                                <td>꽃바구니</td>
+                                <td>꽃바구니 2개 제공</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="prem-detail" id="prem-detail-5">
+                        <button class="prem-detail__close" aria-label="닫기">✕</button>
+                        <h4 class="prem-detail__title">차량지원</h4>
+                        <table class="prem-detail__table">
+                            <tr>
+                                <th>구분</th>
+                                <th>세부 내용</th>
+                            </tr>
+                            <tr>
+                                <td>운구 이송차량</td>
+                                <td>관내 (시·군내) 무료 제공</td>
+                            </tr>
+                            <tr>
+                                <td>고인 리무진</td>
+                                <td>왕복 300km (초과 시 2,000원/km)</td>
+                            </tr>
+                            <tr>
+                                <td>유족 버스</td>
+                                <td>왕복 300km (초과 시 2,000원/km)</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="prem-detail" id="prem-detail-6">
+                        <button class="prem-detail__close" aria-label="닫기">✕</button>
+                        <h4 class="prem-detail__title">인력지원</h4>
+                        <table class="prem-detail__table">
+                            <tr>
+                                <th>구분</th>
+                                <th>세부 내용</th>
+                            </tr>
+                            <tr>
+                                <td>장례지도사</td>
+                                <td>1명 (입관지원 포함)</td>
+                            </tr>
+                            <tr>
+                                <td>장례의전 도우미</td>
+                                <td>5명 (1인 10시간 기준)</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="prem-detail" id="prem-detail-7">
+                        <button class="prem-detail__close" aria-label="닫기">✕</button>
+                        <h4 class="prem-detail__title">편의서비스</h4>
+                        <table class="prem-detail__table">
+                            <tr>
+                                <th>구분</th>
+                                <th>세부 내용</th>
+                            </tr>
+                            <tr>
+                                <td>일회용 식기세트</td>
+                                <td>300인분 제공</td>
+                            </tr>
+                            <tr>
+                                <td>편의용품</td>
+                                <td>1세트 (6인 기준) 제공</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div><!-- /.premium__container -->
+            </div>
+
+
+            <!-- Membership Tab Pane -->
+            <div class="tab-pane" id="pane-membership">
+                <div class="membership__container">
+                    <div class="membership__header">
+                        <p class="membership__subtitle-top">가입 후 회원 정상 유지기간 내 맘껏 누리는</p>
+                        <h2 class="membership__title">소노아임레디 멤버십</h2>
+                        <p class="membership__desc">
+                            <b class="membership__desc-highlight">소노호텔앤리조트 제휴 전국 18개 리조트</b>
+                            <b class="membership__desc-highlight">연10회 특가 할인 제공</b>
+                            <span class="membership__desc-sub">오션월드/스키/부대시설 최대 30~35% 할인 · 골프 할인 최대 10%</span>
+                        </p>
+                    </div>
+
+                    <div class="membership__slider-container">
+                        <div class="membership__track">
+                            <!-- Card 1: Resort -->
+                            <div class="membership__card">
+                                <div class="membership__card-img"
+                                    style="background-image: url('./img/membership_resort.jpg')">
+                                </div>
+                                <div class="membership__card-content">
+                                    <h3 class="membership__card-title">소노호텔앤리조트 객실 혜택</h3>
+                                    <div class="membership__table-wrap">
+                                        <table class="membership__table">
+                                            <tr>
+                                                <th>구분</th>
+                                                <th>혜택 (비수기 주중)</th>
+                                            </tr>
+                                            <tr>
+                                                <td>소노호텔앤리조트</td>
+                                                <td>무기명 회원가<br class="pc-br"> + 1만원 (일~목)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>소노펫/비발디</td>
+                                                <td>무기명 회원가<br class="pc-br"> + 1만원 (일~목)</td>
+                                            </tr>
+                                        </table>
+                                        <p class="membership__card-note">* 패밀리/스위트 객실 기준 (금요일 +2만원)</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Waterpark -->
+                            <div class="membership__card">
+                                <div class="membership__card-img"
+                                    style="background-image: url('./img/membership_waterpark.jpg')"></div>
+                                <div class="membership__card-content">
+                                    <h3 class="membership__card-title">워터파크 할인 혜택</h3>
+                                    <div class="membership__table-wrap">
+                                        <table class="membership__table">
+                                            <tr>
+                                                <th>구분</th>
+                                                <th>혜택 (연 10회)</th>
+                                            </tr>
+                                            <tr>
+                                                <td>오션월드/어드벤처</td>
+                                                <td>최대 30% 우대</td>
+                                            </tr>
+                                            <tr>
+                                                <td>오션플레이</td>
+                                                <td>최대 35% 우대</td>
+                                            </tr>
+                                        </table>
+                                        <p class="membership__card-note">* 본인 포함 2인, 모바일 멤버십 필수</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Ski -->
+                            <div class="membership__card">
+                                <div class="membership__card-img"
+                                    style="background-image: url('./img/membership_ski.jpg')">
+                                </div>
+                                <div class="membership__card-content">
+                                    <h3 class="membership__card-title">스키 할인 혜택</h3>
+                                    <div class="membership__table-wrap">
+                                        <table class="membership__table">
+                                            <tr>
+                                                <th>구분</th>
+                                                <th>혜택 (연 10회)</th>
+                                            </tr>
+                                            <tr>
+                                                <td>리프트/렌탈</td>
+                                                <td>최대 30% 우대</td>
+                                            </tr>
+                                        </table>
+                                        <p class="membership__card-note">* 시즌에 따라 변동 가능, 본인 포함 2인</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Leisure -->
+                            <div class="membership__card">
+                                <div class="membership__card-img"
+                                    style="background-image: url('./img/membership_golf.jpg')">
+                                </div>
+                                <div class="membership__card-content">
+                                    <h3 class="membership__card-title">레저/부대시설 할인</h3>
+                                    <div class="membership__table-wrap">
+                                        <table class="membership__table">
+                                            <tr>
+                                                <th>구분</th>
+                                                <th>혜택</th>
+                                            </tr>
+                                            <tr>
+                                                <td>사우나</td>
+                                                <td>10% 우대<br class="pc-br"> (일부 제외)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>골프(그린피)</td>
+                                                <td>주중 10% 우대<br class="pc-br"> (본인)</td>
+                                            </tr>
+                                        </table>
+                                        <p class="membership__card-note">* 비발디/델피노CC, 현장 카드 제시</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <p class="membership__footer-note">
+                        * 행사(장례/전환) 시 가입일로부터 5년간 제공<br>
+                        * 멤버십서비스는 당사 및 제휴사의 사정에 따라<br class="mobile-br"> 축소 및 확대, 변경될 수 있습니다.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Hybrid Tab Pane -->
+            <div class="tab-pane" id="pane-hybrid">
+                <div class="hybrid__container">
+                    <div class="hybrid__header">
+                        <p class="hybrid__header-subtitle">가입 후 필요에 따라 자유롭게 선택하는</p>
+                        <h2 class="hybrid__title">하이브리드 전환 서비스</h2>
+                        <p class="hybrid__subtitle">
+                            크루즈, 웨딩, 골프 투어, 어학연수 등<br>
+                            라이프스타일에 맞춘 <strong>서비스 선택권 보장</strong>
+                        </p>
+                    </div>
+
+                    <!-- Service Image Grid -->
+                    <!-- Service Image Grid -->
+                    <div class="hybrid__grid">
+                        <!-- 1. Cruise (New) -->
+                        <div class="hybrid__item">
+                            <div class="hybrid__img" style="background-image: url('./img/hybrid_cruise_new.jpg')"></div>
+                            <span class="hybrid__label">크루즈</span>
+                        </div>
+                        <!-- 2. Travel -->
+                        <div class="hybrid__item">
+                            <div class="hybrid__img" style="background-image: url('./img/hybrid_travel.jpg')"></div>
+                            <span class="hybrid__label">여행</span>
+                        </div>
+                        <!-- 3. Wedding -->
+                        <div class="hybrid__item">
+                            <div class="hybrid__img" style="background-image: url('./img/hybrid_wedding.jpg')"></div>
+                            <span class="hybrid__label">웨딩</span>
+                        </div>
+                        <!-- 4. Golf -->
+                        <div class="hybrid__item">
+                            <div class="hybrid__img" style="background-image: url('./img/hybrid_golf.jpg')"></div>
+                            <span class="hybrid__label">골프</span>
+                        </div>
+                        <!-- 5. Luxury (New) -->
+                        <div class="hybrid__item">
+                            <div class="hybrid__img" style="background-image: url('./img/hybrid_luxury.jpg')"></div>
+                            <span class="hybrid__label">명품</span>
+                        </div>
+                        <!-- 6. Education -->
+                        <div class="hybrid__item">
+                            <div class="hybrid__img" style="background-image: url('./img/hybrid_edu.jpg')"></div>
+                            <span class="hybrid__label">교육 / 어학연수</span>
+                        </div>
+                        <!-- 7. SonoSeason (Living) -->
+                        <div class="hybrid__item">
+                            <div class="hybrid__img" style="background-image: url('./img/hybrid_living.jpg')"></div>
+                            <span class="hybrid__label">리빙</span>
+                        </div>
+                        <!-- 8. Life (New) -->
+                        <div class="hybrid__item">
+                            <div class="hybrid__img" style="background-image: url('./img/hybrid_life.jpg')"></div>
+                            <span class="hybrid__label">라이프</span>
+                        </div>
+                    </div>
+
+                    <!-- 레디캐시 소개 Header -->
+                    <div class="hybrid__header" style="margin-top: 8rem; margin-bottom: 4rem;">
+                        <p class="hybrid__header-subtitle">소노아임레디 상품금액의 일부를</p>
+                        <h2 class="hybrid__readycash-title">만기 전에 사용할 수 있는 레디캐시</h2>
+                        <!-- 레디캐시 정의 pill -->
+                        <div class="rc-pill-card">
+                            <p class="rc-pill-card__desc">
+                                <strong>'레디캐시'란</strong> 상품 납입 금액 중 일부를 소노아임레디가 운영하는 서비스에 이용 가능한 결제 수단입니다.
+                                <span class="rc-pill-card__note">(가입 상품의 해약환급금×80% 사용가능)</span>
+                            </p>
+                            <div class="rc-pill-card__meta">
+                                <span><strong>레디캐시 사용처</strong> 실생활에 유용한 제휴처에서 사용</span>
+                                <span class="rc-pill-card__divider">|</span>
+                                <span><strong>레디캐시 산정비율</strong> 가입한 상품 해약 환급금의 80%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 소노아임레디몰 -->
+                    <div class="rc-mall">
+                        <div class="rc-mall__header">
+                            <div>
+                                <h3 class="rc-mall__title">소노아임레디몰</h3>
+                                <p class="rc-mall__desc">소노아임레디 회원만 접속가능한 초특가 쇼핑몰</p>
+                            </div>
+                        </div>
+                        <div class="rc-mall__content">
+                            <!-- 목업 -->
+                            <div class="rc-mall__mockup-wrap">
+                                <img src="./mall_mockup.png" alt="소노아임레디몰 목업" class="rc-mall__mockup-img">
+                            </div>
+                            <!-- 혜택 리스트 -->
+                            <div class="rc-mall__features">
+                                <div class="rc-mall-feature">
+                                    <div class="rc-mall-icon">👍</div>
+                                    <div class="rc-mall-text">
+                                        <h5>아임레디 세븐딜</h5>
+                                        <p>단 7일, 온라인 최저가 타파!<br>놓치면 후회할 초특가 상품</p>
+                                    </div>
+                                </div>
+                                <div class="rc-mall-feature">
+                                    <div class="rc-mall-icon">🛍️</div>
+                                    <div class="rc-mall-text">
+                                        <h5>레디마트</h5>
+                                        <p>편하게 집에서 장보세요.<br>신선식품부터 가공식품까지!</p>
+                                    </div>
+                                </div>
+                                <div class="rc-mall-feature">
+                                    <div class="rc-mall-icon">🎫</div>
+                                    <div class="rc-mall-text">
+                                        <h5>웰컴쿠폰 5,000원</h5>
+                                        <p>만나서 반갑습니다.<br>가입 즉시 사용하는 특별한 혜택!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rc-buttons">
+                            <a href="https://imreadymall.kr/pcuo/member/sign-in.html" target="_blank"
+                                class="rc-btn">소노아임레디몰 자세히 보기 &gt;</a>
+                        </div>
+                    </div>
+
+                    <!-- 레디캐시 앱 -->
+                    <div class="rc-app">
+                        <h3 class="rc-app__title">레디캐시 앱(APP)</h3>
+                        <p class="rc-app__desc">바코드 하나로 카페, 음식점 결제 및 상품권 구매까지 앱 다운로드 후, 다양한 제휴 매장 방문하여 레디캐시로 결제해보세요!</p>
+                        <div class="rc-app__content">
+                            <!-- 왼쪽 기능 -->
+                            <div class="rc-app__features rc-app__features--right">
+                                <div class="rc-app-feature">
+                                    <h5>모바일 간편결제</h5>
+                                    <p>카드나 현금, 공인인증서가 없어도<br>레디캐시 앱(APP)의 바코드 하나로<br>빠르고 간편하게 결제할 수 있어요!</p>
+                                </div>
+                                <div class="rc-app-feature">
+                                    <h5>모바일 상품권 선물</h5>
+                                    <p>마음을 전하는 쉬운 방법, 이제<br>레디캐시 앱(APP)으로 선물하세요.</p>
+                                </div>
+                            </div>
+                            <!-- 중앙 목업 -->
+                            <div class="rc-app__mockup-wrap">
+                                <img src="./app_mockup.png" alt="레디캐시 앱 목업" class="rc-app__mockup-img">
+                            </div>
+                            <!-- 오른쪽 기능 -->
+                            <div class="rc-app__features rc-app__features--left">
+                                <div class="rc-app-feature">
+                                    <h5>위치기반 시스템</h5>
+                                    <p>내 위치 중심으로 주변 매장을<br>찾는 기능이 있어요!</p>
+                                </div>
+                                <div class="rc-app-feature">
+                                    <h5>나의 레디캐시 금액 확인</h5>
+                                    <p>내가 가입한 상품의 레디캐시를<br>실시간으로 조회할 수 있어요!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rc-buttons">
+                            <a href="https://play.google.com/store/apps/details?id=deamyung.lifeway.readycash&hl=ko"
+                                target="_blank" class="rc-btn">▶ Google Play</a>
+                            <a href="https://apps.apple.com/kr/app/%EB%A0%88%EB%94%94%EC%BA%90%EC%8B%9C/id1582133757"
+                                target="_blank" class="rc-btn">🍎 App Store</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        // 전역 Splitting() 삭제 (필요한 지점에서만 수동 호출)
+
+        // --- Hero Section Typing Logic (Based on TextType Reference) ---
+        const typingElement = document.querySelector(".typing-text");
+        const cursorElement = document.querySelector(".cursor");
+
+        // 커서 모양 변경 (_)
+        cursorElement.textContent = "_";
+
+        const textArray = [
+            "당신의 일상을 더 특별하게\n소노아임레디 스마트케어",
+            "쓴 만큼 고스란히\n만기 환급형 가전 렌탈",
+            "상조도 소노와 함께\n프리미엄으로 준비",
+            "소노의 모든 공간\n특별한 멤버십 혜택"
+        ];
+        let currentTextIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        let isVisible = false;
+
+        const typingSpeed = 75;
+        const pauseDuration = 1500;
+        const deletingSpeed = 50;
+
+        // Cursor Animation (GSAP) - React 패턴의 yoyo 스타일 적용
+        gsap.to(cursorElement, {
+            opacity: 0,
+            duration: 0.5,
+            repeat: -1,
+            yoyo: true,
+            ease: "power2.inOut"
+        });
+
+        // Intersection Observer (startOnVisible 구현)
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !isVisible) {
+                    isVisible = true;
+                    executeTyping();
+                }
+            });
+        }, { threshold: 0.1 });
+        heroObserver.observe(document.querySelector(".hero-section"));
+
+        // --- Weather Cycle Animation ---
+        const weatherItems = document.querySelectorAll('.weather-item');
+        const cloud = document.querySelector('.icon__cloud');
+        const states = ['sun', 'thunder', 'snow', 'rainbow'];
+        let currentStateIndex = 0;
+
+        // 툴팁 초기 위치 및 변환 세팅
+        gsap.set('.glass-tooltip', { xPercent: -50, yPercent: 0 });
+
+        function updateWeather() {
+            const nextIndex = (currentStateIndex + 1) % states.length;
+            const currentStatus = states[currentStateIndex];
+            const nextStatus = states[nextIndex];
+
+            const currentElements = document.querySelectorAll(`[data-weather="${currentStatus}"]`);
+            const nextElements = document.querySelectorAll(`[data-weather="${nextStatus}"]`);
+
+            const weatherTl = gsap.timeline();
+
+            // Fade out current
+            weatherTl.to(currentElements, {
+                opacity: 0,
+                duration: 0.8,
+                onComplete: () => {
+                    gsap.set(currentElements, { display: 'none' });
+                }
+            });
+
+            // Prepare next
+            gsap.set(nextElements, { display: 'block' });
+
+            // Fade in next and update cloud
+            weatherTl.to(nextElements, {
+                opacity: 1,
+                duration: 0.8
+            }, "-=0.4");
+
+            // Update cloud color class
+            cloud.classList.remove('is-thunder', 'is-snow', 'is-rainbow');
+            if (nextStatus !== 'sun') {
+                cloud.classList.add(`is-${nextStatus}`);
+            }
+
+            // Update tooltip data (text, position)
+            const tooltipData = {
+                sun: {
+                    text: "햇살 가득한 휴가,<br>여행·리조트 지원 ✈️",
+                    pos: "pos-bottom-center",
+                    theme: "theme-sun",
+                    xPercent: -50
+                },
+                thunder: {
+                    text: "갑작스러운 먹구름에도<br>든든한 상조 ☂️",
+                    pos: "pos-top-right",
+                    theme: "theme-thunder",
+                    xPercent: 0
+                },
+                snow: {
+                    text: "소복소복 쌓이는<br>100% 만기 환급금 ⛄",
+                    pos: "pos-top-left",
+                    theme: "theme-snow",
+                    xPercent: 0
+                },
+                rainbow: {
+                    text: "무지개처럼 다채로운<br>프리미엄 가전 🌈",
+                    pos: "pos-bottom-right",
+                    theme: "theme-rainbow",
+                    xPercent: 0
+                }
+            };
+
+            const tooltipContainer = document.querySelector('.glass-tooltip');
+            const tooltipContent = document.querySelector('.tooltip-text');
+
+            // 툴팁 팝 효과 (크기 축소 및 페이드아웃)
+            weatherTl.to(tooltipContainer, {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.4,
+                ease: "back.in(1.5)",
+                onComplete: () => {
+                    const data = tooltipData[nextStatus];
+                    tooltipContent.innerHTML = data.text;
+                    tooltipContainer.className = `glass-tooltip ${data.pos} ${data.theme}`;
+                    gsap.set(tooltipContainer, { xPercent: data.xPercent, yPercent: 0 });
+                }
+            }, "-=0.8");
+
+            // 툴팁 통통 튀며 등장 (크기 회복 및 페이드인)
+            weatherTl.to(tooltipContainer, {
+                scale: 1,
+                opacity: 1,
+                duration: 0.6,
+                ease: "back.out(2)"
+            }, "-=0.2");
+
+            currentStateIndex = nextIndex;
+        }
+
+        // Start cycling every 5 seconds
+        setInterval(updateWeather, 5000);
+
+        function executeTyping() {
+            if (!isVisible) return;
+
+            const currentText = textArray[currentTextIndex];
+
+            if (isDeleting) {
+                if (typingElement.textContent === "") {
+                    isDeleting = false;
+                    currentTextIndex = (currentTextIndex + 1) % textArray.length;
+                    currentCharIndex = 0;
+                    setTimeout(executeTyping, 500); // 리셋 후 짧은 대기
+                } else {
+                    typingElement.textContent = typingElement.textContent.slice(0, -1);
+                    setTimeout(executeTyping, deletingSpeed);
+                }
+            } else {
+                if (currentCharIndex < currentText.length) {
+                    // 한 글자씩 추가
+                    typingElement.textContent += currentText[currentCharIndex];
+                    currentCharIndex++;
+                    setTimeout(executeTyping, typingSpeed);
+                } else {
+                    // 문장 완성 시 대기 후 삭제 모드로 전환
+                    setTimeout(() => {
+                        isDeleting = true;
+                        executeTyping();
+                    }, pauseDuration);
+                }
+            }
+        }
+
+        // --- Dark mode transition (Turn off lights) at hooking section using GSAP scrub ---
+        // 백그라운드와 글씨체가 스크롤 진행에 맞게 서서히 부드럽게 전환되게 하여 섹션 간의 경계를 없앰
+        const darkTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".hooking-section",
+                start: "top 100%", // 섹션이 보이기 시작할 때부터 색상 전환 시작
+                end: "top top",   // 완전히 보일 때 전환 완료
+                scrub: true
+            }
+        });
+
+        darkTl.to("body", {
+            backgroundColor: "#000000",
+            color: "#f5f5f7",
+            ease: "none"
+        }, 0);
+
+        darkTl.to(".hook-text, .target-title, .number-counter", {
+            color: "#ffffff",
+            ease: "none"
+        }, 0);
+
+        darkTl.to(".card", {
+            backgroundColor: "#1c1c1e",
+            borderColor: "rgba(255, 255, 255, 0.1)",
+            color: "#f5f5f7",
+            ease: "none"
+        }, 0);
+
+        darkTl.to(".main-header", {
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            ease: "none"
+        }, 0);
+
+        // --- Hooking Section (Narrative Horizontal Scroll) ---
+        const panels = gsap.utils.toArray('.panel');
+        const container = document.querySelector('.panels-container');
+
+        const hookingTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".hooking-section",
+                pin: true,
+                start: "top top",
+                end: () => `+=${window.innerWidth * 18}`, // 18배로 더욱 느린 호흡 확보
+                scrub: 1,
+                invalidateOnRefresh: true,
+                snap: {
+                    snapTo: "labels",
+                    duration: { min: 0.2, max: 0.6 },
+                    delay: 0.1,
+                    ease: "power1.inOut"
+                },
+                toggleClass: { targets: "body", className: "dark-mode" }
+            }
+        });
+
+        const q1 = panels[0].querySelector('.hook-text');
+        const aPrefix = panels[0].querySelector('.ans-prefix');
+        const aNo = panels[0].querySelector('.no-text-anim');
+
+        // 초기 상태 설정
+        gsap.set([q1, aPrefix], { opacity: 0, y: 30 });
+        gsap.set(aNo, { opacity: 0 });
+        panels.slice(1).forEach(p => {
+            const title = p.querySelector('.hook-text, .target-title, .badge-container');
+            const content = p.querySelectorAll('.answer-text, .target-card, .benefit-item');
+            gsap.set([title, ...content], { opacity: 0, y: 30 });
+        });
+
+        // --- Narrative Sequence (Panel 1) ---
+        // 1. 질문 먼저 서서히 등장
+        hookingTl.addLabel("p1-start");
+        hookingTl.to(q1, { opacity: 1, y: 0, duration: 1.5 });
+        hookingTl.addLabel("p1-question"); // 질문 완성 지점
+
+        // 2. 한참 머무르기 (질문만 인지하는 충분한 구간)
+        hookingTl.to({}, { duration: 3 });
+
+        // 3. 답변 페이드 인 (동서적 순서가 아닌 동시 등장)
+        hookingTl.to([aPrefix, aNo], {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            onStart: () => {
+                const noText = document.querySelector('.no-text-anim');
+                if (noText) {
+                    noText.style.opacity = "1";
+                    Splitting({ target: noText });
+                }
+            }
+        });
+
+        hookingTl.addLabel("p1-answer");
+
+        // 4. 한참 더 머무르기
+        hookingTl.to({}, { duration: 4 });
+
+        // 5. 가로 스크롤 메인 트윈 (패널 2부터 끝까지)
+        const moveTween = hookingTl.to(container, {
+            x: () => -(container.scrollWidth - window.innerWidth),
+            ease: "none",
+            duration: 60 // 이동을 훨씬 더 천천히 진행하도록 대폭 확장
+        });
+
+        // 패널 가로 스크롤 구간에 라벨 추가 (자석 효과를 위한 지점)
+        hookingTl.addLabel("p2", "-=40");
+        hookingTl.addLabel("p3", "-=20");
+        hookingTl.addLabel("p4", "-=0");
+
+        // --- 나머지 패널 시네마틱 등장 (가로 스크롤 연동) ---
+        panels.slice(1).forEach((panel, i) => {
+            const title = panel.querySelector('.hook-text, .target-title, .badge-container');
+            const content = panel.querySelectorAll('.answer-text, .target-card, .benefit-item');
+
+            // 1. 패널 제목 (통합된 문장) - 화면에 충분히 들어왔을 때 (70% 지점) 시네마틱하게 등장
+            if (title) {
+                gsap.fromTo(title,
+                    { opacity: 0, y: 30 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 1.5,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: panel,
+                            containerAnimation: moveTween,
+                            start: "left 70%", // 눈에 편안하게 들어오는 지점에서 시작
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            }
+
+            // 2. 패널 하단 컨텐츠 (카드/리스트) - 어느정도 진입하여 시선이 머물 때 (30% 지점) 아래에서 위로 등장
+            if (content.length > 0) {
+                gsap.fromTo(content,
+                    { opacity: 0, y: 30 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 1.5,
+                        stagger: 0.2,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: panel,
+                            containerAnimation: moveTween,
+                            start: "left 30%", // 화면의 30% 지점 통과 시
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            }
+        });
+
+        // --- Light mode transition (Turn ON lights) at benefits section ---
+        // 멤버십 섹션이 뷰포트를 채울 때까지 검정을 유지하고, 그 동안 흰색으로 서서히 전환
+        const lightTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".section--benefits",
+                start: "top 100%", // 섹션 상단이 화면 하단에 들어오기 시작할 때
+                end: "top top",    // 섹션 상단이 화면 상단에 닿을 때 전환 완료
+                scrub: true
+            }
+        });
+
+        lightTl.to("body", {
+            backgroundColor: "#ffffff",
+            color: "#1d1d1f",
+            ease: "none"
+        }, 0);
+
+        lightTl.to(".main-header", {
+            backgroundColor: "rgba(255, 255, 255, 0.7)",
+            ease: "none"
+        }, 0);
+
+        const initBenefitTabs = () => {
+            const tabs = document.querySelectorAll('.benefit-tab');
+            const panes = document.querySelectorAll('.tab-pane');
+            const membershipId = 'membership';
+            const hybridId = 'hybrid';
+
+            const switchTab = (target) => {
+                tabs.forEach(t => {
+                    if (t.getAttribute('data-tab') === target) {
+                        t.classList.add('active');
+                    } else {
+                        t.classList.remove('active');
+                    }
+                });
+
+                panes.forEach(p => {
+                    if (p.id === `pane-${target}`) {
+                        p.classList.add('active');
+                    } else {
+                        p.classList.remove('active');
+                    }
+                });
+
+                // Trigger a custom event or refresh slider if needed
+                window.dispatchEvent(new Event('resize'));
+            };
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+                    switchTab(target);
+
+                    // Update URL without jump if possible, or just let it be
+                    // history.replaceState(null, null, `#${target}`);
+                });
+            });
+
+            // Handle initial hash or clicks from nav
+            const handleHash = () => {
+                const hash = window.location.hash.replace('#', '');
+                if (hash === hybridId) {
+                    switchTab('hybrid');
+                } else if (hash === membershipId) {
+                    switchTab('membership');
+                }
+            };
+
+            window.addEventListener('hashchange', handleHash);
+            handleHash(); // Run on load
+        };
+        initBenefitTabs();
+
+        // --- Premium Cards Accordion ---
+        const initPremiumCards = () => {
+            const cards = document.querySelectorAll('.prem-card');
+            const details = document.querySelectorAll('.prem-detail');
+
+            const closeAll = () => {
+                details.forEach(d => d.classList.remove('is-open'));
+                cards.forEach(c => c.classList.remove('is-active'));
+            };
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const targetId = card.getAttribute('data-target');
+                    const target = document.getElementById(targetId);
+                    const isOpen = target.classList.contains('is-open');
+
+                    closeAll();
+
+                    if (!isOpen) {
+                        target.classList.add('is-open');
+                        card.classList.add('is-active');
+                        // 패널이 열린 후 부드럽게 스크롤
+                        setTimeout(() => {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 100);
+                    }
+                });
+            });
+
+            details.forEach(detail => {
+                const closeBtn = detail.querySelector('.prem-detail__close');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        closeAll();
+                    });
+                }
+            });
+        };
+        initPremiumCards();
+
+
+    </script>
+
+</body>
+
+</html>
