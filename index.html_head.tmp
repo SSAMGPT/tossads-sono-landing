@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소노아임레디 | 가전제품 렌탈 서비스</title>
+    <link rel="stylesheet" href="style.css?v=1.1">
+    <!-- Splitting.js for Text Animation -->
+    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
+    <style>
+        /* --- GLOBAL & TRANSITIONS --- */
+        body {
+            background-color: #ffffff;
+            transition: background-color 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #1c1c1e;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+        body.is-dark {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* --- STRENGTH & REVIEW SECTION --- */
+        .strength-review {
+            padding: 10rem 0;
+            background: #ffffff;
+            text-align: center;
+            overflow: hidden;
+            transition: background 1.2s ease, color 1s ease;
+            position: relative;
+            z-index: 5;
+        }
+        .is-dark .strength-review {
+            background: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .sr-subtitle {
+            display: block; font-size: 0.9rem; color: #C5A065; font-weight: 700;
+            letter-spacing: 0.15rem; margin-bottom: 1rem; text-transform: uppercase;
+        }
+
+        .sr-title {
+            font-size: 3.5rem; font-weight: 800; color: #001A3D; margin-bottom: 4rem !important;
+            letter-spacing: -0.03em; line-height: 1.3; transition: color 0.8s ease;
+        }
+        .is-dark .sr-title { color: #ffffff !important; }
+
+        .sr-grid {
+            display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 6rem !important;
+            text-align: left; max-width: 1000px; margin: 0 auto;
+        }
+
+        .sr-card {
+            background: #ffffff; padding: 4rem; border-radius: 24px;
+            border: 1px solid #f2f2f2; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            display: flex; flex-direction: row; align-items: center; gap: 4rem;
+            transition: all 0.6s ease;
+        }
+        .is-dark .sr-card {
+            background: #111111; border-color: #222; box-shadow: none; color: #fff;
+        }
+
+        .sr-card__icon-box { flex-shrink: 0; }
+        .sr-card__icon-box img { width: 150px; height: 150px; object-fit: contain; filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.1)); }
+        
+        .sr-card__content { flex: 1; }
+        .sr-card__title { font-size: 2.2rem; color: #001A3D; margin-bottom: 1.2rem; font-weight: 800; transition: color 0.6s ease; }
+        .is-dark .sr-card__title { color: #fff; }
+        .sr-card__desc { font-size: 1.1rem; color: #4a4a4a; line-height: 1.7; transition: color 0.6s ease; }
+        .is-dark .sr-card__desc { color: #aaa; }
+
+        .sr-review-wrap {
+            background: #f8f9fb; border-radius: 24px; padding: 6rem 4rem !important;
+            max-width: 900px; margin: 0 auto; transition: all 1.2s ease;
+        }
+        .is-dark .sr-review-wrap { background: #111111; color: #fff; }
+        .sr-review__quote { font-size: 2.4rem; font-weight: 700; color: #1d1d1f; line-height: 1.5; margin-bottom: 2rem; transition: color 0.8s ease; }
+        .is-dark .sr-review__quote { color: #fff; }
+        .sr-review__author { font-weight: 600; color: #86868b; transition: color 0.8s ease; }
+
+        /* --- JOIN PROCESS SECTION --- */
+        .section--join-process {
+            padding: 12rem 0; background: transparent; color: #111; 
+            position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; z-index: 10;
+        }
+
+        .lighting-overlay {
+            position: absolute; top: 50%; left: 50%; width: 170vmax; height: 170vmax;
+            background: radial-gradient(circle at center, rgba(197, 160, 101, 0.12) 0%, rgba(0, 0, 0, 0) 65%);
+            transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; z-index: 1;
+        }
+
+        .product__timeline-wrap {
+            position: relative; display: flex; justify-content: space-between; align-items: flex-start;
+            width: 100%; max-width: 1200px; margin: 6rem auto 0; padding: 0 40px;
+        }
+
+        .timeline-bar {
+            position: absolute; top: 15px; left: calc(12.5% + 20px); right: calc(12.5% + 20px); height: 2px;
+            background: rgba(0, 0, 0, 0.05); z-index: 0; transition: background 0.8s ease;
+        }
+        .is-dark .timeline-bar { background: rgba(255, 255, 255, 0.1); }
+
+        .timeline-progress {
+            width: 0%; height: 100%; background: linear-gradient(90deg, #C5A065, #EFC75E);
+            box-shadow: 0 0 25px rgba(197, 160, 101, 0.4); transition: width 0.1s linear;
+        }
+
+        .timeline-step { position: relative; z-index: 1; text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; }
+        .step-num { display: block; font-size: 1.1rem; font-weight: 800; color: #C5A065; margin-bottom: 0.8rem; letter-spacing: 2px; }
+        .timeline-step h4 { font-size: 1.6rem; color: #1c1c1e; margin-bottom: 1.2rem; font-weight: 800; transition: color 0.6s ease; }
+        .is-dark .timeline-step h4 { color: #ffffff !important; }
+        .timeline-step p { font-size: 1.1rem; color: #666; line-height: 1.7; transition: color 0.6s ease; }
+        .is-dark .timeline-step p { color: #aaaaaa !important; }
+        
+        .step-dot {
+            width: 32px; height: 32px; background: #fff; border: 2px solid #ddd; border-radius: 50%;
+            margin-bottom: 2rem; position: relative; transition: all 0.4s ease;
+        }
+        .is-dark .step-dot { background: #000; border-color: #444; }
+        .step-dot::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 12px; height: 12px; background: #C5A065; border-radius: 50%; transition: transform 0.4s ease; }
+        .timeline-step.active .step-dot { border-color: #C5A065; box-shadow: 0 0 25px rgba(197, 160, 101, 0.4); }
+        .timeline-step.active .step-dot::after { transform: translate(-50%, -50%) scale(1); }
+        .step-content { opacity: 0.1; transform: translateY(20px); transition: all 1s ease; }
+        .timeline-step.active .step-content { opacity: 1; transform: translateY(0); }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            .strength-review { padding: 6rem 0; }
+            .sr-grid { gap: 1.5rem; margin-bottom: 4rem !important; }
+            .sr-card { flex-direction: row; padding: 2rem 1.5rem !important; gap: 1.5rem; align-items: center; }
+            .sr-card__icon-box img { width: 100px; height: 100px; }
+            .sr-card__title { font-size: 1.4rem; }
+            .sr-review-wrap { padding: 4rem 2rem !important; border-radius: 20px; }
+            .sr-title { font-size: 2.2rem !important; margin-bottom: 3.5rem !important; }
+
+            .section--join-process { padding: 8rem 0; }
+            .product__timeline-wrap { flex-direction: column; align-items: center; margin-top: 5rem; padding: 0 !important; }
+            .timeline-bar { width: 2px; height: auto; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); right: auto; }
+            .timeline-progress { width: 100% !important; height: 0%; background: linear-gradient(180deg, #C5A065, #EFC75E); }
+            .timeline-step { width: 100%; min-height: 180px; margin-bottom: 5rem; display: block; position: relative; }
+            .timeline-step:last-child { margin-bottom: 0; }
+            .step-dot { position: absolute; left: 50%; transform: translateX(-50%); top: 0; margin: 0; width: 28px; height: 28px; z-index: 5; }
+            .step-content { width: 45%; padding-top: 0; position: relative; display: flex; flex-direction: column; }
+            .timeline-step:nth-of-type(odd) .step-content { margin-left: 50%; padding-left: 1.5rem; text-align: left !important; align-items: flex-start !important; }
+            .timeline-step:nth-of-type(even) .step-content { margin-right: 50%; padding-right: 1.5rem; text-align: right !important; align-items: flex-end !important; margin-left: auto; }
+            .timeline-step h4 { font-size: 1.35rem; margin-bottom: 0.6rem; }
+            .timeline-step p { font-size: 0.95rem; line-height: 1.5; }
+        }
+    </style>
+</head>

@@ -2648,31 +2648,34 @@ body.dark-mode .split-layout .answer-text {
 
 /* Icon Grid */
 .premium__grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* Center cards in container, especially the last row */
+    gap: 1.5rem;
     margin-bottom: 3rem;
+    width: 100%;
 }
 
 .prem-card {
     background: #fff;
     border: 2px solid #f0f0f0;
     border-radius: 20px;
-    padding: 2.4rem 1rem 1.8rem;
+    padding: 1.5rem 1rem;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.8rem;
+    justify-content: center;
+    gap: 1.2rem;
+    flex: 0 0 calc(25% - 1.2rem);
+    /* 4 columns base with centering support */
+    aspect-ratio: 1 / 1;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     user-select: none;
-    width: 100%;
-    /* 너비 100% 강제 */
-    max-width: none !important;
-    /* 혹시 모를 max-width 해제 */
-    margin: 0 !important;
-    /* 마진 초기화 */
+    max-width: 200px;
+    /* Limit size for desktop while keeping it centered */
 }
 
 .prem-card:hover {
@@ -2693,8 +2696,8 @@ body.dark-mode .split-layout .answer-text {
 }
 
 .prem-card__icon {
-    font-size: 5rem;
-    /* 3.6rem * 1.4 = 5.04rem */
+    font-size: 6rem;
+    /* Increased for better visibility */
     line-height: 1;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
     transition: transform 0.3s ease;
@@ -2704,8 +2707,8 @@ body.dark-mode .split-layout .answer-text {
 }
 
 .prem-card__icon img {
-    width: 5rem;
-    height: 5rem;
+    width: 6rem;
+    height: 6rem;
     object-fit: contain;
 }
 
@@ -2715,12 +2718,14 @@ body.dark-mode .split-layout .answer-text {
 }
 
 .prem-card__label {
-    font-size: var(--font-small);
-    font-weight: 800;
+    font-size: 1.2rem;
+    /* Increased from var(--font-small) */
+    font-weight: 850;
     color: #001A3D;
-    line-height: 1.4;
+    line-height: 1.3;
     text-align: center;
     transition: color 0.3s;
+    word-break: keep-all;
 }
 
 /* Detail Panel */
@@ -2805,23 +2810,168 @@ body.dark-mode .split-layout .answer-text {
 
 @media (max-width: 768px) {
     .premium__grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 1.2rem;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 1.2rem !important;
     }
 
     .premium__grid .prem-card {
-        grid-column: auto !important;
-        /* 모든 카드 위치 자동 */
+        flex: 0 0 calc(50% - 0.6rem) !important;
+        aspect-ratio: 1 / 1 !important;
         max-width: none !important;
         margin: 0 !important;
+        padding: 1.5rem 0.5rem !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .prem-card__icon {
-        font-size: 4.5rem;
+        font-size: 5.5rem;
     }
 
     .prem-card__icon img {
-        width: 4.5rem;
-        height: 4.5rem;
+        width: 5.5rem;
+        height: 5.5rem;
+    }
+
+    .prem-card__label {
+        font-size: 1.1rem;
+    }
+}
+
+/* Global Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+}
+
+/* Strength & Review Section */
+.strength-review {
+    padding: 10rem 0;
+    background: #ffffff;
+    text-align: center;
+    position: relative;
+}
+
+.sr-subtitle {
+    display: block;
+    font-size: var(--font-small);
+    color: #C5A065;
+    font-weight: 700;
+    letter-spacing: 0.15rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+}
+
+.sr-title {
+    font-size: var(--font-h1);
+    font-weight: 800;
+    color: #001A3D;
+    margin-bottom: 6rem;
+    letter-spacing: -0.03em;
+    line-height: 1.3;
+    word-break: keep-all;
+}
+
+.sr-title .char {
+    display: inline-block;
+}
+
+/* Strength Cards Grid */
+.sr-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 8rem;
+}
+
+.sr-card {
+    background: #ffffff;
+    padding: 3.5rem 2.5rem;
+    border-radius: 20px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.sr-card:hover {
+    transform: translateY(-5px);
+    border-color: #001A3D;
+}
+
+.sr-card__icon-box {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.sr-card__title {
+    font-size: var(--font-h2);
+    font-weight: 800;
+    color: #001A3D;
+    margin-bottom: 1.2rem;
+    line-height: 1.3;
+}
+
+.sr-card__desc {
+    font-size: var(--font-body);
+    color: #4a4a4a;
+    line-height: 1.6;
+    word-break: keep-all;
+}
+
+/* Review Highlight */
+.sr-review-wrap {
+    background: #f8f9fb;
+    border-radius: 24px;
+    padding: 6rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sr-review__quote {
+    font-size: var(--font-h2);
+    font-weight: 700;
+    line-height: 1.5;
+    color: #1d1d1f;
+    margin-bottom: 2.5rem;
+    word-break: keep-all;
+}
+
+.sr-review__author {
+    font-size: var(--font-body);
+    font-weight: 600;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .strength-review {
+        padding: 7rem 0;
+    }
+
+    .sr-title {
+        margin-bottom: 4rem;
+    }
+
+    .sr-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 6rem;
+    }
+
+    .sr-card {
+        padding: 3rem 2rem;
+    }
+
+    .sr-review-wrap {
+        padding: 4rem 2rem;
+        margin: 0 1.5rem;
     }
 }

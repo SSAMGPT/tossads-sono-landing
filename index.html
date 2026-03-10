@@ -4,10 +4,728 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>가전제품 렌탈 서비스</title>
-    <link rel="stylesheet" href="style.css">
+    <title>소노아임레디 | 가전제품 렌탈 서비스</title>
+    <link rel="stylesheet" href="style.css?v=1.1">
     <!-- Splitting.js for Text Animation -->
     <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
+    <style>
+        /* --- GLOBAL & TRANSITIONS --- */
+        body {
+            background-color: #ffffff;
+            color: #1c1c1e;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        /* --- STRENGTH & REVIEW SECTION --- */
+        .strength-review {
+            padding: 10rem 0;
+            background: transparent;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .sr-subtitle {
+            display: block;
+            font-size: 0.9rem;
+            color: #C5A065;
+            font-weight: 700;
+            letter-spacing: 0.15rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .sr-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #001A3D;
+            margin-bottom: 4rem !important;
+            letter-spacing: -0.03em;
+            line-height: 1.3;
+            translate: 0 0;
+        }
+
+        @media (min-width: 992px) {
+            .sr-grid--3col {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .sr-grid--2col {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .sr-card {
+            background: #ffffff;
+            padding: 3rem 2.5rem;
+            border-radius: 28px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2rem;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @media (max-width: 768px) {
+            .sr-card {
+                padding: 2.2rem 1.8rem;
+                gap: 1.5rem;
+            }
+        }
+
+        .sr-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+            border-color: rgba(197, 160, 101, 0.2);
+        }
+
+        .sr-card__icon-box {
+            flex-shrink: 0;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .sr-card__icon-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.08));
+        }
+
+        /* Stats-specific card layout (Edge-Bleed Icon Effect) */
+        .sr-card--stat {
+            position: relative;
+            overflow: hidden;
+            padding: 5rem 4rem !important;
+            min-height: 260px;
+            display: flex !important;
+            align-items: flex-start;
+            justify-content: flex-start;
+            background: #ffffff;
+        }
+
+        .sr-card--stat .sr-card__content {
+            position: relative;
+            z-index: 5;
+            flex: 1;
+            text-align: left;
+        }
+
+        .sr-card--stat .sr-stat-label {
+            font-size: 1.3rem;
+            color: #555;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .sr-card--stat .sr-stat-value {
+            font-size: 5rem;
+            margin: 0;
+            line-height: 1;
+            color: #C5A065;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+        }
+
+        .sr-card--stat .sr-card__icon-box {
+            position: absolute;
+            bottom: -60px;
+            right: -50px;
+            width: 250px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            opacity: 0.7;
+            transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .sr-card--stat .sr-card__icon-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Hover Effect: Icon moves in and scales up */
+        .sr-card--stat:hover .sr-card__icon-box {
+            opacity: 1;
+            bottom: -25px;
+            right: -25px;
+        }
+
+        .sr-card--stat:hover .sr-card__icon-box img {
+            transform: scale(1.15) rotate(-10deg);
+        }
+
+        @media (max-width: 768px) {
+            .sr-card--stat {
+                padding: 4rem 2.8rem !important;
+                min-height: 210px;
+            }
+
+            .sr-card--stat .sr-card__icon-box {
+                width: 170px;
+                height: 170px;
+                bottom: -40px;
+                right: -30px;
+            }
+
+            .sr-card--stat .sr-stat-value {
+                font-size: 4rem;
+            }
+        }
+
+        .sr-card__content {
+            flex: 1;
+        }
+
+        .sr-card__title {
+            font-size: 1.5rem;
+            color: #111;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .sr-card__desc {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+
+        .sr-card--text-only {
+            flex-direction: column;
+            text-align: center;
+            padding: 4.5rem 3rem !important;
+            justify-content: center;
+        }
+
+        .sr-card--text-only .sr-card__title {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .sr-stat-label {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .sr-stat-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #C5A065;
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+
+        /* --- REVIEW CAROUSEL --- */
+        .sr-carousel-container {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 3rem;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .sr-carousel-track {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem;
+            width: max-content;
+        }
+
+        .sr-carousel-card {
+            flex-shrink: 0;
+            width: 380px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+        }
+
+        .sr-carousel-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 2rem;
+        }
+
+        .sr-carousel-card b {
+            display: block;
+            font-size: 1.2rem;
+            color: #111;
+            margin-bottom: 0.5rem;
+        }
+
+        .sr-carousel-date {
+            font-size: 0.9rem;
+            color: #999;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .sr-carousel-card {
+                width: 300px;
+                padding: 2rem;
+                min-height: 200px;
+            }
+        }
+
+
+
+        .section--join-process {
+            padding: 12rem 0;
+            background: transparent;
+            color: #111;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section--join-process.is-dark {
+            color: #ffffff;
+        }
+
+        .section--join-process.is-dark .sr-title {
+            color: #ffffff !important;
+        }
+
+        .section--join-process.is-dark .timeline-step h4 {
+            color: #ffffff !important;
+        }
+
+        .section--join-process.is-dark .timeline-step p {
+            color: #aaaaaa !important;
+        }
+
+        .section--join-process.is-dark .step-dot {
+            background: #000;
+            border-color: #C5A065;
+        }
+
+        .section--join-process.is-dark .timeline-bar {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .lighting-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150vmax;
+            height: 150vmax;
+            background: radial-gradient(circle at center, rgba(197, 160, 101, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .product__timeline-wrap {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1200px;
+            margin: 6rem auto 0;
+            padding: 0 40px;
+        }
+
+        .timeline-bar {
+            position: absolute;
+            top: 15px;
+            left: calc(12.5% + 20px);
+            right: calc(12.5% + 20px);
+            height: 2px;
+            background: rgba(0, 0, 0, 0.05);
+            z-index: 0;
+            transition: background 0.8s ease;
+        }
+
+        .timeline-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #C5A065, #EFC75E);
+            box-shadow: 0 0 25px rgba(197, 160, 101, 0.4);
+            transition: width 0.1s linear;
+        }
+
+        .timeline-step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .step-dot {
+            position: relative;
+            z-index: 4;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border: 2px solid #C5A065;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            transition: all 0.4s ease;
+        }
+
+        .step-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .step-num {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #C5A065;
+            margin-bottom: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .timeline-step h4 {
+            font-size: 1.6rem;
+            color: #1c1c1e;
+            margin-bottom: 1.2rem;
+            font-weight: 800;
+            transition: color 0.6s ease;
+        }
+
+        .timeline-step p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.7;
+            transition: color 0.6s ease;
+        }
+
+        .step-dot {
+            width: 32px;
+            height: 32px;
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .step-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 12px;
+            height: 12px;
+            background: #C5A065;
+            border-radius: 50%;
+            transition: transform 0.4s ease;
+        }
+
+        .timeline-step.active .step-dot {
+            border-color: #C5A065;
+            box-shadow: 0 0 25px rgba(197, 160, 101, 0.4);
+        }
+
+        .timeline-step.active .step-dot::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .step-content {
+            opacity: 0.1;
+            transition: all 1s ease;
+        }
+
+        .timeline-step.active .step-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            .strength-review {
+                padding: 6rem 0;
+            }
+
+            .sr-grid {
+                gap: 1.5rem;
+                margin-bottom: 4rem !important;
+            }
+
+            .sr-card {
+                flex-direction: row;
+                padding: 2.2rem 1.5rem !important;
+                gap: 1.5rem;
+                align-items: center;
+            }
+
+            .sr-card__icon-box img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .sr-card__title {
+                font-size: 1.4rem;
+            }
+
+            .sr-review-wrap {
+                padding: 4rem 2rem !important;
+                border-radius: 20px;
+            }
+
+            .sr-title {
+                font-size: 2.22rem !important;
+                margin-bottom: 3.5rem !important;
+            }
+
+            .section--join-process {
+                padding: 8rem 0;
+            }
+
+            .product__timeline-wrap {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 5rem;
+                padding: 0 !important;
+            }
+
+            .timeline-bar {
+                width: 2px;
+                height: auto;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                right: auto;
+            }
+
+            .timeline-progress {
+                width: 100% !important;
+                height: 0%;
+                background: linear-gradient(180deg, #C5A065, #EFC75E);
+            }
+
+            .timeline-step {
+                width: 100%;
+                min-height: 180px;
+                margin-bottom: 5rem;
+                display: block;
+                position: relative;
+            }
+
+            .timeline-step:last-child {
+                margin-bottom: 0;
+            }
+
+            .step-dot {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 0;
+                margin: 0;
+                width: 28px;
+                height: 28px;
+                z-index: 5;
+            }
+
+            .step-content {
+                width: 45%;
+                padding-top: 0;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .timeline-step:nth-child(2n+2) .step-content {
+                margin-left: 50%;
+                padding-left: 1.8rem;
+                padding-top: 4px;
+                /* 시각적 수평 최적화 */
+                text-align: left !important;
+                align-items: flex-start !important;
+            }
+
+            .timeline-step:nth-child(2n+3) .step-content {
+                margin-right: 50%;
+                padding-right: 1.8rem;
+                padding-top: 4px;
+                /* 시각적 수평 최적화 */
+                text-align: right !important;
+                align-items: flex-end !important;
+                margin-left: auto;
+            }
+
+            .step-num {
+                font-size: 1.2rem !important;
+                margin-bottom: 0.4rem !important;
+            }
+        }
+
+        /* --- PROMOTION SECTION --- */
+        .section--promotion {
+            padding: 8rem 0 12rem;
+            position: relative;
+            background: transparent;
+            /* Allows body background to show through */
+            margin-top: -4px;
+            /* Seamless overlap */
+            z-index: 5;
+        }
+
+        .section--promotion .lighting-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150vmax;
+            height: 150vmax;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .promo-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .promo-card {
+            background: #f8f9fa;
+            border-radius: 30px;
+            overflow: hidden;
+            padding: 4rem;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .promo-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+            background: #fff;
+        }
+
+        .promo-card__badge {
+            position: absolute;
+            top: 2rem;
+            left: 2.5rem;
+            background: #C5A065;
+            color: #fff;
+            padding: 0.6rem 2rem;
+            border-radius: 100px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            z-index: 5;
+        }
+
+        .promo-card__image {
+            width: 100%;
+            height: 350px;
+            margin-bottom: 3rem;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #eee;
+        }
+
+        .promo-card.secondary .promo-card__image {
+            height: 280px;
+        }
+
+        .promo-card__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .promo-card:hover .promo-card__image img {
+            transform: scale(1.05);
+        }
+
+        .promo-card__info h3 {
+            font-size: 2.22rem;
+            color: #111;
+            margin-bottom: 1rem;
+            font-weight: 850;
+            letter-spacing: -1px;
+        }
+
+        .promo-count {
+            font-size: 1.6rem;
+            color: #C5A065;
+            font-weight: 700;
+        }
+
+        @media (max-width: 991px) {
+            .promo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .promo-card__image {
+                height: 280px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section--promotion {
+                padding: 8rem 0;
+            }
+
+            .promo-card {
+                padding: 3rem 2rem;
+            }
+
+            .promo-card__info h3 {
+                font-size: 1.6rem;
+            }
+
+            .promo-count {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -710,6 +1428,190 @@
         </div>
     </section>
 
+    <!-- Strength & Review Section -->
+    <section class="strength-review" id="strength">
+        <div class="container">
+            <span class="sr-subtitle">STRENGTH & TRUST</span>
+            <h2 class="sr-title" data-splitting data-effect2>170만명 회원이 선택한<br class="mo-br"> 소노아임레디</h2>
+
+            <!-- 강점 카드 그리드 1 -->
+            <div class="sr-grid sr-grid--3col">
+                <div class="sr-card" data-effect2>
+                    <div class="sr-card__icon-box">
+                        <img src="./img/trust_icon_ccm.png" alt="CCM">
+                    </div>
+                    <div class="sr-card__content">
+                        <h3 class="sr-card__title">CCM인증 소비자<br class="mo-br">중심 경영 인증</h3>
+                        <p class="sr-card__desc">업계 최초 2회 연속 소비자 중심 경영 인증을 획득하며 고객 가치를 인정받았습니다.</p>
+                    </div>
+                </div>
+                <div class="sr-card" data-effect2>
+                    <div class="sr-card__icon-box">
+                        <img src="./img/web_award_2025_icon.png" alt="Web Award">
+                    </div>
+                    <div class="sr-card__content">
+                        <h3 class="sr-card__title">웹 어워드코리아<br class="mo-br">고객서비스 부문 수상</h3>
+                        <p class="sr-card__desc">최고의 디지털 고객 경험을 제공하며 우수성을 공식 입증했습니다.</p>
+                    </div>
+                </div>
+                <div class="sr-card" data-effect2>
+                    <div class="sr-card__icon-box">
+                        <img src="./img/newsletter_image.png" alt="Consumer Award">
+                    </div>
+                    <div class="sr-card__content">
+                        <h3 class="sr-card__title">대한민국 소비자대상<br class="mo-br">3년 연속 수상</h3>
+                        <p class="sr-card__desc">소비자가 신뢰하고 선호하는 브랜드로 3년 연속 선정되어 가치를 증명했습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="sr-title" style="margin-top: 12rem; margin-bottom: 1.5rem !important;">소노아임레디<br class="mo-br">
+                상조 서비스만의 신뢰도</h2>
+            <p class="sr-subtitle"
+                style="margin-bottom: 5rem; font-size: 1.4rem; letter-spacing: -0.5px; color: #666; opacity: 0.8;">상조
+                서비스 품질 보증제</p>
+
+            <!-- 강점 카드 그리드 2 -->
+            <div class="sr-grid sr-grid--3col">
+                <div class="sr-card sr-card--text-only" data-effect2>
+                    <div class="sr-card__content">
+                        <h3 class="sr-card__title">부당행위 방지 시스템</h3>
+                        <p class="sr-card__desc">물품 추가 강요 등의 부당 요구는 일절 하지 않으며, 투명한 문화를 만듭니다.</p>
+                    </div>
+                </div>
+                <div class="sr-card sr-card--text-only" data-effect2>
+                    <div class="sr-card__content">
+                        <h3 class="sr-card__title">고객 안심 시스템</h3>
+                        <p class="sr-card__desc">장례 접수 후 2시간 이내에 현장에 도착하여 곁을 지켜드립니다.</p>
+                    </div>
+                </div>
+                <div class="sr-card sr-card--text-only" data-effect2>
+                    <div class="sr-card__content">
+                        <h3 class="sr-card__title">용품 보증 시스템</h3>
+                        <p class="sr-card__desc">규격 용품 외 하위 용품은 일절 사용하지 않으며 정품만을 사용합니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ★리뷰 섹션★ -->
+            <div class="sr-grid sr-grid--2col" style="margin-top: 3rem;">
+                <div class="sr-card sr-card--stat" data-effect2>
+                    <div class="sr-card__content">
+                        <p class="sr-stat-label">소비자 만족도</p>
+                        <h3 class="sr-stat-value">99%</h3>
+                    </div>
+                    <div class="sr-card__icon-box">
+                        <img src="./3d_trophy_icon_gold_5165785e15 1.png" alt="만족도">
+                    </div>
+                </div>
+                <div class="sr-card sr-card--stat" data-effect2>
+                    <div class="sr-card__content">
+                        <p class="sr-stat-label">상조 서비스 추천지수</p>
+                        <h3 class="sr-stat-value">9.3</h3>
+                    </div>
+                    <div class="sr-card__icon-box">
+                        <img src="./3d____e9e37b8386 1.png" alt="추천지수">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 리뷰 캐러셀 (무한 루프 마키) -->
+            <div class="sr-carousel-container" data-effect2>
+                <div class="sr-carousel-track" id="reviewTrack">
+                    <!-- JS에서 채움 -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Join Process Section -->
+    <section class="section section--join-process" id="join-process">
+        <!-- Lighting Effect Overlay -->
+        <div class="lighting-overlay"></div>
+
+        <div class="container" style="text-align: center; position: relative; z-index: 2;">
+            <span class="sr-subtitle" style="display: block; margin-bottom: 1rem;">JOIN PROCESS</span>
+            <h2 class="sr-title" style="margin-bottom: 5rem;">소노아임레디 가입절차</h2>
+
+            <div class="product__timeline-wrap">
+                <div class="timeline-bar">
+                    <div class="timeline-progress"></div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="step-dot"></div>
+                    <div class="step-content">
+                        <span class="step-num">STEP 01</span>
+                        <h4>가전제품 선택 및<br class="mo-br">상담신청</h4>
+                        <p>원하는 가전모델을 고르고<br>간편하게 상담을 신청하세요</p>
+                    </div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="step-dot"></div>
+                    <div class="step-content">
+                        <span class="step-num">STEP 02</span>
+                        <h4>신용조회 및<br class="mo-br">전자서명</h4>
+                        <p>간편 본인인증 후<br>전자계약서를 작성합니다</p>
+                    </div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="step-dot"></div>
+                    <div class="step-content">
+                        <span class="step-num">STEP 03</span>
+                        <h4>해피콜(계약완료)</h4>
+                        <p>전문 상담사 해피콜을 통해 계약 내용을 최종 확정합니다</p>
+                    </div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="step-dot"></div>
+                    <div class="step-content">
+                        <span class="step-num">STEP 04</span>
+                        <h4>가전 배송 및 설치</h4>
+                        <p>지정된 날짜에 전문 기사가 안전하게 배송 및 설치 해 드립니다</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section--promotion" id="promotion">
+        <!-- 배경 밝아지는 효과용 조명 오버레이 -->
+        <div class="lighting-overlay"></div>
+
+        <div class="container" style="text-align: center; position: relative; z-index: 2;">
+            <span class="sr-subtitle" style="display: block; margin-bottom: 1rem;">PROMOTION</span>
+            <h2 class="sr-title" style="margin-bottom: 5rem;">가입시 사은품 증정</h2>
+
+            <div class="promo-grid">
+                <!-- 1등 상품 -->
+                <div class="promo-card primary" data-effect2>
+                    <div class="promo-card__badge">1등</div>
+                    <div class="promo-card__image">
+                        <img src="./modern_tv_85inch_display_1773117279337.png" alt="삼성 LG 85인치 TV">
+                    </div>
+                    <div class="promo-card__info">
+                        <h3>삼성 or LG 85인치 TV</h3>
+                        <p class="promo-count">(1명)</p>
+                    </div>
+                </div>
+
+                <!-- 2등 상품 -->
+                <div class="promo-card secondary" data-effect2>
+                    <div class="promo-card__badge">2등</div>
+                    <div class="promo-card__image">
+                        <img src="./gift_voucher_100k_won_1773117292002.png" alt="상품권 10만원권">
+                    </div>
+                    <div class="promo-card__info">
+                        <h3>백화점 상품권 10만원권</h3>
+                        <p class="promo-count">(3명)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- GSAP & Plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -917,7 +1819,7 @@
             ease: "none"
         }, 0);
 
-        darkTl.to(".card", {
+        darkTl.to(".hooking-section .card", {
             backgroundColor: "#1c1c1e",
             borderColor: "rgba(255, 255, 255, 0.1)",
             color: "#f5f5f7",
@@ -1164,9 +2066,262 @@
         };
         initPremiumCards();
 
+        // --- Typography Animation (Effect 2: Heavenly Pleasure) ---
+        const initTypographyAnimations = () => {
+            // ... (Typography animation remains same or fits with dark mode)
+            Splitting({ target: '.sr-title' });
+            const titles = document.querySelectorAll('.sr-title');
+            titles.forEach(title => {
+                const chars = title.querySelectorAll('.char');
+                gsap.fromTo(chars, {
+                    'will-change': 'opacity, transform',
+                    opacity: 0,
+                    yPercent: 120,
+                    scaleY: 2.3,
+                    scaleX: 0.7,
+                    transformOrigin: '50% 0%'
+                }, {
+                    ease: 'back.out(1.7)',
+                    opacity: 1,
+                    yPercent: 0,
+                    scaleY: 1,
+                    scaleX: 1,
+                    stagger: 0.05,
+                    scrollTrigger: {
+                        trigger: title,
+                        start: 'top bottom-=10%',
+                        toggleActions: "restart none none restart"
+                    },
+                    duration: 1
+                });
+            });
+
+            const cards = document.querySelectorAll('.sr-card');
+            cards.forEach(card => {
+                gsap.fromTo(card, { opacity: 0, y: 60 }, {
+                    opacity: 1, y: 0, duration: 1.2, ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top bottom-=10%",
+                        toggleActions: "restart none none restart"
+                    }
+                });
+            });
+        };
+
+        const initJoinProcessAnimation = () => {
+            const section = document.querySelector('.section--join-process');
+            const overlay = section.querySelector('.lighting-overlay');
+            if (!section || !overlay) return;
+
+            // 1. Cinematic "Lights Out" Transition (FOLLOWING HERO PATTERN)
+            const cinematicTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 100%",
+                    end: "top 10%",   // Fully black by the time section top hits 10% from top
+                    scrub: true
+                }
+            });
+
+            // Animate body background for perfect seamless transition
+            cinematicTl.to("body", { backgroundColor: "#000000", ease: "none" }, 0);
+
+            // Spotlight overlay expansion
+            cinematicTl.fromTo(overlay,
+                { scale: 0, opacity: 0 },
+                { scale: 1, opacity: 1, ease: "none" }, 0
+            );
+
+            // Separate ScrollTrigger for class switching logic (text color, dots, etc.)
+            ScrollTrigger.create({
+                trigger: section,
+                start: "top 50%",
+                onEnter: () => section.classList.add('is-dark'),
+                onEnterBack: () => section.classList.add('is-dark'),
+                onLeaveBack: () => section.classList.remove('is-dark')
+            });
+
+            // 2. Timeline Progress Logic
+            const timeline = section.querySelector('.product__timeline-wrap');
+            const steps = section.querySelectorAll('.timeline-step');
+            const progressBar = section.querySelector('.timeline-progress');
+            const bar = section.querySelector('.timeline-bar');
+
+            let mm = gsap.matchMedia();
+
+            mm.add("(max-width: 768px)", () => {
+                const lastStep = steps[steps.length - 1];
+                const totalBarHeight = lastStep.offsetTop;
+
+                // Adjust the line to start from 1st dot center and end at last dot center
+                gsap.set(bar, { height: totalBarHeight, top: 14 }); // 14px is half of dot height
+                gsap.set(progressBar, { width: '100%', height: '0%' });
+
+                ScrollTrigger.create({
+                    trigger: timeline,
+                    start: "top 80%",
+                    end: () => `top+=${totalBarHeight} 80%`, // Complete progress at the last dot
+                    scrub: true,
+                    onUpdate: (self) => {
+                        const progress = self.progress;
+                        gsap.set(progressBar, { height: `${progress * 100}%` });
+
+                        steps.forEach((step, i) => {
+                            const threshold = i / (steps.length - 1);
+                            if (progress >= threshold * 0.98) {
+                                if (!step.classList.contains('active')) {
+                                    step.classList.add('active');
+                                    gsap.fromTo(step.querySelector('.step-content'),
+                                        { x: (i + 1) % 2 === 0 ? 30 : -30, y: 0, opacity: 0 },
+                                        { x: 0, y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+                                    );
+                                }
+                            } else {
+                                step.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+
+            mm.add("(min-width: 769px)", () => {
+                gsap.set(progressBar, { height: '100%', width: '0%' });
+
+                const updateProgress = (idx) => {
+                    const step = steps[idx];
+                    const dot = step.querySelector('.step-dot');
+                    if (dot && bar) {
+                        const dotCenter = step.offsetLeft + dot.offsetLeft + (dot.offsetWidth / 2);
+                        const barWidth = bar.offsetWidth;
+                        let pct = ((dotCenter - bar.offsetLeft) / barWidth) * 100;
+                        if (idx === steps.length - 1) pct = 100;
+                        gsap.to(progressBar, { width: `${Math.max(0, Math.min(100, pct))}%`, duration: 0.8, ease: 'power3.out' });
+                    }
+                    steps.forEach((s, i) => {
+                        if (i <= idx) s.classList.add('active');
+                        else s.classList.remove('active');
+                    });
+                };
+
+                // Scroll-based progress for Desktop
+                ScrollTrigger.create({
+                    trigger: timeline,
+                    start: "top 80%",
+                    end: "bottom 60%",
+                    scrub: true,
+                    onUpdate: (self) => {
+                        const progress = self.progress;
+                        const stepIndex = Math.floor(progress * steps.length);
+                        const activeIndex = Math.min(stepIndex, steps.length - 1);
+                        updateProgress(activeIndex);
+                    }
+                });
+
+                steps.forEach((step, i) => {
+                    step.addEventListener('mouseenter', () => updateProgress(i));
+                });
+            });
+        };
+
+        const initReviewCarousel = () => {
+            const reviews = [
+                { text: "<b>처음 겪는 일을 상조상품을 통해 진행하니•••</b> 신경 써야 할 일들이 줄어 마음이 조금 편안했습니다. 담당 지도사님과 직원분들이 친절하게 장례 진행을 도와주셔서 감사한 마음입니다. 감사드립니다.", date: "25년 12월 4일" },
+                { text: "<b>그 마음과 손길이 감사했습니다•••</b> 밤늦게 어머님께서 돌아가셔서 더 경황이 없었는데 늦은 시간에도 친절하게 응대해 주시고 어머님 입관도 너무 곱고 예쁘게 잘 해주셔서 그 마음과 손길이 정말 감사했습니다.", date: "25년 10월 27일" },
+                { text: "<b>순조로운 진행에••·</b> 장례지도사님께서 설명을 잘해주시고 잘 리드해 주셔서 장례 치르는데 많은 도움을 받고 순조로운 진행에 매우 감사를 드립니다.", date: "25년 11월 17일" },
+                { text: "<b>주변에서도 업체 물어보며…</b> 납입 완료가 다 되어서 고민하던 시기에 장례를 치르게 되었습니다. 임종을 맞이하고 생각나던 건 상조상품. 전화 한 통에 장례식장에 미리 와 계시고...", date: "25년 12월 4일" },
+                { text: "<b>세심한 배려에 감동받았습니다•••</b> 장례 준비부터 마무리까지 하나하나 세심하게 챙겨주셔서 유족으로서 큰 위안이 되었습니다. 어려운 시기에 든든한 지원이 되어주셔서 감사합니다.", date: "25년 9월 15일" },
+                { text: "<b>전문적인 서비스에 만족합니다•••</b> 장례 절차에 대해 잘 몰랐는데, 처음부터 끝까지 친절하게 안내해 주시고 모든 것을 완벽하게 처리해 주셔서 정말 만족스러웠습니다.", date: "25년 8월 22일" },
+                { text: "<b>믿고 맡길 수 있었습니다•••</b> 상조 서비스를 이용하길 잘했다는 생각이 듭니다. 모든 과정이 체계적이고 깔끔하게 진행되어 고인을 편안히 보낼 수 있었습니다.", date: "25년 11월 3일" },
+                { text: "<b>가족처럼 대해주셔서•••</b> 슬픔에 잠긴 저희 가족을 진심으로 위로해 주시고, 마치 가족처럼 따뜻하게 대해주셔서 큰 힘이 되었습니다. 진심으로 감사드립니다.", date: "25년 10월 8일" },
+                { text: "<b>빠른 대응이 인상적이었습니다•••</b> 급하게 연락드렸는데도 신속하게 출동해 주시고, 모든 준비를 완벽하게 해주셔서 정말 감사했습니다. 프로페셔널한 모습이 인상적이었습니다.", date: "25년 12월 11일" },
+                { text: "<b>합리적인 비용에 만족합니다•••</b> 품질 높은 서비스를 합리적인 비용으로 받을 수 있어서 좋았습니다. 추가 비용 없이 약속된 서비스를 모두 제공받았습니다.", date: "25년 9월 28일" },
+                { text: "<b>정성스러운 서비스에 감동•••</b> 고인을 정성스럽게 모셔주시고, 유족들의 마음까지 세심하게 배려해 주셔서 정말 감동받았습니다. 최고의 선택이었습니다.", date: "25년 11월 25일" },
+                { text: "<b>안심하고 맡길 수 있었습니다•••</b> 처음부터 끝까지 투명하게 진행되어 안심하고 맡길 수 있었습니다. 장례지도사님의 전문성과 친절함에 깊은 감사를 드립니다.", date: "25년 10월 19일" }
+            ];
+
+            const track = document.getElementById('reviewTrack');
+            if (track) {
+                const createCard = (data) => {
+                    const card = document.createElement('div');
+                    card.className = 'sr-carousel-card';
+                    card.innerHTML = `
+                        <p>${data.text}</p>
+                        <span class="sr-carousel-date">${data.date}</span>
+                    `;
+                    return card;
+                };
+
+                // Populate and clone for loop
+                reviews.forEach(rev => track.appendChild(createCard(rev)));
+                reviews.forEach(rev => track.appendChild(createCard(rev)));
+                reviews.forEach(rev => track.appendChild(createCard(rev)));
+
+                const totalWidth = track.scrollWidth / 3;
+                const marquee = gsap.to(track, {
+                    x: -totalWidth,
+                    duration: 50,
+                    ease: "none",
+                    repeat: -1
+                });
+
+                track.addEventListener('mouseenter', () => marquee.pause());
+                track.addEventListener('mouseleave', () => marquee.play());
+            }
+        };
+
+        const initPromotionAnimation = () => {
+            const section = document.querySelector('.section--promotion');
+            const overlay = section.querySelector('.lighting-overlay');
+            if (!section || !overlay) return;
+
+            // 1. Cinematic "Lights Up" Transition (IDENTICAL TO JOIN PROCESS)
+            const promoTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 100%",
+                    end: "top 40%",
+                    scrub: true
+                }
+            });
+
+            // White wash effect
+            promoTl.to("body", { backgroundColor: "#ffffff", ease: "none" }, 0);
+            promoTl.fromTo(overlay,
+                { scale: 0, opacity: 0 },
+                { scale: 1, opacity: 1, ease: "none" }, 0
+            );
+
+            // 2. 사은품 카드 웅장한 등장 (Reliable Reveal)
+            gsap.fromTo(".promo-card",
+                { y: 100, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.5,
+                    stagger: 0.3,
+                    ease: "expo.out",
+                    scrollTrigger: {
+                        trigger: ".promo-grid",
+                        start: "top 90%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        };
+
+        const initApp = () => {
+            initPremiumCards();
+            initTypographyAnimations();
+            initJoinProcessAnimation();
+            initReviewCarousel();
+            initPromotionAnimation();
+        };
+
+        initApp();
+
 
     </script>
-
 </body>
 
 </html>
