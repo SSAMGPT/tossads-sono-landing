@@ -4137,6 +4137,21 @@ body.dark-mode .split-layout .answer-text {
     }
 }
 
+@media (min-width: 768px) {
+    .sc-pill-stack {
+        transform: scale(1.35);
+        transform-origin: bottom left;
+        bottom: 2rem;
+        left: 2rem;
+    }
+
+    #sc-pane-330x6 .sc-pill-stack {
+        transform-origin: bottom right;
+        left: auto;
+        right: 2rem;
+    }
+}
+
 .sc-pill {
     position: relative;
     display: inline-flex;
