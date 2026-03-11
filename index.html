@@ -1381,8 +1381,8 @@
                             <!-- Character Image -->
                             <img src="./img/benefits_char.png" alt="Benefits Character" style="width: 65%; height: auto; object-fit: contain; z-index: 2; position: relative; animation: float3d 4s ease-in-out infinite;">
                             
-                            <!-- Top Badge (from-them: tail on left, pointing down toward character head) -->
-                            <div style="position: absolute; top: 2%; left: 50%; transform: translateX(-50%); z-index: 3;">
+                            <!-- Top Badge -->
+                            <div style="position: absolute; top: 12.9%; left: 51.3%; z-index: 3;">
                                 <div class="benefit-bubble-anim slam" style="animation-delay: 0.3s;">
                                     <div class="ios-bubble from-them float-1" style="--bg-color: #ff1f5d; background: var(--bg-color); color: #fff;">
                                         💸 만기 시 전액 환급
@@ -1390,8 +1390,8 @@
                                 </div>
                             </div>
                             
-                            <!-- Left Badge (from-me: tail on right, pointing toward character) -->
-                            <div style="position: absolute; top: 42%; left: 0%; z-index: 3;">
+                            <!-- Left Badge -->
+                            <div style="position: absolute; top: 53.8%; left: 1.5%; z-index: 3;">
                                 <div class="benefit-bubble-anim slam" style="animation-delay: 0.9s;">
                                     <div class="ios-bubble from-me float-2" style="--bg-color: #1a8fe3; background: var(--bg-color); color: #fff;">
                                         🏨 리조트 객실 우대
@@ -1399,8 +1399,8 @@
                                 </div>
                             </div>
                             
-                            <!-- Right Badge (from-them: tail on left, pointing toward character) -->
-                            <div style="position: absolute; top: 32%; right: 0%; z-index: 3;">
+                            <!-- Right Badge -->
+                            <div style="position: absolute; top: 46.8%; left: 60.5%; z-index: 3;">
                                 <div class="benefit-bubble-anim slam" style="animation-delay: 1.5s;">
                                     <div class="ios-bubble from-them float-3" style="--bg-color: #7c3aed; background: var(--bg-color); color: #fff;">
                                         🚢 해외여행 전환
@@ -1408,8 +1408,8 @@
                                 </div>
                             </div>
                             
-                            <!-- Bottom Badge (from-me: tail on right, pointing toward character) -->
-                            <div style="position: absolute; bottom: 2%; left: 50%; transform: translateX(-50%); z-index: 3;">
+                            <!-- Bottom Badge -->
+                            <div style="position: absolute; top: 81.6%; left: 31.5%; z-index: 3;">
                                 <div class="benefit-bubble-anim slam" style="animation-delay: 2.1s;">
                                     <div class="ios-bubble from-me float-4" style="--bg-color: #ffffff; background: var(--bg-color); color: #1d1d1f; border: 1px solid rgba(0,0,0,0.06);">
                                         🕊️ 프리미엄 상조
@@ -1440,7 +1440,7 @@
                         .float-3 { animation: floatBadge3 3.8s ease-in-out infinite alternate; }
                         .float-4 { animation: floatBadge4 4.2s ease-in-out infinite alternate-reverse; }
 
-                        /* === Reference slam animation (exact copy) === */
+                        /* === Reference slam animation === */
                         @keyframes slam {
                             0% {
                                 transform: rotate3d(0, 0, 1, 5deg) scale3d(3, 3, 3) translate3d(-50px, -10px, 0);
@@ -1482,54 +1482,30 @@
                             line-height: 1.3;
                         }
 
-                        /* from-me: tail on right side (pointing right toward character) */
+                        /* from-me: tail on right side */
                         .ios-bubble.from-me::before {
                             content: "";
                             position: absolute;
-                            z-index: -1;
-                            bottom: -2px;
-                            right: -7px;
+                            bottom: 0;
+                            right: -8px;
+                            width: 20px;
                             height: 20px;
-                            border-right: 20px solid var(--bg-color);
-                            border-bottom-left-radius: 16px 14px;
-                            transform: translate(0, -2px);
-                        }
-                        .ios-bubble.from-me::after {
-                            content: "";
-                            position: absolute;
-                            z-index: 1;
-                            bottom: -2px;
-                            right: -56px;
-                            width: 26px;
-                            height: 20px;
-                            background: #000;
-                            border-bottom-left-radius: 10px;
-                            transform: translate(-30px, -2px);
+                            background: var(--bg-color);
+                            border-bottom-left-radius: 15px;
+                            clip-path: polygon(0 0, 100% 0, 0 100%);
                         }
 
-                        /* from-them: tail on left side (pointing left toward character) */
+                        /* from-them: tail on left side */
                         .ios-bubble.from-them::before {
                             content: "";
                             position: absolute;
-                            z-index: -1;
-                            bottom: -2px;
-                            left: -7px;
+                            bottom: 0;
+                            left: -8px;
+                            width: 20px;
                             height: 20px;
-                            border-left: 20px solid var(--bg-color);
-                            border-bottom-right-radius: 16px 14px;
-                            transform: translate(0, -2px);
-                        }
-                        .ios-bubble.from-them::after {
-                            content: "";
-                            position: absolute;
-                            z-index: 1;
-                            bottom: -2px;
-                            left: 4px;
-                            width: 26px;
-                            height: 20px;
-                            background: #000;
-                            border-bottom-right-radius: 10px;
-                            transform: translate(-30px, -2px);
+                            background: var(--bg-color);
+                            border-bottom-right-radius: 15px;
+                            clip-path: polygon(100% 0, 0 0, 100% 100%);
                         }
 
                         @media (max-width: 480px) {
