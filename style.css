@@ -4103,16 +4103,25 @@ body.dark-mode .split-layout .answer-text {
     position: relative;
 }
 
-/* Colorful solid badge-style keyword pills stacked at bottom left */
+/* Colorful solid badge-style keyword pills stacked at bottom right */
 .sc-pill-stack {
     position: absolute;
     bottom: 1.5rem;
-    left: 1.5rem;
+    right: 1.5rem;
     z-index: 10;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 0.8rem;
+}
+
+@media (max-width: 480px) {
+    .sc-pill-stack {
+        transform: scale(0.85);
+        transform-origin: bottom right;
+        bottom: 1rem;
+        right: 1rem;
+    }
 }
 
 .sc-pill {
