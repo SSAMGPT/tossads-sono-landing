@@ -4831,10 +4831,11 @@ body {
 
 @media (max-width: 480px) {
     .floating-cta {
-        width: 92%;
+        width: calc(100% - 2rem);
+        right: 1rem;
     }
     .floating-cta.active {
-        bottom: 1.5rem;
+        bottom: 1rem;
     }
 }
 
