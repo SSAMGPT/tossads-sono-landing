@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>말풍선 위치 제어판</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1a1a; font-family: -apple-system, sans-serif; color: #fff; }
+
+.controls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,0.95);
+    border-bottom: 1px solid #333;
+    padding: 10px 16px;
+    font-size: 12px;
+}
+.controls h3 {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #ff1f5d;
+}
+.coord-display {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+.coord-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+}
+.coord-row .label {
+    font-weight: 700;
+    min-width: 120px;
+}
+.coord-row .value {
+    color: #0f0;
+    font-family: monospace;
+    font-size: 13px;
+}
+#copyBtn {
+    background: #ff1f5d;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 6px;
+}
+#copyBtn:active { opacity: 0.7; }
+#copyResult {
+    background: #111;
+    color: #0f0;
+    font-family: monospace;
+    font-size: 11px;
+    padding: 8px;
+    border-radius: 6px;
+    margin-top: 6px;
+    max-height: 80px;
+    overflow-y: auto;
+    display: none;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.stage {
+    margin-top: 220px;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.panel-mock {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1/1.1;
+    background: #000;
+    border-radius: 20px;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.char-img {
+    width: 65%;
+    height: auto;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.draggable {
+    position: absolute;
+    z-index: 10;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+}
+.draggable:active { cursor: grabbing; }
+
+.ios-bubble {
+    position: relative;
+    padding: 10px 20px;
+    font-weight: 800;
+    font-size: 17px;
+    border-radius: 25px;
+    white-space: nowrap;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    line-height: 1.3;
+}
+
+.ios-bubble.from-me::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: -2px;
+    right: -7px;
+    height: 20px;
+    border-right: 20px solid var(--bg-color);
+    border-bottom-left-radius: 16px 14px;
+    transform: translate(0, -2px);
+}
+.ios-bubble.from-me::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: -2px;
+    right: -56px;
+    width: 26px;
+    height: 20px;
+    background: #000;
+    border-bottom-left-radius: 10px;
+    transform: translate(-30px, -2px);
+}
+
+.ios-bubble.from-them::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: -2px;
+    left: -7px;
+    height: 20px;
+    border-left: 20px solid var(--bg-color);
+    border-bottom-right-radius: 16px 14px;
+    transform: translate(0, -2px);
+}
+.ios-bubble.from-them::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: -2px;
+    left: 4px;
+    width: 26px;
+    height: 20px;
+    background: #000;
+    border-bottom-right-radius: 10px;
+    transform: translate(-30px, -2px);
+}
+
+.draggable.active-drag {
+    outline: 2px dashed #0f0;
+    outline-offset: 4px;
+}
+
+.hint {
+    text-align: center;
+    padding: 12px;
+    color: #888;
+    font-size: 13px;
+}
+</style>
+</head>
+<body>
+
+<div class="controls">
+    <h3>🎯 말풍선 위치 제어판</h3>
+    <p style="color:#888; font-size:11px; margin-bottom:6px;">말풍선을 드래그해서 원하는 위치에 놓으세요</p>
+    <div class="coord-display">
+        <div class="coord-row"><span class="label">💸 만기 시 전액 환급</span><span class="value" id="pos-top">--</span></div>
+        <div class="coord-row"><span class="label">🏨 리조트 객실 우대</span><span class="value" id="pos-left">--</span></div>
+        <div class="coord-row"><span class="label">🚢 해외여행 전환</span><span class="value" id="pos-right">--</span></div>
+        <div class="coord-row"><span class="label">🕊️ 프리미엄 상조</span><span class="value" id="pos-bottom">--</span></div>
+    </div>
+    <button id="copyBtn">📋 좌표 복사하기</button>
+    <div id="copyResult"></div>
+</div>
+
+<p class="hint">⬇️ 아래 말풍선을 손가락/마우스로 드래그하세요</p>
+
+<div class="stage">
+    <div class="panel-mock" id="panel">
+        <img src="./img/benefits_char.png" alt="Character" class="char-img">
+
+        <div class="draggable" id="bubble-top" style="top: 2%; left: 50%; transform: translateX(-50%);">
+            <div class="ios-bubble from-them" style="--bg-color: #ff1f5d; background: var(--bg-color); color: #fff;">
+                💸 만기 시 전액 환급
+            </div>
+        </div>
+
+        <div class="draggable" id="bubble-left" style="top: 42%; left: 0%;">
+            <div class="ios-bubble from-me" style="--bg-color: #1a8fe3; background: var(--bg-color); color: #fff;">
+                🏨 리조트 객실 우대
+            </div>
+        </div>
+
+        <div class="draggable" id="bubble-right" style="top: 32%; right: 0%;">
+            <div class="ios-bubble from-them" style="--bg-color: #7c3aed; background: var(--bg-color); color: #fff;">
+                🚢 해외여행 전환
+            </div>
+        </div>
+
+        <div class="draggable" id="bubble-bottom" style="bottom: 2%; left: 50%; transform: translateX(-50%);">
+            <div class="ios-bubble from-me" style="--bg-color: #ffffff; background: var(--bg-color); color: #1d1d1f; border: 1px solid rgba(0,0,0,0.06);">
+                🕊️ 프리미엄 상조
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const panel = document.getElementById('panel');
+const bubbles = {
+    'bubble-top':    { el: document.getElementById('bubble-top'),    displayId: 'pos-top',    name: '💸 만기 시 전액 환급' },
+    'bubble-left':   { el: document.getElementById('bubble-left'),   displayId: 'pos-left',   name: '🏨 리조트 객실 우대' },
+    'bubble-right':  { el: document.getElementById('bubble-right'),  displayId: 'pos-right',  name: '🚢 해외여행 전환' },
+    'bubble-bottom': { el: document.getElementById('bubble-bottom'), displayId: 'pos-bottom', name: '🕊️ 프리미엄 상조' },
+};
+
+function getPercent(el) {
+    const pRect = panel.getBoundingClientRect();
+    const eRect = el.getBoundingClientRect();
+    const topPct = ((eRect.top - pRect.top) / pRect.height * 100).toFixed(1);
+    const leftPct = ((eRect.left - pRect.left) / pRect.width * 100).toFixed(1);
+    return { top: topPct, left: leftPct };
+}
+
+function updateDisplay() {
+    for (const [id, b] of Object.entries(bubbles)) {
+        const pos = getPercent(b.el);
+        document.getElementById(b.displayId).textContent = `top:${pos.top}%, left:${pos.left}%`;
+    }
+}
+
+// Initial display
+setTimeout(updateDisplay, 100);
+
+// Drag logic
+let activeEl = null;
+let startX, startY, origLeft, origTop;
+
+function onStart(e) {
+    const draggable = e.target.closest('.draggable');
+    if (!draggable) return;
+    e.preventDefault();
+    activeEl = draggable;
+    activeEl.classList.add('active-drag');
+    
+    const touch = e.touches ? e.touches[0] : e;
+    const pRect = panel.getBoundingClientRect();
+    const eRect = activeEl.getBoundingClientRect();
+    
+    startX = touch.clientX;
+    startY = touch.clientY;
+    origLeft = eRect.left - pRect.left;
+    origTop = eRect.top - pRect.top;
+    
+    // Reset CSS positioning to use top/left only
+    activeEl.style.right = 'auto';
+    activeEl.style.bottom = 'auto';
+    activeEl.style.transform = 'none';
+    activeEl.style.left = origLeft + 'px';
+    activeEl.style.top = origTop + 'px';
+}
+
+function onMove(e) {
+    if (!activeEl) return;
+    e.preventDefault();
+    const touch = e.touches ? e.touches[0] : e;
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    
+    activeEl.style.left = (origLeft + dx) + 'px';
+    activeEl.style.top = (origTop + dy) + 'px';
+    
+    updateDisplay();
+}
+
+function onEnd() {
+    if (activeEl) {
+        activeEl.classList.remove('active-drag');
+        activeEl = null;
+    }
+    updateDisplay();
+}
+
+panel.addEventListener('mousedown', onStart);
+panel.addEventListener('touchstart', onStart, { passive: false });
+document.addEventListener('mousemove', onMove);
+document.addEventListener('touchmove', onMove, { passive: false });
+document.addEventListener('mouseup', onEnd);
+document.addEventListener('touchend', onEnd);
+
+// Copy coordinates
+document.getElementById('copyBtn').addEventListener('click', () => {
+    let result = '';
+    for (const [id, b] of Object.entries(bubbles)) {
+        const pos = getPercent(b.el);
+        result += `${b.name}: top=${pos.top}%, left=${pos.left}%\n`;
+    }
+    
+    const resultEl = document.getElementById('copyResult');
+    resultEl.textContent = result;
+    resultEl.style.display = 'block';
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(result).then(() => {
+            document.getElementById('copyBtn').textContent = '✅ 복사 완료!';
+            setTimeout(() => {
+                document.getElementById('copyBtn').textContent = '📋 좌표 복사하기';
+            }, 2000);
+        });
+    }
+});
+</script>
+</body>
+</html>
