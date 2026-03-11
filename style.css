@@ -4730,7 +4730,6 @@ body {
     transition: bottom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s;
     opacity: 0;
     pointer-events: none;
-    overflow: hidden;
 }
 
 .f-cta-toggle-btn {
@@ -4817,8 +4816,8 @@ body {
     gap: 0.5rem;
     font-size: 14px;
     font-weight: 800;
-    color: #fff;
-    text-decoration: none;
+    color: #fff !important;
+    text-decoration: none !important;
     background: rgba(255, 255, 255, 0.2);
     padding: 0.5rem 1rem;
     border-radius: 30px;
