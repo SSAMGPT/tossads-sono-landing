@@ -1312,7 +1312,10 @@
             <!-- Panel 1: 문제 제기 및 답변 -->
             <div class="panel">
                 <div class="panel-content split-layout">
-                    <h2 class="hook-text" data-splitting>가전제품 꼭 목돈 마련해야만<br>구매가 가능할까요?</h2>
+                    <div style="align-self: flex-start; text-align: left;">
+                        <span class="hook-badge" style="display: inline-flex; align-items: center; justify-content: center; background-color: #645d95; color: #fff; padding: 4px 14px; border-radius: 30px; font-size: 13px; font-family: 'Paperozi', sans-serif; font-weight: 700; margin-bottom: 12px; letter-spacing: 0;">가전 결합 상품</span>
+                        <h2 class="hook-text" data-splitting style="align-self: auto;">가전제품 꼭 목돈 마련해야만<br>구매가 가능할까요?</h2>
+                    </div>
                     <h2 class="answer-text" data-splitting
                         style="font-size: calc(var(--font-h1) * 1.4); color: #ff2d78; margin-top: 2rem;">
                         저희가 드리는 답변은<br>No!입니다
@@ -1322,20 +1325,28 @@
 
             <!-- Panel 2: 핵심 해결책 -->
             <div class="panel">
-                <div class="panel-content">
-                    <div class="badge-container">
-                        <button class="Btn"></button>
+                <div class="panel-content" style="width: 100%; height: 100%; position: relative; padding: 4rem 2rem; display: block;">
+                    <div style="display: flex; flex-direction: column; align-items: flex-start; text-align: left; width: 100%; max-width: 700px; margin-top: 15vh;">
+                        <div class="badge-container" style="margin-bottom: 12px;">
+                            <span class="hook-badge" style="display: inline-flex; align-items: center; justify-content: center; background-color: #59d9ff; color: #1d1d1f; padding: 4px 14px; border-radius: 30px; font-size: 13px; font-family: 'Paperozi', sans-serif; font-weight: 700; letter-spacing: 0;">SONO 스마트케어</span>
+                        </div>
+                        <h2 class="hook-text" id="panel2-title" data-splitting style="margin: 0; text-align: left; word-break: keep-all; line-height: 1.4;">
+                            부담스럽지 않은 월 납입으로 가전제품 쓰고 만기 때 환급까지 받을 수 있는 SONO 스마트케어가 있습니다.
+                        </h2>
                     </div>
-                    <h2 class="hook-text" id="panel2-title" data-splitting>
-                        부담스럽지 않은 월 납입으로 가전제품 쓰고 만기 때 환급까지 받을 수 있는 SONO 스마트케어가 있습니다.
-                    </h2>
+                    <img src="./img/30____f30075769a%201.png" alt="Happy Character" id="panel2-img" style="position: absolute; right: -1rem; bottom: 22vh; width: 350px; opacity: 0; transform-origin: bottom center;">
                 </div>
             </div>
 
             <!-- Panel 3: 타겟 고객층 대상 메시지 -->
             <div class="panel">
                 <div class="panel-content">
-                    <h2 class="target-title">가전결합상조<br>이런 분들에게 좋아요!</h2>
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;">
+                        <div class="badge-container" style="margin-bottom: 12px;">
+                            <span class="hook-badge" style="display: inline-flex; align-items: center; justify-content: center; background-color: #ff1f5d; color: #fff; padding: 4px 14px; border-radius: 30px; font-size: 13px; font-family: 'Paperozi', sans-serif; font-weight: 700; letter-spacing: 0;">추천 가입 대상</span>
+                        </div>
+                        <h2 class="target-title" style="margin-top: 0;">가전결합상조<br>이런 분들에게 좋아요!</h2>
+                    </div>
                     <div class="target-cards">
                         <div class="card target-card">
                             <span>혼수 준비하면서<br>똑똑한 소비가 필요하신 분</span>
@@ -1356,7 +1367,12 @@
             <!-- Panel 4: 다양한 혜택 및 추가 안내 -->
             <div class="panel">
                 <div class="panel-content">
-                    <h2 class="target-title">단순한 렌탈상품? 아닙니다.<br>다양한 혜택이 준비돼 있어요.</h2>
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;">
+                        <div class="badge-container" style="margin-bottom: 12px;">
+                            <span class="hook-badge" style="display: inline-flex; align-items: center; justify-content: center; background-color: limegreen; color: #fff; padding: 4px 14px; border-radius: 30px; font-size: 13px; font-family: 'Paperozi', sans-serif; font-weight: 700; letter-spacing: 0;">풍성한 혜택</span>
+                        </div>
+                        <h2 class="target-title" style="margin-top: 0;">단순한 렌탈상품? 아닙니다.<br>다양한 혜택이 준비돼 있어요.</h2>
+                    </div>
                     <div class="benefit-list">
                         <div class="benefit-item">차별화 된 프리미엄 상조 서비스</div>
                         <div class="benefit-item">연간 10회 리조트, 레저스포츠 멤버십 할인이 가능해요</div>
@@ -1370,6 +1386,566 @@
                 </div>
             </div>
 
+        </div>
+    </section>
+
+    
+    <!-- 새로운 스마트케어 상품 섹션 구조 -->
+    <section class="smartcare-section" id="smartcare">
+        <div class="sc-light-beam"></div>
+        <div class="sc-container">
+            <!-- 새로운 첫번째 소개 박스 -->
+            <div class="sc-intro-box" style="background-color: #f5f5f7; border-radius: 30px; padding: 2.5rem; display: flex; flex-direction: column; position: relative; margin: 4rem auto 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.03); overflow: hidden;">
+                <div style="text-align: left; z-index: 2; position: relative; max-width: 75%;">
+                    <p class="sc-intro-tag" style="font-size: calc(var(--font-hero) * 0.8); font-weight: 800; color: #ff1f5d; margin-bottom: 0.8rem; letter-spacing: -0.02em;" data-splitting>SMART CARE 플랜</p>
+                    <h3 class="sc-intro-desc" style="font-size: var(--font-h2); font-weight: 800; color: #1d1d1f; line-height: 1.4; word-break: keep-all; letter-spacing: -0.02em; margin-bottom: 1rem;" data-splitting>다양한 최신 가전을 한눈에 보고<br class="mo-br">신청까지 편하게 할 수 있어요!</h3>
+                    <div class="sc-intro-badges" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.8rem;">
+                        <span style="display: inline-flex; align-items: center; background-color: #fff3f6; color: #ff1f5d; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 30px; letter-spacing: -0.02em;">#가전 직접선택</span>
+                        <span style="display: inline-flex; align-items: center; background-color: #eaf6ff; color: #1a8fe3; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 30px; letter-spacing: -0.02em;">#빠른 상담신청</span>
+                        <span style="display: inline-flex; align-items: center; background-color: #eafff5; color: #00a86b; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 30px; letter-spacing: -0.02em;">#편한 월 납입</span>
+                        <span style="display: inline-flex; align-items: center; background-color: #f5f0ff; color: #7c3aed; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 30px; letter-spacing: -0.02em;">#만기 환급</span>
+                    </div>
+                </div>
+                <img src="./img/30____82fd7d00b8%201.png" alt="Happy Emoji" class="sc-intro-emoji" style="position: absolute; right: 0.5rem; bottom: -5px; width: 180px; transform-origin: bottom center; z-index: 3;">
+            </div>
+
+            <!-- 스마트케어 상품별 전환 탭 -->
+            <div class="sc-product-tabs-nav" style="margin-top: 3rem; margin-bottom: 2rem;">
+                <div class="sc-product-tabs-container">
+                    <button class="sc-product-tab active" data-sctab="330x2">330X2</button>
+                    <button class="sc-product-tab" data-sctab="330x3">330X3</button>
+                    <button class="sc-product-tab" data-sctab="330x4">330X4</button>
+                    <button class="sc-product-tab" data-sctab="330x6">330X6</button>
+                </div>
+            </div>
+
+            <div class="sc-product-tabs-content" style="margin-bottom: 5rem;">
+
+                <div class="sc-tab-pane active" id="sc-pane-330x2">
+                    <div class="sc-price-card">
+                        <div class="sc-price-text">
+                            <h4 class="sc-price-name">스마트케어 330X2</h4>
+                            <div class="sc-price-row">
+                                <span class="sc-price-label">월 납입 금액</span>
+                                <p class="sc-price-value-mo">9,900원 <em>× 150회</em></p>
+                            </div>
+                            <div class="sc-price-divider"></div>
+                            <div class="sc-price-row">
+                                <span class="sc-price-label">총 납입 금액</span>
+                                <p class="sc-price-value-total">1,485,000원</p>
+                            </div>
+                        </div>
+                        <div class="sc-price-img-wrap">
+                            <div class="sc-pill-stack">
+                                <span class="sc-pill">#부담없는시작</span>
+                                <span class="sc-pill">#합리적선택</span>
+                                <span class="sc-pill">#월납입혜택</span>
+                            </div>
+                            <img src="./img/_____984fbb481c%201.png" alt="character" class="sc-price-char">
+                        </div>
+                    </div>
+                    
+                    <div class="sc-refund-box">
+                        <p class="sc-refund-title">💡 상품 가입 후 만기 시 <strong>총 1,485,000원</strong> 환급이 가능해요!</p>
+                        <p class="sc-refund-desc">ex) 1구좌 사용 후 1구좌 잔여 시 부분 환급 ok</p>
+                    </div>
+                    <!-- 가전 선택 및 계산기 UI (330x2) -->
+                    <div class="sc-calc-wrap">
+                        <div class="sc-brand-filter">
+                            <button class="sc-brand-btn active">전체</button>
+                            <button class="sc-brand-btn">LG전자</button>
+                            <button class="sc-brand-btn">삼성/기타</button>
+                        </div>
+                        
+                        <div class="sc-prod-swiper">
+                            <div class="sc-prod-card" data-name="LG 퓨리케어 공기청정기 (AS305DWWA)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x2_lg_공기청정기_AS305DWWA.jpg" alt="LG 퓨리케어 공기청정기 (AS305DWWA)"></div>
+                                <p class="sc-prod-name">LG 공기청정기</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="LG 퓨리케어 정수기 (WD220MCB)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x2_LG_정수기_WD220MCB.avif" alt="LG 퓨리케어 정수기 (WD220MCB)"></div>
+                                <p class="sc-prod-name">LG 정수기</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="SK매직 스스로 직수 정수기 (WPUIAC414SPS)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x2_SK_정수기_WPUIAC414SPS.png" alt="SK매직 스스로 직수 정수기 (WPUIAC414SPS)"></div>
+                                <p class="sc-prod-name">SK 정수기</p>
+                            </div>
+                        </div>
+
+                        <!-- 영수증 UI -->
+                        <div class="sc-receipt-box">
+                            <div class="sc-receipt-header">
+                                <span class="sc-receipt-check">✔️</span>
+                                <span class="sc-receipt-product">가전을 선택해주세요</span>
+                            </div>
+                            <div class="sc-receipt-body">
+                                <div class="sc-receipt-row">
+                                    <span>기본 월 납입금</span>
+                                    <span><strong class="sc-r-base">33,000</strong>원</span>
+                                </div>
+                                <div class="sc-receipt-row discount">
+                                    <span>제휴카드 최대 혜택</span>
+                                    <span><strong>- 24,000</strong>원 <span style="font-size:10px">🔻</span></span>
+                                </div>
+                                <div class="sc-receipt-divider"></div>
+                                <div class="sc-receipt-row total">
+                                    <span>최종 체감가</span>
+                                    <span>월 <strong class="sc-r-final">9,000</strong>원</span>
+                                </div>
+                                <p class="sc-receipt-note">* 전월실적 30만원 이상 충족 시</p>
+                            </div>
+                        </div>
+                        
+                        <label class="sc-card-checkbox">
+                            <input type="checkbox" class="sc-calc-check">
+                            제휴카드 발급 안내 희망 시 체크
+                        </label>
+                        
+                        <a href="#consult" class="sc-cta-btn">이 조건으로 빠른 상담 신청하기</a>
+                    </div>
+
+
+                </div>
+
+                <div class="sc-tab-pane" id="sc-pane-330x3">
+                    <div class="sc-price-card">
+                        <div class="sc-price-text">
+                            <h4 class="sc-price-name">스마트케어 330X3</h4>
+                            <div class="sc-price-row">
+                                <span class="sc-price-label">월 납입 금액</span>
+                                <p class="sc-price-value-mo">19,900원 <em>× 150회</em></p>
+                            </div>
+                            <div class="sc-price-divider"></div>
+                            <div class="sc-price-row">
+                                <span class="sc-price-label">총 납입 금액</span>
+                                <p class="sc-price-value-total">2,985,000원</p>
+                            </div>
+                        </div>
+                        <div class="sc-price-img-wrap">
+                            <div class="sc-pill-stack">
+                                <span class="sc-pill">#현명한소비</span>
+                                <span class="sc-pill">#가전업그레이드</span>
+                                <span class="sc-pill">#납입혜택</span>
+                            </div>
+                            <img src="./img/____4e87bb1fcc.jpeg" alt="character" class="sc-price-char">
+                        </div>
+                    </div>
+                    
+                    <div class="sc-refund-box">
+                        <p class="sc-refund-title">💡 상품 가입 후 만기 시 <strong>총 2,985,000원</strong> 환급이 가능해요!</p>
+                        <p class="sc-refund-desc">ex) 1구좌 사용 후 2구좌 잔여 시 부분 환급 ok</p>
+                    </div>
+
+                    <!-- 가전 선택 및 계산기 UI (330x3) -->
+                    <div class="sc-calc-wrap">
+                        <div class="sc-brand-filter">
+                            <button class="sc-brand-btn active">전체</button>
+                            <button class="sc-brand-btn">LG전자</button>
+                            <button class="sc-brand-btn">삼성/기타</button>
+                        </div>
+                        
+                        <div class="sc-prod-swiper">
+                            <div class="sc-prod-card" data-name="LG 퓨리케어 공기청정기 (AS355NSNA)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x3_lg_공기청정기_AS355NSNA.jpg" alt="LG 퓨리케어 공기청정기 (AS355NSNA)"></div>
+                                <p class="sc-prod-name">LG 공기청정기</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="LG 디오스 냉장고 (S836MRQ112)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x3_LG_냉장고_S836MRQ112.avif" alt="LG 디오스 냉장고 (S836MRQ112)"></div>
+                                <p class="sc-prod-name">LG 냉장고</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="LG 올레드 TV (OLED55B5KNA)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x3_LG_TV_OLED55B5KNA.avif" alt="LG 올레드 TV (OLED55B5KNA)"></div>
+                                <p class="sc-prod-name">LG TV</p>
+                            </div>
+                        </div>
+
+                        <!-- 영수증 UI -->
+                        <div class="sc-receipt-box">
+                            <div class="sc-receipt-header">
+                                <span class="sc-receipt-check">✔️</span>
+                                <span class="sc-receipt-product">가전을 선택해주세요</span>
+                            </div>
+                            <div class="sc-receipt-body">
+                                <div class="sc-receipt-row">
+                                    <span>기본 월 납입금</span>
+                                    <span><strong class="sc-r-base">49,500</strong>원</span>
+                                </div>
+                                <div class="sc-receipt-row discount">
+                                    <span>제휴카드 최대 혜택</span>
+                                    <span><strong>- 24,000</strong>원 <span style="font-size:10px">🔻</span></span>
+                                </div>
+                                <div class="sc-receipt-divider"></div>
+                                <div class="sc-receipt-row total">
+                                    <span>최종 체감가</span>
+                                    <span>월 <strong class="sc-r-final">25,500</strong>원</span>
+                                </div>
+                                <p class="sc-receipt-note">* 전월실적 30만원 이상 충족 시</p>
+                            </div>
+                        </div>
+                        
+                        <label class="sc-card-checkbox">
+                            <input type="checkbox" class="sc-calc-check">
+                            제휴카드 발급 안내 희망 시 체크
+                        </label>
+                        
+                        <a href="#consult" class="sc-cta-btn">이 조건으로 빠른 상담 신청하기</a>
+                    </div>
+
+
+                </div>
+
+                <div class="sc-tab-pane" id="sc-pane-330x4">
+                    <div class="sc-price-card">
+                        <div class="sc-price-text">
+                            <h4 class="sc-price-name">스마트케어 330X4</h4>
+                            <div class="sc-price-row">
+                                <span class="sc-price-label">월 납입 금액</span>
+                                <p class="sc-price-value-mo">29,900원 <em>× 150회</em></p>
+                            </div>
+                            <div class="sc-price-divider"></div>
+                            <div class="sc-price-row">
+                                <span class="sc-price-label">총 납입 금액</span>
+                                <p class="sc-price-value-total">4,485,000원</p>
+                            </div>
+                        </div>
+                        <div class="sc-price-img-wrap">
+                            <div class="sc-pill-stack">
+                                <span class="sc-pill">#프리미엄가전</span>
+                                <span class="sc-pill">#만기환급</span>
+                                <span class="sc-pill">#라이프업그레이드</span>
+                            </div>
+                            <img src="./img/___f23f5fb77a.jpeg" alt="character" class="sc-price-char">
+                        </div>
+                    </div>
+                    
+                    <div class="sc-refund-box">
+                        <p class="sc-refund-title">💡 상품 가입 후 만기 시 <strong>총 4,485,000원</strong> 환급이 가능해요!</p>
+                        <p class="sc-refund-desc">ex) 1구좌 사용 후 3구좌 잔여 시 부분 환급 ok</p>
+                    </div>
+
+                    <!-- 가전 선택 및 계산기 UI (330x4) -->
+                    <div class="sc-calc-wrap">
+                        <div class="sc-brand-filter">
+                            <button class="sc-brand-btn active">전체</button>
+                            <button class="sc-brand-btn">LG전자</button>
+                            <button class="sc-brand-btn">삼성/기타</button>
+                        </div>
+                        
+                        <div class="sc-prod-swiper">
+                            <div class="sc-prod-card" data-name="LG 트롬 건조기 (Z509MHHF23)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x4_LG_건조기_Z509MHHF23.avif" alt="LG 트롬 건조기 (Z509MHHF23)"></div>
+                                <p class="sc-prod-name">LG 건조기</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="LG 디오스 냉장고 (Z509MHHF23)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x4_LG_냉장고_Z509MHHF23.avif" alt="LG 디오스 냉장고 (Z509MHHF23)"></div>
+                                <p class="sc-prod-name">LG 냉장고</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="LG 코드제로 로봇청소기 (B95AWBH)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x4_LG_로봇청소기_B95AWBH.jpg" alt="LG 코드제로 로봇청소기 (B95AWBH)"></div>
+                                <p class="sc-prod-name">LG 로봇청소기</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="LG 휘센 에어컨 (FQ18HDWHY2)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x4_lg_에어컨_FQ18HDWHY2.jpg" alt="LG 휘센 에어컨 (FQ18HDWHY2)"></div>
+                                <p class="sc-prod-name">LG 에어컨</p>
+                            </div>
+                        </div>
+
+                        <!-- 영수증 UI -->
+                        <div class="sc-receipt-box">
+                            <div class="sc-receipt-header">
+                                <span class="sc-receipt-check">✔️</span>
+                                <span class="sc-receipt-product">가전을 선택해주세요</span>
+                            </div>
+                            <div class="sc-receipt-body">
+                                <div class="sc-receipt-row">
+                                    <span>기본 월 납입금</span>
+                                    <span><strong class="sc-r-base">66,000</strong>원</span>
+                                </div>
+                                <div class="sc-receipt-row discount">
+                                    <span>제휴카드 최대 혜택</span>
+                                    <span><strong>- 24,000</strong>원 <span style="font-size:10px">🔻</span></span>
+                                </div>
+                                <div class="sc-receipt-divider"></div>
+                                <div class="sc-receipt-row total">
+                                    <span>최종 체감가</span>
+                                    <span>월 <strong class="sc-r-final">42,000</strong>원</span>
+                                </div>
+                                <p class="sc-receipt-note">* 전월실적 30만원 이상 충족 시</p>
+                            </div>
+                        </div>
+                        
+                        <label class="sc-card-checkbox">
+                            <input type="checkbox" class="sc-calc-check">
+                            제휴카드 발급 안내 희망 시 체크
+                        </label>
+                        
+                        <a href="#consult" class="sc-cta-btn">이 조건으로 빠른 상담 신청하기</a>
+                    </div>
+
+
+                </div>
+
+                <div class="sc-tab-pane" id="sc-pane-330x6">
+                    <div class="sc-price-card">
+                        <div class="sc-price-text">
+                            <h4 class="sc-price-name">스마트케어 330X6</h4>
+                            <div class="sc-price-row">
+                                <span class="sc-price-label">월 납입 금액</span>
+                                <p class="sc-price-value-mo">39,900원 <em>× 150회</em></p>
+                            </div>
+                            <div class="sc-price-divider"></div>
+                            <div class="sc-price-row">
+                                <span class="sc-price-label">총 납입 금액</span>
+                                <p class="sc-price-value-total">5,985,000원</p>
+                            </div>
+                        </div>
+                        <div class="sc-price-img-wrap">
+                            <div class="sc-pill-stack">
+                                <span class="sc-pill">#6가전구성</span>
+                                <span class="sc-pill">#프리미엄라인업</span>
+                                <span class="sc-pill">#만기전액환급</span>
+                            </div>
+                            <img src="./img/50____56e58b94b4.jpeg" alt="character" class="sc-price-char">
+                        </div>
+                    </div>
+                    
+                    <div class="sc-refund-box">
+                        <p class="sc-refund-title">💡 상품 가입 후 만기 시 <strong>총 5,985,000원</strong> 환급이 가능해요!</p>
+                        <p class="sc-refund-desc">ex) 1구좌 사용 후 5구좌 잔여 시 부분 환급 ok</p>
+                    </div>
+
+                    <!-- 가전 선택 및 계산기 UI (330x6) -->
+                    <div class="sc-calc-wrap">
+                        <div class="sc-brand-filter">
+                            <button class="sc-brand-btn active">전체</button>
+                            <button class="sc-brand-btn">LG전자</button>
+                            <button class="sc-brand-btn">삼성/기타</button>
+                        </div>
+                        
+                        <div class="sc-prod-swiper">
+                            <div class="sc-prod-card" data-name="바디프랜드 안마의자 (BFR-7211)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x6_바디프렌드_안마의자_BFR-7211.jpg" alt="바디프랜드 안마의자 (BFR-7211)"></div>
+                                <p class="sc-prod-name">바디프랜드</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="삼성 비스포크 냉장고 (RM80F91K1XJ)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x6_삼성_냉장고_RM80F91K1XJ.jfif" alt="삼성 비스포크 냉장고 (RM80F91K1XJ)"></div>
+                                <p class="sc-prod-name">삼성 냉장고</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="세라젬 마스터 V6 (MB-1901)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x6_세라젬_안마의자_CGM MB-1901.jpg" alt="세라젬 마스터 V6 (MB-1901)"></div>
+                                <p class="sc-prod-name">세라젬 V6</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="MacBook Pro M3 (Space Black)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x6_애플_노트북_MX2H3KHA(Space Black).png" alt="MacBook Pro M3 (Space Black)"></div>
+                                <p class="sc-prod-name">맥북 프로</p>
+                            </div>
+                            <div class="sc-prod-card" data-name="LG 워시타워 (FX25GNR+RD20GNG)">
+                                <div class="sc-prod-img"><img src="./img/스마트케어330x6_lg_세탁기+건조기_FX25GNR+RD20GNG.jpg" alt="LG 워시타워 (FX25GNR+RD20GNG)"></div>
+                                <p class="sc-prod-name">LG 워시타워</p>
+                            </div>
+                        </div>
+
+                        <!-- 영수증 UI -->
+                        <div class="sc-receipt-box">
+                            <div class="sc-receipt-header">
+                                <span class="sc-receipt-check">✔️</span>
+                                <span class="sc-receipt-product">가전을 선택해주세요</span>
+                            </div>
+                            <div class="sc-receipt-body">
+                                <div class="sc-receipt-row">
+                                    <span>기본 월 납입금</span>
+                                    <span><strong class="sc-r-base">99,000</strong>원</span>
+                                </div>
+                                <div class="sc-receipt-row discount">
+                                    <span>제휴카드 최대 혜택</span>
+                                    <span><strong>- 24,000</strong>원 <span style="font-size:10px">🔻</span></span>
+                                </div>
+                                <div class="sc-receipt-divider"></div>
+                                <div class="sc-receipt-row total">
+                                    <span>최종 체감가</span>
+                                    <span>월 <strong class="sc-r-final">75,000</strong>원</span>
+                                </div>
+                                <p class="sc-receipt-note">* 전월실적 30만원 이상 충족 시</p>
+                            </div>
+                        </div>
+                        
+                        <label class="sc-card-checkbox">
+                            <input type="checkbox" class="sc-calc-check">
+                            제휴카드 발급 안내 희망 시 체크
+                        </label>
+                        
+                        <a href="#consult" class="sc-cta-btn">이 조건으로 빠른 상담 신청하기</a>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const scTabs = document.querySelectorAll('.sc-product-tab');
+                    const scPanes = document.querySelectorAll('.sc-tab-pane');
+
+                    scTabs.forEach(tab => {
+                        tab.addEventListener('click', () => {
+                            const target = tab.getAttribute('data-sctab');
+                            
+                            scTabs.forEach(t => t.classList.remove('active'));
+                            tab.classList.add('active');
+
+                            scPanes.forEach(p => {
+                                if(p.id === `sc-pane-${target}`) {
+                                    p.classList.add('active');
+                                } else {
+                                    p.classList.remove('active');
+                                }
+                            });
+                        });
+                    });
+
+                    // Animate character image and pills when tab switches
+                    function animateChar(pane) {
+                        const char = pane.querySelector('.sc-price-char');
+                        const pills = pane.querySelectorAll('.sc-pill');
+                        
+                        if (char) {
+                            gsap.fromTo(char,
+                                { opacity: 0, y: 40, scale: 0.85 },
+                                { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'elastic.out(1, 0.5)', delay: 0.15 }
+                            );
+                        }
+                        
+                        // Cute popping animation for pills
+                        if (pills.length) {
+                            gsap.fromTo(pills,
+                                { opacity: 0, y: 30, scale: 0 },
+                                { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'back.out(2)', stagger: 0.15, delay: 0.3 }
+                            );
+                        }
+                    }
+
+                    scTabs.forEach(tab => {
+                        tab.addEventListener('click', () => {
+                            const target = tab.getAttribute('data-sctab');
+
+                            scTabs.forEach(t => t.classList.remove('active'));
+                            tab.classList.add('active');
+
+                            scPanes.forEach(p => {
+                                if (p.id === `sc-pane-${target}`) {
+                                    p.classList.add('active');
+                                    animateChar(p);
+                                } else {
+                                    p.classList.remove('active');
+                                }
+                            });
+                        });
+                    });
+
+                    // 영수증 / 계산기 업데이트 로직
+                    const prodCards = document.querySelectorAll('.sc-prod-card');
+                    prodCards.forEach(card => {
+                        card.addEventListener('click', () => {
+                            const wrap = card.closest('.sc-calc-wrap');
+                            // 선택된 스타일 적용
+                            wrap.querySelectorAll('.sc-prod-card').forEach(c => c.classList.remove('selected'));
+                            card.classList.add('selected');
+                            
+                            // 영수증에 가전 이름 반영
+                            const productName = card.getAttribute('data-name');
+                            const receiptProduct = wrap.querySelector('.sc-receipt-product');
+                            
+                            receiptProduct.innerHTML = productName;
+                            receiptProduct.style.color = '#1d1d1f';
+                            
+                            // 영수증 등장 애니메이션
+                            const receiptBox = wrap.querySelector('.sc-receipt-box');
+                            gsap.fromTo(receiptBox, 
+                                { y: 15, scale: 0.98, opacity: 0.8, boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }, 
+                                { y: 0, scale: 1, opacity: 1, boxShadow: '0 10px 30px rgba(0,0,0,0.08)', duration: 0.4, ease: 'back.out(2)' }
+                            );
+                        });
+                    });
+
+                    // 자동 스크롤 캐러셀 로직
+                    const swipers = document.querySelectorAll('.sc-prod-swiper');
+                    swipers.forEach(swiper => {
+                        let isPaused = false;
+                        let direction = 1;
+
+                        const autoScroll = () => {
+                            if (!isPaused && swiper.scrollWidth > swiper.clientWidth) {
+                                swiper.scrollLeft += direction * 0.5;
+                                if (swiper.scrollLeft >= swiper.scrollWidth - swiper.clientWidth - 1) {
+                                    direction = -1;
+                                } else if (swiper.scrollLeft <= 0) {
+                                    direction = 1;
+                                }
+                            }
+                            requestAnimationFrame(autoScroll);
+                        };
+                        requestAnimationFrame(autoScroll);
+
+                        // 인터랙션 발생 시 일시정지 (사용자가 직접 스크롤/터치 할 때)
+                        swiper.addEventListener('touchstart', () => isPaused = true, {passive: true});
+                        swiper.addEventListener('touchend', () => {
+                            if (!swiper.querySelector('.selected')) isPaused = false;
+                        });
+                        swiper.addEventListener('mouseenter', () => isPaused = true);
+                        swiper.addEventListener('mouseleave', () => {
+                            if (!swiper.querySelector('.selected')) isPaused = false;
+                        });
+                    });
+
+                    // Animate char in the default active tab on load
+                    const firstActivePane = document.querySelector('.sc-tab-pane.active');
+                    if (firstActivePane) animateChar(firstActivePane);
+                });
+            </script>
+
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        // GSAP ScrollTrigger & Splitting Setup
+                        if (typeof Splitting !== 'undefined') {
+                            Splitting({ target: '.sc-intro-tag' });
+                            Splitting({ target: '.sc-intro-desc' });
+                        }
+
+                        const introTagChars = document.querySelectorAll('.sc-intro-tag .char');
+                        const introDescChars = document.querySelectorAll('.sc-intro-desc .char');
+                        const introBadges = document.querySelectorAll('.sc-intro-badges span');
+                        const introBox = document.querySelector('.sc-intro-box');
+                        const introEmoji = document.querySelector('.sc-intro-emoji');
+
+                        gsap.set(introTagChars, { opacity: 0, y: 15 });
+                        gsap.set(introDescChars, { opacity: 0, y: 15 });
+                        gsap.set(introBadges, { opacity: 0, y: 20 });
+                        gsap.set(introEmoji, { opacity: 0, scale: 0.5, y: 40 });
+                        gsap.set(introBox, { opacity: 0, scale: 0.95 });
+
+                        if (typeof ScrollTrigger !== 'undefined') {
+                            const scBoxTl = gsap.timeline({
+                                scrollTrigger: {
+                                    trigger: introBox,
+                                    start: "top 80%",
+                                }
+                            });
+
+                            // Box fades in
+                            scBoxTl.to(introBox, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" })
+                            // Text types out
+                            .to(introTagChars, { opacity: 1, y: 0, duration: 0.4, stagger: 0.02, ease: "back.out(2)" }, "-=0.2")
+                            .to(introDescChars, { opacity: 1, y: 0, duration: 0.4, stagger: 0.015, ease: "back.out(1.5)" }, "-=0.1")
+                            // Badges fade in & up staggered — right before emoji
+                            .to(introBadges, { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: "back.out(1.5)" }, "-=0.1")
+                            // Finally emoji pops up simultaneously with last badge
+                            .to(introEmoji, { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "elastic.out(1, 0.4)" }, "-=0.2");
+                        }
+                    });
+                </script>
+            </div>
         </div>
     </section>
 
@@ -2528,7 +3104,8 @@
             <span class="oh__inner">&#10005;</span>
         </button>
         <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#hero">홈</a></div>
-        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#hooking">소노 스마트케어</a></div>
+        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#hooking">소노 스마트케어 소개</a></div>
+        <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#smartcare">스마트케어 가전 플랜</a></div>
         <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#membership">멤버십 혜택</a></div>
         <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#strength">고객 후기</a></div>
         <div class="menu__item oh"><a class="menu__item-link oh__inner" href="#join-process">가입 절차</a></div>
@@ -2775,6 +3352,7 @@
 
         const q1 = panels[0].querySelector('.hook-text');
         const ans = panels[0].querySelector('.answer-text');
+        const hookBadge = panels[0].querySelector('.hook-badge');
 
         // Apply splitting explicitly
         Splitting({ target: q1 });
@@ -2790,6 +3368,7 @@
         gsap.set(ans, { opacity: 1 });
         gsap.set(q1Chars, { opacity: 0 });
         gsap.set(ansChars, { opacity: 0 });
+        if(hookBadge) gsap.set(hookBadge, { opacity: 0 });
 
         panels.slice(1).forEach(p => {
             const title = p.querySelector('.hook-text, .target-title, .badge-container');
@@ -2817,6 +3396,13 @@
         }, "p1-start");
 
         hookingTl.addLabel("p1-question"); // 질문 완성 지점
+        
+        if (hookBadge) {
+            hookingTl.fromTo(hookBadge, 
+                { opacity: 0, y: 15 }, 
+                { opacity: 1, y: 0, duration: 1.5, ease: "power2.out" }, 
+                "p1-question-=1.5"); // 텍스트 완성과 동시에 뱃지 등장 애니메이션(1.5초)도 정확히 100% 끝나도록 배치
+        }
 
         // 2. 한참 머무르기 (질문만 인지하는 충분한 구간)
         hookingTl.to({}, { duration: 3 });
@@ -2901,6 +3487,31 @@
             });
         }
 
+        const p2Img = document.getElementById('panel2-img');
+        if (p2Img) {
+            // 이미지 애니메이션: 통통 튀면서 등장
+            hookingTl.fromTo(p2Img, {
+                opacity: 0,
+                y: 100,
+                scale: 0.8
+            }, {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                ease: 'bounce.out',
+                duration: 1.5
+            }, "moveStart+=10"); // 텍스트 애니메이션이 끝나고 한 템포 쉬고 등장
+
+            // 이미지 퇴장 (패널 넘어갈 때)
+            hookingTl.to(p2Img, {
+                opacity: 0,
+                y: 50,
+                scale: 0.8,
+                ease: 'power2.in',
+                duration: 1.5
+            }, "moveStart+=12");
+        }
+
         // --- 나머지 패널 시네마틱 등장 (가로 스크롤 연동) ---
         panels.slice(1).forEach((panel, i) => {
             const title = panel.querySelectorAll('.hook-text, .target-title, .badge-container');
@@ -2949,10 +3560,10 @@
         });
 
         // --- Light mode transition (Turn ON lights) at benefits section ---
-        // 멤버십 섹션이 뷰포트를 채울 때까지 검정을 유지하고, 그 동안 흰색으로 서서히 전환
+        // 스마트케어 섹션이 뷰포트를 채울 때까지 검정을 유지하고, 그 동안 흰색으로 서서히 전환
         const lightTl = gsap.timeline({
             scrollTrigger: {
-                trigger: ".section--benefits",
+                trigger: ".smartcare-section",
                 start: "top 100%", // 섹션 상단이 화면 하단에 들어오기 시작할 때
                 end: "top top",    // 섹션 상단이 화면 상단에 닿을 때 전환 완료
                 scrub: true
@@ -3604,6 +4215,24 @@
         initApp();
 
     </script>
+    
+    <!-- Global Floating Selection Bar -->
+    <div id="global-floating-bar" class="global-floating-bar">
+        <div class="gfb-inner">
+            <div class="gfb-selections">
+                <span class="gfb-item" id="gfb-plan">스마트케어 150</span>
+                <span class="gfb-divider">|</span>
+                <span class="gfb-item" id="gfb-brand">전체보기 (브랜드)</span>
+                <span class="gfb-divider">|</span>
+                <span class="gfb-item" id="gfb-cat">전체보기 (가전)</span>
+            </div>
+            <div class="gfb-price">
+                <span id="gfb-price-val">19,900원</span> / 월
+            </div>
+            <button class="gfb-btn">상담 신청</button>
+        </div>
+    </div>
+    <script src="./js/smartcare.js"></script>
 </body>
 
 </html>
