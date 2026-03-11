@@ -4693,7 +4693,6 @@ body {
     width: 180px;
     transform-origin: bottom center;
     z-index: 3;
-    transition: all 0.3s ease;
 }
 
 @media (min-width: 768px) {
