@@ -4711,9 +4711,9 @@ body {
 .floating-cta {
     position: fixed;
     bottom: -100px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+    left: auto;
+    right: max(1.5rem, calc(50% - 200px));
+    margin: 0;
     width: calc(100% - 3rem);
     max-width: 400px;
     height: 64px;
