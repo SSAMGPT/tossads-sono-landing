@@ -4711,17 +4711,17 @@ body {
 .floating-cta {
     position: fixed;
     bottom: -100px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 90%;
+    right: 1.5rem;
+    left: auto;
+    margin: 0;
+    width: calc(100% - 3rem);
     max-width: 400px;
     height: 64px;
     background: #ff1f5d;
     color: #fff;
     z-index: 9999;
     padding: 0 1.5rem;
-    border-radius: 50px;
+    border-radius: 32px;
     box-shadow: 0 10px 30px rgba(255, 31, 93, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
     display: flex;
     justify-content: space-between;
@@ -4734,15 +4734,14 @@ body {
 
 .f-cta-toggle-btn {
     position: absolute;
-    top: -12px;
-    right: 24px;
+    top: -46px;
+    right: 0;
     left: auto;
-    transform: none;
-    background: #fff;
+    background: #ff1f5d;
     border: none;
-    color: #ff1f5d;
-    width: 26px;
-    height: 26px;
+    color: #fff;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -4750,12 +4749,13 @@ body {
     align-items: center;
     padding: 0;
     z-index: 10;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     transition: all 0.3s ease;
 }
 
 .f-cta-toggle-btn:hover {
     transform: scale(1.1);
+    background: #f01450;
 }
 
 .floating-cta.is-minimized {
@@ -4770,14 +4770,14 @@ body {
 }
 
 .floating-cta.is-minimized .f-cta-toggle-btn {
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    background: transparent;
+    top: -46px;
+    right: 0;
+    transform: none;
+    background: #ff1f5d;
     color: #fff;
-    box-shadow: none;
-    width: auto;
-    height: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    width: 36px;
+    height: 36px;
 }
 
 .floating-cta.active {
