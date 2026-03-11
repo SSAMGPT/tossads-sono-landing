@@ -1367,14 +1367,7 @@
             <!-- Panel 4: 다양한 혜택 및 추가 안내 -->
             <div class="panel">
                 <div class="panel-content">
-                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;">
-                        <div class="badge-container" style="margin-bottom: 12px;">
-                            <span class="hook-badge" style="display: inline-flex; align-items: center; justify-content: center; background-color: limegreen; color: #fff; padding: 4px 14px; border-radius: 30px; font-size: 13px; font-family: 'Paperozi', sans-serif; font-weight: 700; letter-spacing: 0;">풍성한 혜택</span>
-                        </div>
-                        <h2 class="target-title" style="margin-top: 0; margin-bottom: 3rem;">단순한 렌탈상품? 아닙니다.<br>다양한 혜택이 준비돼 있어요.</h2>
-                    </div>
-
-                    <div class="benefit-3d-wrap" style="position: relative; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
+                                      <div class="benefit-3d-wrap" style="position: relative; width: 100%; max-width: 400px; margin: -5rem auto 2rem; display: flex; flex-direction: column; align-items: center;">
                         
                         <!-- Floating Badges and Character Container -->
                         <div style="position: relative; width: 100%; aspect-ratio: 1/1.1; display: flex; justify-content: center; align-items: center; margin-bottom: 2rem;">
@@ -1383,8 +1376,8 @@
                             
                             <!-- Top Badge -->
                             <div style="position: absolute; top: 12.9%; left: 51.3%; z-index: 3;">
-                                <div class="benefit-bubble-anim slam" style="animation-delay: 0.3s;">
-                                    <div class="ios-bubble from-them float-1" style="--bg-color: #ff1f5d; background: var(--bg-color); color: #fff;">
+                                <div class="benefit-bubble-anim" style="animation-delay: 0.1s;">
+                                    <div class="ios-bubble" style="--bg-color: #ff1f5d; background: var(--bg-color); color: #fff;">
                                         💸 만기 시 전액 환급
                                     </div>
                                 </div>
@@ -1392,8 +1385,8 @@
                             
                             <!-- Left Badge -->
                             <div style="position: absolute; top: 53.8%; left: 1.5%; z-index: 3;">
-                                <div class="benefit-bubble-anim slam" style="animation-delay: 0.9s;">
-                                    <div class="ios-bubble from-me float-2" style="--bg-color: #1a8fe3; background: var(--bg-color); color: #fff;">
+                                <div class="benefit-bubble-anim" style="animation-delay: 0.7s;">
+                                    <div class="ios-bubble" style="--bg-color: #1a8fe3; background: var(--bg-color); color: #fff;">
                                         🏨 리조트 객실 우대
                                     </div>
                                 </div>
@@ -1401,8 +1394,8 @@
                             
                             <!-- Right Badge -->
                             <div style="position: absolute; top: 46.8%; left: 60.5%; z-index: 3;">
-                                <div class="benefit-bubble-anim slam" style="animation-delay: 1.5s;">
-                                    <div class="ios-bubble from-them float-3" style="--bg-color: #7c3aed; background: var(--bg-color); color: #fff;">
+                                <div class="benefit-bubble-anim" style="animation-delay: 1.3s;">
+                                    <div class="ios-bubble" style="--bg-color: #7c3aed; background: var(--bg-color); color: #fff;">
                                         🚢 해외여행 전환
                                     </div>
                                 </div>
@@ -1410,8 +1403,8 @@
                             
                             <!-- Bottom Badge -->
                             <div style="position: absolute; top: 81.6%; left: 31.5%; z-index: 3;">
-                                <div class="benefit-bubble-anim slam" style="animation-delay: 2.1s;">
-                                    <div class="ios-bubble from-me float-4" style="--bg-color: #ffffff; background: var(--bg-color); color: #1d1d1f; border: 1px solid rgba(0,0,0,0.06);">
+                                <div class="benefit-bubble-anim" style="animation-delay: 1.9s;">
+                                    <div class="ios-bubble" style="--bg-color: #ffffff; background: var(--bg-color); color: #1d1d1f; border: 1px solid rgba(0,0,0,0.06);">
                                         🕊️ 프리미엄 상조
                                     </div>
                                 </div>
@@ -1424,6 +1417,33 @@
                         </div>
                     </div>
                     
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const observer = new IntersectionObserver((entries) => {
+                                entries.forEach(entry => {
+                                    if (entry.isIntersecting) {
+                                        const anims = entry.target.querySelectorAll('.benefit-bubble-anim');
+                                        anims.forEach((anim, idx) => {
+                                            anim.classList.add('run-anim');
+                                            
+                                            // animation-delay 파싱 (ex: "0.1s" -> 0.1)
+                                            const delaySec = parseFloat(anim.style.animationDelay) || 0;
+                                            // slam duration (1.5s) + delaySec가 지난 후 플로팅 애니메이션 시작 (밀리초 환산)
+                                            setTimeout(() => {
+                                                const bubble = anim.querySelector('.ios-bubble');
+                                                bubble.classList.add('float-' + (idx + 1));
+                                            }, (delaySec + 1.5) * 1000);
+                                        });
+                                        observer.unobserve(entry.target); // 한번만 실행
+                                    }
+                                });
+                            }, { threshold: 0.3 });
+                            
+                            const wrap = document.querySelector('.benefit-3d-wrap');
+                            if(wrap) observer.observe(wrap);
+                        });
+                    </script>
+
                     <style>
                         @keyframes float3d {
                             0% { transform: translateY(0) rotate(0deg); }
@@ -1445,29 +1465,38 @@
                             0% {
                                 transform: rotate3d(0, 0, 1, 5deg) scale3d(3, 3, 3) translate3d(-50px, -10px, 0);
                                 box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
+                                opacity: 0;
                             }
                             18% {
                                 transform: rotate3d(0, 0, 1, 0deg) scale3d(1, 1, 1) translate3d(0, 0, 0);
                                 box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.45);
+                                opacity: 1;
                             }
                             40% {
                                 transform: rotate3d(0, 0, 1, 1deg) scale3d(1.1, 1.1, 1.1) translate3d(-1px, -1px, 0);
                                 box-shadow: 0px 0px 100px 2px rgba(0, 0, 0, 0.25);
+                                opacity: 1;
                             }
                             55% {
                                 transform: rotate3d(0, 0, 1, 0deg) scale3d(1.0, 1.0, 1.0) translate3d(0px, 0px, 0);
+                                opacity: 1;
                             }
                             to {
                                 transform: rotate3d(0, 0, 1, 0deg);
                                 box-shadow: 0px 0px 125px 5px rgba(0, 0, 0, 0);
+                                opacity: 1;
                             }
                         }
 
-                        .benefit-bubble-anim.slam {
+                        .benefit-bubble-anim {
+                            opacity: 0;
                             animation-duration: 1.5s;
                             animation-fill-mode: both;
                             animation-timing-function: cubic-bezier(.87, .58, .25, 1.29);
                             transform-origin: center center;
+                        }
+                        
+                        .benefit-bubble-anim.run-anim {
                             animation-name: slam;
                         }
 
@@ -1482,36 +1511,10 @@
                             line-height: 1.3;
                         }
 
-                        /* from-me: tail on right side */
-                        .ios-bubble.from-me::before {
-                            content: "";
-                            position: absolute;
-                            bottom: 0;
-                            right: -8px;
-                            width: 20px;
-                            height: 20px;
-                            background: var(--bg-color);
-                            border-bottom-left-radius: 15px;
-                            clip-path: polygon(0 0, 100% 0, 0 100%);
-                        }
-
-                        /* from-them: tail on left side */
-                        .ios-bubble.from-them::before {
-                            content: "";
-                            position: absolute;
-                            bottom: 0;
-                            left: -8px;
-                            width: 20px;
-                            height: 20px;
-                            background: var(--bg-color);
-                            border-bottom-right-radius: 15px;
-                            clip-path: polygon(100% 0, 0 0, 100% 100%);
-                        }
-
                         @media (max-width: 480px) {
                             .ios-bubble {
-                                font-size: 16px;
-                                padding: 9px 18px;
+                                font-size: 14px;
+                                padding: 8px 16px;
                             }
                         }
                     </style>
