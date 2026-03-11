@@ -4685,6 +4685,25 @@ body {
     padding-bottom: 80px; /* To prevent footer overlap */
 }
 
+/* Smartcare Intro Emoji Styling */
+.sc-intro-emoji {
+    position: absolute;
+    right: 0.5rem;
+    bottom: -5px;
+    width: 180px;
+    transform-origin: bottom center;
+    z-index: 3;
+    transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .sc-intro-emoji {
+        width: 250px;
+        right: 2rem;
+        bottom: -10px;
+    }
+}
+
 /* GSAP Lighting Effect in Smartcare Section */
 .smartcare-section {
     position: relative;
