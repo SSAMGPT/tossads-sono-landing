@@ -4735,21 +4735,28 @@ body {
 
 .f-cta-toggle-btn {
     position: absolute;
-    top: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.2);
+    top: -12px;
+    right: 24px;
+    left: auto;
+    transform: none;
+    background: #fff;
     border: none;
-    color: white;
-    width: 40px;
-    height: 18px;
-    border-radius: 0 0 10px 10px;
+    color: #ff1f5d;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 2px;
-    z-index: 2;
+    padding: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.f-cta-toggle-btn:hover {
+    transform: scale(1.1);
 }
 
 .floating-cta.is-minimized {
@@ -4764,12 +4771,14 @@ body {
 }
 
 .floating-cta.is-minimized .f-cta-toggle-btn {
-    top: auto;
-    bottom: -4px;
-    border-radius: 10px 10px 0 0;
-    padding-bottom: 0;
-    padding-top: 2px;
-    height: 15px;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    background: transparent;
+    color: #fff;
+    box-shadow: none;
+    width: auto;
+    height: auto;
 }
 
 .floating-cta.active {
@@ -4808,10 +4817,17 @@ body {
     gap: 0.5rem;
     font-size: 14px;
     font-weight: 800;
+    color: #fff;
+    text-decoration: none;
     background: rgba(255, 255, 255, 0.2);
     padding: 0.5rem 1rem;
     border-radius: 30px;
     backdrop-filter: blur(5px);
+    transition: background 0.3s;
+}
+
+.f-cta-action:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 @media (max-width: 480px) {
