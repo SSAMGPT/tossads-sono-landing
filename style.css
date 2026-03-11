@@ -4103,23 +4103,36 @@ body.dark-mode .split-layout .answer-text {
     position: relative;
 }
 
-/* Colorful solid badge-style keyword pills stacked at bottom right */
+/* Colorful solid badge-style keyword pills stacked at bottom left */
 .sc-pill-stack {
     position: absolute;
     bottom: 1.5rem;
-    right: 1.5rem;
+    left: 1.5rem;
     z-index: 10;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 0.8rem;
+}
+
+/* Only 330X6 has pills on the right */
+#sc-pane-330x6 .sc-pill-stack {
+    left: auto;
+    right: 1.5rem;
+    align-items: flex-end;
 }
 
 @media (max-width: 480px) {
     .sc-pill-stack {
         transform: scale(0.85);
-        transform-origin: bottom right;
+        transform-origin: bottom left;
         bottom: 1rem;
+        left: 1rem;
+    }
+    
+    #sc-pane-330x6 .sc-pill-stack {
+        transform-origin: bottom right;
+        left: auto;
         right: 1rem;
     }
 }
