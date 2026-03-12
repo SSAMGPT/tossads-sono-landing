@@ -4139,16 +4139,31 @@ body.dark-mode .split-layout .answer-text {
 
 @media (min-width: 768px) {
     .sc-pill-stack {
-        transform: scale(1.35);
+        transform: scale(1.5);
         transform-origin: bottom left;
         bottom: 2rem;
-        left: 2rem;
+        left: 2.5rem;
     }
 
     #sc-pane-330x6 .sc-pill-stack {
         transform-origin: bottom right;
         left: auto;
-        right: 2rem;
+        right: 2.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sc-pill-stack {
+        transform: scale(2.2);
+        transform-origin: bottom left;
+        bottom: 3.5rem;
+        left: 4rem;
+    }
+
+    #sc-pane-330x6 .sc-pill-stack {
+        transform-origin: bottom right;
+        left: auto;
+        right: 4rem;
     }
 }
 
