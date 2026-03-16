@@ -5,6 +5,7 @@ if (typeof SplitText !== 'undefined' && typeof CustomEase !== 'undefined') {
 }
 
 // Loading Animation
+// Loading Animation
 function initCrispLoadingAnimation() {
   const container = document.querySelector(".crisp-header");
   if (!container) return;
@@ -14,8 +15,10 @@ function initCrispLoadingAnimation() {
   const isScaleUp = container.querySelectorAll(".crisp-loader__media");
   const isScaleDown = container.querySelectorAll(".crisp-loader__media .is--scale-down");
   const isRadius = container.querySelectorAll(".crisp-loader__media.is--scaling.is--radius");
-  const smallElements = container.querySelectorAll(".crisp-header__top, .crisp-header__p");
   const sliderNav = container.querySelectorAll(".crisp-header__slider-nav > *");
+  
+  // Combine all elements to reveal at the end
+  const smallElements = document.querySelectorAll(".main-header, .crisp-header__p, .crisp-header__top");
   
   /* GSAP Timeline */
   const tl = gsap.timeline({
@@ -35,40 +38,35 @@ function initCrispLoadingAnimation() {
     tl.to(splashLogo, {
       opacity: 1,
       scale: 1,
-      duration: 1.2,
+      duration: 1,
       ease: "power2.out"
     })
     .to(splashLogo, {
       opacity: 0,
       scale: 1.1,
-      duration: 0.8,
+      duration: 0.6,
       ease: "power2.in"
-    }, "+=0.3")
+    }, "+=0.2")
     .to(splash, {
       autoAlpha: 0,
       duration: 0.5
-    }, "-=0.2");
+    }, "-=0.1");
   }
   
-  /* GSAP SplitText Setup */
+  /* GSAP SplitText - Using User's requested 'mask: words' logic */
   let split;
   if (headings.length && typeof SplitText !== 'undefined') {
-    // 1. Split text into words with a dedicated class for spacing
     split = new SplitText(headings, {
       type: "words",
-      wordsClass: "sono-word"
+      mask: "words"
     });
 
-    // 2. Set initial state of words hidden below the masking container
     gsap.set(split.words, {
       yPercent: 110,
     });
-
-    // 3. Keep it hidden for now (will be revealed in the timeline)
-    gsap.set(headings, { autoAlpha: 0 });
   }
   
-  /* Start of Timeline */
+  /* Start of Timeline (follows splash) */
   if (revealImages.length) {
     tl.fromTo(revealImages, {
       xPercent: 500
@@ -76,7 +74,7 @@ function initCrispLoadingAnimation() {
       xPercent: -500,
       duration: 2.5,
       stagger: 0.05
-    });
+    }, ">");
   }
   
   if (isScaleDown.length) {
@@ -117,35 +115,23 @@ function initCrispLoadingAnimation() {
   }
   
   if (split && split.words.length) {
-    // Reveal the container just before the words start moving
-    tl.set(headings, { autoAlpha: 1 }, "<");
-    
-    tl.fromTo(split.words, {
-      yPercent: 110
-    }, {
+    tl.to(split.words, {
       yPercent: 0,
-      stagger: 0.1,
+      stagger: 0.075,
       ease: "expo.out",
-      duration: 1.2
+      duration: 1
     }, "< 0.1");
   }
   
   if (smallElements.length) {
-    tl.from(smallElements, {
-      opacity: 0,
+    tl.to(smallElements, {
+      opacity: 1,
+      y: 0,
+      pointerEvents: "auto",
       ease: "power1.inOut",
-      duration: 0.2
+      duration: 0.8
     }, "< 0.15");
   }
-
-  // Header Reveal: Fade In & Up
-  tl.to(".main-header", {
-    opacity: 1,
-    y: 0,
-    pointerEvents: "auto",
-    duration: 1.2,
-    ease: "power3.out"
-  }, "-=0.8");
   
   tl.call(function () {
     container.classList.remove('is--loading');
