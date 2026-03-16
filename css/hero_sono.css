@@ -133,6 +133,28 @@ body:has(.crisp-header.is--loading) {
   display: flex;
 }
 
+/* Splash Screen */
+.crisp-splash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #eaeaea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  opacity: 1;
+}
+
+.crisp-splash__logo {
+  width: 90px; /* 로고 크기 1/2로 축소 (180px -> 90px) */
+  height: auto;
+  opacity: 0;
+  transform: scale(0.9);
+}
+
 /* Loading: Loading Done */
 .crisp-loader {
   display: none;

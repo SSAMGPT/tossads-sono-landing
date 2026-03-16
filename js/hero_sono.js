@@ -26,6 +26,29 @@ function initCrispLoadingAnimation() {
       container.classList.remove('is--hidden');
     }
   });
+
+  // 0. Splash Animation (Logo First)
+  const splash = container.querySelector(".crisp-splash");
+  const splashLogo = container.querySelector(".crisp-splash__logo");
+
+  if (splash && splashLogo) {
+    tl.to(splashLogo, {
+      opacity: 1,
+      scale: 1,
+      duration: 1.2,
+      ease: "power2.out"
+    })
+    .to(splashLogo, {
+      opacity: 0,
+      scale: 1.1,
+      duration: 0.8,
+      ease: "power2.in"
+    }, "+=0.3")
+    .to(splash, {
+      autoAlpha: 0,
+      duration: 0.5
+    }, "-=0.2");
+  }
   
   /* GSAP SplitText Setup */
   let split;
