@@ -27,17 +27,22 @@ function initCrispLoadingAnimation() {
     }
   });
   
-  /* GSAP SplitText - Using chars for smoother effect */
+  /* GSAP SplitText Setup */
   let split;
   if (headings.length && typeof SplitText !== 'undefined') {
+    // 1. Split text into words with a dedicated class for spacing
     split = new SplitText(headings, {
-      type: "chars,words",
+      type: "words",
+      wordsClass: "sono-word"
     });
 
-    gsap.set(split.chars, {
+    // 2. Set initial state of words hidden below the masking container
+    gsap.set(split.words, {
       yPercent: 110,
-      opacity: 0
     });
+
+    // 3. Keep it hidden for now (will be revealed in the timeline)
+    gsap.set(headings, { autoAlpha: 0 });
   }
   
   /* Start of Timeline */
@@ -88,13 +93,17 @@ function initCrispLoadingAnimation() {
     }, "-=0.9");
   }
   
-  if (split && split.chars.length) {
-    tl.to(split.chars, {
+  if (split && split.words.length) {
+    // Reveal the container just before the words start moving
+    tl.set(headings, { autoAlpha: 1 }, "<");
+    
+    tl.fromTo(split.words, {
+      yPercent: 110
+    }, {
       yPercent: 0,
-      opacity: 1,
-      stagger: 0.02,
+      stagger: 0.1,
       ease: "expo.out",
-      duration: 1
+      duration: 1.2
     }, "< 0.1");
   }
   
@@ -134,7 +143,10 @@ function initSlideShow(el) {
     thumbs: Array.from(el.querySelectorAll('[data-slideshow="thumb"]'))
   };
 
-  let current = 0;
+  // Determine current index from HTML or default to 0
+  let current = ui.slides.findIndex(slide => slide.classList.contains('is--current'));
+  if (current === -1) current = 0;
+
   const length = ui.slides.length;
   let animating = false;
   const animationDuration = 1.5;
@@ -142,6 +154,7 @@ function initSlideShow(el) {
   ui.slides.forEach((slide, index) => slide.setAttribute('data-index', index));
   ui.thumbs.forEach((thumb, index) => thumb.setAttribute('data-index', index));
 
+  // Add classes if not already present
   if (ui.slides[current]) ui.slides[current].classList.add('is--current');
   if (ui.thumbs[current]) ui.thumbs[current].classList.add('is--current');
 

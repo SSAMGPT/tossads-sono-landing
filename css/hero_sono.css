@@ -1,4 +1,4 @@
-/* ------- Osmo [https://osmo.supply/] ------- */
+/* ------- Sono Smartcare Hero ------- */
 
 /* Disable Scroll on Loading */
 body:has(.crisp-header.is--loading) {
@@ -163,6 +163,8 @@ body:has(.crisp-header.is--loading) {
   padding: 1.5em;
   position: absolute;
   left: 0;
+  overflow: hidden;
+  z-index: 100; /* Ensure it's above the slider */
 }
 
 .crisp-header__bottom {
@@ -269,14 +271,27 @@ body:has(.crisp-header.is--loading) {
 
 .crisp-header__h1 {
   text-align: center;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   margin-top: 0;
   margin-bottom: .125em;
   font-family: 'Paperozi', sans-serif;
-  font-size: calc(4vw + 4dvh);
+  font-size: calc(3.6vw + 3.6dvh);
   font-weight: 800;
-  line-height: 1.1;
-  word-break: keep-all;
+  line-height: 1.25;
+}
+
+/* Masking for SplitText words */
+.crisp-header__h1 .sono-word {
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 0.28em; /* To fix the spacing issue */
+}
+
+.crisp-header__h1 .sono-word:last-child {
+  margin-right: 0;
 }
 
 .crisp-header__h1 > * {
