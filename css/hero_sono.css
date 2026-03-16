@@ -6,6 +6,11 @@ body:has(.crisp-header.is--loading) {
   height: 100dvh;
 }
 
+/* Hide all content below the hero during loading to prevent scroll-restoration flash */
+body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
+  visibility: hidden;
+}
+
 /* Loader */
 
 .crisp-loader {
@@ -115,6 +120,7 @@ body:has(.crisp-header.is--loading) {
   align-items: center;
   display: flex;
   position: relative;
+  z-index: 2;
   overflow: hidden;
   min-height: 100vh;
 }
@@ -170,7 +176,7 @@ body:has(.crisp-header.is--loading) {
   padding: 2.5em;
   display: flex;
   position: relative;
-  z-index: 10;
+  z-index: 10002;
 }
 
 .crisp-header__top {
@@ -184,9 +190,11 @@ body:has(.crisp-header.is--loading) {
   width: 100%;
   padding: 1.5em;
   position: absolute;
+  top: 50%;
   left: 0;
+  transform: translateY(-50%);
   overflow: hidden;
-  z-index: 100; /* Ensure it's above the slider */
+  z-index: 100;
 }
 
 .crisp-header__bottom {
@@ -296,15 +304,20 @@ body:has(.crisp-header.is--loading) {
   letter-spacing: -0.025em;
   margin-top: 0;
   margin-bottom: .125em;
-  font-family: 'Paperozi', sans-serif;
-  font-size: calc(3.6vw + 3.6dvh);
+  font-family: 'Pretendard', sans-serif;
+  font-size: clamp(1.8rem, calc(3.6vw + 3.6dvh), 4.5rem);
   font-weight: 800;
   line-height: 1.25;
   opacity: 0; /* JS will handle reveal */
+  will-change: transform;
 }
 
-/* Ensure SplitText mask containers work correctly */
-.crisp-header__h1 > div {
-  padding-bottom: 0.1em;
-  margin-bottom: -0.1em;
+.crisp-header__h1 * {
+  will-change: transform;
+}
+
+/* SplitText word spans – margin-right is the ONLY spacing source (text nodes are removed in JS) */
+.crisp-header__h1 .split-word {
+  display: inline-block;
+  margin-right: 0.25em;
 }
