@@ -124,6 +124,7 @@ body {
 }
 
 /* Header */
+/* Header - Transparent initially for Hero */
 .main-header {
     position: fixed;
     top: 0;
@@ -131,11 +132,12 @@ body {
     width: 100%;
     z-index: 1000;
     padding: 1.5rem 0;
-    background: rgba(255, 255, 255, 0.7);
-    /* 반투명 배경 */
-    backdrop-filter: blur(15px);
-    /* 고급스러운 블러 효과 */
-    /* 하단 라인 제거 */
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
 }
 
 .header-container {
@@ -152,6 +154,7 @@ body {
     /* 로고 높이를 세련되게 조정 */
     width: auto;
     display: block;
+    filter: brightness(0) invert(1); /* White for Hero */
 }
 
 /* Hero Section */
