@@ -5980,7 +5980,9 @@ body {
     border-radius: 1.25rem;
 }
 
-.refund-card:hover .refund-card-inner {
+.refund-card:hover .refund-card-inner,
+.refund-card.is--flipped .refund-card-inner {
+    -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
 

@@ -254,7 +254,34 @@ document.fonts.ready.then(() => {
     const splash = container ? container.querySelector('.crisp-splash') : null;
     if (splash) gsap.set(splash, { autoAlpha: 0 });
   }
+
+  // ── 모바일 카드 플립: 클릭으로 토글 ──
+  document.querySelectorAll('.refund-card').forEach(card => {
+    card.addEventListener('click', function () {
+      this.classList.toggle('is--flipped');
+    });
+  });
 });
+
+// ── Safari/모바일 안전망: fonts.ready가 발화하지 않거나 GSAP 실패 시 ──
+// 6초 후에도 is--loading 상태면 강제 해제하여 콘텐츠를 표시
+const _safariFallbackTimer = setTimeout(function () {
+  const container = document.querySelector('.crisp-header');
+  if (container && container.classList.contains('is--loading')) {
+    console.warn('[hero] Safari fallback: releasing loading state after timeout');
+    container.classList.remove('is--loading');
+    const mainHeader = document.querySelector('.main-header');
+    if (mainHeader) gsap.set(mainHeader, { opacity: 1, y: 0, pointerEvents: 'auto' });
+    const headings = container.querySelectorAll('.crisp-header__h1');
+    headings.forEach(h => gsap.set(h, { opacity: 1 }));
+    const sliderNav = container.querySelectorAll('.crisp-header__slider-nav > *');
+    if (sliderNav.length) gsap.set(sliderNav, { yPercent: 0 });
+    const scrollBtn = document.querySelector('.hero-scrolldown');
+    if (scrollBtn) gsap.set(scrollBtn, { opacity: 1, y: 0 });
+    const smallElements = document.querySelectorAll('.crisp-header__p, .crisp-header__top');
+    gsap.set(smallElements, { opacity: 1, y: 0, pointerEvents: 'auto' });
+  }
+}, 6000);
 
 // Slideshow
 function initSlideShow(el) {
