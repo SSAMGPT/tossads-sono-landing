@@ -1991,6 +1991,20 @@
     <section class="smartcare-section" id="smartcare" data-color="#fdfdfd #1d1d1f">
         <!-- 가입절차의 lighting-overlay와 동일한 패턴: 뺛이 켜지는 효과 -->
 
+        <!-- 섹션 타이틀 -->
+        <h2 id="smartcare-section-heading" style="
+            font-size: clamp(1.5rem, calc(3vw + 3dvh), 3.75rem);
+            font-weight: 800;
+            color: #1d1d1f;
+            line-height: 1.25;
+            letter-spacing: -0.03em;
+            word-break: keep-all;
+            text-align: center;
+            margin: 0 auto 0;
+            padding-top: 5rem;
+            opacity: 0;
+            font-family: 'Pretendard', sans-serif;
+        ">스마트케어 플랜</h2>
 
         <div class="sc-container">
             <!-- 새로운 첫번째 소개 박스 -->
@@ -3914,6 +3928,38 @@
                     },
                     onLeaveBack: () => {
                         gsap.to(split.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' });
+                    }
+                });
+            }
+
+            // --- 스마트케어 플랜 섹션 타이틀 애니메이션 (intro-dark-heading과 동일) ---
+            const scHeading = document.getElementById('smartcare-section-heading');
+            if (scHeading && typeof SplitText !== 'undefined') {
+                const scSplit = new SplitText(scHeading, {
+                    type: 'words,chars',
+                    wordsClass: 'split-word',
+                    charsClass: 'split-char'
+                });
+                gsap.set(scHeading, { opacity: 1 });
+                gsap.set(scSplit.chars, { opacity: 0 });
+                ScrollTrigger.create({
+                    trigger: scHeading,
+                    start: 'top 80%',
+                    onEnter: () => {
+                        gsap.fromTo(scSplit.chars,
+                            { opacity: 0 },
+                            {
+                                opacity: 1, duration: 1.2, ease: 'power1.inOut',
+                                stagger: { from: 'center', each: 0.04 }
+                            }
+                        );
+                        gsap.from(scSplit.words, {
+                            y: (i) => (i * 100) - 50,
+                            duration: 3, ease: 'expo.out'
+                        });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(scSplit.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' });
                     }
                 });
             }
