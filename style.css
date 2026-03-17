@@ -856,12 +856,881 @@ body {
 }
 
 /* 후킹 섹션 (전체 컨테이너) */
-.hooking-section {
+
+/* =============================================
+   Intro Dark 섹션 — 카드 캐러셀
+   ============================================= */
+
+/* 캐러셀 래퍼: 좌우 가장자리 페이드 처리 */
+.dark-carousel-wrapper {
+    width: calc(100% + clamp(1.5rem, 5vw, 8rem) * 2);
+    margin-left: calc(-1 * clamp(1.5rem, 5vw, 8rem));
+    margin-top: calc(6vh - 12px); /* padding-top 보정 */
+    padding-top: 12px;            /* 호버 시 카드 위로 이동 여백 */
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* 카드 트랙 */
+.dark-carousel-track {
+    display: flex;
+    flex-direction: row;
+    gap: 1.25rem;
+    width: max-content;
+    animation: darkCarouselScroll 18s linear infinite;
+    will-change: transform;
+}
+
+.dark-carousel-wrapper:hover .dark-carousel-track {
+    animation-play-state: paused;
+}
+
+@keyframes darkCarouselScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+/* 개별 카드 */
+.dark-card {
+    flex-shrink: 0;
+    width: clamp(260px, 28vw, 380px);
+    aspect-ratio: 3 / 4;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    display: block;
+    background: #111;
+}
+
+/* 이미지: 카드 전체를 꽉 채움 */
+.dark-card__img {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.dark-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+}
+
+/* 텍스트: 이미지 위에 직접 */
+.dark-card p {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    right: 1.25rem;
+    z-index: 2;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    font-family: 'Pretendard', sans-serif;
+    font-size: clamp(1.21rem, 1.71vw, 1.5rem);
+    font-weight: 700;
+    color: #ffffff !important;
+    line-height: 1.4;
+    letter-spacing: -0.03em;
+    word-break: keep-all;
+    margin: 0;
+    text-shadow: none;
+}
+
+/* 가로 블라인드 전환: 오버레이는 JS 인라인 스타일로 제어 */
+
+/* 이미지 없는 플레이스홀더 카드 (두 번째 캐러셀용) */
+.dark-card--placeholder {
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+/* 알약 + 텍스트 묶음 컨테이너 */
+.dark-card__content {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    right: 1.25rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* content 안의 p는 static (절대 위치 해제) */
+.dark-card__content p {
+    position: static !important;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin: 0;
+    padding: 0;
+    text-shadow: none;
+}
+
+/* 알약 뱃지 */
+.dark-card__pill {
+    display: inline-block;
+    align-self: flex-start;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1d1d1f;
+    font-family: 'Pretendard', sans-serif;
+    font-size: clamp(0.9rem, 1.275vw, 1.125rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    padding: 0.55em 0.9em 0.38em;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: color 0.4s ease;
+    z-index: 2;
+}
+
+/* 채우기 레이어 */
+.dark-card__pill::before {
+    content: '';
+    position: absolute;
+    top: -2%;
+    left: -2%;
+    width: 104%;
+    height: 104%;
+    background: linear-gradient(
+        82.3deg,
+        rgba(150, 93, 233, 1) 10.8%,
+        rgba(99, 88, 238, 1) 94.3%
+    );
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: -1;
+}
+
+/* 카드 호버 시 알약 채우기 */
+.dark-card:hover .dark-card__pill::before {
+    transform: scaleX(1);
+}
+
+/* 채워지면 텍스트 흰색으로 */
+.dark-card:hover .dark-card__pill {
+    color: #ffffff;
+}
+
+/* =============================================
+   Flowing Menu
+   ============================================= */
+/* #flowing-menu-section은 #intro-dark로 통합됨 */
+
+
+#flowing-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    margin: 5vh 0 0;
+    /* #intro-dark의 좌우 패딩을 상쇄하여 양쪽 끝까지 확장 */
+    margin-left: calc(-1 * clamp(1.5rem, 5vw, 8rem));
+    padding: 0;
+}
+
+.fm-item {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+}
+
+.fm-item:last-child {
+    border-bottom: none;
+}
+
+.fm-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: clamp(70px, 10vh, 110px);
+    padding: 1.5rem 2rem;
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'Pretendard', sans-serif;
+    font-size: clamp(1rem, 2.2vh, 1.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    word-break: keep-all;
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.3s;
+}
+
+/* 텍스트 왼쪽 캐릭터 이미지 팝아웃 프레임 */
+.fm-avatar {
+    --size: clamp(56px, 8vh, 85px);
+    --noggin: calc(var(--size) * 0.25);
+    --height-with-noggin: calc(var(--size) + var(--noggin));
+    --border-width: calc(var(--size) * 0.05);
+
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    border: var(--border-width) solid transparent;
+    background-color: #0039E3;
+    margin-right: 1.2rem;
+    flex-shrink: 0;
+}
+
+.fm-avatar {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+
+    --mask-size: calc(var(--size) / 2 - var(--border-width));
+    --mask-image:
+      linear-gradient(to bottom, black 0%, black 50%, transparent 50%),
+      radial-gradient(
+          circle at center center,
+          black 0%,
+          black var(--mask-size),
+          transparent var(--mask-size),
+          transparent 100%
+        );
+    --mask-repeat: no-repeat, no-repeat;
+    --mask-position:
+      center center, center calc(var(--noggin) / 2 + var(--border-width));
+      
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
+}
+
+.fm-avatar img.fm-char {
+    width: 100%;
+    height: var(--height-with-noggin);
+    object-fit: contain;
+    object-position: bottom;
+    
+    -webkit-mask-image: var(--mask-image);
+    -webkit-mask-repeat: var(--mask-repeat);
+    -webkit-mask-position: var(--mask-position);
+    mask-image: var(--mask-image);
+    mask-repeat: var(--mask-repeat);
+    mask-position: var(--mask-position);
+    
+    pointer-events: none;
+}
+
+/* 팝아웃 효과 없이 프레임 안쪽에 이미지를 가두어 표시 (상조 등 잘리는 이미지용) */
+.fm-avatar.fm-avatar--contained {
+    overflow: hidden !important;
+    align-items: center;
+    justify-content: center;
+    /* 웹킷(Safari 등)에서 border-radius + overflow: hidden 버그 방지 */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    transform: translateZ(0);
+}
+
+.fm-avatar.fm-avatar--contained img.fm-char {
+    height: 100% !important;
+    width: 100% !important;
+    object-position: center !important;
+    object-fit: cover !important;
+    
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+}
+
+/* 마키 오버레이 */
+.fm-marquee {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    /* transform은 GSAP에서 초기화 */
+    background: #ffffff;
+    z-index: 2;
+    will-change: transform;
+}
+
+/* 마키 내부 스크롤 컨테이너 */
+.fm-marquee-inner {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: max-content;
+    will-change: transform;
+}
+
+/* 반복 단위 */
+.fm-part {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.fm-part span {
+    white-space: nowrap;
+    font-family: 'Pretendard', sans-serif;
+    font-size: clamp(1rem, 2.2vh, 1.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #000000;
+    padding: 0 2vw;
+}
+
+/* 썸네일 이미지 */
+.fm-thumb {
+    width: clamp(120px, 18vw, 220px);
+    height: clamp(50px, 8vh, 90px);
+    margin: 0 1vw 0 3vw;   /* 왼쪽 여백 더 크게 */
+    border-radius: 100px;
+    background-color: #FF6242; /* 호버 시(마퀴 내부) 프레임 컬러 */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* 프레임 테두리 추가 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 부드러운 그림자 추가 */
+    background-size: contain; /* 이미지 비율 유지 */
+    background-position: center; /* 이미지 중앙 정렬 */
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+}
+
+
+
+.dark-card--placeholder p {
+    bottom: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+}
+
+
+
+/* =============================================
+   Sono Consult Widget — 리뉴얼
+   ─ 버튼 프레임 + 뉴모픽 인풋
+   ============================================= */
+
+/* 색상 변수 (shadows 기준색 = 카드 배경색) */
+.sono-consult {
+    --sc-bg: #0a0a16;   /* 카드 배경 (인셋 쉐도우 기준색) */
+    --sc-base: #ffffff;
+    --sc-accent: #FF6242;
+    --sc-blue: #0039E3;
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px 80px;
+    box-sizing: border-box;
+}
+
+/* ── 기본 버튼 ── */
+.sc-btn {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.8);
+    border-radius: 500px;
+    color: #ffffff;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 14px 44px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.04em;
+    transition: border-color 0.4s ease;
+}
+.sc-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -10%;
+    width: 120%; height: 100%;
+    background: #FF6242;
+    transform: skew(30deg) translateX(-110%);
+    transition: transform 0.45s cubic-bezier(0.3, 1, 0.8, 1);
+    z-index: 0;
+}
+.sc-btn:hover::before { transform: skew(30deg) translateX(0%); }
+.sc-btn:hover          { border-color: #FF6242; }
+.sc-btn > span {
+    position: relative;
+    z-index: 1;
+}
+
+/* 버튼 out 애니메이션 */
+.sc-btn.sc-leaving {
+    animation: scBtnOut 0.25s ease forwards;
+    pointer-events: none;
+}
+@keyframes scBtnOut {
+    to { opacity: 0; transform: scale(0.86); }
+}
+
+/* ── 폼 카드 ── 버튼과 동일한 테두리 스타일 */
+.sc-card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--sc-bg);
+    border: 2px solid rgba(255,255,255,0.9);
+    border-radius: 36px;        /* 버튼은 500px, 폼은 좀 더 사각에 가깝게 */
+    padding: 36px 28px 28px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: scCardIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes scCardIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+.sc-card.sc-leaving {
+    animation: scCardOut 0.28s ease forwards;
+    pointer-events: none;
+}
+@keyframes scCardOut {
+    to { opacity: 0; transform: translateY(-8px) scale(0.96); }
+}
+
+/* 카드 제목 */
+.sc-card__label {
+    text-align: center;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.05em;
+    margin: 0 0 4px;
+}
+
+/* ── 인풋 래퍼 (뉴모픽 인셋 쉐도우) ── */
+.sc-input {
+    display: flex;
+    position: relative;
+    border-radius: 40px;
+}
+
+/* 밝은 쪽 하이라이트 */
+.sc-input::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    border-radius: 40px;
+    box-shadow: inset -2px -2px 8px var(--sc-bg);
+    filter: brightness(1.2);
+    transition: 0.3s ease-out;
+}
+
+/* 어두운 쪽 그림자 */
+.sc-input::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    border-radius: 40px;
+    box-shadow: inset 4px 4px 8px var(--sc-bg);
+    filter: brightness(0.8);
+    transition: 0.3s ease-out;
+}
+
+/* 포커스 시 쉐도우 강화 */
+.sc-input:focus-within::before {
+    box-shadow: inset -3px -3px 15px var(--sc-bg);
+}
+.sc-input:focus-within::after {
+    box-shadow: inset 8px 8px 15px var(--sc-bg);
+}
+
+/* 아이콘 */
+.sc-input svg {
+    position: absolute;
+    left: 1.2rem;
+    top: 0;
+    height: 100%;
+    width: 20px;
+    z-index: 3;
+    flex-shrink: 0;
+}
+
+/* 실제 input 요소 */
+.sc-input input {
+    outline: none !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+    width: 100% !important;
+    background: rgba(255,255,255,0.04) !important;
+    padding: 14px 16px 14px 3.4rem !important;
+    color: #ffffff !important;
+    font-family: 'Pretendard', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    border-radius: 40px !important;
+    box-sizing: border-box !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    transition: border-color 0.25s !important;
+    position: relative;
+    z-index: 1;
+}
+.sc-input input::placeholder {
+    color: rgba(255,255,255,0.55) !important;
+}
+.sc-input input:focus {
+    border-color: rgba(255,255,255,0.4) !important;
+}
+
+/* ── 개인정보 동의 ── */
+.sc-agree {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 0 4px;
+}
+.sc-agree__box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    border: 1.5px solid rgba(255,255,255,0.55);
+    border-radius: 4px;
+    background: transparent;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    flex-shrink: 0;
+}
+.sc-agree__box.is-checked {
+    background: #FF6242;
+    border-color: #FF6242;
+}
+.sc-agree__check {
+    width: 9px;
+    height: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.sc-agree__box.is-checked .sc-agree__check {
+    opacity: 1;
+}
+.sc-agree__text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    font-family: 'Pretendard', sans-serif;
+    line-height: 1.4;
+    user-select: none;
+}
+
+.sc-privacy-link {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.45);
+    font-size: 13px;
+    font-weight: 400;
+    font-family: 'Pretendard', sans-serif;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    display: inline;
+    transition: color 0.2s;
+}
+.sc-privacy-link:hover { color: rgba(255,255,255,0.75); }
+
+/* ── 신청하기 버튼 ── */
+.sc-submit {
+    width: 100%;
+    padding: 15px !important;
+    background: #0039E3 !important;
+    border: none !important;
+    border-radius: 40px !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    font-family: 'Pretendard', sans-serif !important;
+    cursor: pointer !important;
+    letter-spacing: -0.01em;
+    transition: background 0.25s, transform 0.1s !important;
+    margin-top: 4px;
+}
+.sc-submit:hover  { background: #0028b5 !important; }
+.sc-submit:active { transform: scale(0.97) !important; }
+
+/* ── 취소 버튼 ── */
+.sc-cancel {
+    width: 100%;
+    padding: 10px !important;
+    background: transparent !important;
+    border: none !important;
+    color: rgba(255,255,255,0.35) !important;
+    font-size: 13px !important;
+    font-family: 'Pretendard', sans-serif !important;
+    cursor: pointer !important;
+    transition: color 0.2s !important;
+}
+.sc-cancel:hover { color: rgba(255,255,255,0.7) !important; }
+
+
+
+/* ── 레거시 fm-btn-wrap ── */
+.fm-btn-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0;
+}
+
+
+.fm-cta-btn {
+    outline: none;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    padding: 0.75rem 2.5rem;
+    margin: 0;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    border-radius: 500px;
+    overflow: hidden;
+    background: transparent;
+    color: #ffffff;
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    transition: color 0.4s, border-color 0.4s;
+}
+
+.fm-cta-btn span {
+    position: relative;
+    z-index: 10;
+    transition: color 0.4s;
+}
+
+.fm-cta-btn:hover span {
+    color: #ffffff;
+}
+
+.fm-cta-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -10%;
+    width: 120%;
+    height: 100%;
+    z-index: 0;
+    background: #FF6242;
+    transform: skew(30deg) translateX(-110%);
+    transition: transform 0.45s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.fm-cta-btn:hover::before {
+    transform: skew(30deg) translateX(0%);
+}
+
+.fm-cta-btn:hover {
+    border-color: #FF6242;
+}
+
+/* -------------------------------------
+   Consult Box (펼쳐지는 상담 신청 폼)
+   ------------------------------------- */
+.consult-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
+}
+
+/* 버튼 내부 닫기X는 기본 숨김 */
+.fm-cta-btn__close {
+    display: none;
+    font-size: 16px;
+    line-height: 1;
+    margin-left: 6px;
+    opacity: 0.7;
+}
+
+/* 열린 상태: 버튼 스타일 전환 */
+.consult-box.is-open .fm-cta-btn {
+    border-color: #FF6242;
+    background: #FF6242;
+    color: #fff;
+    letter-spacing: 0.05rem;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+}
+.consult-box.is-open .fm-cta-btn .fm-cta-btn__label {
+    font-size: 15px;
+}
+.consult-box.is-open .fm-cta-btn .fm-cta-btn__close {
+    display: inline;
+}
+.consult-box.is-open .fm-cta-btn::before {
+    display: none; /* 슬라이딩 배경 효과 제거 */
+}
+
+/* 폼 패널 */
+.consult-panel {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 98, 66, 0);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    backdrop-filter: blur(8px);
+}
+
+.consult-box.is-open .consult-panel {
+    max-height: 600px;
+    opacity: 1;
+    border-color: #FF6242;
+}
+
+/* 폼 내부 */
+.consult-form {
+    padding: 1.5rem 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.consult-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.consult-form__field label {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.consult-form__field input {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    font-size: 15px;
+    font-family: 'Pretendard', sans-serif;
+    color: #ffffff;
+    outline: none;
+    transition: border-color 0.25s;
+}
+.consult-form__field input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+.consult-form__field input:focus {
+    border-color: #FF6242;
+}
+
+/* 개인정보 동의 */
+.consult-form__check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+}
+
+.consult-form__check input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    margin-top: 2px;
+    transition: border-color 0.2s, background 0.2s;
+}
+.consult-form__check input[type="checkbox"]:checked {
+    background: #FF6242;
+    border-color: #FF6242;
+}
+.consult-form__check input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: -1px;
+    left: 2px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 700;
+}
+
+.consult-form__check label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.consult-form__privacy-link {
+    background: none;
+    border: none;
+    color: #FF6242;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 4px;
+    text-decoration: underline;
+    font-family: 'Pretendard', sans-serif;
+}
+
+/* 신청하기 버튼 */
+.consult-form__submit {
+    margin-top: 0.25rem;
+    padding: 0.85rem;
+    background: #0039E3;
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Pretendard', sans-serif;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.15s;
+    letter-spacing: -0.01em;
+}
+.consult-form__submit:hover {
+    background: #0028a8;
+}
+.consult-form__submit:active {
+    transform: scale(0.98);
+}
+
+
+
+
+.hooking-section {
+
+    width: 100%;
     position: relative;
     background-color: transparent;
-    overflow: hidden;
 }
 
 /* 다크모드 강제 적용 스타일 */
@@ -887,26 +1756,22 @@ body.dark-mode .split-layout .answer-text {
     color: #ff2d78 !important;
 }
 
-/* 옆으로 나열되는 패널 컨테이너 */
+/* 세로로 쌓이는 패널 컨테이너 */
 .panels-container {
     display: flex;
-    flex-wrap: nowrap;
-    width: 400%;
-    /* 4개의 패널 */
-    height: 100vh;
-    will-change: transform;
+    flex-direction: column;
+    width: 100%;
 }
 
-/* 개별 패널 (가로로 배치) */
+/* 개별 패널 (세로로 배치) */
 .panel {
     position: relative;
-    width: 100vw;
-    height: 100vh;
-    flex-shrink: 0;
+    width: 100%;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 4rem 2rem;
 }
 
 /* 패널 내부 컨텐츠 중앙 정렬용 래퍼 */
@@ -3828,10 +4693,6 @@ body.dark-mode .split-layout .answer-text {
     color: #C5A065;
 }
 
-.footer__legal-divider {
-    color: #ddd;
-    font-size: 0.8rem;
-}
 
 .footer__body {
     display: flex;
@@ -4075,8 +4936,9 @@ body.dark-mode .split-layout .answer-text {
    ========================================================================= */
 .smartcare-section {
     padding: 6rem 0;
-    background: #fdfdfd;
+    background: transparent; /* body lightTl이 #000 → #fdfdfd 전환 — 섹션 자체는 투명 */
 }
+
 
 .sc-container {
     max-width: 1200px;
@@ -4737,27 +5599,13 @@ body {
     }
 }
 
-/* GSAP Lighting Effect in Smartcare Section */
+/* Smartcare section positioning for inner elements */
 .smartcare-section {
     position: relative;
     overflow: visible;
-    background: transparent;
-    
 }
 
-.sc-light-beam {
-    position: absolute;
-    top: -50%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 1;
-    mix-blend-mode: screen;
-}
+
 
 /* Floating Action Button (CTA) */
 .floating-cta {
@@ -4968,103 +5816,129 @@ body {
     mix-blend-mode: darken;
 }
 
-.sc-prod-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: #1d1d1f;
-    letter-spacing: -0.02em;
-    word-break: keep-all;
-}
+/* =========================================================================
+   Refund Card (Portrait - Clover Frame - 3D Flip)
+   ========================================================================= */
 
-/* Receipt Box */
-.sc-receipt-box {
-    background: #fff;
-    border-radius: 20px;
-    border: 1px dashed #ddd;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-}
-
-.sc-receipt-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.2rem;
-    padding-bottom: 1.2rem;
-    border-bottom: 1px dashed #eee;
-}
-
-.sc-receipt-check {
-    font-size: 14px;
-    color: #ff1f5d;
-}
-
-.sc-receipt-product {
-    font-size: 15px;
-    font-weight: 800;
-    color: #1a8fe3;
-}
-
-.sc-receipt-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.8rem;
-    font-size: 14px;
-    color: #666;
-    font-weight: 500;
-}
-
-.sc-receipt-row.discount {
-    color: #ff1f5d;
-}
-
-.sc-receipt-row.discount strong {
-    font-weight: 800;
-}
-
-.sc-receipt-divider {
-    height: 1px;
-    background: #1d1d1f;
-    margin: 1.2rem 0;
-}
-
-.sc-receipt-row.total {
-    font-size: 16px;
-    font-weight: 800;
-    color: #1d1d1f;
-    margin-bottom: 0.5rem;
-}
-
-.sc-receipt-row.total .sc-r-final {
-    font-size: 22px;
-    color: #ff1f5d;
-}
-
-.sc-receipt-note {
-    font-size: 11px;
-    color: #aaa;
-    text-align: right;
-}
-
-.sc-card-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 14px;
-    font-weight: 600;
-    color: #666;
-    margin-bottom: 1.5rem;
+/* 카드 외곽: 캐러셀 카드와 동일 사이즈 */
+.refund-card {
+    width: clamp(260px, 28vw, 380px);
+    aspect-ratio: 3 / 4;
+    margin: 0;
+    border-radius: 1.25rem;
     cursor: pointer;
+    perspective: 1200px;       /* 3D 공간 깊이 */
 }
 
-.sc-card-checkbox input {
-    width: 18px;
-    height: 18px;
-    accent-color: #ff1f5d;
+/* 내부 플립 컨테이너 */
+.refund-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    border-radius: 1.25rem;
 }
+
+.refund-card:hover .refund-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* 앞면 / 뒷면 공통 */
+.refund-card__first,
+.refund-card__second {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 1.25rem;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    /* overflow: visible - 캐릭터 머리 오버플로우 허용 */
+}
+
+/* 앞면: 파란 배경 + 레이블 + 클로버 이미지 */
+.refund-card__first {
+    background: #0039E3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.4rem 1.2rem 1.2rem;
+    box-sizing: border-box;
+    transform: rotateY(0deg);
+}
+
+/* 뒷면: 오렌지 배경, 앞면과 동일 레이아웃 */
+.refund-card__second {
+    background: #FF6242;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.4rem 1.2rem 1.2rem;
+    box-sizing: border-box;
+    transform: rotateY(180deg);
+    overflow: visible !important;
+}
+
+/* 뒷면 레이블: 더 구체적인 선택자로 앞면 label 오버라이드 */
+.refund-card__second .refund-card__label {
+    font-size: clamp(1.14rem, 2.47vw, 1.43rem) !important; /* 0.88~1.1rem × 1.3 */
+    line-height: 1.45;
+}
+
+/* 레이블 텍스트 */
+.refund-card__label {
+    font-size: clamp(1.72rem, 3.9vw, 2.18rem);
+    font-weight: 800;
+    font-family: 'Pretendard', sans-serif;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #ffffff;
+    margin: 0 0 0.4rem;
+    padding: 0;
+    background: none;
+    width: 100%;
+}
+
+/* 앞면/뒷면 공통 흰색 텍스트 */
+.refund-card__first .refund-card__label,
+.refund-card__second .refund-card__label { color: #ffffff; }
+
+/* 커드 우하단 화살표 (변던 암시) */
+.refund-card__arrow {
+    position: absolute;
+    bottom: 1rem;
+    right: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    opacity: 0.75;
+    animation: arrowPulse 1.4s ease-in-out infinite;
+}
+.refund-card__arrow span {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg);
+    animation: arrowFade 1.4s ease-in-out infinite;
+}
+.refund-card__arrow span:nth-child(2) { animation-delay: 0.2s; }
+.refund-card__arrow span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes arrowFade {
+    0%, 100% { opacity: 0.2; }
+    50%       { opacity: 1; }
+}
+
+/* 클로버 SVG */
+.refund-card__clover-svg {
+    width: 100%;
+    flex: 1;
+    display: block;
+    min-height: 0;
+}
+
 
 .sc-cta-btn {
     display: block;
@@ -5084,4 +5958,231 @@ body {
 .sc-cta-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(255, 31, 93, 0.4);
+}
+
+/* =========================================================================
+   Hero Scroll-down Indicator
+   ========================================================================= */
+.hero-scrolldown {
+    position: absolute;
+    bottom: 11rem;
+    left: 50%;
+    transform: translateX(-50%) scale(0.833);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10003;
+    cursor: pointer;
+    transform-origin: bottom center;
+    opacity: 0; /* GSAP이 썸네일과 동시에 등장 제어 */
+}
+
+.scrolldown {
+    --color: white;
+    --sizeX: 30px;
+    --sizeY: 50px;
+    position: relative;
+    width: var(--sizeX);
+    height: var(--sizeY);
+    border: calc(var(--sizeX) / 10) solid var(--color);
+    border-radius: 50px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+}
+
+.scrolldown::before {
+    content: "";
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    background-color: var(--color);
+    border-radius: 100%;
+    animation: scrolldown-anim 2s infinite;
+    box-sizing: border-box;
+    box-shadow: 0px -5px 3px 1px #2a547066;
+}
+
+@keyframes scrolldown-anim {
+    0%  { opacity: 0; height: 6px; }
+    40% { opacity: 1; height: 10px; }
+    80% { transform: translate(0, 20px); height: 10px; opacity: 0; }
+    100%{ height: 3px; opacity: 0; }
+}
+
+.chevrons {
+    padding: 6px 0 0 0;
+    margin-left: -3px;
+    margin-top: 48px;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chevrondown {
+    margin-top: -6px;
+    position: relative;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+}
+
+.chevrondown:nth-child(odd)  { animation: pulse54012 500ms ease infinite alternate; }
+.chevrondown:nth-child(even) { animation: pulse54012 500ms ease infinite alternate 250ms; }
+
+@keyframes pulse54012 {
+    from { opacity: 0; }
+    to   { opacity: 0.5; }
+}
+
+
+/* 클로버 SVG (이미지 + 점선 테두리 통합) */
+.refund-card__clover-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+/* 클로버 래퍼 */
+.refund-card__clover-wrap {
+    position: relative;
+    width: 90%;
+    margin: -0.4rem auto 0;
+}
+
+/* 클로버 SVG: overflow visible로 머리 솟아오름 허용 */
+.refund-card__clover-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+}
+
+/* 앞면: overflow visible */
+.refund-card__first {
+    overflow: visible !important;
+}
+
+/* 레이블: 항상 최상단 */
+.refund-card__label {
+    position: relative;
+    z-index: 10;
+}
+
+/* ─── 벤토 그리드 ─────────────────────────────────── */
+.refund-bento {
+    display: grid;
+    /* 태블릿/데스크탑: 좌(1fr) + 우(1fr) 2열 2행 */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+    margin: 2.5rem auto 0;
+    max-width: min(820px, 92vw);
+    /* 그리드 전체 높이 고정: 1fr 행이 제대로 작동하려면 필수 */
+    height: min(520px, 60vw);
+    /* 카드 위 overflow (캐릭터 머리) 허용 위한 상단 패딩 */
+    padding-top: 2rem;
+    box-sizing: border-box;
+}
+
+/* 좌측 메인 카드: 2행 모두 차지 */
+.bento-main {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    width: 100%;           /* refund-card의 clamp 너비 무효화 */
+    aspect-ratio: unset;   /* refund-card의 3/4 비율 무효화 → 그리드가 높이 관리 */
+    height: 100%;          /* 그리드 셀 높이 전체 사용 */
+    margin: 0;
+}
+
+/* 우측 가로형 카드 공통 */
+.bento-right {
+    grid-column: 2;
+    border-radius: 1.25rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 1.4rem 1rem 1rem 1.4rem;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+    cursor: default;
+    transition: filter 0.25s;
+}
+.bento-right:hover {
+    filter: brightness(0.97);
+}
+
+/* 카드 1: 파스텔 파란 */
+.bento-right--blue {
+    background: #D6E8F7;
+}
+/* 카드 2: 연회색 */
+.bento-right--gray {
+    background: #EBEBEB;
+}
+
+/* 주제 텍스트 */
+.bento-right__title {
+    font-family: 'Pretendard', sans-serif;
+    font-size: clamp(1.32rem, 2.1vw, 1.58rem); /* 기존 × 1.5 */
+    font-weight: 800;
+    color: #1d1d1f;
+    line-height: 1.4;
+    letter-spacing: -0.03em;
+    word-break: keep-all;
+    text-align: left;
+    margin: 0;
+    flex: 1;
+    align-self: flex-start;
+}
+.bento-right__title span {
+    font-weight: 800;    /* 위와 동일 */
+    font-size: 1em;      /* 부모와 동일 크기 */
+    color: #1d1d1f;
+    display: block;
+    margin-top: 0;
+    text-align: left;
+}
+
+/* 아이콘 래퍼 */
+.bento-right__illust {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-left: 0.5rem;
+}
+.bento-right__illust svg {
+    display: block;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12));
+}
+
+/* 모바일: 단일 열 세로 스택 */
+@media (max-width: 640px) {
+    .refund-bento {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;           /* 모바일: 높이 auto로 리셋 */
+        max-width: min(380px, 90vw);
+    }
+    .bento-main {
+        grid-column: 1;
+        grid-row: auto;
+        height: auto;           /* 그리드 셀 높이 리셋 */
+        aspect-ratio: 3 / 4;    /* 모바일에서 카드 비율 복원 */
+        width: 100%;
+    }
+    .bento-right {
+        grid-column: 1;
+        min-height: 160px;
+    }
 }

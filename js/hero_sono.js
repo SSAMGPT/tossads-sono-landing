@@ -1,7 +1,19 @@
-// Immediately scroll to top to prevent browser scroll restoration from showing below-fold content
-window.scrollTo(0, 0);
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
+// ─── 인트로 1회 재생 로직 (세션당) ────────────────────────────────────
+// 새로고침해도 동일 세션이면 인트로 스킵 → 스크롤 잠금 없이 즉시 진입
+const INTRO_KEY = 'introPlayed';
+const introAlreadyPlayed = sessionStorage.getItem(INTRO_KEY);
+
+if (!introAlreadyPlayed) {
+  // 첫 방문: 상단 고정 후 인트로 재생
+  window.scrollTo(0, 0);
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+} else {
+  // 재방문(새로고침): 스크롤 복원 허용
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'auto';
+  }
 }
 
 // Removes whitespace text nodes between split-word spans so CSS margin-right
@@ -152,6 +164,21 @@ function initCrispLoadingAnimation() {
       ease: "expo.out",
       duration: 1
     }, ">"); // right after isScaleUp ends
+
+    // 스크롤 유도 버튼: 썸네일과 동일 타이밍에 등장
+    const scrollBtn = document.querySelector('.hero-scrolldown');
+    if (scrollBtn) {
+      tl.fromTo(scrollBtn,
+        { opacity: 0, y: 16 },
+        {
+          opacity: 1,
+          y: 0,
+          ease: "power2.out",
+          duration: 0.8
+        },
+        "<" // sliderNav 애니메이션과 동시 시작
+      );
+    }
   }
   
   if (split && split.chars && split.chars.length) {
@@ -199,7 +226,34 @@ function initCrispLoadingAnimation() {
 
 // Initialize Crisp Loading Animation
 document.fonts.ready.then(() => {
-  initCrispLoadingAnimation();
+  if (!introAlreadyPlayed) {
+    // 첫 방문: 풀 인트로 재생 후 sessionStorage에 기록
+    initCrispLoadingAnimation();
+    sessionStorage.setItem(INTRO_KEY, '1');
+  } else {
+    // 재방문: 인트로 스킵 — 로딩 상태 즉시 해제
+    const container = document.querySelector('.crisp-header');
+    if (container) container.classList.remove('is--loading');
+
+    const mainHeader = document.querySelector('.main-header');
+    if (mainHeader) gsap.set(mainHeader, { opacity: 1, y: 0, pointerEvents: 'auto' });
+
+    const headings = container ? container.querySelectorAll('.crisp-header__h1') : [];
+    headings.forEach(h => gsap.set(h, { opacity: 1 }));
+
+    const smallElements = document.querySelectorAll('.crisp-header__p, .crisp-header__top');
+    gsap.set(smallElements, { opacity: 1, y: 0, pointerEvents: 'auto' });
+
+    const sliderNav = container ? container.querySelectorAll('.crisp-header__slider-nav > *') : [];
+    gsap.set(sliderNav, { yPercent: 0 });
+
+    // 재방문: 스크롤 유도 버튼 즉시 표시
+    const scrollBtn = document.querySelector('.hero-scrolldown');
+    if (scrollBtn) gsap.set(scrollBtn, { opacity: 1, y: 0 });
+
+    const splash = container ? container.querySelector('.crisp-splash') : null;
+    if (splash) gsap.set(splash, { autoAlpha: 0 });
+  }
 });
 
 // Slideshow
@@ -237,50 +291,61 @@ function initSlideShow(el) {
       heading.innerHTML = newHTML;
       return;
     }
-    
-    // Revert any existing split
-    if (currentSplit) { currentSplit.revert(); currentSplit = null; }
 
-    // Animate out current text
-    const exitSplit = new SplitText(heading, { type: 'chars', charsClass: 'split-char' });
-    gsap.to(exitSplit.chars, {
-      opacity: 0,
-      y: -20,
-      duration: 0.3,
-      stagger: { from: 'center', each: 0.02 },
-      ease: 'power1.in',
-      onComplete: () => {
-        exitSplit.revert();
-        // Update text content
-        heading.innerHTML = newHTML;
-        // Immediately hide the heading to prevent flash of unsplit text
-        gsap.set(heading, { opacity: 0 });
-        // Animate in new text
-        currentSplit = new SplitText(heading, {
-          type: 'words,chars',
-          wordsClass: 'split-word',
-          charsClass: 'split-char'
-        });
-        gsap.set(heading, { opacity: 1 }); // show container
-        gsap.set(currentSplit.chars, { opacity: 0 }); // hide chars individually
-        // Remove text node spaces so CSS margin-right is the sole spacing source
-        removeWordTextNodes(heading);
-        gsap.fromTo(currentSplit.chars,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration: 1,
-            ease: 'power1.inOut',
-            stagger: { from: 'center', each: 0.04 }
-          }
-        );
-        gsap.from(currentSplit.words, {
-          y: (i) => (i * 60) - 30,
-          duration: 1.5,
-          ease: 'expo.out'
-        });
-      }
-    });
+    // Target EXISTING split-char elements already in the DOM.
+    // Creating a new SplitText for the exit would remove word wrappers
+    // (SplitText 3.14.2 unwraps words when type='chars' only),
+    // causing margin-right to vanish and the text to visibly shift left.
+    const existingChars = Array.from(heading.querySelectorAll('.split-char'));
+
+    const doTransitionIn = () => {
+      // Hide the heading while we restructure the DOM
+      gsap.set(heading, { opacity: 0 });
+      // Revert previous navigation's split (null on first click — that's fine)
+      if (currentSplit) { currentSplit.revert(); currentSplit = null; }
+      // Set new text
+      heading.innerHTML = newHTML;
+      // Split new text
+      // overwrite: false prevents SplitText 3.14.2 from auto-reverting the heading
+      // to the PREVIOUS split's original HTML (which would show the init text again)
+      currentSplit = new SplitText(heading, {
+        type: 'words,chars',
+        wordsClass: 'split-word',
+        charsClass: 'split-char',
+        overwrite: false
+      });
+      removeWordTextNodes(heading);
+      gsap.set(currentSplit.chars, { opacity: 0 });
+      gsap.set(heading, { opacity: 1 }); // container visible, chars hidden
+      gsap.fromTo(currentSplit.chars,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 1,
+          ease: 'power1.inOut',
+          stagger: { from: 'center', each: 0.04 }
+        }
+      );
+      gsap.from(currentSplit.words, {
+        y: (i) => (i * 60) - 30,
+        duration: 1.5,
+        ease: 'expo.out'
+      });
+    };
+
+    if (existingChars.length) {
+      // Animate out existing chars without touching word wrapper structure
+      gsap.to(existingChars, {
+        opacity: 0,
+        y: -20,
+        duration: 0.3,
+        stagger: { from: 'center', each: 0.02 },
+        ease: 'power1.in',
+        onComplete: doTransitionIn
+      });
+    } else {
+      doTransitionIn();
+    }
   }
 
   function navigate(direction, targetIndex = null) {

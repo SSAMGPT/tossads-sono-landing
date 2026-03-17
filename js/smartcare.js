@@ -125,42 +125,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. GSAP Lighting & Entrance Effect for Smartcare Section
+    // 3. Entrance Effect for Smartcare Section
     if (typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
         const scSection = document.querySelector('.smartcare-section');
-        const scLightBeam = document.querySelector('.sc-light-beam');
         const scContainer = document.querySelector('.sc-container');
 
-        if(scSection && scLightBeam && scContainer) {
-            // Init styles
-            gsap.set(scContainer, { opacity: 0, y: 50 });
-
+        if (scSection && scContainer) {
             ScrollTrigger.create({
                 trigger: scSection,
-                start: "top 70%", // 섹션이 화면 70% 지점에 도달할 때
+                start: 'top 80%',
                 onEnter: () => {
-                    // Turn background to white smoothly
-                    // GSAP bg handled by global lightTl in index.html
-                    
-                    // Spotlight animation
-                    gsap.fromTo(scLightBeam, 
-                        { opacity: 0, y: -200, scale: 0.5 },
-                        { opacity: 1, y: 0, scale: 1.5, duration: 1.5, ease: "power2.out" }
+                    gsap.fromTo(scContainer,
+                        { opacity: 0, y: 30 },
+                        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
                     );
-                    gsap.to(scLightBeam, { opacity: 0, duration: 1, delay: 1.5 }); // fade out spotlight
-
-                    // Fade in content
-                    gsap.to(scContainer, { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: "power3.out" });
-
-                    // 예전에는 여기서 updateFloatingBar()를 무조건 불렀으나, 
-                    // 이제는 사용자가 선택을 해야만 뜨게 하므로 주석 처리/삭제합니다.
-                    // updateFloatingBar();
                 },
-                once: true // 한 번만 실행되게 (프리미엄 느낌)
+                once: true
             });
         }
     }
+
 
 });
