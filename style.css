@@ -6115,10 +6115,15 @@ body {
     overflow: hidden;
     position: relative;
     cursor: default;
-    transition: filter 0.25s;
+    /* 기본 그림자 + 호버 전환 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transform: translateY(0);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.35s ease;
 }
 .bento-right:hover {
-    filter: brightness(0.97);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.13);
 }
 
 /* 카드 1: 파스텔 파란 */
