@@ -4688,12 +4688,12 @@
                         activated[i] = true;
                         step.classList.add('active');
                         if (content) { content.style.opacity = '1'; content.style.transform = 'translateY(0)'; }
-                        if (dot) { dot.style.borderColor = '#C5A065'; dot.style.boxShadow = '0 0 14px rgba(197,160,101,0.5)'; dot.style.transform = 'scale(1.15)'; }
+                        if (dot) { dot.style.borderColor = '#C5A065'; dot.style.boxShadow = '0 0 14px rgba(197,160,101,0.5)'; dot.style.transform = 'translateX(-50%) scale(1.15)'; }
                     } else if (progress < threshold && activated[i]) {
                         activated[i] = false;
                         step.classList.remove('active');
                         if (content) { content.style.opacity = '0'; content.style.transform = 'translateY(20px)'; }
-                        if (dot) { dot.style.borderColor = '#ddd'; dot.style.boxShadow = 'none'; dot.style.transform = 'scale(1)'; }
+                        if (dot) { dot.style.borderColor = '#ddd'; dot.style.boxShadow = 'none'; dot.style.transform = 'translateX(-50%) scale(1)'; }
                     }
                 });
             };
