@@ -4006,6 +4006,18 @@
         }, 0);
 
 
+        // --- strength 섹션(OUR PROMISE/REAL REVIEW): body 강제 화이트 고정 ---
+        // cinematicTl이 일찍 body를 어둡게 바꾸는 것을 막기 위해
+        // #strength 진입 시 즉시 흰 배경으로 돌려놓고, 벗어날 때도 흰 배경 유지
+        ScrollTrigger.create({
+            trigger: '#strength',
+            start: 'top 100%',
+            end: 'bottom top',
+            onEnter:      () => gsap.to('body', { backgroundColor: '#ffffff', color: '#1d1d1f', duration: 0.1, overwrite: 'auto' }),
+            onEnterBack:  () => gsap.to('body', { backgroundColor: '#ffffff', color: '#1d1d1f', duration: 0.1, overwrite: 'auto' }),
+            onLeaveBack:  () => gsap.to('body', { backgroundColor: '#ffffff', color: '#1d1d1f', duration: 0.1, overwrite: 'auto' }),
+        });
+
         // --- Light mode transition: 가입절차 패턴 역방향 (Lights ON) ---
         const lightTl = gsap.timeline({
             scrollTrigger: {
