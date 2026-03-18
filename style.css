@@ -4183,7 +4183,7 @@ body.dark-mode .split-layout .answer-text {
 
 .consult__subtitle {
     font-size: var(--font-h3);
-    color: #C5A065;
+    color: #0039E3;
     font-weight: 600;
 }
 
@@ -4202,14 +4202,14 @@ body.dark-mode .split-layout .answer-text {
 /* 컨설트 배너 이미지 */
 .consult__banner {
     width: 100%;
-    max-height: 340px;
+    max-height: 283px;
     overflow: hidden;
 }
 
 .consult__banner img {
     width: 100%;
     height: 100%;
-    max-height: 340px;
+    max-height: 283px;
     display: block;
     object-fit: cover;
     object-position: center;
@@ -4226,7 +4226,7 @@ body.dark-mode .split-layout .answer-text {
 .consult__card:hover {
     transform: translateY(-8px);
     box-shadow: 0 32px 64px rgba(0, 0, 0, 0.08);
-    border-color: #C5A065;
+    border-color: #0039E3;
 }
 
 
@@ -4253,7 +4253,7 @@ body.dark-mode .split-layout .answer-text {
 }
 
 .consult__group .required {
-    color: #C5A065;
+    color: #0039E3;
     margin-left: 0.2rem;
 }
 
@@ -4274,7 +4274,7 @@ body.dark-mode .split-layout .answer-text {
 }
 
 .consult__group select {
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C5A065' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230039E3' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 1.5rem center;
     background-size: 1.2rem;
@@ -4284,9 +4284,9 @@ body.dark-mode .split-layout .answer-text {
 
 .consult__group input:focus,
 .consult__group select:focus {
-    border-color: #C5A065;
+    border-color: #0039E3;
     background-color: #fff;
-    box-shadow: 0 0 0 4px rgba(197, 160, 101, 0.1);
+    box-shadow: 0 0 0 4px rgba(0, 57, 227, 0.08);
 }
 
 .consult__group input::placeholder {
@@ -4457,12 +4457,12 @@ body.dark-mode .split-layout .answer-text {
 }
 
 .checkbox-container:hover input~.checkmark {
-    border-color: #C5A065;
+    border-color: #0039E3;
 }
 
 .checkbox-container input:checked~.checkmark {
-    background-color: #C5A065;
-    border-color: #C5A065;
+    background-color: #0039E3;
+    border-color: #0039E3;
 }
 
 .checkmark:after {
