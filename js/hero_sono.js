@@ -146,61 +146,31 @@ function initCrispLoadingAnimation() {
   }
   
   if (sliderNav.length) {
-    // isScaleUp 종료 0.4초 전부터 loader 페이드아웃 → hero와 크로스페이드
-    const loaderEl = container.querySelector('.crisp-loader');
-    if (loaderEl) {
-      tl.to(loaderEl, {
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power1.inOut',
-      }, '>-0.4'); // isScaleUp 끝나기 0.4초 전
-    }
-
-    // 클래스 제거 및 헤더 등장 (loader가 이미 투명 → 끊김 없음)
-    tl.call(function () {
-      container.classList.remove('is--loading');
-      gsap.fromTo(mainHeader,
-        { opacity: 0, y: -30 },
-        {
-          opacity: 1,
-          y: 0,
-          pointerEvents: "auto",
-          ease: "power2.out",
-          duration: 1
-        }
-      );
-    }, null, ">"); // loader 페이드아웃 완료 직후
-    
+    // 원본 구조: sliderNav가 isScaleUp 종료 0.9초 전부터 loader 뒤에서 미리 실행
+    // → is--loading 제거 시 이미 제자리에 있어 끊김 없이 나타남
     tl.from(sliderNav, {
       yPercent: 150,
       stagger: 0.05,
       ease: "expo.out",
       duration: 1
-    }, ">"); // right after isScaleUp ends
+    }, "-=0.9"); // isScaleUp 종료 0.9초 전에 시작 (loader 뒤에서 실행)
 
-    // 스크롤 유도 버튼: 썸네일과 동일 타이밍에 등장
+    // 스크롤 유도 버튼도 동시 시작
     const scrollBtn = document.querySelector('.hero-scrolldown');
     if (scrollBtn) {
       tl.fromTo(scrollBtn,
         { opacity: 0, y: 16 },
-        {
-          opacity: 1,
-          y: 0,
-          ease: "power2.out",
-          duration: 0.8
-        },
-        "<" // sliderNav 애니메이션과 동시 시작
+        { opacity: 1, y: 0, ease: "power2.out", duration: 0.8 },
+        "<"
       );
     }
   }
   
   if (split && split.chars && split.chars.length) {
-    // 1. Revert container opacity to 1 immediately so child animations can be seen.
     gsap.set(headings, { opacity: 1 });
-    // 2. Hide all chars initially to prevent any flashes.
     gsap.set(split.chars, { opacity: 0 });
 
-    // 3. Characters fade in from the center (staggered)
+    // 글자 fade-in (loader 뒤에서 실행, is--loading 제거 시 이미 완성)
     tl.fromTo(split.chars, 
       { opacity: 0 }, 
       {
@@ -209,21 +179,16 @@ function initCrispLoadingAnimation() {
         ease: "power1.inOut",
         stagger: { from: "center", each: 0.04 }
       }, 
-      "<"
+      "< 0.1"
     );
     
-    // 4. Words spring up (the 'explosion' effect)
     tl.from(split.words, 
-      {
-        duration: 3,
-        y: (i) => (i * 100) - 50,
-        ease: "expo.out"
-      }, 
+      { duration: 3, y: (i) => (i * 100) - 50, ease: "expo.out" }, 
       "<"
     );
     
   } else if (headings.length) {
-    tl.to(headings, { opacity: 1, duration: 0.8 }, "<");
+    tl.to(headings, { opacity: 1, duration: 0.8 }, "< 0.1");
   }
   
   if (smallElements.length) {
@@ -233,8 +198,16 @@ function initCrispLoadingAnimation() {
       pointerEvents: "auto",
       ease: "power1.inOut",
       duration: 0.8
-    }, "<");
+    }, "< 0.15");
   }
+
+  // 원본과 동일: 모든 애니메이션이 loader 뒤에서 완료된 후 +=0.45 지연하여 한 번에 reveal
+  // CSS의 .crisp-loader { display: none } 이 자동으로 loader를 숨김 → 끊김 없음
+  tl.call(function () {
+    container.classList.remove('is--loading');
+    // 메인 헤더 즉시 표시 (loader 뒤에서 이미 컨텐츠 준비 완료)
+    if (mainHeader) gsap.set(mainHeader, { opacity: 1, y: 0, pointerEvents: 'auto' });
+  }, null, "+=0.45");
 }
 
 // 인트로 재생 여부를 스크롤 위치로 결정
