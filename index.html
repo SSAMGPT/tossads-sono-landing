@@ -964,67 +964,26 @@
         }
 
         .promo-card {
-            background: #f5f5f0;
+            position: relative;
+            aspect-ratio: 3 / 4;
             border-radius: 22px;
             overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            aspect-ratio: 3 / 4;
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            background: #ddd;
+            border: 1px solid rgba(0,0,0,0.04);
             transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
                         box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .promo-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 24px 48px rgba(0,0,0,0.12);
         }
 
-        .promo-card__badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: #0039E3;
-            color: #fff;
-            padding: 0.3rem 0.9rem;
-            border-radius: 100px;
-            font-size: 0.82rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            z-index: 5;
-        }
-
-        /* 상단 40% — 텍스트 영역 */
-        .promo-card__info {
-            flex: 4;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;   /* 텍스트 하단 고정 */
-            padding: 1rem 1.3rem 1.1rem;
-        }
-
-        .promo-card__info h3 {
-            font-size: clamp(1rem, 2.8vw, 1.5rem);
-            font-weight: 900;
-            color: #111;
-            line-height: 1.3;
-            letter-spacing: -0.03em;
-            margin: 0 0 0.3rem;
-            word-break: keep-all;
-        }
-
-        .promo-count {
-            font-size: clamp(0.75rem, 1.8vw, 0.95rem);
-            color: #FF6242;
-            font-weight: 700;
-        }
-
-        /* 하단 60% — 이미지 */
+        /* 이미지: 카드 전체 fill */
         .promo-card__image {
-            flex: 6;
-            overflow: hidden;
-            background: #e5e7eb;
+            position: absolute;
+            inset: 0;
+            z-index: 0;
         }
 
         .promo-card__image img {
@@ -1035,7 +994,56 @@
         }
 
         .promo-card:hover .promo-card__image img {
-            transform: scale(1.05);
+            transform: scale(1.06);
+        }
+
+        /* 텍스트 오버레이: 상단, 흔색 그레이디언트 */
+        .promo-card__info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding: 3rem 1.3rem 2.5rem;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.92) 0%,
+                rgba(255,255,255,0.85) 55%,
+                rgba(255,255,255,0) 100%
+            );
+        }
+
+        .promo-card__info h3 {
+            font-size: clamp(0.9rem, 2.8vw, 1.45rem);
+            font-weight: 900;
+            color: #111;
+            line-height: 1.3;
+            letter-spacing: -0.03em;
+            margin: 0 0 0.35rem;
+            word-break: keep-all;
+            text-align: left;
+        }
+
+        .promo-count {
+            font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+            color: #FF6242;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        /* 배지: 이미지 위, 오버레이 위 */
+        .promo-card__badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 3;
+            background: #0039E3;
+            color: #fff;
+            padding: 0.3rem 0.9rem;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
         }
 
         @media (max-width: 768px) {
@@ -1047,14 +1055,14 @@
             }
 
             .promo-card__badge {
-                font-size: 0.68rem;
-                padding: 0.25rem 0.65rem;
-                top: 0.6rem;
-                left: 0.6rem;
+                font-size: 0.65rem;
+                padding: 0.22rem 0.6rem;
+                top: 0.55rem;
+                left: 0.55rem;
             }
 
             .promo-card__info {
-                padding: 0.6rem 0.9rem 0.7rem;
+                padding: 2.2rem 0.9rem 2rem;
             }
         }
 
@@ -3516,25 +3524,25 @@
             <div class="promo-grid">
                 <!-- 1등 상품 -->
                 <div class="promo-card primary" data-effect2>
+                    <div class="promo-card__image">
+                        <img src="./modern_tv_85inch_display_1773117279337.png" alt="삼성 LG 85인치 TV">
+                    </div>
                     <div class="promo-card__badge">1등</div>
                     <div class="promo-card__info">
                         <h3>삼성 or LG 85인치 TV</h3>
                         <p class="promo-count">(1명)</p>
                     </div>
-                    <div class="promo-card__image">
-                        <img src="./modern_tv_85inch_display_1773117279337.png" alt="삼성 LG 85인치 TV">
-                    </div>
                 </div>
 
                 <!-- 2등 상품 -->
                 <div class="promo-card secondary" data-effect2>
+                    <div class="promo-card__image">
+                        <img src="./gift_voucher_100k_won_1773117292002.png" alt="상품권 10만원권">
+                    </div>
                     <div class="promo-card__badge">2등</div>
                     <div class="promo-card__info">
                         <h3>백화점 상품권 10만원권</h3>
                         <p class="promo-count">(3명)</p>
-                    </div>
-                    <div class="promo-card__image">
-                        <img src="./gift_voucher_100k_won_1773117292002.png" alt="상품권 10만원권">
                     </div>
                 </div>
             </div>
