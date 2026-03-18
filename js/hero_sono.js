@@ -146,16 +146,14 @@ function initCrispLoadingAnimation() {
   }
   
   if (sliderNav.length) {
-    // 원본 구조: sliderNav가 isScaleUp 종료 0.9초 전부터 loader 뒤에서 미리 실행
-    // → is--loading 제거 시 이미 제자리에 있어 끊김 없이 나타남
+    // isScaleUp 완전히 끝난 후 시작 (기존 "-=0.9" 겹침이 CPU 경합 → 끊김 원인)
     tl.from(sliderNav, {
       yPercent: 150,
       stagger: 0.05,
       ease: "expo.out",
       duration: 1
-    }, "-=0.9"); // isScaleUp 종료 0.9초 전에 시작 (loader 뒤에서 실행)
+    }, ">"); // isScaleUp 종료 후 시작
 
-    // 스크롤 유도 버튼도 동시 시작
     const scrollBtn = document.querySelector('.hero-scrolldown');
     if (scrollBtn) {
       tl.fromTo(scrollBtn,
@@ -170,7 +168,6 @@ function initCrispLoadingAnimation() {
     gsap.set(headings, { opacity: 1 });
     gsap.set(split.chars, { opacity: 0 });
 
-    // 글자 fade-in (loader 뒤에서 실행, is--loading 제거 시 이미 완성)
     tl.fromTo(split.chars, 
       { opacity: 0 }, 
       {
@@ -182,8 +179,9 @@ function initCrispLoadingAnimation() {
       "< 0.1"
     );
     
+    // words: 3초→1초로 단축 (3초 애니메이션이 isScaleUp과 겹쳐 CPU 과부하였음)
     tl.from(split.words, 
-      { duration: 3, y: (i) => (i * 100) - 50, ease: "expo.out" }, 
+      { duration: 1, y: (i) => (i * 40) - 20, ease: "expo.out" }, 
       "<"
     );
     
@@ -201,11 +199,9 @@ function initCrispLoadingAnimation() {
     }, "< 0.15");
   }
 
-  // 원본과 동일: 모든 애니메이션이 loader 뒤에서 완료된 후 +=0.45 지연하여 한 번에 reveal
   tl.call(function () {
     container.classList.remove('is--loading');
     if (mainHeader) gsap.set(mainHeader, { opacity: 1, y: 0, pointerEvents: 'auto' });
-    // 인트로 완료 후에만 ScrollTrigger 재계산 (인트로 중 실행하면 레이아웃 thrash 발생)
     if (typeof ScrollTrigger !== 'undefined') setTimeout(() => ScrollTrigger.refresh(), 100);
   }, null, "+=0.45");
 }
