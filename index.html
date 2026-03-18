@@ -3716,25 +3716,6 @@
                                     <span>냉장고</span>
                                 </div>
                             </label>
-                            <label class="appliance-item">
-                                <input type="radio" name="c_appliance" value="washer" required>
-                                <div class="appliance-box">
-                                    <div class="appliance-img">
-                                        <img src="./3d_washing_machine_emoji_bdcc46355d 1.png" alt="세탁기">
-                                    </div>
-                                    <span>세탁기</span>
-                                </div>
-                            </label>
-                            <label class="appliance-item">
-                                <input type="radio" name="c_appliance" value="vacuum" required>
-                                <div class="appliance-box">
-                                    <div class="appliance-img">
-                                        <img src="./3d____513178e2e2 1.png" alt="청소기">
-                                    </div>
-                                    <span>청소기</span>
-                                </div>
-                            </label>
-                        </div>
                         <p class="appliance-notice">* 위 이미지는 단순 참고용으로 실제 제품과 다를 수 있습니다.</p>
                     </div>
 
@@ -3981,13 +3962,12 @@
 
 
 
-        // --- Dark mode transition (Turn off lights) at hooking section using GSAP scrub ---
-        // 백그라운드와 글씨체가 스크롤 진행에 맞게 서서히 부드럽게 전환되게 하여 섹션 간의 경계를 없앰
+        // --- Dark mode transition at 소노아임레디 가입절차 section ---
         const darkTl = gsap.timeline({
             scrollTrigger: {
-                trigger: ".crisp-header",
-                start: "bottom bottom", // 히어로 하단이 뷰포트 하단에 닿기 시작할 때 전환 시작
-                end: "bottom top",      // 히어로가 완전히 벗어날 때 전환 완료
+                trigger: "#join-process",
+                start: "top 70%",
+                end: "top 10%",
                 scrub: true
             }
         });
