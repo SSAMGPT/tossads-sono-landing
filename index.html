@@ -3423,6 +3423,32 @@
 
             </div><!-- /trust-grid -->
 
+            <!-- ── REAL REVIEW 신뢰도 섹션 ── -->
+            <div class="real-review-section">
+
+                <!-- 섹션 헤더 -->
+                <p class="trust-section-sub" style="margin-top: 5rem;">REAL REVIEW</p>
+                <h2 class="real-review__title" id="review-section-heading" style="opacity:0;">가입 고객이 직접 전하는 이야기</h2>
+                <p class="real-review__subtitle">실제 이용하신 분들의 솔직한 후기입니다.</p>
+
+                <!-- 신뢰도 수치 카드 2개 -->
+                <div class="stat-grid">
+                    <!-- 만족도 -->
+                    <div class="stat-card stat-card--left">
+                        <span class="stat-card__label">만족도</span>
+                        <div class="stat-card__number">99<span class="stat-card__unit">%</span></div>
+                        <p class="stat-card__desc">소노아임레디 만족도 (23년 기준)</p>
+                    </div>
+                    <!-- 추천지수 -->
+                    <div class="stat-card stat-card--right">
+                        <span class="stat-card__label">추천지수</span>
+                        <div class="stat-card__number">9.3<span class="stat-card__unit">점</span></div>
+                        <p class="stat-card__desc">상조 서비스 추천지수</p>
+                    </div>
+                </div>
+
+            </div><!-- /real-review-section -->
+
             <!-- 리뷰 캐러셀 (무한 루프 마키) -->
             <div class="sr-carousel-container" data-effect2>
                 <div class="sr-carousel-track" id="reviewTrack">
@@ -4113,6 +4139,49 @@
                     },
                     onLeaveBack: () => {
                         gsap.to(trustSplit.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' });
+                    }
+                });
+            }
+
+            // --- REAL REVIEW 타이틀 애니메이션 ---
+            const reviewHeading = document.getElementById('review-section-heading');
+            if (reviewHeading && typeof SplitText !== 'undefined') {
+                const rvSplit = new SplitText(reviewHeading, {
+                    type: 'words,chars',
+                    wordsClass: 'split-word',
+                    charsClass: 'split-char'
+                });
+                gsap.set(reviewHeading, { opacity: 1 });
+                gsap.set(rvSplit.chars, { opacity: 0 });
+                ScrollTrigger.create({
+                    trigger: reviewHeading,
+                    start: 'top 82%',
+                    onEnter: () => {
+                        gsap.fromTo(rvSplit.chars,
+                            { opacity: 0 },
+                            { opacity: 1, duration: 1.0, ease: 'power1.inOut',
+                              stagger: { from: 'center', each: 0.04 } }
+                        );
+                        gsap.from(rvSplit.words, { y: (i) => (i * 80) - 40, duration: 2.5, ease: 'expo.out' });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(rvSplit.chars, { opacity: 0, duration: 0.3 });
+                    }
+                });
+            }
+
+            // --- REAL REVIEW stat 카드 페이드인 ---
+            const statCards = document.querySelectorAll('.stat-card');
+            if (statCards.length > 0) {
+                gsap.set(statCards, { opacity: 0, y: 30 });
+                ScrollTrigger.create({
+                    trigger: '.stat-grid',
+                    start: 'top 85%',
+                    onEnter: () => {
+                        gsap.to(statCards, { opacity: 1, y: 0, duration: 0.65, ease: 'power2.out', stagger: 0.15 });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(statCards, { opacity: 0, y: 30, duration: 0.3 });
                     }
                 });
             }
