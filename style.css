@@ -3829,7 +3829,7 @@ body.dark-mode .split-layout .answer-text {
 
 /* Strength & Review Section */
 .strength-review {
-    padding: 10rem 0;
+    padding: 4rem 0 10rem;
     background: #ffffff;
     text-align: center;
     position: relative;
@@ -5268,7 +5268,7 @@ body.dark-mode .split-layout .answer-text {
     letter-spacing: 0.18em;
     color: #9ca3af;
     text-transform: uppercase;
-    margin: 5rem 0 0.75rem;
+    margin: 1.5rem 0 0.75rem;
 }
 
 /* ─── Trust 4카드 그리드 ────────────────────── */
