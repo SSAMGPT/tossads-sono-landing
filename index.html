@@ -4638,55 +4638,67 @@
         };
 
         const initJoinProcessAnimation = () => {
-            const section     = document.querySelector('.section--join-process');
+            const section = document.querySelector('.section--join-process');
             if (!section) return;
             const steps       = section.querySelectorAll('.timeline-step');
             const progressBar = section.querySelector('.timeline-progress');
             const tlWrap      = section.querySelector('.product__timeline-wrap');
             if (!steps.length || !progressBar || !tlWrap) return;
 
-            const isMobile = window.innerWidth <= 768;
+            const isMobile   = window.innerWidth <= 768;
+            const totalSteps = steps.length;
 
-            /* ── 초기 상태: 모든 step 숨김, progress bar 0 ── */
+            /* ── 1. 초기 숨김 — transition 없이 즉시 적용 ── */
             steps.forEach(step => {
                 const c = step.querySelector('.step-content');
-                if (c) { c.style.opacity = '0'; c.style.transform = 'translateY(22px)'; }
+                if (!c) return;
+                c.style.transition  = 'none';          // transition 임시 끔
+                c.style.opacity     = '0';
+                c.style.transform   = 'translateY(20px)';
+                c.getBoundingClientRect();              // reflow 강제
+                c.style.transition  = '';              // CSS transition 복원
             });
             if (isMobile) { progressBar.style.width = '100%'; progressBar.style.height = '0%'; }
-            else           { progressBar.style.height = '100%'; progressBar.style.width = '0%'; }
+            else          { progressBar.style.height = '100%'; progressBar.style.width  = '0%'; }
 
-            /* ── step 페이드인: IntersectionObserver ── */
-            const io = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const step    = entry.target;
-                    const content = step.querySelector('.step-content');
-                    const dot     = step.querySelector('.step-dot');
-                    if (entry.isIntersecting) {
-                        step.classList.add('active');
-                        if (content) { content.style.opacity = '1'; content.style.transform = 'translateY(0)'; }
-                        if (dot) { dot.style.borderColor = '#C5A065'; dot.style.transform = 'scale(1.15)'; dot.style.boxShadow = '0 0 14px rgba(197,160,101,0.5)'; }
-                    } else {
-                        step.classList.remove('active');
-                        if (content) { content.style.opacity = '0'; content.style.transform = 'translateY(22px)'; }
-                        if (dot) { dot.style.borderColor = '#ddd'; dot.style.transform = 'scale(1)'; dot.style.boxShadow = 'none'; }
-                    }
-                });
-            }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
+            /* ── 2. scroll 이벤트 기반 progress + step 활성화 ── */
+            const activated = new Array(totalSteps).fill(false);
 
-            steps.forEach(step => io.observe(step));
-
-            /* ── progress bar: scroll listener ── */
-            const updateBar = () => {
+            const onScroll = () => {
                 const rect  = tlWrap.getBoundingClientRect();
                 const vh    = window.innerHeight;
-                const total = rect.height + vh * 0.45;
-                const gone  = vh * 0.75 - rect.top;
-                const pct   = Math.max(0, Math.min(1, gone / total)) * 100;
-                if (isMobile) progressBar.style.height = pct + '%';
-                else          progressBar.style.width  = pct + '%';
+
+                // 뷰포트 75% 지점 기준으로 section이 얼마나 지나갔는지 (0~1)
+                const progress = Math.max(0, Math.min(1,
+                    (vh * 0.75 - rect.top) / rect.height
+                ));
+
+                // progress bar 갱신
+                if (isMobile) progressBar.style.height = (progress * 100) + '%';
+                else          progressBar.style.width  = (progress * 100) + '%';
+
+                // step 활성화 (0%, 25%, 50%, 75% 임계값)
+                steps.forEach((step, i) => {
+                    const threshold = i / totalSteps;      // 0, 0.25, 0.5, 0.75
+                    const content   = step.querySelector('.step-content');
+                    const dot       = step.querySelector('.step-dot');
+
+                    if (progress >= threshold && !activated[i]) {
+                        activated[i] = true;
+                        step.classList.add('active');
+                        if (content) { content.style.opacity = '1'; content.style.transform = 'translateY(0)'; }
+                        if (dot) { dot.style.borderColor = '#C5A065'; dot.style.boxShadow = '0 0 14px rgba(197,160,101,0.5)'; dot.style.transform = 'scale(1.15)'; }
+                    } else if (progress < threshold && activated[i]) {
+                        activated[i] = false;
+                        step.classList.remove('active');
+                        if (content) { content.style.opacity = '0'; content.style.transform = 'translateY(20px)'; }
+                        if (dot) { dot.style.borderColor = '#ddd'; dot.style.boxShadow = 'none'; dot.style.transform = 'scale(1)'; }
+                    }
+                });
             };
-            window.addEventListener('scroll', updateBar, { passive: true });
-            updateBar();
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll(); // 초기 상태 체크
         };
 
         const initReviewCarousel = () => {
