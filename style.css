@@ -5343,9 +5343,21 @@ body.dark-mode .split-layout .answer-text {
     font-weight: 800;
 }
 
-/* 모바일: 환급 설명 한 줄 표시 */
+/* 환급 금액 강조 텍스트 (2배 크게) */
+.sc-refund-amount {
+    display: inline-block;
+    font-size: 2em;        /* 18px × 2 = 36px */
+    font-weight: 900;
+    color: #ffd60a;        /* 노란 강조 */
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin: 0 0.1em;
+    vertical-align: middle;
+}
+
+/* 모바일: 환급 설명 */
 @media (max-width: 600px) {
-    .sc-refund-desc { font-size: 12px; white-space: nowrap; }
+    .sc-refund-desc { font-size: 14px; }
 }
 
 
