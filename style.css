@@ -4212,7 +4212,7 @@ body.dark-mode .split-layout .answer-text {
     max-height: 283px;
     display: block;
     object-fit: cover;
-    object-position: center;
+    object-position: top;
 }
 
 /* 폼 영역 패딩 복원 */
