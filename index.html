@@ -4679,7 +4679,8 @@
 
                 // step 활성화 (0%, 25%, 50%, 75% 임계값)
                 steps.forEach((step, i) => {
-                    const threshold = i / totalSteps;      // 0, 0.25, 0.5, 0.75
+                    // 0.05, 0.30, 0.55, 0.80 — step 0도 살짝 스크롤 후 활성화
+                    const threshold = (i / totalSteps) * 0.95 + 0.05;
                     const content   = step.querySelector('.step-content');
                     const dot       = step.querySelector('.step-dot');
 
@@ -5041,9 +5042,7 @@
             new NavigationMenu();
         };
 
-        window.addEventListener('load', () => {
-            initApp();
-        });
+        initApp();
 
     </script>
 
