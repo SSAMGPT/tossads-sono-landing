@@ -6134,8 +6134,7 @@ body {
 /* 바디: 가격 행들 */
 .sc-receipt-body {
     padding: 0;
-    padding-right: 130px; /* 값이 왼쪽으로 이동 */
-    max-width: 380px;    /* 데스크톱에서 행 넓이 제한 */
+    padding-right: 120px; /* SVG 공간 확보 (85px SVG + 28px right + 여백) */
 }
 
 /* SVG 데코: 절대 위치 우하단 */
