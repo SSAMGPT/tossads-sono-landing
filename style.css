@@ -5215,8 +5215,8 @@ body.dark-mode .split-layout .answer-text {
 /* 카드 타이틀 내 Best 배지 크기 조정 */
 .sc-price-name .sc-tab-best {
     font-size: 21px;
-    padding: 5px 20px;
-    letter-spacing: 0.08em;
+    padding: 3px 12px;
+    letter-spacing: 0.06em;
     font-weight: 900;
 }
 
