@@ -4641,54 +4641,100 @@
             const section = document.querySelector('.section--join-process');
             if (!section) return;
 
-            const tlSteps  = section.querySelectorAll('.timeline-step');
-            const progressBar = section.querySelector('.timeline-progress');
-            const tlWrap   = section.querySelector('.product__timeline-wrap');
+            const timeline = section.querySelector('.product__timeline-wrap');
+            if (!timeline) return;
 
-            if (!tlSteps.length) return;
+            const steps        = section.querySelectorAll('.timeline-step');
+            const progressBar  = section.querySelector('.timeline-progress');
+            const totalSteps   = steps.length;
+            const bar          = section.querySelector('.timeline-bar');
 
-            // ① 각 STEP 페이드인+업 (독립 ScrollTrigger)
-            tlSteps.forEach((step) => {
-                const content = step.querySelector('.step-content');
-                const dot     = step.querySelector('.step-dot');
-                if (!content) return;
+            let mm = gsap.matchMedia();
 
-                gsap.set(content, { opacity: 0, y: 28 });
+            /* ── MOBILE (max-width: 768px) ─────────────────── */
+            mm.add("(max-width: 768px)", () => {
+                gsap.set(progressBar, { width: '100%', height: '0%' });
+                steps.forEach(s => {
+                    s.classList.remove('active');
+                    gsap.set(s.querySelector('.step-content'), { opacity: 0.5, y: 0 });
+                });
 
+                const st = ScrollTrigger.create({
+                    trigger: timeline,
+                    start: "top 70%",
+                    end: "bottom 70%",
+                    scrub: 1,
+                    onUpdate: (self) => {
+                        const progress = self.progress * 100;
+                        gsap.to(progressBar, { height: `${progress}%`, duration: 0.1, overwrite: true, ease: "none" });
+
+                        steps.forEach((step, index) => {
+                            const threshold = (index / (totalSteps - 1)) - 0.1;
+                            if (self.progress >= threshold) {
+                                if (!step.classList.contains('active')) {
+                                    step.classList.add('active');
+                                    gsap.to(step.querySelector('.step-content'), { opacity: 1, y: 0, duration: 0.4, overwrite: true });
+                                    gsap.to(step.querySelector('.step-dot'), { scale: 1.2, borderColor: '#C5A065', boxShadow: '0 0 15px rgba(197,160,101,0.6)', duration: 0.3 });
+                                }
+                            } else {
+                                if (step.classList.contains('active')) {
+                                    step.classList.remove('active');
+                                    gsap.to(step.querySelector('.step-content'), { opacity: 0.5, y: 0, duration: 0.4, overwrite: true });
+                                    gsap.to(step.querySelector('.step-dot'), { scale: 1, borderColor: '#C5A065', boxShadow: '0 0 15px rgba(0,0,0,0.1)', duration: 0.3 });
+                                }
+                            }
+                        });
+                    }
+                });
+
+                return () => { if (st) st.kill(); };
+            });
+
+            /* ── DESKTOP (min-width: 769px) ────────────────── */
+            mm.add("(min-width: 769px)", () => {
+                gsap.set(progressBar, { height: '100%', width: '0%' });
+
+                const updateDesktopProgress = (targetIndex) => {
+                    const targetStep = steps[targetIndex];
+                    const dot = targetStep.querySelector('.step-dot');
+                    if (dot && bar) {
+                        const dotCenter     = targetStep.offsetLeft + dot.offsetLeft + (dot.offsetWidth / 2);
+                        const barStart      = bar.offsetLeft;
+                        const barWidth      = bar.offsetWidth;
+                        let   progressPercent = ((dotCenter - barStart) / barWidth) * 100;
+                        if (targetIndex === steps.length - 1) progressPercent = 100;
+                        progressPercent = Math.max(0, Math.min(100, progressPercent));
+                        gsap.to(progressBar, { width: `${progressPercent}%`, duration: 0.6, ease: 'power2.out' });
+                    }
+                    steps.forEach((step, i) => {
+                        const content = step.querySelector('.step-content');
+                        if (i <= targetIndex) {
+                            step.classList.add('active');
+                            gsap.to(content, { opacity: 1, y: 0, duration: 0.4, delay: i * 0.1, overwrite: true });
+                        } else {
+                            step.classList.remove('active');
+                            gsap.to(content, { opacity: 0.4, y: 0, duration: 0.4, overwrite: true });
+                        }
+                    });
+                };
+
+                steps.forEach((step, index) => {
+                    step.addEventListener('mouseenter', () => updateDesktopProgress(index));
+                    step.addEventListener('click',      () => updateDesktopProgress(index));
+                });
+
+                // 스크롤 기반으로도 순차 활성화 (자동 진입)
                 ScrollTrigger.create({
-                    trigger: step,
-                    start: 'top 78%',
-                    onEnter: () => {
-                        step.classList.add('active');
-                        gsap.to(content, { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' });
-                        if (dot) gsap.to(dot, { boxShadow: '0 0 20px rgba(197,160,101,0.5)', duration: 0.4 });
-                    },
-                    onLeaveBack: () => {
-                        step.classList.remove('active');
-                        gsap.to(content, { opacity: 0, y: 28, duration: 0.3 });
-                        if (dot) gsap.to(dot, { boxShadow: 'none', duration: 0.2 });
+                    trigger: timeline,
+                    start: "top 70%",
+                    end: "bottom 60%",
+                    scrub: true,
+                    onUpdate: (self) => {
+                        const idx = Math.min(Math.floor(self.progress * totalSteps), totalSteps - 1);
+                        updateDesktopProgress(idx);
                     }
                 });
             });
-
-            // ② 프로그레스 바 scrub (모바일: heightProp='height', 데스크탑: heightProp='width')
-            if (progressBar && tlWrap) {
-                const isMobile = window.matchMedia('(max-width: 768px)').matches;
-                const prop     = isMobile ? 'height' : 'width';
-                gsap.fromTo(progressBar,
-                    { [prop]: '0%' },
-                    {
-                        [prop]: '100%',
-                        ease: 'none',
-                        scrollTrigger: {
-                            trigger: tlWrap,
-                            start: 'top 70%',
-                            end: 'bottom 65%',
-                            scrub: true
-                        }
-                    }
-                );
-            }
         };
 
         const initReviewCarousel = () => {
