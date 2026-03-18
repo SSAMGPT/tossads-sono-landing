@@ -5127,6 +5127,46 @@ body.dark-mode .split-layout .answer-text {
     .sc-float-btn { padding: 0.65rem 1.2rem; font-size: 13px; }
 }
 
+/* ─── 카드 하단 버튼 영역 ──────────────────── */
+.sc-price-card-btns {
+    display: flex;
+    gap: 0.6rem;
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+.sc-price-card-btn {
+    flex: 1;
+    padding: 0.7rem 0.5rem;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Pretendard', sans-serif;
+    letter-spacing: -0.02em;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.sc-price-card-btn--outline {
+    background: transparent;
+    border: 1.5px solid #d0d0d5;
+    color: #555;
+}
+.sc-price-card-btn--outline:hover {
+    border-color: #1d1d1f;
+    color: #1d1d1f;
+}
+
+.sc-price-card-btn--fill {
+    background: #1d1d1f;
+    border: 1.5px solid #1d1d1f;
+    color: #ffffff;
+}
+.sc-price-card-btn--fill:hover {
+    background: #333;
+    border-color: #333;
+}
+
 /* Price card that appears when tab is selected */
 .sc-price-card {
     background: #fff;
