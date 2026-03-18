@@ -5394,10 +5394,12 @@ body.dark-mode .split-layout .answer-text {
     align-items: flex-end;
     justify-content: flex-end;
 }
-.trust-card__illust svg {
+.trust-card__illust svg,
+.trust-illust-img {
     width: 110px;
     height: auto;
     display: block;
+    object-fit: contain;
 }
 
 /* 태블릿 (769px ~ 1024px) */
