@@ -5413,11 +5413,11 @@ body.dark-mode .split-layout .answer-text {
     .sc-refund-desc    { font-size: 42px; }
 
     /* 영수증 카드 */
-    .sc-receipt-product              { font-size: 16px; }
-    .sc-receipt-row                  { font-size: 15px; }
-    .sc-receipt-row.total            { font-size: 16px; }
-    .sc-receipt-row.total span:last-child { font-size: 18px; }
-    .sc-receipt-note                 { font-size: 12px; }
+    .sc-receipt-product              { font-size: 18px; }
+    .sc-receipt-row                  { font-size: 16px; }
+    .sc-receipt-row.total            { font-size: 18px; }
+    .sc-receipt-row.total span:last-child { font-size: 20px; }
+    .sc-receipt-note                 { font-size: 13px; }
 
     /* 가전 브랜드 필터 */
     .sc-brand-btn  { font-size: 14px; }
@@ -6135,6 +6135,7 @@ body {
 .sc-receipt-body {
     padding: 0;
     padding-right: 130px; /* 값이 왼쪽으로 이동 */
+    max-width: 380px;    /* 데스크톱에서 행 넓이 제한 */
 }
 
 /* SVG 데코: 절대 위치 우하단 */
