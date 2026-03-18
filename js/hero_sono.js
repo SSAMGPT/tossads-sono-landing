@@ -1,19 +1,23 @@
-// ─── 인트로 1회 재생 로직 (세션당) ────────────────────────────────────
-// 새로고침해도 동일 세션이면 인트로 스킵 → 스크롤 잠금 없이 즉시 진입
-const INTRO_KEY = 'introPlayed';
-const introAlreadyPlayed = sessionStorage.getItem(INTRO_KEY);
+// ─── 인트로 재생 조건 결정 ─────────────────────────────────────────────────
+// 규칙:
+//  1. 새 탭/링크 진입 (fresh) → 항상 인트로 재생, 최상단 강제 이동
+//  2. 새로고침(reload) + 스크롤 최상단 → 인트로 재생
+//  3. 새로고침(reload) + 다른 섹션 → 인트로 스킵 (해당 위치 그대로)
 
-if (!introAlreadyPlayed) {
-  // 첫 방문: 상단 고정 후 인트로 재생
+const _isReload = (() => {
+  try {
+    const nav = performance.getEntriesByType('navigation')[0];
+    return nav ? nav.type === 'reload' : performance.navigation.type === 1;
+  } catch (e) { return false; }
+})();
+
+if (!_isReload) {
+  // 새 진입: 최상단으로 이동 후 인트로 재생
   window.scrollTo(0, 0);
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 } else {
-  // 재방문(새로고침): 스크롤 복원 허용
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'auto';
-  }
+  // 새로고침: 브라우저 스크롤 복원 허용
+  if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
 }
 
 // Removes whitespace text nodes between split-word spans so CSS margin-right
@@ -136,8 +140,10 @@ function initCrispLoadingAnimation() {
       height: "10em"
     }, {
       width: "100vw",
-      height: "100dvh",
-      duration: 2
+      height: "100vh",  // dvh → vh: Safari GSAP 인라인 스타일 파싱 오류 방지
+      duration: 2,
+      ease: "power2.inOut",  // expo → power2: Safari GPU 렌더 부하 감소
+      force3D: true,          // 강제 GPU 레이어 사용
     }, "< 0.5");
   }
   
@@ -224,35 +230,49 @@ function initCrispLoadingAnimation() {
   }
 }
 
-// Initialize Crisp Loading Animation
+// 인트로 재생 여부를 스크롤 위치로 결정
+const _shouldPlayIntro = (scrollY) => scrollY < window.innerHeight * 0.25;
+
+// 즉시 표시 (인트로 스킵)
+function _skipIntro() {
+  const container = document.querySelector('.crisp-header');
+  if (container) container.classList.remove('is--loading');
+
+  const mainHeader = document.querySelector('.main-header');
+  if (mainHeader) gsap.set(mainHeader, { opacity: 1, y: 0, pointerEvents: 'auto' });
+
+  const headings = container ? container.querySelectorAll('.crisp-header__h1') : [];
+  headings.forEach(h => gsap.set(h, { opacity: 1 }));
+
+  const smallElements = document.querySelectorAll('.crisp-header__p, .crisp-header__top');
+  gsap.set(smallElements, { opacity: 1, y: 0, pointerEvents: 'auto' });
+
+  const sliderNav = container ? container.querySelectorAll('.crisp-header__slider-nav > *') : [];
+  gsap.set(sliderNav, { yPercent: 0 });
+
+  const scrollBtn = document.querySelector('.hero-scrolldown');
+  if (scrollBtn) gsap.set(scrollBtn, { opacity: 1, y: 0 });
+
+  const splash = container ? container.querySelector('.crisp-splash') : null;
+  if (splash) gsap.set(splash, { autoAlpha: 0 });
+}
+
+// fonts.ready 이후 인트로/스킵 결정
 document.fonts.ready.then(() => {
-  if (!introAlreadyPlayed) {
-    // 첫 방문: 풀 인트로 재생 후 sessionStorage에 기록
-    initCrispLoadingAnimation();
-    sessionStorage.setItem(INTRO_KEY, '1');
+  const decide = () => {
+    if (_shouldPlayIntro(window.scrollY)) {
+      initCrispLoadingAnimation();
+    } else {
+      _skipIntro();
+    }
+  };
+
+  if (_isReload) {
+    // 새로고침: 브라우저 스크롤 복원 완료 후 판단 (50ms 대기)
+    setTimeout(decide, 50);
   } else {
-    // 재방문: 인트로 스킵 — 로딩 상태 즉시 해제
-    const container = document.querySelector('.crisp-header');
-    if (container) container.classList.remove('is--loading');
-
-    const mainHeader = document.querySelector('.main-header');
-    if (mainHeader) gsap.set(mainHeader, { opacity: 1, y: 0, pointerEvents: 'auto' });
-
-    const headings = container ? container.querySelectorAll('.crisp-header__h1') : [];
-    headings.forEach(h => gsap.set(h, { opacity: 1 }));
-
-    const smallElements = document.querySelectorAll('.crisp-header__p, .crisp-header__top');
-    gsap.set(smallElements, { opacity: 1, y: 0, pointerEvents: 'auto' });
-
-    const sliderNav = container ? container.querySelectorAll('.crisp-header__slider-nav > *') : [];
-    gsap.set(sliderNav, { yPercent: 0 });
-
-    // 재방문: 스크롤 유도 버튼 즉시 표시
-    const scrollBtn = document.querySelector('.hero-scrolldown');
-    if (scrollBtn) gsap.set(scrollBtn, { opacity: 1, y: 0 });
-
-    const splash = container ? container.querySelector('.crisp-splash') : null;
-    if (splash) gsap.set(splash, { autoAlpha: 0 });
+    // 새 진입: 즉시 인트로 시작
+    decide();
   }
 
   // ── 모바일 카드 플립: 클릭으로 토글 ──
