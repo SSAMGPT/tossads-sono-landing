@@ -5272,6 +5272,12 @@ body.dark-mode .split-layout .answer-text {
     font-weight: 800;
 }
 
+/* 모바일 전용 줄바꿈 */
+br.mo-br { display: none; }
+@media (max-width: 600px) {
+    br.mo-br { display: block; }
+}
+
 
 .sc-header-wrap {
     text-align: center;
