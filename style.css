@@ -5091,12 +5091,6 @@ body.dark-mode .split-layout .answer-text {
     gap: 0.8rem;
 }
 
-/* Only 330X6 has pills on the right */
-#sc-pane-330x6 .sc-pill-stack {
-    left: auto;
-    right: 1.5rem;
-    align-items: flex-end;
-}
 
 @media (max-width: 480px) {
     .sc-pill-stack {
@@ -5106,11 +5100,6 @@ body.dark-mode .split-layout .answer-text {
         left: 1rem;
     }
     
-    #sc-pane-330x6 .sc-pill-stack {
-        transform-origin: bottom right;
-        left: auto;
-        right: 1rem;
-    }
 }
 
 @media (min-width: 768px) {
@@ -5121,11 +5110,6 @@ body.dark-mode .split-layout .answer-text {
         left: 2.5rem;
     }
 
-    #sc-pane-330x6 .sc-pill-stack {
-        transform-origin: bottom right;
-        left: auto;
-        right: 2.5rem;
-    }
 }
 
 @media (min-width: 1024px) {
@@ -5136,11 +5120,6 @@ body.dark-mode .split-layout .answer-text {
         left: 4rem;
     }
 
-    #sc-pane-330x6 .sc-pill-stack {
-        transform-origin: bottom right;
-        left: auto;
-        right: 4rem;
-    }
 }
 
 .sc-pill {
