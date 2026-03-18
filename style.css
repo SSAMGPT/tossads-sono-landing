@@ -1129,6 +1129,7 @@ body {
     justify-content: center;
     /* 웹킷(Safari 등)에서 border-radius + overflow: hidden 버그 방지 */
     -webkit-mask-image: -webkit-radial-gradient(white, black);
+    mask-image: radial-gradient(white, black);
     transform: translateZ(0);
 }
 
@@ -3830,10 +3831,10 @@ body.dark-mode .split-layout .answer-text {
 /* Strength & Review Section */
 .strength-review {
     padding: 0 0 10rem;
-    background: #ffffff;
+    background: #ffffff !important;  /* 어떤 GSAP body 전환도 덮어씌우지 못하게 고정 */
     text-align: center;
     position: relative;
-    z-index: 1;                /* body dark 전환과 격리 */
+    z-index: 1;
     isolation: isolate;
 }
 
@@ -6214,9 +6215,7 @@ body.dark-mode .split-layout .answer-text {
         padding: 3rem 0;
     }
     
-    .sc-container {
-        /* max-width: min(820px, 92vw) 이 자동으로 좌우 여백 처리 */
-    }
+    /* .sc-container max-width: min(820px, 92vw) 이 자동으로 좌우 여백 처리 */
     
     .sc-banner__inner {
         flex-direction: column;

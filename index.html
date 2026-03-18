@@ -3965,9 +3965,9 @@
         // --- Dark mode transition at 소노아임레디 가입절차 section ---
         const darkTl = gsap.timeline({
             scrollTrigger: {
-                trigger: "#join-process",
-                start: "top 70%",
-                end: "top 10%",
+                trigger: ".crisp-header",
+                start: "bottom bottom",
+                end: "bottom top",
                 scrub: true
             }
         });
@@ -4005,23 +4005,6 @@
             ease: "none"
         }, 0);
 
-
-        // --- strength 섹션(OUR PROMISE/REAL REVIEW): body 강제 화이트 고정 ---
-        // cinematicTl이 일찍 body를 어둡게 바꾸는 것을 막기 위해
-        // #strength 진입 시 즉시 흰 배경으로 돌려놓고, 벗어날 때도 흰 배경 유지
-        ScrollTrigger.create({
-            trigger: '#strength',
-            start: 'top 100%',
-            end: 'bottom top',
-            onEnter:      () => gsap.to('body', { backgroundColor: '#ffffff', color: '#1d1d1f', duration: 0.1, overwrite: 'auto' }),
-            onEnterBack:  () => gsap.to('body', { backgroundColor: '#ffffff', color: '#1d1d1f', duration: 0.1, overwrite: 'auto' }),
-            onLeaveBack:  () => gsap.to('body', { backgroundColor: '#ffffff', color: '#1d1d1f', duration: 0.1, overwrite: 'auto' }),
-            onLeave:      () => {
-                // strength 섹션을 완전히 지나 join-process로 진입 시 white 고정 해제
-                // cinematicTl/darkTl이 이어받아 어둡게 전환할 수 있도록 clearProps
-                gsap.set('body', { clearProps: 'backgroundColor,color' });
-            },
-        });
 
         // --- Light mode transition: 가입절차 패턴 역방향 (Lights ON) ---
         const lightTl = gsap.timeline({
@@ -4676,8 +4659,8 @@
             const cinematicTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
-                    start: "top 100%",
-                    end: "top 10%",   // Fully black by the time section top hits 10% from top
+                    start: "top 30%",   // join-process가 뷰포트 30% 지점에 올 때 시작 (strength 섹션 이미 지나침)
+                    end: "top -20%",    // 완전히 지나갈 때 완료
                     scrub: true
                 }
             });
