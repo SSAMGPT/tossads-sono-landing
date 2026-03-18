@@ -3327,6 +3327,21 @@
     <!-- Strength & Review Section -->
     <section class="strength-review" id="strength">
         <div class="container">
+            <!-- 섹션 타이틀 -->
+            <p class="trust-section-sub">OUR PROMISE</p>
+            <h2 id="trust-section-heading" style="
+                font-size: clamp(1.5rem, calc(3vw + 3dvh), 3.75rem);
+                font-weight: 800;
+                color: #1d1d1f;
+                line-height: 1.25;
+                letter-spacing: -0.03em;
+                word-break: keep-all;
+                text-align: center;
+                margin: 0 auto 3rem;
+                opacity: 0;
+                font-family: 'Pretendard', sans-serif;
+            ">가족을 위한 선택이라면,<br>이것만 확인하세요</h2>
+
             <!-- ── 4카드 강점 그리드 ── -->
             <div class="trust-grid">
 
@@ -4132,6 +4147,38 @@
                     },
                     onLeaveBack: () => {
                         gsap.to(scSplit.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' });
+                    }
+                });
+            }
+
+            // --- Trust 섹션 타이틀 애니메이션 (스마트케어 플랜과 동일) ---
+            const trustHeading = document.getElementById('trust-section-heading');
+            if (trustHeading && typeof SplitText !== 'undefined') {
+                const trustSplit = new SplitText(trustHeading, {
+                    type: 'words,chars',
+                    wordsClass: 'split-word',
+                    charsClass: 'split-char'
+                });
+                gsap.set(trustHeading, { opacity: 1 });
+                gsap.set(trustSplit.chars, { opacity: 0 });
+                ScrollTrigger.create({
+                    trigger: trustHeading,
+                    start: 'top 80%',
+                    onEnter: () => {
+                        gsap.fromTo(trustSplit.chars,
+                            { opacity: 0 },
+                            {
+                                opacity: 1, duration: 1.2, ease: 'power1.inOut',
+                                stagger: { from: 'center', each: 0.04 }
+                            }
+                        );
+                        gsap.from(trustSplit.words, {
+                            y: (i) => (i * 100) - 50,
+                            duration: 3, ease: 'expo.out'
+                        });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(trustSplit.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' });
                     }
                 });
             }

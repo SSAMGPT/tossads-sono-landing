@@ -5260,6 +5260,17 @@ body.dark-mode .split-layout .answer-text {
 /* 예전 divider 숨김 */
 .sc-card-divider { display: none; }
 
+/* ─── Trust 섹션 타이틀 ──────────────────────── */
+.trust-section-sub {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #9ca3af;
+    text-transform: uppercase;
+    margin: 5rem 0 0.75rem;
+}
+
 /* ─── Trust 4카드 그리드 ────────────────────── */
 .trust-grid {
     display: grid;
