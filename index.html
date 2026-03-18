@@ -3896,13 +3896,11 @@
 
 
         // --- Light mode transition: 가입절차 패턴 역방향 (Lights ON) ---
-        // 가입절차: body #fff→#000, overlay scale 0→1 (불이 꺼짐)
-        // 스마트케어: body #000→#fdfdfd, overlay scale 1→0 (불이 켜짐)
         const lightTl = gsap.timeline({
             scrollTrigger: {
-                trigger: "#smartcare", // Trigger on the #smartcare section
-                start: "top 100%",     // When the top of #smartcare hits the bottom of the viewport
-                end: "top 10%",        // When the top of #smartcare is 10% from the top of the viewport
+                trigger: "#smartcare",
+                start: "top 50%",  // 이전: top 100% → bento에 있을 때 너무 일찍 밝아지는 문제 수정
+                end: "top -10%",   // smartcare 상단이 뷰포트 위로 올라가면 완료
                 scrub: true
             }
         });
@@ -3910,6 +3908,9 @@
         lightTl.to(".main-header", { backgroundColor: "rgba(255,255,255,0.7)", ease: "none" }, 0);
         lightTl.to(".logo img", { filter: "brightness(1) invert(0)", ease: "none" }, 0);
         lightTl.to(".hamburger-menu span", { backgroundColor: "#1d1d1f", ease: "none" }, 0);
+
+        // 새로고침 시: 브라우저가 스크롤 복원한 뒤 ScrollTrigger 재계산 → 올바른 배경색 유지
+        setTimeout(function () { ScrollTrigger.refresh(); }, 200);
 
 
         // --- Intro Dark Section 텍스트 애니메이션 ---
