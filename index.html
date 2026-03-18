@@ -4640,102 +4640,60 @@
         const initJoinProcessAnimation = () => {
             const section = document.querySelector('.section--join-process');
             if (!section) return;
-
             const timeline    = section.querySelector('.product__timeline-wrap');
-            if (!timeline) return;
-
             const steps       = section.querySelectorAll('.timeline-step');
             const progressBar = section.querySelector('.timeline-progress');
-            const totalSteps  = steps.length;
             const bar         = section.querySelector('.timeline-bar');
-            if (!steps.length || !progressBar || !bar) return;
+            if (!timeline || !steps.length || !progressBar) return;
 
-            const isMobile = () => window.innerWidth <= 768;
+            const isMobile = window.innerWidth <= 768;
 
-            if (isMobile()) {
-                /* ── MOBILE: 세로 바 + scrub ── */
+            // ① 처음부터 모든 step-content 숨김 (CSS opacity:1 무력화)
+            steps.forEach(step => {
+                gsap.set(step.querySelector('.step-content'), { opacity: 0, y: 20 });
+            });
+            // progress bar 초기화
+            if (isMobile) {
                 gsap.set(progressBar, { width: '100%', height: '0%' });
-                steps.forEach(s => {
-                    s.classList.remove('active');
-                    gsap.set(s.querySelector('.step-content'), { opacity: 0.5 });
-                });
-
-                ScrollTrigger.create({
-                    trigger: timeline,
-                    start: "top 70%",
-                    end: "bottom 70%",
-                    scrub: 1,
-                    onUpdate: (self) => {
-                        gsap.to(progressBar, { height: `${self.progress * 100}%`, duration: 0.1, overwrite: true, ease: "none" });
-                        steps.forEach((step, i) => {
-                            const threshold = (i / (totalSteps - 1)) - 0.1;
-                            const content   = step.querySelector('.step-content');
-                            const dot       = step.querySelector('.step-dot');
-                            if (self.progress >= threshold) {
-                                if (!step.classList.contains('active')) {
-                                    step.classList.add('active');
-                                    gsap.to(content, { opacity: 1, duration: 0.4, overwrite: true });
-                                    gsap.to(dot, { scale: 1.2, borderColor: '#C5A065', boxShadow: '0 0 15px rgba(197,160,101,0.6)', duration: 0.3 });
-                                }
-                            } else {
-                                if (step.classList.contains('active')) {
-                                    step.classList.remove('active');
-                                    gsap.to(content, { opacity: 0.5, duration: 0.4, overwrite: true });
-                                    gsap.to(dot, { scale: 1, borderColor: '#ddd', boxShadow: 'none', duration: 0.3 });
-                                }
-                            }
-                        });
-                    }
-                });
-
             } else {
-                /* ── DESKTOP: 가로 바 + hover/scroll ── */
                 gsap.set(progressBar, { height: '100%', width: '0%' });
-
-                const updateDesktopProgress = (targetIndex) => {
-                    const targetStep = steps[targetIndex];
-                    const dot = targetStep.querySelector('.step-dot');
-                    if (dot && bar) {
-                        const dotCenter      = targetStep.offsetLeft + dot.offsetLeft + (dot.offsetWidth / 2);
-                        const barStart       = bar.offsetLeft;
-                        const barWidth       = bar.offsetWidth;
-                        let   progressPercent = ((dotCenter - barStart) / barWidth) * 100;
-                        if (targetIndex === steps.length - 1) progressPercent = 100;
-                        progressPercent = Math.max(0, Math.min(100, progressPercent));
-                        gsap.to(progressBar, { width: `${progressPercent}%`, duration: 0.6, ease: 'power2.out' });
-                    }
-                    steps.forEach((step, i) => {
-                        const content = step.querySelector('.step-content');
-                        if (i <= targetIndex) {
-                            step.classList.add('active');
-                            gsap.to(content, { opacity: 1, duration: 0.4, delay: i * 0.08, overwrite: true });
-                        } else {
-                            step.classList.remove('active');
-                            gsap.to(content, { opacity: 0.35, duration: 0.4, overwrite: true });
-                        }
-                    });
-                };
-
-                steps.forEach((step, i) => {
-                    step.addEventListener('mouseenter', () => updateDesktopProgress(i));
-                    step.addEventListener('click',      () => updateDesktopProgress(i));
-                });
-
-                // 스크롤 진입 시 자동 활성화
-                ScrollTrigger.create({
-                    trigger: timeline,
-                    start: "top 70%",
-                    end: "bottom 60%",
-                    scrub: true,
-                    onUpdate: (self) => {
-                        const idx = Math.min(Math.floor(self.progress * totalSteps), totalSteps - 1);
-                        updateDesktopProgress(idx);
-                    }
-                });
-
-                // 첫 번째 step 초기 활성화 (레이아웃 완료 후)
-                requestAnimationFrame(() => requestAnimationFrame(() => updateDesktopProgress(0)));
             }
+
+            // ② 각 step 스크롤 시 fade-in + up
+            steps.forEach((step, i) => {
+                const content = step.querySelector('.step-content');
+                const dot     = step.querySelector('.step-dot');
+
+                ScrollTrigger.create({
+                    trigger: step,
+                    start: isMobile ? 'top 80%' : 'top 85%',
+                    onEnter: () => {
+                        step.classList.add('active');
+                        gsap.to(content, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', delay: i * 0.05 });
+                        if (dot) gsap.to(dot, { borderColor: '#C5A065', scale: 1.15, boxShadow: '0 0 14px rgba(197,160,101,0.55)', duration: 0.35 });
+                    },
+                    onLeaveBack: () => {
+                        step.classList.remove('active');
+                        gsap.to(content, { opacity: 0, y: 20, duration: 0.3 });
+                        if (dot) gsap.to(dot, { borderColor: '#ddd', scale: 1, boxShadow: 'none', duration: 0.25 });
+                    }
+                });
+            });
+
+            // ③ progress bar scrub (단순 0→100%)
+            gsap.fromTo(progressBar,
+                { [isMobile ? 'height' : 'width']: '0%' },
+                {
+                    [isMobile ? 'height' : 'width']: '100%',
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: timeline,
+                        start: 'top 75%',
+                        end: 'bottom 30%',
+                        scrub: 0.8
+                    }
+                }
+            );
         };
 
         const initReviewCarousel = () => {
