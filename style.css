@@ -4190,13 +4190,37 @@ body.dark-mode .split-layout .answer-text {
 .consult__card {
     background: #fff;
     border-radius: 20px;
-    padding: 5rem;
+    padding: 0;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
     border: 2px solid transparent;
-    /* Match border on hover */
+    overflow: hidden;             /* 배너 이미지 border-radius 적용 */
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
         box-shadow 0.4s ease,
         border-color 0.4s ease;
+}
+
+/* 컨설트 배너 이미지 */
+.consult__banner {
+    width: 100%;
+    max-height: 340px;
+    overflow: hidden;
+}
+
+.consult__banner img {
+    width: 100%;
+    height: 100%;
+    max-height: 340px;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 폼 영역 패딩 복원 */
+.consult__form {
+    padding: 4rem 5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
 }
 
 .consult__card:hover {
@@ -4205,11 +4229,7 @@ body.dark-mode .split-layout .answer-text {
     border-color: #C5A065;
 }
 
-.consult__form {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-}
+
 
 .consult__row {
     display: flex;
