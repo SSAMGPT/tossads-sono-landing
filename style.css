@@ -5272,11 +5272,9 @@ body.dark-mode .split-layout .answer-text {
     font-weight: 800;
 }
 
-/* 모바일 전용 줄바꿈 */
-br.mo-br { display: none; }
+/* 모바일: 환급 설명 한 줄 표시 */
 @media (max-width: 600px) {
-    br.mo-br { display: block; }
-    .sc-refund-desc { font-size: 14px; }
+    .sc-refund-desc { font-size: 12px; white-space: nowrap; }
 }
 
 
