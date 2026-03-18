@@ -4014,7 +4014,7 @@ body.dark-mode .split-layout .answer-text {
     font-size: 1.2em;
     color: #C5A065;
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.15rem;   /* FAQ ↔ 자주 묻는 질문 간격 최소화 */
     line-height: 1;
 }
 
