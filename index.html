@@ -793,8 +793,8 @@
         }
 
         .step-content {
-            opacity: 0.1;
-            transition: all 1s ease;
+            opacity: 1;        /* GSAP에서 직접 0으로 set함 */
+            transition: all 0.75s ease;
         }
 
         .timeline-step.active .step-content {
@@ -4639,90 +4639,56 @@
 
         const initJoinProcessAnimation = () => {
             const section = document.querySelector('.section--join-process');
-            const overlay = section.querySelector('.lighting-overlay');
-            if (!section || !overlay) return;
+            if (!section) return;
 
-            // join-process: white background (no dark transition)
-            // 2. Timeline Progress Logic
-            const timeline = section.querySelector('.product__timeline-wrap');
-            const steps = section.querySelectorAll('.timeline-step');
+            const tlSteps  = section.querySelectorAll('.timeline-step');
             const progressBar = section.querySelector('.timeline-progress');
-            const bar = section.querySelector('.timeline-bar');
+            const tlWrap   = section.querySelector('.product__timeline-wrap');
 
-            let mm = gsap.matchMedia();
+            if (!tlSteps.length) return;
 
-            mm.add("(max-width: 768px)", () => {
-                const lastStep = steps[steps.length - 1];
-                const totalBarHeight = lastStep.offsetTop;
+            // ① 각 STEP 페이드인+업 (독립 ScrollTrigger)
+            tlSteps.forEach((step) => {
+                const content = step.querySelector('.step-content');
+                const dot     = step.querySelector('.step-dot');
+                if (!content) return;
 
-                // Adjust the line to start from 1st dot center and end at last dot center
-                gsap.set(bar, { height: totalBarHeight, top: 14 }); // 14px is half of dot height
-                gsap.set(progressBar, { width: '100%', height: '0%' });
+                gsap.set(content, { opacity: 0, y: 28 });
 
                 ScrollTrigger.create({
-                    trigger: timeline,
-                    start: "top 80%",
-                    end: () => `top+=${totalBarHeight} 80%`, // Complete progress at the last dot
-                    scrub: true,
-                    onUpdate: (self) => {
-                        const progress = self.progress;
-                        gsap.set(progressBar, { height: `${progress * 100}%` });
-
-                        steps.forEach((step, i) => {
-                            const threshold = i / (steps.length - 1);
-                            if (progress >= threshold * 0.98) {
-                                if (!step.classList.contains('active')) {
-                                    step.classList.add('active');
-                                    gsap.fromTo(step.querySelector('.step-content'),
-                                        { x: (i + 1) % 2 === 0 ? 30 : -30, y: 0, opacity: 0 },
-                                        { x: 0, y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-                                    );
-                                }
-                            } else {
-                                step.classList.remove('active');
-                            }
-                        });
+                    trigger: step,
+                    start: 'top 78%',
+                    onEnter: () => {
+                        step.classList.add('active');
+                        gsap.to(content, { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' });
+                        if (dot) gsap.to(dot, { boxShadow: '0 0 20px rgba(197,160,101,0.5)', duration: 0.4 });
+                    },
+                    onLeaveBack: () => {
+                        step.classList.remove('active');
+                        gsap.to(content, { opacity: 0, y: 28, duration: 0.3 });
+                        if (dot) gsap.to(dot, { boxShadow: 'none', duration: 0.2 });
                     }
                 });
             });
 
-            mm.add("(min-width: 769px)", () => {
-                gsap.set(progressBar, { height: '100%', width: '0%' });
-
-                const updateProgress = (idx) => {
-                    const step = steps[idx];
-                    const dot = step.querySelector('.step-dot');
-                    if (dot && bar) {
-                        const dotCenter = step.offsetLeft + dot.offsetLeft + (dot.offsetWidth / 2);
-                        const barWidth = bar.offsetWidth;
-                        let pct = ((dotCenter - bar.offsetLeft) / barWidth) * 100;
-                        if (idx === steps.length - 1) pct = 100;
-                        gsap.to(progressBar, { width: `${Math.max(0, Math.min(100, pct))}%`, duration: 0.8, ease: 'power3.out' });
+            // ② 프로그레스 바 scrub (모바일: heightProp='height', 데스크탑: heightProp='width')
+            if (progressBar && tlWrap) {
+                const isMobile = window.matchMedia('(max-width: 768px)').matches;
+                const prop     = isMobile ? 'height' : 'width';
+                gsap.fromTo(progressBar,
+                    { [prop]: '0%' },
+                    {
+                        [prop]: '100%',
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: tlWrap,
+                            start: 'top 70%',
+                            end: 'bottom 65%',
+                            scrub: true
+                        }
                     }
-                    steps.forEach((s, i) => {
-                        if (i <= idx) s.classList.add('active');
-                        else s.classList.remove('active');
-                    });
-                };
-
-                // Scroll-based progress for Desktop
-                ScrollTrigger.create({
-                    trigger: timeline,
-                    start: "top 80%",
-                    end: "bottom 60%",
-                    scrub: true,
-                    onUpdate: (self) => {
-                        const progress = self.progress;
-                        const stepIndex = Math.floor(progress * steps.length);
-                        const activeIndex = Math.min(stepIndex, steps.length - 1);
-                        updateProgress(activeIndex);
-                    }
-                });
-
-                steps.forEach((step, i) => {
-                    step.addEventListener('mouseenter', () => updateProgress(i));
-                });
-            });
+                );
+            }
         };
 
         const initReviewCarousel = () => {
