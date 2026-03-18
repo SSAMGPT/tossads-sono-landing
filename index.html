@@ -666,7 +666,7 @@
 
         .section--join-process .step-dot {
             background: #ffffff;
-            border-color: #C5A065;
+            border-color: #FF6242;
         }
 
         .section--join-process .timeline-bar {
@@ -702,8 +702,8 @@
         .timeline-progress {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, #C5A065, #EFC75E);
-            box-shadow: 0 0 25px rgba(197, 160, 101, 0.4);
+            background: linear-gradient(90deg, #FF6242, #FF8A74);
+            box-shadow: 0 0 25px rgba(255, 98, 66, 0.35);
             transition: width 0.1s linear;
         }
 
@@ -724,7 +724,7 @@
             width: 24px;
             height: 24px;
             background: #fff;
-            border: 2px solid #C5A065;
+            border: 2px solid #FF6242;
             border-radius: 50%;
             margin-bottom: 2rem;
             transition: all 0.4s ease;
@@ -739,7 +739,7 @@
             display: block;
             font-size: 1.1rem;
             font-weight: 800;
-            color: #C5A065;
+            color: #FF6242;
             margin-bottom: 0.8rem;
             letter-spacing: 2px;
         }
@@ -778,14 +778,14 @@
             transform: translate(-50%, -50%) scale(0);
             width: 12px;
             height: 12px;
-            background: #C5A065;
+            background: #FF6242;
             border-radius: 50%;
             transition: transform 0.4s ease;
         }
 
         .timeline-step.active .step-dot {
-            border-color: #C5A065;
-            box-shadow: 0 0 25px rgba(197, 160, 101, 0.4);
+            border-color: #FF6242;
+            box-shadow: 0 0 25px rgba(255, 98, 66, 0.35);
         }
 
         .timeline-step.active .step-dot::after {
@@ -863,7 +863,7 @@
             .timeline-progress {
                 width: 100% !important;
                 height: 0%;
-                background: linear-gradient(180deg, #C5A065, #EFC75E);
+                background: linear-gradient(180deg, #FF6242, #FF8A74);
             }
 
             .timeline-step {
@@ -4697,7 +4697,7 @@
                         activated[i] = true;
                         step.classList.add('active');
                         if (content) { content.style.opacity = '1'; content.style.transform = 'translateY(0)'; }
-                        if (dot) { dot.style.borderColor = '#C5A065'; dot.style.boxShadow = '0 0 14px rgba(197,160,101,0.5)'; dot.style.transform = 'translateX(-50%) scale(1.15)'; }
+                        if (dot) { dot.style.borderColor = '#FF6242'; dot.style.boxShadow = '0 0 14px rgba(255,98,66,0.45)'; dot.style.transform = 'translateX(-50%) scale(1.15)'; }
                     } else if (progress < threshold && activated[i]) {
                         activated[i] = false;
                         step.classList.remove('active');
