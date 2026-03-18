@@ -146,10 +146,19 @@ function initCrispLoadingAnimation() {
   }
   
   if (sliderNav.length) {
-    // Remove loading overlay and trigger header animation at the same moment thumbnails appear
+    // isScaleUp 종료 0.4초 전부터 loader 페이드아웃 → hero와 크로스페이드
+    const loaderEl = container.querySelector('.crisp-loader');
+    if (loaderEl) {
+      tl.to(loaderEl, {
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power1.inOut',
+      }, '>-0.4'); // isScaleUp 끝나기 0.4초 전
+    }
+
+    // 클래스 제거 및 헤더 등장 (loader가 이미 투명 → 끊김 없음)
     tl.call(function () {
       container.classList.remove('is--loading');
-      // Header slides down from top, same timing as text/thumbnails
       gsap.fromTo(mainHeader,
         { opacity: 0, y: -30 },
         {
@@ -160,7 +169,7 @@ function initCrispLoadingAnimation() {
           duration: 1
         }
       );
-    }, null, ">"); // fires right when isScaleUp ends
+    }, null, ">"); // loader 페이드아웃 완료 직후
     
     tl.from(sliderNav, {
       yPercent: 150,
