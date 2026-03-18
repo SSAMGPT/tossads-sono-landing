@@ -957,9 +957,9 @@
 
         .promo-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            max-width: 1200px;
+            grid-template-columns: 1fr 1fr;   /* 항상 2열 */
+            gap: 1.5rem;
+            max-width: 860px;                  /* OUR PROMISE와 동일 */
             margin: 0 auto;
         }
 
@@ -1032,12 +1032,9 @@
         }
 
         @media (max-width: 991px) {
-            .promo-grid {
-                grid-template-columns: 1fr;
-            }
-
+            /* grid는 1fr 1fr 유지 — 너비만 조정 */
             .promo-card__image {
-                height: 280px !important;
+                height: 220px !important;
             }
         }
 
@@ -1047,30 +1044,35 @@
             }
 
             .promo-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                padding: 0 1.6rem;
+                /* 2열 유지, gap/padding 조정 */
+                gap: 1rem;
+                padding: 0 1rem;
             }
 
             .promo-card {
-                padding: 2.5rem 2rem;
+                padding: 1.8rem 1.2rem;
+                border-radius: 20px;
             }
 
             .promo-card__image {
-                height: 220px !important;
+                height: 160px !important;
+                margin-bottom: 1.5rem;
             }
 
             .promo-card__badge {
-                font-size: 0.95rem;
-                padding: 0.5rem 1.4rem;
+                font-size: 0.8rem;
+                padding: 0.4rem 1rem;
+                top: 1.2rem;
+                left: 1.2rem;
             }
 
             .promo-card__info h3 {
-                font-size: 1.5rem;
+                font-size: 1.2rem;
+                letter-spacing: -0.5px;
             }
 
             .promo-count {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
         }
 
