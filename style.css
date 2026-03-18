@@ -6106,23 +6106,23 @@ body {
 /* 바디: 가격 행들 */
 .sc-receipt-body {
     padding: 0;
-    padding-right: 100px; /* SVG와 겹치지 않도록 */
+    padding-right: 130px; /* 값이 왼쪽으로 이동 */
 }
 
 /* SVG 데코: 절대 위치 우하단 */
 .sc-receipt-deco {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 110px;
+    right: 10px;
+    bottom: 10px;
+    width: 95px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
 }
 
 .sc-receipt-deco svg {
-    width: 105px;
-    height: 115px;
+    width: 85px;
+    height: 95px;
     display: block;
 }
 
