@@ -6112,7 +6112,7 @@ body {
 /* SVG 데코: 절대 위치 우하단 */
 .sc-receipt-deco {
     position: absolute;
-    right: 10px;
+    right: 28px;
     bottom: 10px;
     width: 95px;
     display: flex;
