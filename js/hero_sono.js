@@ -261,7 +261,7 @@ document.fonts.ready.then(() => {
 });
 
 // ── Safari/모바일 안전망: fonts.ready가 발화하지 않거나 GSAP 실패 시 ──
-// 6초 후에도 is--loading 상태면 강제 해제하여 콘텐츠를 표시
+// 인트로 전체 길이 ~7.1초 → 12초 후에도 is--loading 상태면 강제 해제
 const _safariFallbackTimer = setTimeout(function () {
   const container = document.querySelector('.crisp-header');
   if (container && container.classList.contains('is--loading')) {
@@ -278,7 +278,7 @@ const _safariFallbackTimer = setTimeout(function () {
     const smallElements = document.querySelectorAll('.crisp-header__p, .crisp-header__top');
     gsap.set(smallElements, { opacity: 1, y: 0, pointerEvents: 'auto' });
   }
-}, 6000);
+}, 12000); // 6000→12000: 인트로 7.1초 완료 후에만 발동하도록
 
 // Slideshow
 function initSlideShow(el) {
