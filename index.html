@@ -646,48 +646,35 @@
 
         .section--join-process {
             padding: 12rem 0;
-            background: transparent;
-            color: #111;
+            background: #ffffff;
+            color: #111827;
             position: relative;
             z-index: 5;
         }
 
-        .section--join-process.is-dark {
-            color: #ffffff;
+        .section--join-process .sr-title {
+            color: #1d1d1f !important;
         }
 
-        .section--join-process.is-dark .sr-title {
-            color: #ffffff !important;
+        .section--join-process .timeline-step h4 {
+            color: #1d1d1f !important;
         }
 
-        .section--join-process.is-dark .timeline-step h4 {
-            color: #ffffff !important;
+        .section--join-process .timeline-step p {
+            color: #6b7280 !important;
         }
 
-        .section--join-process.is-dark .timeline-step p {
-            color: #aaaaaa !important;
-        }
-
-        .section--join-process.is-dark .step-dot {
-            background: #000;
+        .section--join-process .step-dot {
+            background: #ffffff;
             border-color: #C5A065;
         }
 
-        .section--join-process.is-dark .timeline-bar {
-            background: rgba(255, 255, 255, 0.1);
+        .section--join-process .timeline-bar {
+            background: rgba(0, 0, 0, 0.08);
         }
 
         .lighting-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 150vmax;
-            height: 150vmax;
-            background: radial-gradient(circle at center, rgba(197, 160, 101, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 1;
+            display: none; /* 다크 조명 오버레이 비활성화 */
         }
 
         .product__timeline-wrap {
@@ -4655,37 +4642,7 @@
             const overlay = section.querySelector('.lighting-overlay');
             if (!section || !overlay) return;
 
-            // 1. Cinematic "Lights Out" Transition (FOLLOWING HERO PATTERN)
-            const cinematicTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top 30%",   // join-process가 뷰포트 30% 지점에 올 때 시작 (strength 섹션 이미 지나침)
-                    end: "top -20%",    // 완전히 지나갈 때 완료
-                    scrub: true
-                }
-            });
-
-            // Animate body and header background for perfect seamless transition
-            cinematicTl.to("body", { backgroundColor: "#000000", ease: "none" }, 0);
-            cinematicTl.to(".main-header", { backgroundColor: "rgba(0, 0, 0, 0.6)", ease: "none" }, 0);
-            cinematicTl.to(".logo img", { filter: "brightness(0) invert(1)", ease: "none" }, 0);
-            cinematicTl.to(".hamburger-menu span", { backgroundColor: "#ffffff", ease: "none" }, 0);
-
-            // Spotlight overlay expansion
-            cinematicTl.fromTo(overlay,
-                { scale: 0, opacity: 0 },
-                { scale: 1, opacity: 1, ease: "none" }, 0
-            );
-
-            // Separate ScrollTrigger for class switching logic (text color, dots, etc.)
-            ScrollTrigger.create({
-                trigger: section,
-                start: "top 50%",
-                onEnter: () => section.classList.add('is-dark'),
-                onEnterBack: () => section.classList.add('is-dark'),
-                onLeaveBack: () => section.classList.remove('is-dark')
-            });
-
+            // join-process: white background (no dark transition)
             // 2. Timeline Progress Logic
             const timeline = section.querySelector('.product__timeline-wrap');
             const steps = section.querySelectorAll('.timeline-step');
