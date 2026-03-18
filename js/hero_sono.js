@@ -225,7 +225,10 @@ function initCrispLoadingAnimation() {
 // Initialize Crisp Loading Animation
 function _skipIntro() {
   const container = document.querySelector('.crisp-header');
-  if (container) container.classList.remove('is--loading');
+  if (container) {
+    container.classList.remove('is--loading');
+    container.classList.remove('is--hidden'); // ← 핵심: 이게 없으면 화면이 보이지 않음
+  }
   const mainHeader = document.querySelector('.main-header');
   if (mainHeader) gsap.set(mainHeader, { opacity: 1, y: 0, pointerEvents: 'auto' });
   const headings = container ? container.querySelectorAll('.crisp-header__h1') : [];
@@ -249,8 +252,8 @@ document.fonts.ready.then(() => {
       initCrispLoadingAnimation();
     }
   };
-  // reload시 브라우저 스크롤 복원 기다린 후 판단
-  _isReload ? setTimeout(run, 50) : run();
+  // reload시 브라우저 스크롤 복원 기다린 후 판단 (50→150ms)
+  _isReload ? setTimeout(run, 150) : run();
 
   // ── 모바일 카드 플립: 클릭으로 토글 ──
   document.querySelectorAll('.refund-card').forEach(card => {
