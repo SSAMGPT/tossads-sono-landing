@@ -2107,7 +2107,7 @@ body.dark-mode .split-layout .answer-text {
 }
 
 .section--benefits {
-    padding: 5rem 0;
+    padding: 10rem 0 5rem;
     background: transparent;
     /* body GSAP 색상 전환이 비치도록 투명 처리 */
 }
