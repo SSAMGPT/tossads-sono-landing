@@ -135,39 +135,14 @@ function initCrispLoadingAnimation() {
   }
   
   if (isScaleUp.length) {
-    // vw/vh 상대 단위를 매 프레임 재계산하면 Safari 에서 레이아웃 과부하 → 픽셀로 미리 계산
-    const targetW = window.innerWidth;
-    const targetH = window.innerHeight;
-    // 10em = 160px (base 16px) 고정
-    const startPx = parseFloat(getComputedStyle(document.documentElement).fontSize) * 10 || 160;
-
-    // will-change: transform 과 충돌하는 width/height 대신
-    // position:fixed + transform:scale 로 GPU 전용 애니메이션 전환
-    gsap.set(isScaleUp, {
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      width: startPx + 'px',
-      height: startPx + 'px',
-      xPercent: -50,
-      yPercent: -50,
-      zIndex: 9000,
-      transformOrigin: '50% 50%',
-    });
-
-    const scaleX = targetW / startPx;
-    const scaleY = targetH / startPx;
-
-    tl.fromTo(isScaleUp,
-      { scaleX: 1, scaleY: 1 },
-      {
-        scaleX: scaleX,
-        scaleY: scaleY,
-        duration: 1.6,
-        ease: 'power2.inOut',
-        force3D: true,
-      }, '< 0.5'
-    );
+    tl.fromTo(isScaleUp, {
+      width: "10em",
+      height: "10em"
+    }, {
+      width: "100vw",
+      height: "100dvh",
+      duration: 2
+    }, "< 0.5");
   }
   
   if (sliderNav.length) {
