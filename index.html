@@ -987,7 +987,7 @@
             position: absolute;
             top: 2rem;
             left: 2.5rem;
-            background: #C5A065;
+            background: #0039E3;
             color: #fff;
             padding: 0.6rem 2rem;
             border-radius: 100px;
@@ -1043,19 +1043,34 @@
 
         @media (max-width: 768px) {
             .section--promotion {
-                padding: 8rem 0;
+                padding: 5rem 0;
+            }
+
+            .promo-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 0 1.6rem;
             }
 
             .promo-card {
-                padding: 3rem 2rem;
+                padding: 2.5rem 2rem;
+            }
+
+            .promo-card__image {
+                height: 220px !important;
+            }
+
+            .promo-card__badge {
+                font-size: 0.95rem;
+                padding: 0.5rem 1.4rem;
             }
 
             .promo-card__info h3 {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
             }
 
             .promo-count {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
         }
 
