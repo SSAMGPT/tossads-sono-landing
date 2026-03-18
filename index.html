@@ -5003,11 +5003,12 @@
 
     <script>
     (function () {
-        const floatBar = document.getElementById('sc-float-bar');
-        const tabsNav  = document.querySelector('.sc-product-tabs-nav');
-        const floatBtns = document.querySelectorAll('.sc-float-btn');
+        var floatBar  = document.getElementById('sc-float-bar');
+        var tabsNav   = document.querySelector('.sc-product-tabs-nav');
+        var tabsContent = document.querySelector('.sc-product-tabs-content');
+        var floatBtns = document.querySelectorAll('.sc-float-btn');
 
-        if (!floatBar || !tabsNav) return;
+        if (!floatBar || !tabsNav || !tabsContent) return;
 
         function syncActive(tabKey) {
             floatBtns.forEach(function(btn) {
@@ -5019,22 +5020,22 @@
             return activeBtn ? activeBtn.dataset.sctab : '330x4';
         }
 
-        /* 가전 선택 탭 nav가 화면 위로 사라지면 플로팅 탭바 등장 */
-        var obs = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                var rect = tabsNav.getBoundingClientRect();
-                if (!entry.isIntersecting && rect.bottom < 0) {
-                    floatBar.classList.add('is--visible');
-                    floatBar.setAttribute('aria-hidden', 'false');
-                    syncActive(getCurrentTab());
-                } else {
-                    floatBar.classList.remove('is--visible');
-                    floatBar.setAttribute('aria-hidden', 'true');
-                }
-            });
-        }, { threshold: 0 });
+        /* sc-product-tabs-content의 하단이 완전히 화면 위로 사라졌을 때만 표시
+           ─ 히어로·2섹션에서는 rect.bottom > 0이므로 절대 뜨지 않음 */
+        function onScroll() {
+            var rect = tabsContent.getBoundingClientRect();
+            if (rect.bottom < 0) {
+                floatBar.classList.add('is--visible');
+                floatBar.setAttribute('aria-hidden', 'false');
+                syncActive(getCurrentTab());
+            } else {
+                floatBar.classList.remove('is--visible');
+                floatBar.setAttribute('aria-hidden', 'true');
+            }
+        }
 
-        obs.observe(tabsNav);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll(); /* 초기 상태 체크 */
 
         /* 플로팅 탭 클릭: 탭 전환 + 탭 nav 위치로 스크롤 */
         floatBtns.forEach(function(btn) {

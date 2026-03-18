@@ -5105,6 +5105,11 @@ body.dark-mode .split-layout .answer-text {
     white-space: nowrap;
     letter-spacing: -0.02em;
     font-family: 'Pretendard', sans-serif;
+    /* 수직 중앙 정렬 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 .sc-float-btn.active {
