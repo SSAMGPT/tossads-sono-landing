@@ -5276,6 +5276,7 @@ body.dark-mode .split-layout .answer-text {
 br.mo-br { display: none; }
 @media (max-width: 600px) {
     br.mo-br { display: block; }
+    .sc-refund-desc { font-size: 14px; }
 }
 
 
