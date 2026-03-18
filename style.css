@@ -5583,36 +5583,24 @@ body {
 
 /* Smartcare Intro Illust (SVG, bento-right style) */
 .sc-intro-illust {
-    position: absolute;
-    right: 1rem;
-    bottom: 0;
+    flex-shrink: 0;
     display: flex;
-    align-items: flex-end;
-    pointer-events: none;
-    z-index: 1;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .sc-intro-illust svg {
-    width: clamp(90px, 18vw, 140px);
+    width: clamp(90px, 15vw, 140px);
     height: auto;
 }
 
 @media (max-width: 480px) {
-    .sc-intro-illust {
-        right: 0.25rem;
-        bottom: 0.5rem;
-    }
     .sc-intro-illust svg {
-        width: 90px;
-        opacity: 0.85;
+        width: 80px;
     }
 }
 
 @media (min-width: 768px) {
-    .sc-intro-illust {
-        right: 2rem;
-        bottom: 0;
-    }
     .sc-intro-illust svg {
         width: 140px;
     }
