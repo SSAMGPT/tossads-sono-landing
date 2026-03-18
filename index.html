@@ -3909,9 +3909,6 @@
         lightTl.to(".logo img", { filter: "brightness(1) invert(0)", ease: "none" }, 0);
         lightTl.to(".hamburger-menu span", { backgroundColor: "#1d1d1f", ease: "none" }, 0);
 
-        // 새로고침 시: 브라우저가 스크롤 복원한 뒤 ScrollTrigger 재계산 → 올바른 배경색 유지
-        setTimeout(function () { ScrollTrigger.refresh(); }, 200);
-
 
         // --- Intro Dark Section 텍스트 애니메이션 ---
         // 히어로 메인 텍스트와 동일: 글자 가운데에서 fade-in + 단어 스프링업

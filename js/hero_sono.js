@@ -202,11 +202,11 @@ function initCrispLoadingAnimation() {
   }
 
   // 원본과 동일: 모든 애니메이션이 loader 뒤에서 완료된 후 +=0.45 지연하여 한 번에 reveal
-  // CSS의 .crisp-loader { display: none } 이 자동으로 loader를 숨김 → 끊김 없음
   tl.call(function () {
     container.classList.remove('is--loading');
-    // 메인 헤더 즉시 표시 (loader 뒤에서 이미 컨텐츠 준비 완료)
     if (mainHeader) gsap.set(mainHeader, { opacity: 1, y: 0, pointerEvents: 'auto' });
+    // 인트로 완료 후에만 ScrollTrigger 재계산 (인트로 중 실행하면 레이아웃 thrash 발생)
+    if (typeof ScrollTrigger !== 'undefined') setTimeout(() => ScrollTrigger.refresh(), 100);
   }, null, "+=0.45");
 }
 
@@ -235,6 +235,9 @@ function _skipIntro() {
 
   const splash = container ? container.querySelector('.crisp-splash') : null;
   if (splash) gsap.set(splash, { autoAlpha: 0 });
+
+  // 스킵 경로에서만 ScrollTrigger 재계산 (reload 후 스크롤 위치에 맞는 배경색 복원)
+  if (typeof ScrollTrigger !== 'undefined') setTimeout(() => ScrollTrigger.refresh(), 100);
 }
 
 // fonts.ready 이후 인트로/스킵 결정
