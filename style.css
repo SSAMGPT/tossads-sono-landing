@@ -5132,11 +5132,12 @@ body.dark-mode .split-layout .answer-text {
     display: flex;
     gap: 0.6rem;
     padding: 1rem 1.25rem 1.25rem;
+    justify-content: space-between;
 }
 
 .sc-price-card-btn {
-    flex: 1;
-    padding: 0.7rem 0.5rem;
+    flex: 0 0 auto;
+    padding: 0.7rem 1.25rem;
     border-radius: 50px;
     font-size: 13px;
     font-weight: 700;
@@ -5395,6 +5396,33 @@ body.dark-mode .split-layout .answer-text {
     .sc-refund-desc { font-size: 20px; }
 }
 
+/* ─── 스마트케어 데스크탑 반응형 폰트 ─────────────── */
+@media (min-width: 769px) {
+    /* 상품 탭 버튼 */
+    .sc-product-tab    { font-size: 1rem; }
+    .sc-float-btn      { font-size: 1rem; }
+
+    /* 카드 하단 버튼 */
+    .sc-price-card-btn { font-size: 15px; padding: 0.75rem 1.5rem; }
+
+    /* 가격 라벨 */
+    .sc-price-label    { font-size: 15px; }
+
+    /* 환급 박스 */
+    .sc-refund-title   { font-size: 24px; }
+    .sc-refund-desc    { font-size: 42px; }
+
+    /* 영수증 카드 */
+    .sc-receipt-product              { font-size: 16px; }
+    .sc-receipt-row                  { font-size: 15px; }
+    .sc-receipt-row.total            { font-size: 16px; }
+    .sc-receipt-row.total span:last-child { font-size: 18px; }
+    .sc-receipt-note                 { font-size: 12px; }
+
+    /* 가전 브랜드 필터 */
+    .sc-brand-btn  { font-size: 14px; }
+    .sc-prod-name  { font-size: 13px; }
+}
 
 .sc-header-wrap {
     text-align: center;
