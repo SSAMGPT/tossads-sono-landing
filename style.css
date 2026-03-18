@@ -5146,6 +5146,7 @@ body.dark-mode .split-layout .answer-text {
     flex-direction: column;
     gap: 0.7rem;
     margin-top: 0.7rem;
+    margin-bottom: 1rem;
 }
 
 /* 각 카드 아이템 – 히어로 카드 스타일 */
