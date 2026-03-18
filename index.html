@@ -793,8 +793,8 @@
         }
 
         .step-content {
-            opacity: 1;        /* GSAP에서 직접 0으로 set함 */
-            transition: all 0.75s ease;
+            opacity: 1;
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
         .timeline-step.active .step-content {
@@ -4638,62 +4638,55 @@
         };
 
         const initJoinProcessAnimation = () => {
-            const section = document.querySelector('.section--join-process');
+            const section     = document.querySelector('.section--join-process');
             if (!section) return;
-            const timeline    = section.querySelector('.product__timeline-wrap');
             const steps       = section.querySelectorAll('.timeline-step');
             const progressBar = section.querySelector('.timeline-progress');
-            const bar         = section.querySelector('.timeline-bar');
-            if (!timeline || !steps.length || !progressBar) return;
+            const tlWrap      = section.querySelector('.product__timeline-wrap');
+            if (!steps.length || !progressBar || !tlWrap) return;
 
             const isMobile = window.innerWidth <= 768;
 
-            // ① 처음부터 모든 step-content 숨김 (CSS opacity:1 무력화)
+            /* ── 초기 상태: 모든 step 숨김, progress bar 0 ── */
             steps.forEach(step => {
-                gsap.set(step.querySelector('.step-content'), { opacity: 0, y: 20 });
+                const c = step.querySelector('.step-content');
+                if (c) { c.style.opacity = '0'; c.style.transform = 'translateY(22px)'; }
             });
-            // progress bar 초기화
-            if (isMobile) {
-                gsap.set(progressBar, { width: '100%', height: '0%' });
-            } else {
-                gsap.set(progressBar, { height: '100%', width: '0%' });
-            }
+            if (isMobile) { progressBar.style.width = '100%'; progressBar.style.height = '0%'; }
+            else           { progressBar.style.height = '100%'; progressBar.style.width = '0%'; }
 
-            // ② 각 step 스크롤 시 fade-in + up
-            steps.forEach((step, i) => {
-                const content = step.querySelector('.step-content');
-                const dot     = step.querySelector('.step-dot');
-
-                ScrollTrigger.create({
-                    trigger: step,
-                    start: isMobile ? 'top 80%' : 'top 85%',
-                    onEnter: () => {
+            /* ── step 페이드인: IntersectionObserver ── */
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const step    = entry.target;
+                    const content = step.querySelector('.step-content');
+                    const dot     = step.querySelector('.step-dot');
+                    if (entry.isIntersecting) {
                         step.classList.add('active');
-                        gsap.to(content, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', delay: i * 0.05 });
-                        if (dot) gsap.to(dot, { borderColor: '#C5A065', scale: 1.15, boxShadow: '0 0 14px rgba(197,160,101,0.55)', duration: 0.35 });
-                    },
-                    onLeaveBack: () => {
+                        if (content) { content.style.opacity = '1'; content.style.transform = 'translateY(0)'; }
+                        if (dot) { dot.style.borderColor = '#C5A065'; dot.style.transform = 'scale(1.15)'; dot.style.boxShadow = '0 0 14px rgba(197,160,101,0.5)'; }
+                    } else {
                         step.classList.remove('active');
-                        gsap.to(content, { opacity: 0, y: 20, duration: 0.3 });
-                        if (dot) gsap.to(dot, { borderColor: '#ddd', scale: 1, boxShadow: 'none', duration: 0.25 });
+                        if (content) { content.style.opacity = '0'; content.style.transform = 'translateY(22px)'; }
+                        if (dot) { dot.style.borderColor = '#ddd'; dot.style.transform = 'scale(1)'; dot.style.boxShadow = 'none'; }
                     }
                 });
-            });
+            }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
 
-            // ③ progress bar scrub (단순 0→100%)
-            gsap.fromTo(progressBar,
-                { [isMobile ? 'height' : 'width']: '0%' },
-                {
-                    [isMobile ? 'height' : 'width']: '100%',
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: timeline,
-                        start: 'top 75%',
-                        end: 'bottom 30%',
-                        scrub: 0.8
-                    }
-                }
-            );
+            steps.forEach(step => io.observe(step));
+
+            /* ── progress bar: scroll listener ── */
+            const updateBar = () => {
+                const rect  = tlWrap.getBoundingClientRect();
+                const vh    = window.innerHeight;
+                const total = rect.height + vh * 0.45;
+                const gone  = vh * 0.75 - rect.top;
+                const pct   = Math.max(0, Math.min(1, gone / total)) * 100;
+                if (isMobile) progressBar.style.height = pct + '%';
+                else          progressBar.style.width  = pct + '%';
+            };
+            window.addEventListener('scroll', updateBar, { passive: true });
+            updateBar();
         };
 
         const initReviewCarousel = () => {
