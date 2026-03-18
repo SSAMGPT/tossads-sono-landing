@@ -5206,6 +5206,16 @@ body.dark-mode .split-layout .answer-text {
     letter-spacing: -0.03em;
     margin-bottom: 0.8rem;
     line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* 카드 타이틀 내 Best 배지 크기 조정 */
+.sc-price-name .sc-tab-best {
+    font-size: 13px;
+    padding: 4px 12px;
 }
 
 .sc-price-label {
