@@ -4217,7 +4217,7 @@ body.dark-mode .split-layout .answer-text {
 
 /* 폼 영역 패딩 복원 */
 .consult__form {
-    padding: 4rem 5rem 5rem;
+    padding: 3.5rem 5rem 5rem;
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
@@ -4532,8 +4532,9 @@ body.dark-mode .split-layout .answer-text {
 }
 
 @media (max-width: 768px) {
-    .consult__card {
-        padding: 3rem 2rem;
+    /* card는 padding: 0 유지 (배너 full-width 보존) */
+    .consult__form {
+        padding: 2.5rem 1.5rem 3rem;  /* 모바일: 패딩 충소 효과 제거 */
     }
 
     .consult__row {
