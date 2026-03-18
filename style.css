@@ -5289,6 +5289,15 @@ body.dark-mode .split-layout .answer-text {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    /* 호버 트랜지션 */
+    transition: transform 0.32s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.32s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+}
+
+.trust-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.13);
 }
 
 /* 카드 배경 변형 */
