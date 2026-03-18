@@ -4941,9 +4941,20 @@ body.dark-mode .split-layout .answer-text {
 
 
 .sc-container {
-    max-width: 1200px;
+    max-width: min(820px, 92vw);
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0;
+}
+
+/* 모바일: sc-intro-box column 전환 (텍스트 줄바꿈 방지) */
+@media (max-width: 600px) {
+    .sc-intro-box {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    .sc-intro-illust {
+        display: none !important; /* 모바일: SVG 숨김 → 텍스트 전용 */
+    }
 }
 
 /* Price card that appears when tab is selected */
@@ -5542,7 +5553,7 @@ body.dark-mode .split-layout .answer-text {
     }
     
     .sc-container {
-        padding: 0 1rem;
+        /* max-width: min(820px, 92vw) 이 자동으로 좌우 여백 처리 */
     }
     
     .sc-banner__inner {
@@ -6026,7 +6037,7 @@ body {
     padding: 1.4rem 1.2rem 1.2rem;
     box-sizing: border-box;
     transform: rotateY(180deg);
-    overflow: visible !important;
+    overflow: hidden; /* 이미지 하단 넘침 방지 */
 }
 
 /* 뒷면 레이블: 더 구체적인 선택자로 앞면 label 오버라이드 */
