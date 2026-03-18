@@ -4016,6 +4016,11 @@
             onEnter:      () => gsap.to('body', { backgroundColor: '#ffffff', color: '#1d1d1f', duration: 0.1, overwrite: 'auto' }),
             onEnterBack:  () => gsap.to('body', { backgroundColor: '#ffffff', color: '#1d1d1f', duration: 0.1, overwrite: 'auto' }),
             onLeaveBack:  () => gsap.to('body', { backgroundColor: '#ffffff', color: '#1d1d1f', duration: 0.1, overwrite: 'auto' }),
+            onLeave:      () => {
+                // strength 섹션을 완전히 지나 join-process로 진입 시 white 고정 해제
+                // cinematicTl/darkTl이 이어받아 어둡게 전환할 수 있도록 clearProps
+                gsap.set('body', { clearProps: 'backgroundColor,color' });
+            },
         });
 
         // --- Light mode transition: 가입절차 패턴 역방향 (Lights ON) ---
