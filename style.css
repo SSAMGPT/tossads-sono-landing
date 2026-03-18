@@ -5332,10 +5332,10 @@ body.dark-mode .split-layout .answer-text {
 }
 
 .sc-refund-desc {
-    font-size: 18px; /* 13px × 1.4 */
+    font-size: 36px; /* 18px × 2 */
     font-weight: 600;
     color: rgba(255, 255, 255, 0.85);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
 }
 
 .sc-refund-desc strong {
@@ -5352,7 +5352,7 @@ body.dark-mode .split-layout .answer-text {
 
 /* 모바일: 환급 설명 */
 @media (max-width: 600px) {
-    .sc-refund-desc { font-size: 14px; }
+    .sc-refund-desc { font-size: 20px; }
 }
 
 
