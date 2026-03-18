@@ -5401,6 +5401,9 @@ body.dark-mode .split-layout .answer-text {
     display: block;
     object-fit: contain;
 }
+.trust-illust-img--sm {
+    width: 79px;   /* 110 ÷ 1.4 ≈ 79 */
+}
 
 /* 태블릿 (769px ~ 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
