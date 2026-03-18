@@ -6067,32 +6067,32 @@ body {
 /* =========================================================================
    Receipt UI (영수증 스타일 계산기)
    ========================================================================= */
-/* ─── 영수증 카드 (sc-hero-card 스타일로 리디자인) ─── */
+/* ─── 영수증 카드 (sc-hero-card 스타일) ─── */
 .sc-receipt-box {
     background: #E2EEFF;
     border-radius: 20px;
     border: none;
     margin-bottom: 1rem;
     box-shadow: none;
-    display: flex;
-    align-items: stretch;
-    overflow: hidden;
-    min-height: 160px;
     position: relative;
+    padding: 1.25rem 1.25rem 1.25rem 1.4rem;
+    overflow: hidden;
+    min-height: 155px;
 }
 
+/* 헤더: 상품명 */
 .sc-receipt-header {
     background: none;
     border-bottom: none;
     padding: 0;
     display: block;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.7rem;
 }
 
 .sc-receipt-check { display: none; }
 
 .sc-receipt-product {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 800;
     color: #1d1d1f;
     letter-spacing: -0.03em;
@@ -6100,61 +6100,41 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 180px;
+    max-width: calc(100% - 100px); /* SVG 영역 제외 */
 }
 
+/* 바디: 가격 행들 */
 .sc-receipt-body {
     padding: 0;
-    flex: 1;
+    padding-right: 100px; /* SVG와 겹치지 않도록 */
 }
 
-/* 텍스트 콘텐츠 영역 */
-.sc-receipt-box > .sc-receipt-header,
-.sc-receipt-box > .sc-receipt-body {
-    padding: 1.4rem 1.25rem;
-}
-
-/* flex 레이아웃: 헤더+바디 묶음을 위해 내부 div 처리 */
-.sc-receipt-box > .sc-receipt-header {
-    display: none; /* 헤더는 body 안에서 처리 */
-}
-
-/* 실제 적용: receipt-box에 내부 콘텐츠 패딩 */
-.sc-receipt-box {
-    padding: 1.4rem 1.25rem;
-}
-
-.sc-receipt-body {
-    padding: 0;
-}
-
-/* SVG 데코 영역 */
+/* SVG 데코: 절대 위치 우하단 */
 .sc-receipt-deco {
+    position: absolute;
+    right: 0;
+    bottom: 0;
     width: 110px;
-    flex-shrink: 0;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
-    padding: 0.5rem 0.5rem 0;
-    margin-left: auto;
-    align-self: flex-end;
 }
 
 .sc-receipt-deco svg {
-    width: 100px;
-    height: 120px;
+    width: 105px;
+    height: 115px;
     display: block;
 }
-
 
 
 .sc-receipt-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     font-size: 13px;
     color: #444;
-    padding: 0.35rem 0;
+    padding: 0.28rem 0;
+    gap: 0.5rem;
 }
 
 .sc-receipt-row span:first-child {
@@ -6194,8 +6174,8 @@ body {
 
 .sc-receipt-divider {
     height: 1px;
-    background: #e8e8e8;
-    margin: 0.5rem 0;
+    background: rgba(0,0,0,0.12);
+    margin: 0.45rem 0;
 }
 
 .sc-receipt-note {
