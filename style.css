@@ -5301,6 +5301,7 @@ body.dark-mode .split-layout .answer-text {
     max-width: calc(100% - 120px);
     z-index: 1;
     position: relative;
+    text-align: left;
 }
 
 /* 태그 */
