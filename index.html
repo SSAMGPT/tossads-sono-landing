@@ -2007,49 +2007,31 @@
         ">스마트케어 플랜</h2>
 
         <div class="sc-container">
-            <!-- 새로운 첫번째 소개 박스 -->
-        <div class="sc-intro-box"
-                style="background-color: #FF8C75; border-radius: 30px; padding: 2rem 2.5rem; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 1rem; position: relative; margin: 1.5rem auto 3rem; box-shadow: 0 10px 40px rgba(255,140,117,0.25); overflow: hidden;">
-                <div style="text-align: left; z-index: 2; position: relative; flex: 1; min-width: 0;">
-                    <h3 class="sc-intro-desc"
-                        style="font-size: var(--font-h2); font-weight: 800; color: #ffffff; line-height: 1.4; word-break: keep-all; letter-spacing: -0.02em; margin-bottom: 1rem;"
-                        data-splitting>다양한 최신 가전을 한눈에 보고<br>신청까지 편하게 할 수 있어요!</h3>
-                    <div class="sc-intro-badges" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.8rem;">
-                        <span style="display: inline-flex; align-items: center; background-color: rgba(255,255,255,0.25); color: #ffffff; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 30px; letter-spacing: -0.02em;">#가전 직접선택</span>
-                        <span style="display: inline-flex; align-items: center; background-color: rgba(255,255,255,0.25); color: #ffffff; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 30px; letter-spacing: -0.02em;">#빠른 상담신청</span>
-                        <span style="display: inline-flex; align-items: center; background-color: rgba(255,255,255,0.25); color: #ffffff; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 30px; letter-spacing: -0.02em;">#편한 월 납입</span>
-                        <span style="display: inline-flex; align-items: center; background-color: rgba(255,255,255,0.25); color: #ffffff; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 30px; letter-spacing: -0.02em;">#만기 환급</span>
-                    </div>
+            <!-- 새 프리미엄 히어로 카드 -->
+            <div class="sc-hero-card">
+                <!-- 왼쪽: eyebrow + 헤딩 -->
+                <div class="sc-hero-card__header">
+                    <span class="sc-hero-card__eyebrow">스마트케어 플랜</span>
+                    <h3 class="sc-hero-card__heading">다양한 최신 가전을<br>한눈에 보고<br>신청까지 편하게<br>할 수 있어요!</h3>
                 </div>
-                <!-- 가전 카탈로그 SVG 일러스트 (bento-right 스타일) -->
-                <div class="sc-intro-illust">
-                    <svg width="130" height="120" viewBox="0 0 130 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- 카드 3 (가장 뒤) -->
-                        <rect x="8" y="8" width="78" height="56" rx="10" fill="rgba(255,255,255,0.15)" transform="rotate(-9 8 8)"/>
-                        <!-- 카드 2 (중간) -->
-                        <rect x="14" y="20" width="78" height="56" rx="10" fill="rgba(255,255,255,0.35)" transform="rotate(-3 14 20)"/>
-                        <!-- 카드 1 (앞) -->
-                        <rect x="20" y="32" width="78" height="56" rx="10" fill="rgba(255,255,255,0.88)"/>
-                        <!-- TV 아이콘 영역 -->
-                        <rect x="28" y="40" width="26" height="18" rx="3" fill="rgba(255,98,66,0.18)" stroke="rgba(255,98,66,0.45)" stroke-width="1.2"/>
-                        <!-- 화면 콘텐츠 라인 -->
-                        <rect x="31" y="44" width="9" height="2" rx="1" fill="rgba(255,98,66,0.55)"/>
-                        <rect x="31" y="48" width="14" height="2" rx="1" fill="rgba(255,98,66,0.3)"/>
-                        <rect x="31" y="52" width="11" height="2" rx="1" fill="rgba(255,98,66,0.3)"/>
-                        <!-- TV 스탠드 -->
-                        <rect x="38" y="58" width="2" height="4" rx="1" fill="rgba(255,98,66,0.35)"/>
-                        <rect x="34" y="61" width="10" height="2" rx="1" fill="rgba(255,98,66,0.25)"/>
-                        <!-- 텍스트 줄 (상품명 모킹) -->
-                        <rect x="59" y="43" width="28" height="3" rx="1.5" fill="rgba(0,0,0,0.12)"/>
-                        <rect x="59" y="50" width="20" height="3" rx="1.5" fill="rgba(0,0,0,0.08)"/>
-                        <rect x="59" y="57" width="24" height="3" rx="1.5" fill="rgba(0,0,0,0.08)"/>
-                        <!-- 신청 버튼 모킹 -->
-                        <rect x="28" y="74" width="58" height="8" rx="4" fill="rgba(255,98,66,0.35)"/>
-                        <rect x="40" y="76" width="24" height="3" rx="1.5" fill="rgba(255,255,255,0.8)"/>
-                        <!-- 체크 뱃지 -->
-                        <circle cx="110" cy="40" r="16" fill="white" opacity="0.95"/>
-                        <path d="M104 40l4.5 4.5 9-9" stroke="#FF6242" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                <!-- 오른쪽: 2×2 키워드 카드 -->
+                <div class="sc-hero-card__grid">
+                    <div class="sc-kwd-card">
+                        <svg class="sc-kwd-card__icon" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 21h8M12 16v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        <span class="sc-kwd-card__label">가전<br>직접선택</span>
+                    </div>
+                    <div class="sc-kwd-card">
+                        <svg class="sc-kwd-card__icon" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                        <span class="sc-kwd-card__label">빠른<br>상담신청</span>
+                    </div>
+                    <div class="sc-kwd-card">
+                        <svg class="sc-kwd-card__icon" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M2 10h20" stroke="currentColor" stroke-width="1.6"/><path d="M6 15h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        <span class="sc-kwd-card__label">편한<br>월 납입</span>
+                    </div>
+                    <div class="sc-kwd-card">
+                        <svg class="sc-kwd-card__icon" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 3v5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        <span class="sc-kwd-card__label">만기<br>환급</span>
+                    </div>
                 </div>
             </div>
 
