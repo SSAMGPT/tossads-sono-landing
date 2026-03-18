@@ -139,12 +139,6 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
   display: flex;
 }
 
-/* Loading Done: 로더 숨김 (is--loading 제거 시 자동으로 display:none) */
-/* .crisp-header.is--loading .crisp-loader { display: flex } 가 specificity 더 높아서 loading 중엔 보임 */
-.crisp-loader {
-  display: none;
-}
-
 /* Splash Screen */
 .crisp-splash {
   position: absolute;
