@@ -4946,16 +4946,28 @@ body.dark-mode .split-layout .answer-text {
     padding: 0;
 }
 
-/* 모바일: sc-intro-box column 전환 (텍스트 줄바꿈 방지) */
+/* 모바일: sc-intro-box column 전환 + SVG 표시 + 배지 2열 */
 @media (max-width: 600px) {
     .sc-intro-box {
-        flex-direction: column !important;
-        align-items: flex-start !important;
+        flex-direction: row !important; /* row 유지: 텍스트 왼쪽, SVG 오른쪽 */
+        align-items: stretch !important;
+        padding: 1.5rem !important;
     }
     .sc-intro-illust {
-        display: none !important; /* 모바일: SVG 숨김 → 텍스트 전용 */
+        display: flex !important; /* 모바일에서도 SVG 표시 */
+        align-items: flex-end;
+        flex-shrink: 0;
+    }
+    .sc-intro-illust svg {
+        width: 90px !important;
+    }
+    .sc-intro-badges {
+        display: grid !important;
+        grid-template-columns: repeat(2, auto) !important;
+        gap: 6px !important;
     }
 }
+
 
 /* Price card that appears when tab is selected */
 .sc-price-card {
