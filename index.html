@@ -4991,6 +4991,77 @@
         })();
     </script>
 
+    <!-- ── 플로팅 스마트케어 탭바 ───────────────────────────────── -->
+    <div id="sc-float-bar" aria-hidden="true">
+        <div class="sc-float-bar__inner">
+            <button class="sc-float-btn" data-sctab="330x2">330X2</button>
+            <button class="sc-float-btn" data-sctab="330x3">330X3</button>
+            <button class="sc-float-btn active" data-sctab="330x4">330X4</button>
+            <button class="sc-float-btn" data-sctab="330x6">330X6</button>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        const floatBar = document.getElementById('sc-float-bar');
+        const smartcareSection = document.getElementById('smartcare');
+        const floatBtns = document.querySelectorAll('.sc-float-btn');
+
+        if (!floatBar || !smartcareSection) return;
+
+        /* 플로팅 탭 active 싱크 */
+        function syncActive(tabKey) {
+            floatBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.sctab === tabKey);
+            });
+        }
+
+        function getCurrentTab() {
+            const activeBtn = document.querySelector('.sc-product-tab.active');
+            return activeBtn ? activeBtn.dataset.sctab : '330x4';
+        }
+
+        /* 섹션이 viewport에서 완전히 나갔을 때만 표시 */
+        const obs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    floatBar.classList.remove('is--visible');
+                    floatBar.setAttribute('aria-hidden', 'true');
+                } else {
+                    floatBar.classList.add('is--visible');
+                    floatBar.setAttribute('aria-hidden', 'false');
+                    syncActive(getCurrentTab());
+                }
+            });
+        }, { threshold: 0 });
+
+        obs.observe(smartcareSection);
+
+        /* 플로팅 탭 클릭: 탭 전환 + 섹션으로 스크롤 */
+        floatBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const tabKey = this.dataset.sctab;
+
+                // 메인 탭 클릭 (기존 탭 전환 로직 활용)
+                const mainBtn = document.querySelector('.sc-product-tab[data-sctab="' + tabKey + '"]');
+                if (mainBtn) mainBtn.click();
+
+                syncActive(tabKey);
+
+                // 스마트케어 섹션으로 부드럽게 스크롤
+                smartcareSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        /* 메인 탭 클릭 시 플로팅 탭도 싱크 */
+        document.querySelectorAll('.sc-product-tab').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                syncActive(this.dataset.sctab);
+            });
+        });
+    })();
+    </script>
+
 </body>
 
 </html>
