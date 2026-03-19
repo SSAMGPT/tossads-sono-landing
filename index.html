@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="style.css?v=10.1">
     <link rel="stylesheet" href="css/hero_sono.css">
     <link rel="stylesheet" href="css/benefit_sidetabs.css">
+    <link rel="stylesheet" href="css/fm_flipcards.css?v=3">
     <!-- Splitting.js for Text Animation -->
     <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
     <style>
@@ -1677,7 +1678,146 @@
 
         </div>
 
-        <!-- 상담 신청 위젯 -->
+        <!-- ── 모바일 전용: 플립카드 (태블릿·데스크탑은 위 flowing-menu 사용) ── -->
+        <div id="fm-flip-container" aria-hidden="true">
+
+            <!-- 1. 가전 -->
+            <div class="fmc-card">
+                <div class="fmc-inner">
+                    <div class="fmc-front">
+                        <div class="fm-avatar"><img class="fm-char" src="img/ca-01-01 1.png" alt="가전"></div>
+                        <div class="fmc-text">
+                            <span class="fmc-badge">가전</span>
+                            <p>비싼 새 가전, 목돈이 부담되시나요?</p>
+                        </div>
+                        <div class="fmc-hint">↻</div>
+                    </div>
+                    <div class="fmc-back">
+                        <div class="fm-thumb" style="background-image:url('img/ca-01-01 1.png')"></div>
+                        <div class="fmc-text">
+                            <span class="fmc-badge fmc-badge--back">프리미엄 가전</span>
+                            <p>LG · 삼성 · 바디프랜드, 월 33,000원부터</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 환급 -->
+            <div class="fmc-card">
+                <div class="fmc-inner">
+                    <div class="fmc-front">
+                        <div class="fm-avatar"><img class="fm-char" src="img/ca-03-03 1.png" alt="환급"></div>
+                        <div class="fmc-text">
+                            <span class="fmc-badge">환급</span>
+                            <p>매달 내는 렌탈비, 버리는 돈 같나요?</p>
+                        </div>
+                        <div class="fmc-hint">↻</div>
+                    </div>
+                    <div class="fmc-back">
+                        <div class="fm-thumb" style="background-image:url('img/ca-03-03 1.png')"></div>
+                        <div class="fmc-text">
+                            <span class="fmc-badge fmc-badge--back">만기 시 전액 환급</span>
+                            <p>납입금 100% 돌려받는 소노만의 구조</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 상조 -->
+            <div class="fmc-card">
+                <div class="fmc-inner">
+                    <div class="fmc-front">
+                        <div class="fm-avatar fm-avatar--contained"><img class="fm-char" src="img/ca-05-05 1.png" alt="상조"></div>
+                        <div class="fmc-text">
+                            <span class="fmc-badge">상조</span>
+                            <p>갑작스러운 큰 지출, 준비되셨나요?</p>
+                        </div>
+                        <div class="fmc-hint">↻</div>
+                    </div>
+                    <div class="fmc-back">
+                        <div class="fm-thumb" style="background-image:url('img/ca-05-05 1.png')"></div>
+                        <div class="fmc-text">
+                            <span class="fmc-badge fmc-badge--back">프리미엄 상조</span>
+                            <p>소노아임레디와 함께 미리 준비하는 상조</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 리조트 -->
+            <div class="fmc-card">
+                <div class="fmc-inner">
+                    <div class="fmc-front">
+                        <div class="fm-avatar"><img class="fm-char" src="img/ca-02-02 1.png" alt="리조트"></div>
+                        <div class="fmc-text">
+                            <span class="fmc-badge">리조트</span>
+                            <p>부담되는 호캉스 비용, 망설여지시나요?</p>
+                        </div>
+                        <div class="fmc-hint">↻</div>
+                    </div>
+                    <div class="fmc-back">
+                        <div class="fm-thumb" style="background-image:url('img/ca-02-02 1.png')"></div>
+                        <div class="fmc-text">
+                            <span class="fmc-badge fmc-badge--back">리조트 객실 우대</span>
+                            <p>소노 리조트 회원 혜택으로 합리적인 호캉스</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 여행 -->
+            <div class="fmc-card">
+                <div class="fmc-inner">
+                    <div class="fmc-front">
+                        <div class="fm-avatar"><img class="fm-char" src="img/ca-04-04 1.png" alt="여행"></div>
+                        <div class="fmc-text">
+                            <span class="fmc-badge">여행</span>
+                            <p>꿈꾸던 해외여행, 비용이 걱정이신가요?</p>
+                        </div>
+                        <div class="fmc-hint">↻</div>
+                    </div>
+                    <div class="fmc-back">
+                        <div class="fm-thumb" style="background-image:url('img/ca-04-04 1.png')"></div>
+                        <div class="fmc-text">
+                            <span class="fmc-badge fmc-badge--back">크루즈 · 해외여행 전환</span>
+                            <p>납입 완료 후 해외여행·크루즈로 전환 가능</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /#fm-flip-container -->
+
+        <script>
+        /* 모바일 터치: 카드 탭으로 플립 토글 */
+        (function () {
+            var cards = Array.from(document.querySelectorAll('.fmc-card'));
+
+            function closeAll(except) {
+                cards.forEach(function(c) {
+                    if (c !== except) c.classList.remove('is-flipped');
+                });
+            }
+
+            /* 카드 클릭: 해당 카드 열기/닫기 + 나머지 모두 닫기 */
+            cards.forEach(function(card) {
+                card.addEventListener('click', function(e) {
+                    e.stopPropagation();                  /* 바깥 클릭 이벤트와 충돌 방지 */
+                    var isFlipped = card.classList.contains('is-flipped');
+                    closeAll(null);                       /* 모두 닫기 */
+                    if (!isFlipped) {
+                        card.classList.add('is-flipped'); /* 이미 닫혀있던 카드면 열기 */
+                    }
+                });
+            });
+
+            /* 빈 공간(document) 클릭 시 모두 닫기 */
+            document.addEventListener('click', function() {
+                closeAll(null);
+            });
+        })();
+        </script>
+
         <div class="sono-consult" id="sonoConsult">
 
             <!-- [1] 신청하기 버튼 -->
@@ -4703,6 +4843,13 @@
 
             if (detailBtn) detailBtn.addEventListener('click', openModal);
             if (footerPrivacyBtn) footerPrivacyBtn.addEventListener('click', openModal);
+            /* 이벤트 위임: ffpPrivacyOpen / scPrivacyOpen은 이 스크립트 실행 시점에
+               아직 DOM에 없으므로 document 전체에서 클릭을 위임하여 감지 */
+            document.addEventListener('click', function(e) {
+                if (e.target.id === 'ffpPrivacyOpen' || e.target.id === 'scPrivacyOpen') {
+                    openModal();
+                }
+            });
             if (closeBtn) closeBtn.addEventListener('click', closeModal);
             if (modal) {
                 window.addEventListener('click', (e) => {
@@ -4858,37 +5005,53 @@
             <button class="ffp-close" id="ffpClose" aria-label="닫기">✕</button>
         </div>
 
-        <!-- 이름 -->
-        <div class="ffp-input-wrap">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                stroke="rgba(255,255,255,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
-            </svg>
-            <input type="text" id="ffpName" placeholder="이름" autocomplete="name">
-        </div>
+        <!-- 흰색 카드 섹션 -->
+        <div class="ffp-card">
 
-        <!-- 연락처 -->
-        <div class="ffp-input-wrap">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                stroke="rgba(255,255,255,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 0112 18.85a19.5 19.5 0 01-7.82-7.82 19.79 19.79 0 01-3.07-8.68A2 2 0 013 2.18h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
-            </svg>
-            <input type="tel" id="ffpPhone" placeholder="01012345678 (- 없이 입력)" maxlength="11" autocomplete="tel">
-        </div>
+            <!-- 선택 요약 (스마트케어 섹션에서 선택 시 자동 주입) -->
+            <div class="ffp-selection" id="ffpSelection" style="display:none;">
+                <div class="ffp-sel-row">
+                    <span class="ffp-sel-label">📋 상품</span>
+                    <span id="ffpSelPlan">—</span>
+                </div>
+                <div class="ffp-sel-row">
+                    <span class="ffp-sel-label">🏠 가전</span>
+                    <span id="ffpSelAppliance">—</span>
+                </div>
+            </div>
 
-        <!-- 개인정보 동의 -->
-        <div class="ffp-agree">
-            <span class="ffp-agree-box" id="ffpAgreeBox">
-                <svg viewBox="0 0 12 10" fill="none" stroke="#fff" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="1 5 4.5 9 11 1"/>
+            <!-- 이름 -->
+            <div class="ffp-input-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="#888" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
                 </svg>
-            </span>
-            <input type="checkbox" id="ffpAgree" style="display:none;">
-            <span class="ffp-agree-text">개인정보 수집 및 이용에 동의합니다.</span>
-        </div>
+                <input type="text" id="ffpName" placeholder="이름" autocomplete="name">
+            </div>
 
-        <button class="ffp-submit" id="ffpSubmit" type="button">신청하기</button>
+            <!-- 연락처 -->
+            <div class="ffp-input-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="#888" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 0112 18.85a19.5 19.5 0 01-7.82-7.82 19.79 19.79 0 01-3.07-8.68A2 2 0 013 2.18h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+                <input type="tel" id="ffpPhone" placeholder="01012345678 (- 없이 입력)" maxlength="11" autocomplete="tel">
+            </div>
+
+            <!-- 개인정보 동의 -->
+            <div class="ffp-agree">
+                <span class="ffp-agree-box" id="ffpAgreeBox">
+                    <svg viewBox="0 0 12 10" fill="none" stroke="#fff" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="1 5 4.5 9 11 1"/>
+                    </svg>
+                </span>
+                <input type="checkbox" id="ffpAgree" style="display:none;">
+                <span class="ffp-agree-text">개인정보 수집 및 이용에 동의합니다. <button type="button" class="ffp-privacy-link" id="ffpPrivacyOpen">전문 보기</button></span>
+            </div>
+
+            <button class="ffp-submit" id="ffpSubmit" type="button">신청하기</button>
+        </div>
     </div>
 
     <script>
@@ -4964,7 +5127,36 @@
         var submitBtn   = document.getElementById('ffpSubmit');
         var ffpPhone    = document.getElementById('ffpPhone');
 
+        /* ── 선택 요약: 스마트케어 선택값 전역 저장 ── */
+        var _ffpSelPlan      = '소노 스마트케어 ' + (document.querySelector('.sc-product-tab.active') ? document.querySelector('.sc-product-tab.active').textContent.trim() : '');
+        var _ffpSelAppliance = '';
+
+        /* 플랜 탭 변경 추적 */
+        document.querySelectorAll('.sc-product-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                _ffpSelPlan = '소노 스마트케어 ' + this.textContent.trim();
+            });
+        });
+
+        /* 가전 카드 선택 추적 */
+        document.querySelectorAll('.sc-prod-card').forEach(function(card) {
+            card.addEventListener('click', function() {
+                _ffpSelAppliance = this.getAttribute('data-name') || '';
+            });
+        });
+
         function openPanel() {
+            /* 선택 요약 주입 */
+            var selDiv  = document.getElementById('ffpSelection');
+            var selPlan = document.getElementById('ffpSelPlan');
+            var selApp  = document.getElementById('ffpSelAppliance');
+            if (selDiv && ((_ffpSelPlan && _ffpSelPlan !== '소노 스마트케어 ') || _ffpSelAppliance)) {
+                if (selPlan) selPlan.textContent = _ffpSelPlan || '미선택';
+                if (selApp)  selApp.textContent  = _ffpSelAppliance || '미선택';
+                selDiv.style.display = 'block';
+            } else if (selDiv) {
+                selDiv.style.display = 'none';
+            }
             panel.classList.add('is-open');
             overlay.classList.add('is-open');
             document.body.style.overflow = 'hidden';
@@ -4996,6 +5188,14 @@
         if (triggerBtn) triggerBtn.addEventListener('click', openPanel);
         if (closeBtn)   closeBtn.addEventListener('click', closePanel);
         if (overlay)    overlay.addEventListener('click', closePanel);
+
+        /* ── 지금 신청하기 버튼 → floatFormPanel 열기 ── */
+        document.querySelectorAll('.sc-receipt-tab-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openPanel();
+            });
+        });
 
         /* 커스텀 체크박스 */
         if (agreeBox) {
