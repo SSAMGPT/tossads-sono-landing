@@ -1,0 +1,82 @@
+/* ─────────────────────────────────────────────
+   혜택 섹션 좌측 사이드 인덱스 탭
+   화면 왼쪽 가장자리에 세로로 붙은 파일 인덱스 탭
+───────────────────────────────────────────── */
+
+/* 래퍼: 화면 왼쪽, 세로 중앙 고정 */
+#benefit-sidetabs {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4000;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    pointer-events: none;
+    opacity: 0;
+    /* 기본: 왼쪽으로 완전히 숨음 */
+    translate: -100% 0;
+    transition: opacity 0.35s ease, translate 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 섹션 진입 시 등장 */
+#benefit-sidetabs.bst--visible {
+    opacity: 1;
+    translate: 0 0;
+    pointer-events: auto;
+}
+
+/* 개별 탭 버튼 */
+.bst-tab {
+    display: block;
+    writing-mode: vertical-lr;          /* 세로 텍스트, 위→아래 읽기 */
+    text-orientation: mixed;
+    /* rotate 없음: border-radius가 올바른 위치 유지 */
+    padding: 1rem 0.65rem;
+    background: #001A3D;
+    color: #ffffff;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+    border: none;
+    border-radius: 0 8px 8px 0;        /* 왼쪽 평평(화면에 붙음), 오른쪽만 둥그르게 */
+    cursor: pointer;
+    box-shadow: 3px 2px 12px rgba(0, 0, 0, 0.18);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+    transform: translateX(0);
+}
+
+.bst-tab:hover {
+    filter: brightness(1.25);
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.28);
+    /* translateX 없음: 왼쪽 가장자리와 틈 생기지 않도록 */
+}
+
+/* 현재 활성 탭: 숨김 */
+.bst-tab.bst-tab--hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+/* 탭마다 색상 구분 */
+.bst-tab[data-tab="premium"]    { background: #001A3D; }
+.bst-tab[data-tab="membership"] { background: #0039E3; }
+.bst-tab[data-tab="hybrid"]     { background: #C5A065; }
+
+.bst-tab[data-tab="premium"]:hover    { background: #0039E3; }
+.bst-tab[data-tab="membership"]:hover { background: #001A3D; }
+.bst-tab[data-tab="hybrid"]:hover     { background: #a8864e; }
+
+/* 모바일: 탭 크기 약간 줄이기 */
+@media (max-width: 768px) {
+    .bst-tab {
+        font-size: 11px;
+        padding: 0.85rem 0.55rem;
+    }
+}

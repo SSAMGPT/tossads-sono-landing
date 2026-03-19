@@ -12,6 +12,7 @@
     <meta property="og:description" content="당신의 일상을 더 특별하게, 소노아임레디 스마트케어">
     <link rel="stylesheet" href="style.css?v=10.1">
     <link rel="stylesheet" href="css/hero_sono.css">
+    <link rel="stylesheet" href="css/benefit_sidetabs.css">
     <!-- Splitting.js for Text Animation -->
     <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
     <style>
@@ -5234,6 +5235,78 @@
                 }
             });
         });
+    </script>
+
+    <!-- ── 혜택 섹션 좌측 사이드 인덱스 탭 ── -->
+    <div id="benefit-sidetabs" aria-hidden="true">
+        <button class="bst-tab" data-tab="premium">프리미엄</button>
+        <button class="bst-tab" data-tab="membership">멤버십</button>
+        <button class="bst-tab" data-tab="hybrid">하이브리드</button>
+    </div>
+
+    <script>
+    (function () {
+        var sidetabs  = document.getElementById('benefit-sidetabs');
+        var section   = document.querySelector('.section--benefits');
+        var tabs      = sidetabs.querySelectorAll('.bst-tab');
+        var isInView  = false;
+        var activeTab = 'premium'; // 기본 활성 탭
+
+        /* 사이드탭 업데이트: 현재 활성 탭을 숨기고 나머지 표시 */
+        function updateSidetabs(current) {
+            activeTab = current;
+            tabs.forEach(function(tab) {
+                var key = tab.getAttribute('data-tab');
+                if (key === current) {
+                    tab.classList.add('bst-tab--hidden');
+                    tab.setAttribute('aria-hidden', 'true');
+                } else {
+                    tab.classList.remove('bst-tab--hidden');
+                    tab.setAttribute('aria-hidden', 'false');
+                }
+            });
+        }
+
+        /* 섹션 진입/이탈: IntersectionObserver */
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    isInView = true;
+                    sidetabs.classList.add('bst--visible');
+                    sidetabs.setAttribute('aria-hidden', 'false');
+                } else {
+                    isInView = false;
+                    sidetabs.classList.remove('bst--visible');
+                    sidetabs.setAttribute('aria-hidden', 'true');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        if (section) observer.observe(section);
+
+        /* 사이드탭 클릭 → benefit-tab 전환 */
+        tabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                var target = tab.getAttribute('data-tab');
+                /* 기존 switchTab 재사용: benefit-tab 클릭 이벤트 발화 */
+                var realTab = document.querySelector('.benefit-tab[data-tab="' + target + '"]');
+                if (realTab) realTab.click();
+                /* 스크롤해서 섹션 상단으로 이동 */
+                if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                updateSidetabs(target);
+            });
+        });
+
+        /* 기존 benefit-tab 클릭 감지 → 사이드탭 동기화 */
+        document.querySelectorAll('.benefit-tab').forEach(function(realTab) {
+            realTab.addEventListener('click', function() {
+                updateSidetabs(realTab.getAttribute('data-tab'));
+            });
+        });
+
+        /* 초기 상태 */
+        updateSidetabs('premium');
+    })();
     </script>
 
 </body>
