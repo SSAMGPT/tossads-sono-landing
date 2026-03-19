@@ -3647,7 +3647,7 @@ body.dark-mode .split-layout .answer-text {
 
 .prem-card {
     background: #fff;
-    border: 2px solid #f0f0f0;
+    border: 2px solid transparent;
     border-radius: 20px;
     padding: 1.5rem 1rem;
     cursor: pointer;
@@ -3660,16 +3660,28 @@ body.dark-mode .split-layout .answer-text {
     /* 4 columns base with centering support */
     aspect-ratio: 1 / 1;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
     user-select: none;
     max-width: 200px;
     /* Limit size for desktop while keeping it centered */
 }
 
+/* 블루 카드 (홀수) */
+.prem-card--blue {
+    background: #DCE9FF;
+    border-color: #DCE9FF;
+}
+
+/* 그레이 카드 (짝수) */
+.prem-card--gray {
+    background: #EBEBEB;
+    border-color: #EBEBEB;
+}
+
+
 .prem-card:hover {
     transform: translateY(-6px);
-    border-color: #C5A065;
-    box-shadow: 0 12px 32px rgba(197, 160, 101, 0.18);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
 .prem-card.is-active {
@@ -3718,10 +3730,10 @@ body.dark-mode .split-layout .answer-text {
 
 /* Detail Panel */
 .prem-detail {
-    background: #fff;
-    border: 1.5px solid #e8e8e8;
-    border-radius: 20px;
-    padding: 0 2.5rem;
+    background: #F0F5FF;
+    border: 2px solid transparent;
+    border-radius: 24px;
+    padding: 0 3rem;
     height: 0;
     opacity: 0;
     overflow: hidden;
@@ -3732,56 +3744,98 @@ body.dark-mode .split-layout .answer-text {
 
 .prem-detail__close {
     position: absolute;
-    top: 1.6rem;
-    right: 1.8rem;
-    background: none;
+    top: 1.4rem;
+    right: 1.6rem;
+    background: rgba(255, 255, 255, 0.8);
     border: none;
-    font-size: 1.4rem;
-    color: #aaa;
+    border-radius: 50%;
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1rem;
+    color: #555;
     cursor: pointer;
-    padding: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1;
-    transition: color 0.2s;
+    transition: background 0.2s, color 0.2s;
 }
 
 .prem-detail__close:hover {
-    color: #333;
+    background: #fff;
+    color: #001A3D;
 }
 
 .prem-detail__title {
     font-size: var(--font-h3);
     font-weight: 800;
     color: #001A3D;
-    margin-bottom: 1.6rem;
+    margin-bottom: 1.4rem;
+    padding-top: 2.4rem;
 }
 
 .prem-detail__table {
     width: 100%;
     border-collapse: collapse;
     font-size: var(--font-small);
+    margin-bottom: 2.4rem;
 }
 
+/* 헤더 행 숨김 */
+.prem-detail__table thead,
 .prem-detail__table th {
-    background: #001A3D;
-    color: #fff;
-    padding: 0.9rem 1.2rem;
+    display: none;
+}
+
+/* 각 행: 흰 카드 형태 */
+.prem-detail__table tr {
+    display: flex;
+    align-items: stretch;
+    background: #fff;
+    border-radius: 14px;
+    margin-bottom: 0.6rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 26, 61, 0.06);
+}
+
+.prem-detail__table tr:last-child {
+    margin-bottom: 0;
+}
+
+/* 첫 번째 td: 블루 라벨 */
+.prem-detail__table td:first-child {
+    flex: 0 0 130px;
+    padding: 1rem 1.2rem;
     font-weight: 700;
-    text-align: left;
-}
-
-.prem-detail__table td {
-    padding: 0.85rem 1.2rem;
-    border-bottom: 1px solid #eee;
-    color: #444;
-    line-height: 1.5;
-}
-
-.prem-detail__table tr:last-child td {
+    color: #fff;
+    background: #0039E3;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
     border-bottom: none;
 }
 
+/* 두 번째 td: 내용 */
+.prem-detail__table td:last-child {
+    flex: 1;
+    padding: 1rem 1.4rem;
+    color: #333;
+    background: transparent;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+}
+
+/* 줄무늬 배경 제거 + 짝수 라벨 변형 */
 .prem-detail__table tr:nth-child(even) td {
-    background: #f0f2f5;
+    background: inherit;
+}
+
+.prem-detail__table tr:nth-child(even) td:first-child {
+    background: #1A55F0;
 }
 
 /* 7번째 카드 정렬 제거 (프레임 통일을 위해) */
@@ -4499,7 +4553,7 @@ body.dark-mode .split-layout .answer-text {
 
 .consult__submit {
     width: 100%;
-    background-color: #1d1d1f;
+    background-color: #0039E3;
     color: #fff;
     font-size: 1.4rem;
     font-weight: 700;
@@ -4511,9 +4565,9 @@ body.dark-mode .split-layout .answer-text {
 }
 
 .consult__submit:hover {
-    background-color: #C5A065;
+    background-color: #FF6B1A;
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(197, 160, 101, 0.2);
+    box-shadow: 0 10px 20px rgba(255, 107, 26, 0.3);
 }
 
 .consult__notice {
@@ -5077,75 +5131,96 @@ body.dark-mode .split-layout .answer-text {
 
 
 /* ─── 플로팅 스마트케어 탭바 ──────────────────────────────────── */
-#sc-float-bar {
+/* ─── 스마트케어 플로팅 버튼 ────────────────────── */
+#sc-float-btn-wrap {
     position: fixed;
-    bottom: 1.75rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(120px);
-    z-index: 9100;
+    bottom: 2.4rem;
+    right: 2.4rem;
+    z-index: 3000;
     opacity: 0;
+    transform: translateY(50px) scale(0.6);
     pointer-events: none;
-    transition:
-        transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-        opacity   0.3s ease;
 }
 
-#sc-float-bar.is--visible {
-    transform: translateX(-50%) translateY(0);
+#sc-float-btn-wrap.is--visible {
     opacity: 1;
+    transform: translateY(0) scale(1);
     pointer-events: auto;
 }
 
-/* 플로팅 탭 컨테이너: 기존 sc-product-tabs-container와 동일한 스타일 */
-.sc-float-bar__inner {
-    display: inline-flex;
-    align-items: center;
-    gap: 0;
-    background: rgba(0, 0, 0, 0.05);
-    padding: 6px;
-    border-radius: 50px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.18),
-        0 2px 8px  rgba(0, 0, 0, 0.10);
+/* 스크롤 통통 튀며 등장 */
+#sc-float-btn-wrap.is--entering {
+    animation: floatBtnScrollIn 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    pointer-events: auto;
 }
 
-/* 버튼: .sc-product-tab과 동일한 스타일 */
-.sc-float-btn {
-    padding: 0.75rem 1.85rem;
-    border-radius: 40px;
+/* 스크롤 통통 튀며 사라짐 */
+#sc-float-btn-wrap.is--leaving {
+    animation: floatBtnScrollOut 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+    pointer-events: none;
+}
+
+.sc-float-single-btn {
+    position: relative;
+    width: 148px;
+    height: 56px;
+    border-radius: 45px;
     border: none;
-    background: transparent;
-    color: #888;
-    font-size: var(--font-small);
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    white-space: nowrap;
-    letter-spacing: -0.02em;
+    background-color: #FF6B1A;
+    color: white;
     font-family: 'Pretendard', sans-serif;
-    /* 수직 중앙 정렬 */
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    box-shadow:
+        0px 10px 10px rgba(255, 180, 120, 0.45) inset,
+        0px 6px 16px rgba(255, 107, 26, 0.4),
+        0px -10px 10px rgba(200, 60, 0, 0.5) inset;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1;
+    gap: 6px;
 }
 
-.sc-float-btn.active {
-    background: #000000;
-    color: #fff;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+.sc-float-single-btn::before {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.65);
+    content: "";
+    filter: blur(1px);
+    top: 8px;
+    border-radius: 50%;
 }
 
-.sc-float-btn:hover:not(.active) {
-    color: #1d1d1f;
+.sc-float-single-btn::after {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.13);
+    content: "";
+    filter: blur(1px);
+    bottom: 8px;
+    border-radius: 50%;
 }
 
-@media (max-width: 480px) {
-    #sc-float-bar { bottom: 1.25rem; }
-    .sc-float-btn { padding: 0.65rem 1.2rem; font-size: 13px; }
+.sc-float-single-btn:hover {
+    animation: floatBtnJello 0.9s both;
 }
+
+@media (max-width: 768px) {
+    #sc-float-btn-wrap {
+        bottom: 1.6rem;
+        right: 1.2rem;
+    }
+    .sc-float-single-btn {
+        width: 130px;
+        height: 50px;
+        font-size: 14px;
+    }
+}
+
 
 /* ─── 제휴카드 아코디언 ────────────────────── */
 .sc-card-accordion {
@@ -7051,5 +7126,355 @@ body {
     .bento-right {
         grid-column: 1;
         min-height: 160px;
+    }
+}
+/* ─────────────────────────────────────────────
+   플로팅 상담 신청하기 버튼
+───────────────────────────────────────────── */
+
+/* 버튼 bounce-out 키프레임 (패널 열릴 때) */
+@keyframes floatBtnBounceOut {
+    0%   { opacity: 1; transform: translateY(0) scale(1); }
+    20%  { transform: translateY(-8px) scale(1.15, 0.88); }
+    40%  { transform: translateY(4px) scale(0.9, 1.1); }
+    60%  { transform: translateY(-3px) scale(1.05, 0.96); }
+    80%  { transform: translateY(2px) scale(0.98, 1.02); }
+    100% { opacity: 0; transform: translateY(24px) scale(0.8); }
+}
+
+/* 버튼 bounce-in 키프레임 (패널 닫힐 때) */
+@keyframes floatBtnBounceIn {
+    0%   { opacity: 0; transform: translateY(24px) scale(0.8); }
+    30%  { opacity: 1; transform: translateY(-10px) scale(1.18, 0.85); }
+    50%  { transform: translateY(4px) scale(0.93, 1.1); }
+    68%  { transform: translateY(-5px) scale(1.06, 0.95); }
+    82%  { transform: translateY(2px) scale(0.98, 1.02); }
+    92%  { transform: translateY(-2px) scale(1.02, 0.99); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── 스크롤 등장: 통통 튀며 올라오는 키프레임 ── */
+@keyframes floatBtnScrollIn {
+    0%   { opacity: 0; transform: translateY(50px) scale(0.6); }
+    45%  { opacity: 1; transform: translateY(-16px) scale(1.2, 0.82); }
+    62%  { transform: translateY(7px) scale(0.9, 1.14); }
+    75%  { transform: translateY(-6px) scale(1.07, 0.94); }
+    85%  { transform: translateY(3px) scale(0.97, 1.03); }
+    92%  { transform: translateY(-1px) scale(1.02, 0.99); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── 스크롤 사라짐: 통통 튀며 내려가는 키프레임 ── */
+@keyframes floatBtnScrollOut {
+    0%   { opacity: 1; transform: translateY(0) scale(1); }
+    15%  { transform: translateY(-8px) scale(1.08, 0.88); }
+    35%  { transform: translateY(5px) scale(0.95, 1.06); }
+    55%  { opacity: 0.6; transform: translateY(28px) scale(0.85, 0.9); }
+    100% { opacity: 0; transform: translateY(50px) scale(0.6); }
+}
+
+#floatingConsultBtn {
+    position: fixed;
+    bottom: 2.4rem;
+    left: 2.4rem;
+    z-index: 3000;
+    opacity: 0;
+    transform: translateY(50px) scale(0.6);
+    pointer-events: none;
+}
+
+#floatingConsultBtn.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* 스크롤 통통 튀며 등장 */
+#floatingConsultBtn.is-entering {
+    animation: floatBtnScrollIn 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    pointer-events: auto;
+}
+
+/* 스크롤 통통 튀며 사라짐 */
+#floatingConsultBtn.is-leaving {
+    animation: floatBtnScrollOut 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+    pointer-events: none;
+}
+
+/* 패널 열릴 때: 버튼 bounce-out */
+#floatingConsultBtn.panel-opening {
+    animation: floatBtnBounceOut 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+    pointer-events: none;
+}
+
+/* bounce-out 완료 후 완전 숨김 고정 */
+#floatingConsultBtn.panel-hidden {
+    opacity: 0 !important;
+    transform: translateY(24px) scale(0.8) !important;
+    pointer-events: none !important;
+    animation: none !important;
+}
+
+/* 패널 닫힐 때: 버튼 bounce-in */
+#floatingConsultBtn.panel-closing {
+    animation: floatBtnBounceIn 0.65s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    pointer-events: auto;
+}
+
+
+.float-consult-btn {
+    position: relative;
+    width: 160px;
+    height: 56px;
+    border-radius: 45px;
+    border: none;
+    background-color: #0039E3;
+    color: white;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    box-shadow:
+        0px 10px 10px rgba(110, 158, 255, 0.5) inset,
+        0px 6px 16px rgba(0, 57, 227, 0.35),
+        0px -10px 10px rgba(0, 26, 180, 0.6) inset;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.float-consult-btn::before {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.65);
+    content: "";
+    filter: blur(1px);
+    top: 8px;
+    border-radius: 50%;
+}
+
+.float-consult-btn::after {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.13);
+    content: "";
+    filter: blur(1px);
+    bottom: 8px;
+    border-radius: 50%;
+}
+
+.float-consult-btn:hover {
+    animation: floatBtnJello 0.9s both;
+}
+
+@keyframes floatBtnJello {
+    0%   { transform: scale3d(1, 1, 1); }
+    30%  { transform: scale3d(1.25, 0.75, 1); }
+    40%  { transform: scale3d(0.75, 1.25, 1); }
+    50%  { transform: scale3d(1.15, 0.85, 1); }
+    65%  { transform: scale3d(0.95, 1.05, 1); }
+    75%  { transform: scale3d(1.05, 0.95, 1); }
+    100% { transform: scale3d(1, 1, 1); }
+}
+
+@media (max-width: 768px) {
+    #floatingConsultBtn {
+        bottom: 1.6rem;
+        left: 1.2rem;
+    }
+    .float-consult-btn {
+        width: 148px;
+        height: 50px;
+        font-size: 14px;
+    }
+}
+
+/* ─────────────────────────────────────────────
+   sc-btn 젤리 전환 애니메이션 (원래 버튼이 화면에서 사라질 때)
+───────────────────────────────────────────── */
+@keyframes scBtnJello {
+    0%   { transform: scale3d(1, 1, 1); }
+    15%  { transform: scale3d(1.3, 0.7, 1); }
+    30%  { transform: scale3d(0.75, 1.3, 1); }
+    45%  { transform: scale3d(1.15, 0.85, 1); }
+    60%  { transform: scale3d(0.95, 1.05, 1); }
+    75%  { transform: scale3d(1.05, 0.95, 1); }
+    100% { transform: scale3d(1, 1, 1); }
+}
+
+.sc-btn.sc-jello {
+    animation: scBtnJello 0.85s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* ─────────────────────────────────────────────
+   플로팅 폼 패널 오버레이
+───────────────────────────────────────────── */
+#floatFormOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 2998;
+    pointer-events: none;
+    transition: background 0.35s ease;
+}
+#floatFormOverlay.is-open {
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: auto;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* ─────────────────────────────────────────────
+   플로팅 폼 패널 (하단 슬라이드업)
+───────────────────────────────────────────── */
+#floatFormPanel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2999;
+    background: linear-gradient(160deg, #0a1a4a 0%, #001030 100%);
+    border-radius: 24px 24px 0 0;
+    padding: 2rem 2rem 2.5rem;
+    transform: translateY(100%);
+    transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.35);
+    max-width: 480px;
+    margin: 0 auto;
+}
+#floatFormPanel.is-open {
+    transform: translateY(0);
+}
+
+/* 손잡이 바 */
+#floatFormPanel::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 2px;
+    margin: 0 auto 1.6rem;
+}
+
+.ffp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.6rem;
+}
+
+.ffp-label {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.01em;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.ffp-close {
+    background: rgba(255,255,255,0.12);
+    border: none;
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.ffp-close:hover { background: rgba(255,255,255,0.22); color: #fff; }
+
+.ffp-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s;
+}
+.ffp-input-wrap:focus-within {
+    border-color: rgba(255,255,255,0.45);
+    background: rgba(255,255,255,0.12);
+}
+.ffp-input-wrap svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+.ffp-input-wrap input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: 'Pretendard', sans-serif;
+    width: 100%;
+}
+.ffp-input-wrap input::placeholder { color: rgba(255,255,255,0.38); }
+
+.ffp-agree {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.4rem;
+}
+.ffp-agree-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: 2px solid rgba(255,255,255,0.3);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+.ffp-agree-box svg { width: 10px; height: 8px; opacity: 0; transition: opacity 0.2s; }
+.ffp-agree-box.is-checked { background: #0039E3; border-color: #0039E3; }
+.ffp-agree-box.is-checked svg { opacity: 1; }
+.ffp-agree-text {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Pretendard', sans-serif;
+}
+
+.ffp-submit {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    background: #0039E3;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Pretendard', sans-serif;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.2s;
+    box-shadow: 0 4px 16px rgba(0, 57, 227, 0.4);
+}
+.ffp-submit:hover:not(:disabled) {
+    background: #FF6B1A;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 26, 0.4);
+}
+
+@media (max-width: 768px) {
+    #floatFormPanel {
+        padding: 1.6rem 1.4rem 2rem;
+        border-radius: 20px 20px 0 0;
+        max-width: 100%;
     }
 }
