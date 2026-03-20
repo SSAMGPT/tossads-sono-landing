@@ -5128,10 +5128,10 @@
         var ffpPhone    = document.getElementById('ffpPhone');
 
         /* ── 선택 요약: 스마트케어 선택값 전역 저장 ── */
-        var _ffpSelPlan      = '소노 스마트케어 ' + (document.querySelector('.sc-product-tab.active') ? document.querySelector('.sc-product-tab.active').textContent.trim() : '');
+        var _ffpSelPlan      = '';   /* 사용자가 직접 탭을 클릭해야만 값이 채워짐 */
         var _ffpSelAppliance = '';
 
-        /* 플랜 탭 변경 추적 */
+        /* 플랜 탭 변경 추적 (클릭 시에만 저장) */
         document.querySelectorAll('.sc-product-tab').forEach(function(tab) {
             tab.addEventListener('click', function() {
                 _ffpSelPlan = '소노 스마트케어 ' + this.textContent.trim();
@@ -5142,20 +5142,23 @@
         document.querySelectorAll('.sc-prod-card').forEach(function(card) {
             card.addEventListener('click', function() {
                 _ffpSelAppliance = this.getAttribute('data-name') || '';
+                /* 가전 선택 시 플랜도 현재 액티브 탭으로 자동 세팅 (미선택 상태일 때만) */
+                if (!_ffpSelPlan) {
+                    var activeTab = document.querySelector('.sc-product-tab.active');
+                    if (activeTab) _ffpSelPlan = '소노 스마트케어 ' + activeTab.textContent.trim();
+                }
             });
         });
 
         function openPanel() {
-            /* 선택 요약 주입 */
+            /* 선택 요약 주입: 가전을 선택한 경우에만 표시, 아니면 미선택 */
             var selDiv  = document.getElementById('ffpSelection');
             var selPlan = document.getElementById('ffpSelPlan');
             var selApp  = document.getElementById('ffpSelAppliance');
-            if (selDiv && ((_ffpSelPlan && _ffpSelPlan !== '소노 스마트케어 ') || _ffpSelAppliance)) {
-                if (selPlan) selPlan.textContent = _ffpSelPlan || '미선택';
+            if (selDiv) {
+                if (selPlan) selPlan.textContent = _ffpSelPlan      || '미선택';
                 if (selApp)  selApp.textContent  = _ffpSelAppliance || '미선택';
                 selDiv.style.display = 'block';
-            } else if (selDiv) {
-                selDiv.style.display = 'none';
             }
             panel.classList.add('is-open');
             overlay.classList.add('is-open');
