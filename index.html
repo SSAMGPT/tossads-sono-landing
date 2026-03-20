@@ -5239,6 +5239,10 @@
             overlay.classList.add('is-open');
             document.body.style.overflow = 'hidden';
 
+            /* floating-cta 아래로 숨기기 */
+            var fCta = document.getElementById('floating-cta');
+            if (fCta) fCta.classList.add('panel-open');
+
             /* 버튼 bounce-out → 완료 후 panel-hidden으로 숨김 유지 */
             floatWrap.classList.remove('panel-closing', 'panel-hidden');
             floatWrap.classList.add('panel-opening');
@@ -5253,6 +5257,10 @@
             panel.classList.remove('is-open');
             overlay.classList.remove('is-open');
             document.body.style.overflow = '';
+
+            /* floating-cta 복원 */
+            var fCta = document.getElementById('floating-cta');
+            if (fCta) fCta.classList.remove('panel-open');
 
             /* panel-hidden 제거 후 bounce-in */
             floatWrap.classList.remove('panel-opening', 'panel-hidden');

@@ -6655,6 +6655,12 @@ body {
     opacity: 1;
     pointer-events: auto;
 }
+/* 신청 폼 패널 열릴 때 CTA 아래로 숨김 */
+.floating-cta.panel-open {
+    bottom: -200px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
 
 /* 상품 정보 행 */
 .f-cta-product-row {
