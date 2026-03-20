@@ -4621,17 +4621,20 @@
                             paddingTop: "2.5rem",
                             marginBottom: "1rem",
                             marginTop: "0.5rem",
-                            duration: 0.5,
-                            ease: "power2.out"
+                            duration: 0.45,
+                            ease: "power2.out",
+                            onComplete: () => {
+                                /* 애니메이션 완료 후 스크롤 → 레이아웃 변화 반영된 정확한 위치 */
+                                const hdr = document.querySelector('.main-header');
+                                const headerH = hdr ? hdr.offsetHeight : 0;
+                                gsap.to(window, {
+                                    duration: 0.5,
+                                    scrollTo: { y: target, offsetY: headerH + 12 },
+                                    ease: "power2.out"
+                                });
+                            }
                         }
                     );
-
-                    // Start scrolling immediately so it feels faster and more responsive
-                    gsap.to(window, {
-                        duration: 0.8,
-                        scrollTo: { y: target, offsetY: 150 },
-                        ease: "power2.out"
-                    });
                 });
             });
 
