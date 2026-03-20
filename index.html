@@ -2758,9 +2758,12 @@
 
                     /* ── 탭바 Sticky (헤더 아래 고정) ── */
                     (function() {
-                        const tabNav = document.querySelector('.sc-slider-nav');
                         const section = document.getElementById('smartcare');
-                        if (!tabNav || !section) return;
+                        const tabNav  = document.querySelector('.sc-slider-nav');
+                        if (!section || !tabNav) return;
+
+                        const hdr = document.querySelector('.main-header');
+                        const origStyle = tabNav.getAttribute('style') || '';
 
                         const ph = document.createElement('div');
                         ph.style.display = 'none';
@@ -2768,47 +2771,51 @@
 
                         let isSticky = false;
 
-                        function getHeaderH() {
-                            const hdr = document.querySelector('.crisp-header-nav') ||
-                                        document.querySelector('#main-header') ||
-                                        document.querySelector('header');
-                            return hdr ? hdr.offsetHeight : 0;
+                        function headerH() { return hdr ? hdr.offsetHeight : 0; }
+
+                        function stick() {
+                            const h = headerH();
+                            const navH = tabNav.offsetHeight;
+                            ph.style.height = navH + 'px';
+                            ph.style.display = 'block';
+                            tabNav.style.cssText =
+                                'position:fixed !important;' +
+                                'top:' + h + 'px !important;' +
+                                'left:0 !important;right:0 !important;' +
+                                'z-index:900 !important;margin:0 !important;' +
+                                'padding:0.6rem 1.5rem !important;' +
+                                'background:rgba(255,255,255,0.96) !important;' +
+                                'backdrop-filter:blur(12px) !important;' +
+                                '-webkit-backdrop-filter:blur(12px) !important;' +
+                                'box-shadow:0 2px 16px rgba(0,0,0,0.10) !important;';
+                            isSticky = true;
+                        }
+
+                        function unstick() {
+                            ph.style.display = 'none';
+                            tabNav.setAttribute('style', origStyle);
+                            isSticky = false;
                         }
 
                         function update() {
-                            const headerH = getHeaderH();
-                            const refRect = isSticky ? ph.getBoundingClientRect() : tabNav.getBoundingClientRect();
+                            const h = headerH();
+                            const refTop = isSticky
+                                ? ph.getBoundingClientRect().top
+                                : tabNav.getBoundingClientRect().top;
                             const secBottom = section.getBoundingClientRect().bottom;
-                            const navH = tabNav.offsetHeight;
-                            const shouldStick = refRect.top < headerH;
-                            const sectionOver = secBottom < headerH + navH + 20;
+                            const navH = ph.offsetHeight || tabNav.offsetHeight;
 
-                            if (shouldStick && !sectionOver && !isSticky) {
-                                ph.style.display = 'block';
-                                ph.style.height = navH + 'px';
-                                tabNav.style.cssText = [
-                                    'position:fixed',
-                                    'top:' + headerH + 'px',
-                                    'left:0',
-                                    'right:0',
-                                    'z-index:900',
-                                    'padding:0.6rem 1.5rem',
-                                    'margin:0',
-                                    'background:rgba(255,255,255,0.96)',
-                                    'backdrop-filter:blur(12px)',
-                                    '-webkit-backdrop-filter:blur(12px)',
-                                    'box-shadow:0 2px 16px rgba(0,0,0,0.10)'
-                                ].join(';');
-                                isSticky = true;
-                            } else if ((!shouldStick || sectionOver) && isSticky) {
-                                ph.style.display = 'none';
-                                tabNav.style.cssText = '';
-                                isSticky = false;
+                            if (!isSticky && refTop <= h) {
+                                stick();
+                            } else if (isSticky && (refTop > h || secBottom < h + navH + 20)) {
+                                unstick();
                             }
                         }
 
                         window.addEventListener('scroll', update, { passive: true });
-                        window.addEventListener('resize', update, { passive: true });
+                        window.addEventListener('resize', () => {
+                            if (isSticky) tabNav.style.top = headerH() + 'px';
+                        }, { passive: true });
                     })();
 
                     const prodCards = document.querySelectorAll('.sc-prod-card');
