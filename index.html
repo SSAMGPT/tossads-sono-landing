@@ -4591,6 +4591,23 @@
                 });
             };
 
+            /* 즉시 닫기: 위치 측정 전 레이아웃 확정용 */
+            const closeAllInstant = () => {
+                cards.forEach(c => c.classList.remove('is-active'));
+                details.forEach(detail => {
+                    if (detail.classList.contains('is-open')) {
+                        gsap.killTweensOf(detail);
+                        gsap.set(detail, {
+                            height: 0, opacity: 0,
+                            paddingTop: 0, paddingBottom: 0,
+                            marginTop: 0, marginBottom: 0
+                        });
+                        detail.classList.remove('is-open');
+                    }
+                });
+            };
+
+
             cards.forEach(card => {
                 card.addEventListener('click', (e) => {
                     const targetId = card.getAttribute('data-target');
@@ -4605,8 +4622,8 @@
                         return;
                     }
 
-                    // Otherwise close others and open this one
-                    closeAll();
+                    // 다른 패널 즉시 닫기 → 레이아웃 즉시 확정
+                    closeAllInstant();
 
                     target.classList.add('is-open');
                     card.classList.add('is-active');
