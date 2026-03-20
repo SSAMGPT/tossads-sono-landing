@@ -4615,10 +4615,14 @@
                     const hdr = document.querySelector('.main-header');
                     const headerH = hdr ? hdr.offsetHeight : 0;
 
-                    // 카드 위치로 즉시 스크롤 → 패널이 카드 바로 아래에서 열림
+                    // 카드의 문서 절대 좌표를 미리 계산 (패널 열리기 전)
+                    const cardDocTop = card.getBoundingClientRect().top + window.scrollY;
+                    const scrollTarget = cardDocTop - headerH - 12;
+
+                    // 즉시 스크롤 (autoKill:false → 레이아웃 변화에 중단되지 않음)
                     gsap.to(window, {
                         duration: 0.55,
-                        scrollTo: { y: card, offsetY: headerH + 12 },
+                        scrollTo: { y: Math.max(0, scrollTarget), autoKill: false },
                         ease: "power2.out"
                     });
 
