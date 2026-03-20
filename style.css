@@ -2125,6 +2125,15 @@ body.dark-mode .split-layout .answer-text {
 /* ── 버블 슬라이더 탭바 (레퍼런스 스타일) ── */
 .sc-slider-nav {
     padding: 0 !important;
+    /* CSS sticky: 스크롤 시 헤더 아래 고정 */
+    position: sticky;
+    top: var(--header-h, 60px);
+    z-index: 900;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    padding: 0.4rem 1rem !important;
 }
 .sc-slider-bar {
     --accent-50: #FFF0E6;

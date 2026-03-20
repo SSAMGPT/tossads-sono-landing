@@ -2670,6 +2670,17 @@
 
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
+                    /* 헤더 높이를 CSS 변수로 설정 (sticky top 기준) */
+                    (function() {
+                        function setHeaderH() {
+                            const hdr = document.querySelector('.main-header');
+                            if (hdr) {
+                                document.documentElement.style.setProperty('--header-h', hdr.offsetHeight + 'px');
+                            }
+                        }
+                        setHeaderH();
+                        window.addEventListener('resize', setHeaderH, { passive: true });
+                    })();
                     const scTabs = document.querySelectorAll('.sc-product-tab');
                     const scPanes = document.querySelectorAll('.sc-tab-pane');
 
@@ -2756,67 +2767,7 @@
                         });
                     })();
 
-                    /* ── 탭바 Sticky (헤더 아래 고정) ── */
-                    (function() {
-                        const section = document.getElementById('smartcare');
-                        const tabNav  = document.querySelector('.sc-slider-nav');
-                        if (!section || !tabNav) return;
-
-                        const hdr = document.querySelector('.main-header');
-                        const origStyle = tabNav.getAttribute('style') || '';
-
-                        const ph = document.createElement('div');
-                        ph.style.display = 'none';
-                        tabNav.parentNode.insertBefore(ph, tabNav);
-
-                        let isSticky = false;
-
-                        function headerH() { return hdr ? hdr.offsetHeight : 0; }
-
-                        function stick() {
-                            const h = headerH();
-                            const navH = tabNav.offsetHeight;
-                            ph.style.height = navH + 'px';
-                            ph.style.display = 'block';
-                            tabNav.style.cssText =
-                                'position:fixed !important;' +
-                                'top:' + h + 'px !important;' +
-                                'left:0 !important;right:0 !important;' +
-                                'z-index:900 !important;margin:0 !important;' +
-                                'padding:0.6rem 1.5rem !important;' +
-                                'background:rgba(255,255,255,0.96) !important;' +
-                                'backdrop-filter:blur(12px) !important;' +
-                                '-webkit-backdrop-filter:blur(12px) !important;' +
-                                'box-shadow:0 2px 16px rgba(0,0,0,0.10) !important;';
-                            isSticky = true;
-                        }
-
-                        function unstick() {
-                            ph.style.display = 'none';
-                            tabNav.setAttribute('style', origStyle);
-                            isSticky = false;
-                        }
-
-                        function update() {
-                            const h = headerH();
-                            const refTop = isSticky
-                                ? ph.getBoundingClientRect().top
-                                : tabNav.getBoundingClientRect().top;
-                            const secBottom = section.getBoundingClientRect().bottom;
-                            const navH = ph.offsetHeight || tabNav.offsetHeight;
-
-                            if (!isSticky && refTop <= h) {
-                                stick();
-                            } else if (isSticky && (refTop > h || secBottom < h + navH + 20)) {
-                                unstick();
-                            }
-                        }
-
-                        window.addEventListener('scroll', update, { passive: true });
-                        window.addEventListener('resize', () => {
-                            if (isSticky) tabNav.style.top = headerH() + 'px';
-                        }, { passive: true });
-                    })();
+                    /* 탭바 sticky: CSS position:sticky 사용 (JS 불필요) */
 
                     const prodCards = document.querySelectorAll('.sc-prod-card');
                     prodCards.forEach(card => {
