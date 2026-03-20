@@ -5066,6 +5066,12 @@
     </script>
 
     <!-- ── 플로팅 상담 신청하기 버튼 ── -->
+    <div id="floatingConsultBtn" aria-label="무료 상담 신청하기">
+        <button class="float-consult-btn" id="floatConsultTrigger">
+            상담 신청하기
+        </button>
+    </div>
+
     <!-- ── 플로팅 폼 패널 오버레이 ── -->
     <div id="floatFormOverlay"></div>
     <div id="floatFormPanel">
@@ -5125,8 +5131,66 @@
 
     <script>
     (function () {
-         /* floatingConsultBtn 제거됨 - 스크롤 감지 불필요 */
-         var floatWrap = null; /* 삭제된 요소 - null 처리 */
+
+                /* ── 1. 스크롤 감지: sonoConsult 지나치면 플로팅 버튼 등장 ── */
+        var floatWrap   = document.getElementById('floatingConsultBtn');
+        var scBtn       = document.getElementById('scBtn');          // 원래 버튼
+        var trigger     = document.getElementById('sonoConsult');
+        var consultSec  = document.getElementById('consult'); // (미사용 - 버튼 항상 표시)
+
+        if (!floatWrap || !trigger) return;
+
+        var _consultVisible = false;
+
+        function checkConsultBtn() {
+            var rect       = trigger.getBoundingClientRect();
+            var vh         = window.innerHeight;
+            var shouldShow = rect.bottom < vh * 0.33;
+
+            if (shouldShow && !_consultVisible) {
+                _consultVisible = true;
+                /* 패널 열린 상태면 표시 건너뜀 */
+                if (floatWrap.classList.contains('panel-hidden') ||
+                    floatWrap.classList.contains('panel-opening')) return;
+                /* 이미 보임 / 등장 중이면 skip */
+                if (floatWrap.classList.contains('is-visible') ||
+                    floatWrap.classList.contains('is-entering')) return;
+                floatWrap.classList.remove('is-leaving');
+                floatWrap.classList.add('is-entering');
+                floatWrap.addEventListener('animationend', function onEnterDone(e) {
+                    if (e.animationName !== 'floatBtnScrollIn') return;
+                    floatWrap.classList.remove('is-entering');
+                    floatWrap.classList.add('is-visible');
+                    floatWrap.removeEventListener('animationend', onEnterDone);
+                });
+                if (scBtn && !scBtn.dataset.jelloed) {
+                    scBtn.dataset.jelloed = '1';
+                    scBtn.classList.add('sc-jello');
+                    scBtn.addEventListener('animationend', function () {
+                        scBtn.classList.remove('sc-jello');
+                    }, { once: true });
+                }
+            } else if (!shouldShow && _consultVisible) {
+                _consultVisible = false;
+                if (scBtn) delete scBtn.dataset.jelloed;
+                /* 패널 열린 상태면 조용히 숨기기 */
+                if (floatWrap.classList.contains('panel-hidden') ||
+                    floatWrap.classList.contains('panel-opening')) {
+                    floatWrap.classList.remove('is-entering', 'is-visible');
+                    return;
+                }
+                floatWrap.classList.remove('is-entering', 'is-visible');
+                floatWrap.classList.add('is-leaving');
+                floatWrap.addEventListener('animationend', function onLeaveDone(e) {
+                    if (e.animationName !== 'floatBtnScrollOut') return;
+                    floatWrap.classList.remove('is-leaving');
+                    floatWrap.removeEventListener('animationend', onLeaveDone);
+                });
+            }
+        }
+
+        window.addEventListener('scroll', checkConsultBtn, { passive: true });
+        checkConsultBtn(); /* 초기 체크 */
 
 
 
@@ -5191,7 +5255,13 @@
             var fCta = document.getElementById('floating-cta');
             if (fCta) fCta.classList.remove('panel-open');
 
-            /* floatWrap 없음 (버튼 삭제됨) */
+            /* panel-hidden 제거 후 bounce-in */
+            floatWrap.classList.remove('panel-opening', 'panel-hidden');
+            floatWrap.classList.add('panel-closing');
+            floatWrap.addEventListener('animationend', function onIn() {
+                floatWrap.classList.remove('panel-closing');
+                floatWrap.removeEventListener('animationend', onIn);
+            });
         }
 
         if (triggerBtn) triggerBtn.addEventListener('click', openPanel);
