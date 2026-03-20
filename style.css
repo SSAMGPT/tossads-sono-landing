@@ -5977,16 +5977,30 @@ ul.sc-slider-tabs li {
 }
 
 .sc-refund-title {
-    font-size: 21px; /* 15px × 1.4 */
+    font-size: 19px;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
+    line-height: 1.55;
 }
 
 .sc-refund-title strong {
-    color: #ffd60a; /* 노란 강조 (파란 배경 위) */
+    color: #ffd60a;
     font-weight: 900;
+}
+
+/* 모바일 줄바꿈: 기본 숨김, 모바일에서 표시 */
+.sc-mobile-br {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .sc-mobile-br {
+        display: block;
+    }
+    .sc-refund-title {
+        font-size: 16px;
+    }
 }
 
 .sc-refund-desc {
