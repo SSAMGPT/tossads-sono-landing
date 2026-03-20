@@ -2134,6 +2134,7 @@
             </div>
 
             <!-- 스마트케어 상품별 전환 탭 (버블 슬라이더) -->
+            <div id="sc-tab-sentinel" style="height:0;overflow:hidden;pointer-events:none;" aria-hidden="true"></div>
             <div class="sc-product-tabs-nav sc-slider-nav" style="margin-top: 3rem; margin-bottom: 2rem;">
                 <div class="sc-slider-bar" id="sc-slider-bar">
                     <div class="sc-slider-wrapper">
@@ -2758,25 +2759,22 @@
                             }
                         }
 
-                        /* 문서 기준 top 좌표 */
-                        function getDocTop(el) {
-                            let top = 0, nd = el;
-                            while (nd) { top += nd.offsetTop; nd = nd.offsetParent; }
-                            return top;
-                        }
-                        const tabNav2 = document.querySelector('.sc-slider-nav');
+                        /* sentinel: sticky 영향 없는 기준점 */
+                        const sentinel2 = document.getElementById('sc-tab-sentinel');
 
                         btns.forEach(btn => {
                             btn.addEventListener('click', () => {
                                 btns.forEach(b => b.classList.remove('active'));
                                 btn.classList.add('active');
                                 moveTo(btn.dataset.tv);
-                                /* sticky 상태면 탭바 원위치로 스크롤 */
-                                if (tabNav2) {
+                                /* sentinel 기준으로 탭바 원위치 계산 후 스크롤 */
+                                if (sentinel2) {
                                     const hdr = document.querySelector('.main-header');
                                     const headerH = hdr ? hdr.offsetHeight : 0;
-                                    if (tabNav2.getBoundingClientRect().top <= headerH + 4) {
-                                        window.scrollTo({ top: getDocTop(tabNav2) - headerH - 12, behavior: 'smooth' });
+                                    const sentRect = sentinel2.getBoundingClientRect();
+                                    const targetY = sentRect.top + window.scrollY - headerH - 8;
+                                    if (window.scrollY > targetY + 4) {
+                                        window.scrollTo({ top: targetY, behavior: 'smooth' });
                                     }
                                 }
                             });
