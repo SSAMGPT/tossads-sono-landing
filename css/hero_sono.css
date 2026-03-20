@@ -187,14 +187,19 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
 }
 
 .crisp-header__center {
+  /* Flex column: h1을 cross-axis(수평) 중앙으로 정확하게 배치 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
   padding: 1.5em;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);  /* 정확한 수평+수직 중앙 */
-  text-align: center;                /* 텍스트 중앙 명시 */
-  /* overflow: hidden 제거: 중앙 정렬 클리핑 방지 */
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
   z-index: 100;
 }
 
@@ -311,6 +316,9 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
   line-height: 1.25;
   opacity: 0; /* JS will handle reveal */
   will-change: transform;
+  /* flex parent의 align-items:center가 max-content 너비 h1을 수평 중앙에 배치 */
+  width: max-content;
+  max-width: 100%;
 }
 
 .crisp-header__h1 * {
