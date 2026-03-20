@@ -4611,35 +4611,36 @@
                     target.classList.add('is-open');
                     card.classList.add('is-active');
 
-                    // 스크롤과 패널 오픈 동시 실행 (딜레이 없음)
-                    const hdr = document.querySelector('.main-header');
-                    const headerH = hdr ? hdr.offsetHeight : 0;
-
-                    // 카드의 문서 절대 좌표를 미리 계산 (패널 열리기 전)
-                    const cardDocTop = card.getBoundingClientRect().top + window.scrollY;
-                    const scrollTarget = cardDocTop - headerH - 12;
-
-                    // 즉시 스크롤 (autoKill:false → 레이아웃 변화에 중단되지 않음)
-                    gsap.to(window, {
-                        duration: 0.55,
-                        scrollTo: { y: Math.max(0, scrollTarget), autoKill: false },
-                        ease: "power2.out"
+                    // 1단계: 패널을 opacity:0 상태로 즉시 완전히 열기 (레이아웃 확정)
+                    gsap.set(target, {
+                        height: 'auto',
+                        opacity: 0,
+                        paddingTop: '2.5rem',
+                        paddingBottom: '2.5rem',
+                        marginTop: '0.5rem',
+                        marginBottom: '1rem'
                     });
 
-                    // 패널 오픈 동시 진행
-                    gsap.fromTo(target,
-                        { height: 0, opacity: 0, paddingBottom: 0, paddingTop: 0, marginBottom: 0, marginTop: 0 },
-                        {
-                            height: "auto",
-                            opacity: 1,
-                            paddingBottom: "2.5rem",
-                            paddingTop: "2.5rem",
-                            marginBottom: "1rem",
-                            marginTop: "0.5rem",
-                            duration: 0.45,
-                            ease: "power2.out"
-                        }
-                    );
+                    // 2단계: 레이아웃 리플로우 강제 발생 → 정확한 위치 측정
+                    void target.offsetHeight;
+
+                    // 3단계: 패널의 실제 문서 위치 계산
+                    const hdr = document.querySelector('.main-header');
+                    const headerH = hdr ? hdr.offsetHeight : 0;
+                    const targetDocTop = target.getBoundingClientRect().top + window.scrollY;
+                    const scrollTarget = Math.max(0, targetDocTop - headerH - 12);
+
+                    // 4단계: 스크롤 + 페이드인 동시 실행
+                    gsap.to(window, {
+                        duration: 0.55,
+                        scrollTo: { y: scrollTarget, autoKill: false },
+                        ease: "power2.out"
+                    });
+                    gsap.to(target, {
+                        opacity: 1,
+                        duration: 0.35,
+                        ease: "power2.out"
+                    });
                 });
             });
 
