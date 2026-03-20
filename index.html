@@ -2758,11 +2758,27 @@
                             }
                         }
 
+                        /* 문서 기준 top 좌표 */
+                        function getDocTop(el) {
+                            let top = 0, nd = el;
+                            while (nd) { top += nd.offsetTop; nd = nd.offsetParent; }
+                            return top;
+                        }
+                        const tabNav2 = document.querySelector('.sc-slider-nav');
+
                         btns.forEach(btn => {
                             btn.addEventListener('click', () => {
                                 btns.forEach(b => b.classList.remove('active'));
                                 btn.classList.add('active');
                                 moveTo(btn.dataset.tv);
+                                /* sticky 상태면 탭바 원위치로 스크롤 */
+                                if (tabNav2) {
+                                    const hdr = document.querySelector('.main-header');
+                                    const headerH = hdr ? hdr.offsetHeight : 0;
+                                    if (tabNav2.getBoundingClientRect().top <= headerH + 4) {
+                                        window.scrollTo({ top: getDocTop(tabNav2) - headerH - 12, behavior: 'smooth' });
+                                    }
+                                }
                             });
                         });
                     })();
