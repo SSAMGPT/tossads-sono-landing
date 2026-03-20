@@ -6740,7 +6740,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #2563eb;
+    background: #0039E3;
     color: #fff !important;
     text-decoration: none !important;
     font-size: 16px;
@@ -6748,23 +6748,45 @@ body {
     border-radius: 14px;
     padding: 0.85rem 1.5rem;
     letter-spacing: -0.01em;
+    cursor: pointer;
+    border: none;
+    white-space: nowrap;
+    flex-shrink: 0;
     transition: background 0.2s, transform 0.15s;
 }
 .f-cta-action-btn:hover {
-    background: #1d4ed8;
+    background: #002bc0;
     transform: translateY(-1px);
+}
+
+/* 데스크탑: 가로 레이아웃 (상품 좌 / 버튼 우) */
+@media (min-width: 641px) {
+    .floating-cta {
+        flex-direction: row;
+        align-items: center;
+        padding: 0.85rem 1.25rem;
+    }
+    .f-cta-product-row {
+        flex: 1;
+        min-width: 0;
+    }
+    .f-cta-action-btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 15px;
+    }
 }
 
 @media (max-width: 640px) {
     .floating-cta {
         width: calc(100% - 2rem);
         border-radius: 16px;
-        bottom: -200px;
         padding: 0.9rem 1rem;
+        flex-direction: column;
     }
     .floating-cta.active { bottom: 1rem; }
     .f-cta-prod-name { font-size: 13px; }
-    .f-cta-action-btn { font-size: 15px; padding: 0.8rem 1rem; }
+    .f-cta-action-btn { width: 100%; font-size: 15px; padding: 0.8rem 1rem; }
+    .f-cta-plan-badge { display: none; }
 }
 
 

@@ -2273,7 +2273,6 @@
                                 </div>
                                 <p class="sc-receipt-note">* 전월실적 30만원 이상 충족 시</p>
                             </div>
-                            <a href="#consult" class="sc-receipt-tab-btn">지금 신청하기 →</a>
                         </div>
                     </div>
 
@@ -2401,7 +2400,6 @@
                                 </div>
                                 <p class="sc-receipt-note">* 전월실적 30만원 이상 충족 시</p>
                             </div>
-                            <a href="#consult" class="sc-receipt-tab-btn">지금 신청하기 →</a>
                         </div>
                     </div>
 
@@ -2534,7 +2532,6 @@
                                 </div>
                                 <p class="sc-receipt-note">* 전월실적 30만원 이상 충족 시</p>
                             </div>
-                            <a href="#consult" class="sc-receipt-tab-btn">지금 신청하기 →</a>
                         </div>
                     </div>
 
@@ -2672,7 +2669,6 @@
                                 </div>
                                 <p class="sc-receipt-note">* 전월실적 30만원 이상 충족 시</p>
                             </div>
-                            <a href="#consult" class="sc-receipt-tab-btn">지금 신청하기 →</a>
                         </div>
                     </div>
 
@@ -5268,6 +5264,12 @@
         }
 
         if (triggerBtn) triggerBtn.addEventListener('click', openPanel);
+        /* 의 하단 CTA 신청 버튼 → floatFormPanel 열기 */
+        var fCtaApplyBtn = document.getElementById('f-cta-apply-btn');
+        if (fCtaApplyBtn) fCtaApplyBtn.addEventListener('click', function(e) {
+            e.preventDefault(); openPanel();
+        });
+
         if (closeBtn)   closeBtn.addEventListener('click', closePanel);
         if (overlay)    overlay.addEventListener('click', closePanel);
 
@@ -5327,9 +5329,9 @@
             </div>
             <button class="f-cta-cancel" id="f-cta-cancel">취소</button>
         </div>
-        <a href="#consult" class="f-cta-action-btn">
+        <button id="f-cta-apply-btn" class="f-cta-action-btn">
             선택한 상품으로 신청하기 →
-        </a>
+        </button>
     </div>
     <script src="js/SplitText.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
