@@ -4396,6 +4396,7 @@
         (function () {
             const SPEED = 18; // 마키 스크롤 속도 (초)
             const animDef = { duration: 0.6, ease: 'expo.out' };
+            const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
 
             function findClosestEdge(mouseX, mouseY, w, h) {
                 const top = Math.pow(mouseX - w / 2, 2) + Math.pow(mouseY, 2);
@@ -4410,7 +4411,7 @@
                 const part = inner.querySelector('.fm-part');
                 if (!link || !marquee || !inner || !part) return;
 
-                // GSAP으로 초기 위치 설정 (CSS transform 충돌 방지)
+                // GSAP으로 초기 위치 설정
                 gsap.set(marquee, { y: '101%' });
                 gsap.set(inner, { y: '-101%' });
 
@@ -4430,7 +4431,7 @@
                 setTimeout(setupMarquee, 80);
                 window.addEventListener('resize', setupMarquee);
 
-                // 호버 인 (데스크탑)
+                // ── 호버 인 (마우스) ──
                 link.addEventListener('mouseenter', function (ev) {
                     const r = item.getBoundingClientRect();
                     const edge = findClosestEdge(ev.clientX - r.left, ev.clientY - r.top, r.width, r.height);
@@ -4440,7 +4441,7 @@
                         .to([marquee, inner], { y: '0%' }, 0);
                 });
 
-                // 호버 아웃 (데스크탑)
+                // ── 호버 아웃 (마우스) ──
                 link.addEventListener('mouseleave', function (ev) {
                     const r = item.getBoundingClientRect();
                     const edge = findClosestEdge(ev.clientX - r.left, ev.clientY - r.top, r.width, r.height);
@@ -4448,25 +4449,46 @@
                         .to(marquee, { y: edge === 'top' ? '-101%' : '101%' }, 0)
                         .to(inner, { y: edge === 'top' ? '101%' : '-101%' }, 0);
                 });
+            });
 
-                // 터치 토글 (모바일/사파리)
+            // ── 모바일: touchend 탭 판별 (스크롤 차단 없음) ──
+            document.querySelectorAll('.fm-item').forEach(item => {
+                const link    = item.querySelector('.fm-link');
+                const marquee = item.querySelector('.fm-marquee');
+                const inner   = item.querySelector('.fm-marquee-inner');
+                if (!link || !marquee || !inner) return;
+
                 let fmTouched = false;
+                let _tx = 0, _ty = 0;
+
+                /* touchstart: 좌표만 저장, preventDefault 없음 → 스크롤 자유 */
                 link.addEventListener('touchstart', function (ev) {
-                    ev.preventDefault(); // href 네비게이션 방지
+                    _tx = ev.touches[0].clientX;
+                    _ty = ev.touches[0].clientY;
+                }, { passive: true });
+
+                /* touchend: 이동거리 8px 이하면 탭으로 판단 */
+                link.addEventListener('touchend', function (ev) {
+                    const dx = Math.abs(ev.changedTouches[0].clientX - _tx);
+                    const dy = Math.abs(ev.changedTouches[0].clientY - _ty);
+                    if (dx > 8 || dy > 8) return; /* 스크롤 제스처 → 무시 */
+
                     if (!fmTouched) {
                         fmTouched = true;
                         gsap.timeline({ defaults: animDef })
                             .set(marquee, { y: '101%' }, 0)
-                            .set(inner, { y: '-101%' }, 0)
+                            .set(inner,   { y: '-101%' }, 0)
                             .to([marquee, inner], { y: '0%' }, 0);
                     } else {
                         fmTouched = false;
                         gsap.timeline({ defaults: animDef })
                             .to(marquee, { y: '101%' }, 0)
-                            .to(inner, { y: '-101%' }, 0);
+                            .to(inner,   { y: '-101%' }, 0);
                     }
-                }, { passive: false });
+                });
             });
+
+
         })();
 
 
