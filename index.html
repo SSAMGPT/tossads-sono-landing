@@ -4611,7 +4611,18 @@
                     target.classList.add('is-open');
                     card.classList.add('is-active');
 
-                    // GSAP Animation for opening
+                    // 스크롤과 패널 오픈 동시 실행 (딜레이 없음)
+                    const hdr = document.querySelector('.main-header');
+                    const headerH = hdr ? hdr.offsetHeight : 0;
+
+                    // 카드 위치로 즉시 스크롤 → 패널이 카드 바로 아래에서 열림
+                    gsap.to(window, {
+                        duration: 0.55,
+                        scrollTo: { y: card, offsetY: headerH + 12 },
+                        ease: "power2.out"
+                    });
+
+                    // 패널 오픈 동시 진행
                     gsap.fromTo(target,
                         { height: 0, opacity: 0, paddingBottom: 0, paddingTop: 0, marginBottom: 0, marginTop: 0 },
                         {
@@ -4622,17 +4633,7 @@
                             marginBottom: "1rem",
                             marginTop: "0.5rem",
                             duration: 0.45,
-                            ease: "power2.out",
-                            onComplete: () => {
-                                /* 애니메이션 완료 후 스크롤 → 레이아웃 변화 반영된 정확한 위치 */
-                                const hdr = document.querySelector('.main-header');
-                                const headerH = hdr ? hdr.offsetHeight : 0;
-                                gsap.to(window, {
-                                    duration: 0.5,
-                                    scrollTo: { y: target, offsetY: headerH + 12 },
-                                    ease: "power2.out"
-                                });
-                            }
+                            ease: "power2.out"
                         }
                     );
                 });
