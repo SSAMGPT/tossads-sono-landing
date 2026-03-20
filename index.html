@@ -5365,68 +5365,6 @@
     </script>
 
     <!-- ── 스마트케어 플로팅 버튼 ── -->
-    <div id="sc-float-btn-wrap" aria-hidden="true">
-        <button class="sc-float-single-btn" id="scFloatSingleBtn">
-            스마트케어
-        </button>
-    </div>
-
-    <script>
-    (function () {
-        var floatWrap   = document.getElementById('sc-float-btn-wrap');
-        var tabsContent = document.querySelector('.sc-product-tabs-content');
-        var smartcareSection = document.getElementById('smartcare');
-
-        if (!floatWrap || !tabsContent) return;
-
-        var _scVisible = false;
-
-        /* sc-product-tabs-content가 화면 위로 완전히 사라졌을 때 버튼 표시 */
-        function onScroll() {
-            var rect       = tabsContent.getBoundingClientRect();
-            var vh         = window.innerHeight;
-            var shouldShow = rect.bottom < vh * 0.33;
-
-            if (shouldShow && !_scVisible) {
-                _scVisible = true;
-                if (floatWrap.classList.contains('is--visible') ||
-                    floatWrap.classList.contains('is--entering')) return;
-                floatWrap.classList.remove('is--leaving');
-                floatWrap.classList.add('is--entering');
-                floatWrap.setAttribute('aria-hidden', 'false');
-                floatWrap.addEventListener('animationend', function onSCEnterDone(e) {
-                    if (e.animationName !== 'floatBtnScrollIn') return;
-                    floatWrap.classList.remove('is--entering');
-                    floatWrap.classList.add('is--visible');
-                    floatWrap.removeEventListener('animationend', onSCEnterDone);
-                });
-            } else if (!shouldShow && _scVisible) {
-                _scVisible = false;
-                floatWrap.classList.remove('is--entering', 'is--visible');
-                floatWrap.classList.add('is--leaving');
-                floatWrap.setAttribute('aria-hidden', 'true');
-                floatWrap.addEventListener('animationend', function onSCLeaveDone(e) {
-                    if (e.animationName !== 'floatBtnScrollOut') return;
-                    floatWrap.classList.remove('is--leaving');
-                    floatWrap.removeEventListener('animationend', onSCLeaveDone);
-                });
-            }
-        }
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-
-        /* 버튼 클릭: #smartcare 섹션으로 부드러운 스크롤 */
-        var btn = document.getElementById('scFloatSingleBtn');
-        if (btn) {
-            btn.addEventListener('click', function () {
-                if (smartcareSection) {
-                    smartcareSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        }
-    })();
-    </script>
 
     <script>
         /* ── 제휴카드 상세보기 아코디언 토글 ── */
