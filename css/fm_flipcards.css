@@ -164,6 +164,14 @@
         box-shadow: 0 0 0 3px #FF6B1A;
         background: #FF6B1A !important;
     }
+
+    /* ── 뒷면 텍스트: 앞면보다 1.2배 작게 (텍스트 잘림 방지) ── */
+    #fm-flip-container .fmc-back .fmc-text p {
+        font-size: 15px;   /* 18px ÷ 1.2 */
+    }
+    #fm-flip-container .fmc-back .fmc-badge {
+        font-size: 10px;   /* 12px ÷ 1.2 */
+    }
 }
 
 
