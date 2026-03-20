@@ -2162,21 +2162,26 @@ ul.sc-slider-tabs li {
 .sc-slider-btn,
 .sc-slider-btn.active {
     all: unset !important;
-    cursor: pointer;
-    font-weight: 800;
-    font-size: 0.95rem;
-    font-family: 'Pretendard', sans-serif;
-    letter-spacing: -0.02em;
-    color: #bbb;
-    transition: color var(--dur) ease;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    font-family: 'Pretendard', -apple-system, sans-serif !important;
+    letter-spacing: -0.02em !important;
+    color: #1d1d1f !important;
     background: transparent !important;
     box-shadow: none !important;
     border: none !important;
-    -webkit-tap-highlight-color: transparent;
+    transition: color 0.3s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+    line-height: 1 !important;
 }
 .sc-slider-btn.active {
     color: var(--accent-a) !important;
 }
+
 /* 슬라이더: 배경 원 (탭 뒤에서 슬라이딩) */
 .sc-main-slider {
     pointer-events: none;
