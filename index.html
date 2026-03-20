@@ -5264,10 +5264,12 @@
         }
 
         if (triggerBtn) triggerBtn.addEventListener('click', openPanel);
-        /* 의 하단 CTA 신청 버튼 → floatFormPanel 열기 */
-        var fCtaApplyBtn = document.getElementById('f-cta-apply-btn');
-        if (fCtaApplyBtn) fCtaApplyBtn.addEventListener('click', function(e) {
-            e.preventDefault(); openPanel();
+        /* 하단 CTA 신청 버튼 → 이벤트 위임 (버튼이 스크립트 뒤에 렌더링되므로) */
+        document.addEventListener('click', function(e) {
+            if (e.target.closest && e.target.closest('#f-cta-apply-btn')) {
+                e.preventDefault();
+                openPanel();
+            }
         });
 
         if (closeBtn)   closeBtn.addEventListener('click', closePanel);
