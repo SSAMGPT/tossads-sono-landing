@@ -2117,10 +2117,92 @@ body.dark-mode .split-layout .answer-text {
 .sc-product-tabs-nav {
     max-width: 1300px;
     margin: 0 auto 3rem;
-    /* Reduced from 5rem */
     padding: 0 2rem;
     display: flex;
     justify-content: center;
+}
+
+/* ── 버블 팝업 탭바 ── */
+.sc-bubble-nav {
+    padding: 0 !important;
+}
+
+.sc-bubble-menu {
+    --bg: #1d1d1f;
+    --accent: #FF6B1A;
+    --dur: 0.6s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border-radius: 0;
+    padding: 0 2em;
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+}
+
+/* 버블 아이템: sc-product-tab 오버라이드 */
+.sc-bubble-item {
+    all: unset;
+    flex: 1;
+    z-index: 10;
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    align-items: center;
+    will-change: transform;
+    justify-content: center;
+    padding: 0.6em 0 1em;
+    color: rgba(255,255,255,0.45) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    font-size: 1.05em;
+    font-weight: 800;
+    font-family: 'Pretendard', sans-serif;
+    letter-spacing: -0.02em;
+    transition: transform var(--dur) cubic-bezier(0.23, 1, 0.32, 1),
+                color var(--dur) ease;
+}
+
+/* 아이콘 원형 배경 (팝업 시 등장) */
+.sc-bubble-item::before {
+    content: '';
+    z-index: -1;
+    width: 3.6em;
+    height: 3.6em;
+    border-radius: 50%;
+    position: absolute;
+    top: -0.3em;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: var(--accent);
+    transition: transform var(--dur) cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* 활성 탭: 위로 팝업 */
+.sc-bubble-item.active {
+    transform: translate3d(0, -0.75em, 0);
+    color: #fff !important;
+}
+
+.sc-bubble-item.active::before {
+    transform: translateX(-50%) scale(1);
+}
+
+/* border: 활성 탭 위에 슬라이딩 노치 */
+.sc-bubble-border {
+    position: absolute;
+    left: 0;
+    bottom: 99%;
+    width: 25%;          /* 탭 하나 너비 = 1/4 */
+    height: 2em;
+    background: var(--bg);
+    clip-path: url(#sc-bubble-clip);
+    will-change: transform;
+    transition: transform var(--dur) cubic-bezier(0.23, 1, 0.32, 1);
+    pointer-events: none;
 }
 
 .benefits__tabs-container,

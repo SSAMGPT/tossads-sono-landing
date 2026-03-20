@@ -2133,13 +2133,24 @@
                 >
             </div>
 
-            <!-- 스마트케어 상품별 전환 탭 -->
-            <div class="sc-product-tabs-nav" style="margin-top: 3rem; margin-bottom: 2rem;">
-                <div class="sc-product-tabs-container">
-                    <button class="sc-product-tab" data-sctab="330x2">330X2</button>
-                    <button class="sc-product-tab" data-sctab="330x3">330X3</button>
-                    <button class="sc-product-tab active" data-sctab="330x4">330X4</button>
-                    <button class="sc-product-tab" data-sctab="330x6">330X6</button>
+            <!-- 스마트케어 상품별 전환 탭 (버블 팝업 메뉴) -->
+
+            <!-- SVG clip-path: border 노치 모양 -->
+            <svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+              <defs>
+                <clipPath id="sc-bubble-clip" clipPathUnits="objectBoundingBox">
+                  <path d="M1,0.884 L1,0 L0,0 L0,0.884 C0.084,0.884 0.142,0.884 0.142,0.884 C0.185,0.884 0.222,0.857 0.249,0.810 L0.305,0.707 C0.338,0.644 0.391,0.601 0.454,0.601 L0.546,0.601 C0.609,0.601 0.662,0.644 0.695,0.707 L0.751,0.810 C0.778,0.857 0.815,0.884 0.858,0.884 C0.858,0.884 0.916,0.884 1,0.884 Z"/>
+                </clipPath>
+              </defs>
+            </svg>
+
+            <div class="sc-product-tabs-nav sc-bubble-nav" style="margin-top: 3rem; margin-bottom: 2rem;">
+                <div class="sc-bubble-menu" id="sc-bubble-menu">
+                    <button class="sc-product-tab sc-bubble-item" data-sctab="330x2">330X2</button>
+                    <button class="sc-product-tab sc-bubble-item" data-sctab="330x3">330X3</button>
+                    <button class="sc-product-tab sc-bubble-item active" data-sctab="330x4">330X4</button>
+                    <button class="sc-product-tab sc-bubble-item" data-sctab="330x6">330X6</button>
+                    <div class="sc-bubble-border"></div>
                 </div>
             </div>
 
@@ -2723,6 +2734,40 @@
                     });
 
                     // 영수증 / 계산기 업데이트 로직
+                    /* ── 버블 탭바 border 슬라이딩 ── */
+                    (function() {
+                        const bubbleMenu   = document.getElementById('sc-bubble-menu');
+                        if (!bubbleMenu) return;
+                        const bubbleBorder = bubbleMenu.querySelector('.sc-bubble-border');
+                        const bubbleItems  = bubbleMenu.querySelectorAll('.sc-bubble-item');
+                        let   activeItem   = bubbleMenu.querySelector('.sc-bubble-item.active');
+
+                        function slideBorder(el) {
+                            if (!bubbleBorder || !el) return;
+                            const mRect = bubbleMenu.getBoundingClientRect();
+                            const eRect = el.getBoundingClientRect();
+                            const left  = Math.round(
+                                eRect.left - mRect.left
+                                - (bubbleBorder.offsetWidth - eRect.width) / 2
+                            );
+                            bubbleBorder.style.transform = `translate3d(${left}px, 0, 0)`;
+                        }
+
+                        // 초기 위치
+                        if (activeItem) slideBorder(activeItem);
+
+                        bubbleItems.forEach(item => {
+                            item.addEventListener('click', () => {
+                                activeItem = item;
+                                slideBorder(item);
+                            });
+                        });
+
+                        window.addEventListener('resize', () => {
+                            if (activeItem) slideBorder(activeItem);
+                        });
+                    })();
+
                     const prodCards = document.querySelectorAll('.sc-prod-card');
                     prodCards.forEach(card => {
                         card.addEventListener('click', () => {
