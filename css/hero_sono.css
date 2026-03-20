@@ -191,9 +191,10 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
   padding: 1.5em;
   position: absolute;
   top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  overflow: hidden;
+  left: 50%;
+  transform: translate(-50%, -50%);  /* 정확한 수평+수직 중앙 */
+  text-align: center;                /* 텍스트 중앙 명시 */
+  /* overflow: hidden 제거: 중앙 정렬 클리핑 방지 */
   z-index: 100;
 }
 
@@ -320,6 +321,10 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
 .crisp-header__h1 .split-word {
   display: inline-block;
   margin-right: 0.25em;
+}
+/* 마지막 단어 trailing margin 제거 → 중앙 정렬 정확성 향상 */
+.crisp-header__h1 .split-word:last-of-type {
+  margin-right: 0;
 }
 
 /* ─────────────────────────────────────────────
