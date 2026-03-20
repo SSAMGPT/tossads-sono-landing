@@ -164,13 +164,17 @@
         box-shadow: 0 0 0 3px #FF6B1A;
         background: #FF6B1A !important;
     }
+}
 
-    /* ── 뒷면 텍스트: 앞면보다 1.2배 작게 (텍스트 잘림 방지) ── */
+/* 실제 터치 디바이스(아이폰·갤럭시)에서만 뒷면 텍스트 축소
+   pointer:coarse = 터치스크린 (실제 폰)
+   pointer:fine   = 마우스 (Chrome DevTools 에뮬레이션 포함) → 미적용 */
+@media (max-width: 767px) and (pointer: coarse) {
     #fm-flip-container .fmc-back .fmc-text p {
-        font-size: 15px;   /* 18px ÷ 1.2 */
+        font-size: 16px;   /* 18px보다 작지만 15px보다 살짝 크게 */
     }
     #fm-flip-container .fmc-back .fmc-badge {
-        font-size: 10px;   /* 12px ÷ 1.2 */
+        font-size: 11px;
     }
 }
 
