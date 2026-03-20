@@ -300,25 +300,24 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
 }
 
 .crisp-header__h1 {
-  /* Flex column: 각 .hero-h1-line이 자신의 width만큼만 차지하며 중앙 배치 */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   letter-spacing: -0.025em;
-  margin: 0 auto;
+  margin: 0;
   font-family: 'Pretendard', sans-serif;
   font-size: clamp(1.8rem, calc(3.6vw + 3.6dvh), 4.5rem);
   font-weight: 800;
   line-height: 1.25;
-  opacity: 0; /* JS will handle reveal */
+  opacity: 0;
   will-change: transform;
 }
 
-/* 각 행: 자신의 content 너비만큼 자동 크기 */
+/* 각 행: JS가 width + marginLeft로 정확히 중앙 배치 */
 .hero-h1-line {
   display: block;
-  text-align: center;
-  white-space: nowrap;
+}
+
+/* 슬라이더 라인 숨김 */
+#hero-progress-bar {
+  display: none !important;
 }
 
 .crisp-header__h1 * {
