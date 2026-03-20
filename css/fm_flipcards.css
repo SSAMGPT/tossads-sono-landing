@@ -159,9 +159,10 @@
         line-height: 1;
     }
 
-    /* ── 뒷면: fm-avatar에 오렌지 브랜드 컬러 테두리 ── */
+    /* ── 뒷면: fm-avatar에 오렌지 브랜드 컬러 테두리 + 배경 ── */
     #fm-flip-container .fmc-back .fm-avatar {
         box-shadow: 0 0 0 3px #FF6B1A;
+        background: #FF6B1A !important;
     }
 }
 
