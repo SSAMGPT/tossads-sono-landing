@@ -358,10 +358,51 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
 .crisp-header__slider-nav {
   display: none !important;
 }
+/* 스크롤 유도 — 히어로 하단 중앙에 절대 배치 */
 .hero-scrolldown {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  opacity: 0;          /* GSAP이 텍스트와 동시에 fade-in */
+  text-decoration: none;
+  color: rgba(255,255,255,0.75);
+  font-family: 'Pretendard', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
 }
+.hero-scrolldown:hover {
+  opacity: 0.9 !important;
+}
+
+/* 마우스 프레임 크기 조정 */
+.hero-scrolldown .scrolldown {
+  --sizeX: 24px;
+  --sizeY: 38px;
+  margin-bottom: 0;
+}
+
+/* 스크롤 레이블 */
+.hero-scroll-label {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  margin-top: 4px;
+}
+
 /* crisp-splash는 position:absolute(전체화면)이 원래 CSS에 있으므로 별도 오버라이드 불필요 */
 /* z-index는 원래 20000으로 이미 WebGL(z-index:0) 위에 있음 */
 
