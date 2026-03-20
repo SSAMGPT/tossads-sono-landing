@@ -200,11 +200,15 @@
     this.plane    = new THREE.Mesh(this.geometry, this.material);
     this.scene.add(this.plane);
 
-    /* Load all textures */
+    /* Load all textures — mipmap 비활성화로 풀해상도 선명하게 렌더링 */
     var loaded  = 0;
     var loader  = new THREE.TextureLoader();
     this.images.forEach(function (url, i) {
       loader.load(url, function (tex) {
+        /* LinearFilter: mipmap 없이 풀해상도 샘플링 → 이미지 선명도 유지 */
+        tex.minFilter = THREE.LinearFilter;
+        tex.magFilter = THREE.LinearFilter;
+        tex.generateMipmaps = false;
         self.textures[i] = tex;
         loaded++;
         if (loaded === self.images.length) self._onReady();
@@ -334,7 +338,17 @@
 
     function tick() {
       if (self._stopped) return;
+
+      /* 이미지 전환 시작 → 텍스트 페이드 아웃 */
+      if (typeof window._heroTextFadeOut === 'function') {
+        window._heroTextFadeOut();
+      }
+
       self.next(null, function () {
+        /* 이미지 전환 완료 → 새 텍스트 등장 (SplitText 애니메이션) */
+        if (typeof window._heroSlideTextChange === 'function') {
+          window._heroSlideTextChange(self.current);
+        }
         self._resetProgressBar();
         self._autoTimer = setTimeout(tick, AUTO_INTERVAL);
       });

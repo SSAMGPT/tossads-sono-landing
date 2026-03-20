@@ -187,14 +187,13 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
 }
 
 .crisp-header__center {
-  width: 100%;
+  width: 100vw;   /* % 계산 오차 우회: 항상 정확히 뷰포트 너비 */
   padding: 1.5em;
   position: absolute;
   top: 50%;
   left: 0;
-  right: 0;
   transform: translateY(-50%);
-  text-align: center;
+  overflow: hidden;
   z-index: 100;
 }
 
@@ -303,21 +302,32 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
 .crisp-header__h1 {
   text-align: center;
   letter-spacing: -0.025em;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: .125em;
   font-family: 'Pretendard', sans-serif;
   font-size: clamp(1.8rem, calc(3.6vw + 3.6dvh), 4.5rem);
   font-weight: 800;
-  line-height: 1.45;
+  line-height: 1.25;
   opacity: 0;
   will-change: transform;
 }
-/* 각 행: 블록 + 중앙 정렬 (chars-only SplitText → 단어 wrapper 없음 → text-align 정상 작동) */
-.hero-h1-line {
-  display: block;
-  text-align: center;
-}
 .crisp-header__h1 * {
   will-change: transform;
+}
+/* SplitText word spans — inline-block으로 text-align:center 작동 */
+.crisp-header__h1 .split-word {
+  display: inline-block !important;
+  margin-right: 0.25em;
+}
+.crisp-header__h1 .split-word:last-child {
+  margin-right: 0;
+}
+.crisp-header__h1 .split-char {
+  display: inline !important;
+}
+/* 슬라이더 라인 숨김 */
+#hero-progress-bar {
+  display: none !important;
 }
 
 /* ─────────────────────────────────────────────

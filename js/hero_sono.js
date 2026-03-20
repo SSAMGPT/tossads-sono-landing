@@ -30,6 +30,73 @@ if (typeof SplitText !== 'undefined' && typeof CustomEase !== 'undefined') {
   CustomEase.create("slideshow-wipe", "0.625, 0.05, 0, 1");
 }
 
+/* 슬라이드별 텍스트 (hero_webgl.js IMAGES 배열 순서와 동일) */
+var HERO_TEXTS = [
+  ['당신의 일상을', '더 특별하게.'],           // 0: sono-hero-04
+  ['쓴 만큼 고스란히', '만기 환급형 가전 렌탈'],    // 1: sono-hero-02
+  ['상조도 소노와 함께', '프리미엄으로 준비'],     // 2: sono-hero-03
+  ['소노의 모든 공간', '특별한 멤버십 혜택'],       // 3: sono-hero-05
+  ['소노아임레디', '스마트케어'],                // 4: sono-hero-01
+];
+
+/* h1에 새 텍스트를 주입하고 SplitText 적용 후 글로벌 저장 */
+function heroSplitApply(textPair) {
+  var h1 = document.querySelector('.crisp-header__h1');
+  if (!h1) return null;
+
+  /* 이전 SplitText 명시적 정리
+     (GSAP이 동일 요소 재분리 시 old 텍스트로 auto-revert하는 것 방지) */
+  if (window._heroSplit && typeof window._heroSplit.revert === 'function') {
+    window._heroSplit.revert();
+  }
+
+  /* DOM 교체 (원래 구조: br 사용) */
+  h1.innerHTML = textPair[0] + '<br>' + textPair[1];
+
+  if (typeof SplitText === 'undefined') return null;
+
+  var s = new SplitText([h1], {
+    type: 'words,chars',
+    wordsClass: 'split-word',
+    charsClass: 'split-char'
+  });
+  removeWordTextNodes(h1);
+  window._heroSplit = s;
+  return s;
+}
+
+/* 현재 쾐주얼 페이드 아웃 */
+window._heroTextFadeOut = function() {
+  var s = window._heroSplit;
+  if (s && s.chars && s.chars.length) {
+    gsap.to(s.chars, {
+      opacity: 0,
+      duration: 0.35,
+      stagger: { from: 'center', each: 0.02 }
+    });
+  }
+};
+
+/* 이미지 전환 완료 후 새 텍스트 등장 (초기와 동일한 SplitText 애니메이션) */
+window._heroSlideTextChange = function(slideIndex) {
+  var textPair = HERO_TEXTS[slideIndex] || HERO_TEXTS[0];
+  var s = heroSplitApply(textPair);
+  if (!s || !s.chars || !s.chars.length) return;
+  gsap.set(s.chars, { opacity: 0 });
+  /* chars: 중앙에서 페이드 인 */
+  gsap.fromTo(s.chars,
+    { opacity: 0 },
+    { duration: 1.2, opacity: 1, ease: 'power1.inOut',
+      stagger: { from: 'center', each: 0.04 } }
+  );
+  /* words: 스프링 업 (초기 등장과 동일) */
+  if (s.words && s.words.length) {
+    gsap.from(s.words,
+      { duration: 3, y: function(i) { return (i * 100) - 50; }, ease: 'expo.out' }
+    );
+  }
+};
+
 // Loading Animation
 function initCrispLoadingAnimation() {
   const container = document.querySelector(".crisp-header");
@@ -42,12 +109,21 @@ function initCrispLoadingAnimation() {
 
   if (mainHeader) gsap.set(mainHeader, { opacity: 0, y: -20, pointerEvents: "none" });
 
-  /* GSAP SplitText — chars only (단어 wrapper 없이 인라인 텍스트 흐름 유지 → text-align:center 정상 작동) */
+  /* GSAP SplitText — words + chars */
   let split;
   if (headings.length && typeof SplitText !== 'undefined') {
+    headings.forEach(h => { h.innerHTML = h.innerHTML; });
     split = new SplitText(headings, {
-      type: "chars",
+      type: "words,chars",
+      wordsClass: "split-word",
       charsClass: "split-char"
+    });
+    /* h1 + hero-h1-line 모든 공백 텍스트 노드 제거
+       (flex 레이아웃에서 공백 텍스트 노드 → anonymous flex item 방지,
+        gap으로 단어 간격 제공) */
+    headings.forEach(removeWordTextNodes);
+    headings.forEach(h => {
+      h.querySelectorAll('.hero-h1-line').forEach(removeWordTextNodes);
     });
   }
 
@@ -96,14 +172,19 @@ function initCrispLoadingAnimation() {
         );
       }
 
-      /* Hero heading — chars 중앙에서 fade in */
+      /* Hero heading — chars 중앙에서 fade in + words spring */
       if (split && split.chars && split.chars.length) {
+        /* 전역 저장 → 슬라이드 전환 시 _heroTextFadeOut에서 사용 */
+        window._heroSplit = split;
         gsap.set(headings, { opacity: 1 });
         gsap.set(split.chars, { opacity: 0 });
         gsap.fromTo(split.chars,
           { opacity: 0 },
           { duration: 1.2, opacity: 1, ease: "power1.inOut",
             stagger: { from: "center", each: 0.04 } }
+        );
+        gsap.from(split.words,
+          { duration: 3, y: (i) => (i * 100) - 50, ease: "expo.out" }
         );
       } else if (headings.length) {
         gsap.to(headings, { opacity: 1, duration: 0.8 });
