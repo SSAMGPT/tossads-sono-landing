@@ -7494,6 +7494,7 @@ body {
     opacity: 0;
     transform: translateY(50px) scale(0.6);
     pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 #floatingConsultBtn.is-visible {
@@ -7514,7 +7515,14 @@ body {
     pointer-events: none;
 }
 
-/* 패널 열릴 때: 버튼 bounce-out */
+/* 패널 열릴 때: 부드럽게 사라짐 (transition 기반) */
+#floatingConsultBtn.panel-open {
+    opacity: 0 !important;
+    transform: translateY(16px) scale(0.9) !important;
+    pointer-events: none !important;
+}
+
+/* 패널 열릴 때: 버튼 bounce-out (기존 유지) */
 #floatingConsultBtn.panel-opening {
     animation: floatBtnBounceOut 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
     pointer-events: none;

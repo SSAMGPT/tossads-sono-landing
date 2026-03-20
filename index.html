@@ -5244,6 +5244,9 @@
             /* floating-cta 아래로 숨기기 */
             var fCta = document.getElementById('floating-cta');
             if (fCta) fCta.classList.add('panel-open');
+
+            /* 상담 버튼 부드럽게 숨기기 */
+            if (floatWrap) floatWrap.classList.add('panel-open');
         }
 
         function closePanel() {
@@ -5255,13 +5258,8 @@
             var fCta = document.getElementById('floating-cta');
             if (fCta) fCta.classList.remove('panel-open');
 
-            /* panel-hidden 제거 후 bounce-in */
-            floatWrap.classList.remove('panel-opening', 'panel-hidden');
-            floatWrap.classList.add('panel-closing');
-            floatWrap.addEventListener('animationend', function onIn() {
-                floatWrap.classList.remove('panel-closing');
-                floatWrap.removeEventListener('animationend', onIn);
-            });
+            /* 상담 버튼 복원 */
+            if (floatWrap) floatWrap.classList.remove('panel-open');
         }
 
         if (triggerBtn) triggerBtn.addEventListener('click', openPanel);
