@@ -5565,7 +5565,23 @@ ul.sc-slider-tabs li {
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
     margin: 0 auto 4rem;
-    max-width: 860px;          /* 위 섹션 좌우 여백 안에 들어오도록 */
+    max-width: 860px;
+}
+
+/* 신뢰도 카드: 전체 너비 */
+.trust-card--wide {
+    grid-column: 1 / -1;
+    min-height: 260px;
+}
+
+/* 모바일: 1열 */
+@media (max-width: 767px) {
+    .trust-grid {
+        grid-template-columns: 1fr;
+    }
+    .trust-card--wide {
+        grid-column: auto;
+    }
 }
 
 .trust-card {
@@ -5678,6 +5694,17 @@ ul.sc-slider-tabs li {
     margin: 0.5rem 0 0;
     color: #9ca3af;
     font-style: italic;
+}
+
+.trust-card__promise {
+    font-size: 13px;
+    font-weight: 700;
+    color: #2563eb;
+    margin-top: 0.6rem;
+}
+
+.trust-card--light .trust-card__promise {
+    color: #2563eb;
 }
 
 /* SVG 일러스트: 절대 우하단 */
