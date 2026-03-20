@@ -42,16 +42,13 @@ function initCrispLoadingAnimation() {
 
   if (mainHeader) gsap.set(mainHeader, { opacity: 0, y: -20, pointerEvents: "none" });
 
-  /* GSAP SplitText */
+  /* GSAP SplitText — chars only (단어 wrapper 없이 인라인 텍스트 흐름 유지 → text-align:center 정상 작동) */
   let split;
   if (headings.length && typeof SplitText !== 'undefined') {
-    headings.forEach(h => { h.innerHTML = h.innerHTML; });
     split = new SplitText(headings, {
-      type: "words,chars",
-      wordsClass: "split-word",
+      type: "chars",
       charsClass: "split-char"
     });
-    headings.forEach(removeWordTextNodes);
   }
 
   /* GSAP Timeline — only splash part */
@@ -99,42 +96,15 @@ function initCrispLoadingAnimation() {
         );
       }
 
-      /* Hero heading — JS로 정확한 중앙 정렬 후 chars fade in */
+      /* Hero heading — chars 중앙에서 fade in */
       if (split && split.chars && split.chars.length) {
         gsap.set(headings, { opacity: 1 });
         gsap.set(split.chars, { opacity: 0 });
-
-        /* ── JS 측정 기반 중앙 정렬 (CSS cascade 우회) ── */
-        requestAnimationFrame(function() {
-          var center = document.querySelector('.crisp-header__center');
-          if (center) {
-            var cw = center.getBoundingClientRect().width
-                   - parseFloat(getComputedStyle(center).paddingLeft)
-                   - parseFloat(getComputedStyle(center).paddingRight);
-
-            document.querySelectorAll('.hero-h1-line').forEach(function(line) {
-              /* 현재 display를 inline-block으로 바꿔 content 너비 측정 */
-              line.style.display = 'inline-block';
-              line.style.width   = 'auto';
-              var lw = line.getBoundingClientRect().width;
-
-              /* 블록으로 복원 후 margin-left로 중앙 배치 */
-              line.style.display    = 'block';
-              line.style.width      = lw + 'px';
-              line.style.marginLeft = Math.max(0, (cw - lw) / 2) + 'px';
-            });
-          }
-
-          /* 측정 완료 후 애니메이션 시작 */
-          gsap.fromTo(split.chars,
-            { opacity: 0 },
-            { duration: 1.2, opacity: 1, ease: "power1.inOut",
-              stagger: { from: "center", each: 0.04 } }
-          );
-          gsap.from(split.words,
-            { duration: 3, y: (i) => (i * 100) - 50, ease: "expo.out" }
-          );
-        });
+        gsap.fromTo(split.chars,
+          { opacity: 0 },
+          { duration: 1.2, opacity: 1, ease: "power1.inOut",
+            stagger: { from: "center", each: 0.04 } }
+        );
       } else if (headings.length) {
         gsap.to(headings, { opacity: 1, duration: 0.8 });
       }

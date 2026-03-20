@@ -194,6 +194,7 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
   left: 0;
   right: 0;
   transform: translateY(-50%);
+  text-align: center;
   z-index: 100;
 }
 
@@ -300,38 +301,23 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
 }
 
 .crisp-header__h1 {
+  text-align: center;
   letter-spacing: -0.025em;
   margin: 0;
   font-family: 'Pretendard', sans-serif;
   font-size: clamp(1.8rem, calc(3.6vw + 3.6dvh), 4.5rem);
   font-weight: 800;
-  line-height: 1.25;
+  line-height: 1.45;
   opacity: 0;
   will-change: transform;
 }
-
-/* 각 행: JS가 width + marginLeft로 정확히 중앙 배치 */
+/* 각 행: 블록 + 중앙 정렬 (chars-only SplitText → 단어 wrapper 없음 → text-align 정상 작동) */
 .hero-h1-line {
   display: block;
+  text-align: center;
 }
-
-/* 슬라이더 라인 숨김 */
-#hero-progress-bar {
-  display: none !important;
-}
-
 .crisp-header__h1 * {
   will-change: transform;
-}
-
-/* SplitText word spans – margin-right is the ONLY spacing source (text nodes are removed in JS) */
-.crisp-header__h1 .split-word {
-  display: inline-block;
-  margin-right: 0.25em;
-}
-/* 마지막 단어 trailing margin 제거 → 중앙 정렬 정확성 향상 */
-.crisp-header__h1 .split-word:last-of-type {
-  margin-right: 0;
 }
 
 /* ─────────────────────────────────────────────
