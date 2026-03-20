@@ -3553,17 +3553,17 @@
                 <p class="real-review__subtitle">실제 이용하신 분들의 솔직한 후기입니다.</p>
 
                 <!-- 신뢰도 수치 카드 2개 -->
-                <div class="stat-grid">
+                <div class="stat-grid" id="stat-grid">
                     <!-- 만족도 -->
                     <div class="stat-card stat-card--left">
                         <span class="stat-card__label">만족도</span>
-                        <div class="stat-card__number">99<span class="stat-card__unit">%</span></div>
+                        <div class="stat-card__number"><span id="count-satisfaction" data-target="99" data-decimals="0">0</span><span class="stat-card__unit">%</span></div>
                         <p class="stat-card__desc">소노아임레디 만족도 (23년 기준)</p>
                     </div>
                     <!-- 추천지수 -->
-                    <div class="stat-card stat-card--right">
+                    <div class="stat-card stat-card--left">
                         <span class="stat-card__label">추천지수</span>
-                        <div class="stat-card__number">9.3<span class="stat-card__unit">점</span></div>
+                        <div class="stat-card__number"><span id="count-recommend" data-target="9.3" data-decimals="1">0</span><span class="stat-card__unit">점</span></div>
                         <p class="stat-card__desc">상조 서비스 추천지수</p>
                     </div>
                 </div>
@@ -4191,6 +4191,41 @@
             }
 
             // --- REAL REVIEW stat 카드 페이드인 ---
+            /* ── 숫자 카운팅 애니메이션 ── */
+            (function() {
+                function animateCount(el, target, decimals, duration) {
+                    const start = performance.now();
+                    function step(now) {
+                        const elapsed = Math.min((now - start) / duration, 1);
+                        // easeOutQuart
+                        const ease = 1 - Math.pow(1 - elapsed, 4);
+                        const value = (target * ease).toFixed(decimals);
+                        el.textContent = value;
+                        if (elapsed < 1) requestAnimationFrame(step);
+                        else el.textContent = target.toFixed(decimals);
+                    }
+                    requestAnimationFrame(step);
+                }
+
+                const statGrid = document.getElementById('stat-grid');
+                if (!statGrid) return;
+
+                let counted = false;
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting && !counted) {
+                        counted = true;
+                        const counters = statGrid.querySelectorAll('[data-target]');
+                        counters.forEach(el => {
+                            const target   = parseFloat(el.dataset.target);
+                            const decimals = parseInt(el.dataset.decimals || '0');
+                            animateCount(el, target, decimals, 1800);
+                        });
+                    }
+                }, { threshold: 0.3 });
+
+                observer.observe(statGrid);
+            })();
+
             const statCards = document.querySelectorAll('.stat-card');
             if (statCards.length > 0) {
                 gsap.set(statCards, { opacity: 0, y: 30 });
