@@ -332,7 +332,7 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background: #000;
+  background: #eaeaea;  /* 스플래시 배경색과 동일 — 끊김 없는 전환 */
 }
 #hero-webgl canvas {
   display: block;

@@ -168,7 +168,7 @@
     this.renderer = new THREE.WebGLRenderer({ antialias: false });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setSize(w, h);
-    this.renderer.setClearColor(0x000000, 1);
+    this.renderer.setClearColor(0xeaeaea, 1);  /* 스플래시 배경색과 동일 */
     this.container.appendChild(this.renderer.domElement);
 
     /* Camera */
@@ -215,14 +215,23 @@
   };
 
   HeroWebGL.prototype._onReady = function () {
-    /* Set initial textures: texture1 = image0, texture2 = image0 (static) */
-    this.material.uniforms.texture1.value = this.textures[0];
-    this.material.uniforms.texture2.value = this.textures[0];
+    /* 스플래시 배경색(#eaeaea)으로 저리 쳭리 뺜리텍스쳐 생성 */
+    var bgCanvas    = document.createElement('canvas');
+    bgCanvas.width  = 4; bgCanvas.height = 4;
+    var bgCtx = bgCanvas.getContext('2d');
+    bgCtx.fillStyle = '#eaeaea';
+    bgCtx.fillRect(0, 0, 4, 4);
+    this._bgTex = new THREE.CanvasTexture(bgCanvas);
+
+    /* WebGL 쾔럿: 스플래시와 동일한 배경색 표시 (스플래시 사라진 후 색상 일치) */
+    this.material.uniforms.texture1.value = this._bgTex;
+    this.material.uniforms.texture2.value = this._bgTex;
+
     this._resize();
     this._paused = false;
     this._render();
 
-    /* Notify hero_sono.js that WebGL is ready */
+    /* hero_sono.js에 WebGL 준비 완료 알림 */
     window._heroWebGLIsReady = true;
     if (typeof window._heroWebGLReadyCallback === 'function') {
       window._heroWebGLReadyCallback();
@@ -262,25 +271,17 @@
     this.renderer.render(this.scene, this.camera);
   };
 
-  /**
-   * introTransition — black → first image (called after splash)
-   * @param {Function} callback  — fires when wipe is complete
-   */
   HeroWebGL.prototype.introTransition = function (callback) {
     var self = this;
     if (!this.textures.length) return;
 
-    /* Create a 1×1 black canvas texture as "from" */
-    var canvas    = document.createElement('canvas');
-    canvas.width  = 2; canvas.height = 2;
-    var ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, 2, 2);
-    var blackTex = new THREE.CanvasTexture(canvas);
-
-    this.material.uniforms.texture1.value = blackTex;
+    /* texture1 = 스플래시 배경색(#eaeaea), texture2 = 첫 번째 이미지 */
+    this.material.uniforms.texture1.value = this._bgTex;
     this.material.uniforms.texture2.value = this.textures[0];
     this.material.uniforms.progress.value = 0;
+
+    /* 쿬오버 이후에도 오버라이드병에도 _bgTex 결해야 하므로 resize 업데이트 */
+    this._resize();
 
     gsap.to(this.material.uniforms.progress, {
       value: 1,
