@@ -1191,7 +1191,17 @@
         <div class="crisp-splash">
             <img src="img/splash.png" alt="Sono Logo" class="crisp-splash__logo">
         </div>
-        <div class="crisp-header__slider">
+
+        <!-- ── WebGL 배경 캔버스 ── -->
+        <div id="hero-webgl"></div>
+
+        <!-- ── 프로그레스 바 (흰색 라인) ── -->
+        <div id="hero-progress-bar" style="opacity:0">
+            <div id="hero-progress-line"></div>
+        </div>
+
+        <!-- 기존 슬라이더 (WebGL로 대체되므로 숨김) -->
+        <div class="crisp-header__slider" style="display:none;">
             <div class="crisp-header__slider-list">
                 <div data-slideshow="slide" class="crisp-header__slider-slide"><img
                         class="crisp-header__slider-slide-inner" src="img/sono-hero-02.jpeg" width="Auto"
@@ -1210,7 +1220,8 @@
                         alt="Hero Image 1" data-slideshow="parallax" draggable="false"></div>
             </div>
         </div>
-        <div class="crisp-loader">
+        <!-- crisp-loader: WebGL이 이미지 reveal을 담당하므로 숨김 -->
+        <div class="crisp-loader" style="display:none;">
             <div class="crisp-loader__wrap">
                 <div class="crisp-loader__groups">
                     <div class="crisp-loader__group is--duplicate">
@@ -5263,6 +5274,13 @@
     </div>
     <script src="js/SplitText.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
+    <!-- WebGL 히어로 슬라이더: Three.js + Demo1 engine -->
+    <script src="js/three.js"></script>
+    <script src="js/hero_webgl.js"></script>
+    <script>
+      /* three.js와 hero_webgl.js 로드 직후 인스턴스 생성 → 텍스처 미리 로딩 시작 */
+      window._heroWebGLInstance = new HeroWebGL('hero-webgl');
+    </script>
     <script src="js/hero_sono.js"></script>
     <script src="./js/smartcare.js"></script>
 

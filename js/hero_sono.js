@@ -31,196 +31,122 @@ if (typeof SplitText !== 'undefined' && typeof CustomEase !== 'undefined') {
 }
 
 // Loading Animation
-// Loading Animation
 function initCrispLoadingAnimation() {
   const container = document.querySelector(".crisp-header");
   if (!container) return;
 
-  const headings = container.querySelectorAll(".crisp-header__h1");
-  const revealImages = container.querySelectorAll(".crisp-loader__group > *");
-  const isScaleUp = container.querySelectorAll(".crisp-loader__media");
-  const isScaleDown = container.querySelectorAll(".crisp-loader__media .is--scale-down");
-  const isRadius = container.querySelectorAll(".crisp-loader__media.is--scaling.is--radius");
-  const sliderNav = container.querySelectorAll(".crisp-header__slider-nav > *");
-  
-  // Combine all elements to reveal at the end
+  const headings   = container.querySelectorAll(".crisp-header__h1");
+  const sliderNav  = container.querySelectorAll(".crisp-header__slider-nav > *");
   const smallElements = document.querySelectorAll(".crisp-header__p, .crisp-header__top");
-  const mainHeader = document.querySelector(".main-header");
-  
-  // Force GSAP control over header from the start (overrides CSS)
+  const mainHeader    = document.querySelector(".main-header");
+
   if (mainHeader) gsap.set(mainHeader, { opacity: 0, y: -20, pointerEvents: "none" });
-  
-  
-  /* GSAP Timeline */
-  const tl = gsap.timeline({
-    defaults: {
-      ease: "expo.inOut",
-    },
-    onStart: () => {
-      container.classList.remove('is--hidden');
-    }
-  });
 
-  // 0. Splash Animation (Logo First)
-  const splash = container.querySelector(".crisp-splash");
-  const splashLogo = container.querySelector(".crisp-splash__logo");
-
-  if (splash && splashLogo) {
-    tl.to(splashLogo, {
-      opacity: 1,
-      scale: 1,
-      duration: 1,
-      ease: "power2.out"
-    })
-    .to(splashLogo, {
-      opacity: 0,
-      scale: 1.1,
-      duration: 0.6,
-      ease: "power2.in"
-    }, "+=0.2")
-    .to(splash, {
-      autoAlpha: 0,
-      duration: 0.5
-    }, "-=0.1");
-  }
-  
   /* GSAP SplitText */
   let split;
   if (headings.length && typeof SplitText !== 'undefined') {
-    // Refresh innerHTML before SplitText to ensure consistent text node creation
     headings.forEach(h => { h.innerHTML = h.innerHTML; });
-    
     split = new SplitText(headings, {
       type: "words,chars",
       wordsClass: "split-word",
       charsClass: "split-char"
     });
-    
-    // Remove text node spaces SplitText inserted – spacing is handled by CSS margin-right
     headings.forEach(removeWordTextNodes);
   }
-  
-  /* Start of Timeline (follows splash) */
-  if (revealImages.length) {
-    tl.fromTo(revealImages, {
-      xPercent: 500
-    }, {
-      xPercent: -500,
-      duration: 2.5,
-      stagger: 0.05
-    }, ">");
-  }
-  
-  if (isScaleDown.length) {
-    tl.to(isScaleDown, {
-      scale: 0.5,
-      duration: 2,
-      stagger: {
-        each: 0.05,
-        from: "edges",
-        ease: "none"
-      },
-      onComplete: () => {
-        if (isRadius) {
-          isRadius.forEach(el => el.classList.remove('is--radius'));
-        }
-      }
-    }, "-=0.1");
-  }
-  
-  if (isScaleUp.length) {
-    tl.fromTo(isScaleUp, {
-      width: "10em",
-      height: "10em"
-    }, {
-      width: "100vw",
-      height: "100dvh",
-      duration: 2
-    }, "< 0.5");
-  }
-  
-  if (sliderNav.length) {
-    // Remove loading overlay and trigger header animation at the same moment thumbnails appear
-    tl.call(function () {
-      container.classList.remove('is--loading');
-      // Header slides down from top, same timing as text/thumbnails
-      gsap.fromTo(mainHeader,
-        { opacity: 0, y: -30 },
-        {
-          opacity: 1,
-          y: 0,
-          pointerEvents: "auto",
-          ease: "power2.out",
-          duration: 1
-        }
-      );
-    }, null, ">"); // fires right when isScaleUp ends
-    
-    tl.from(sliderNav, {
-      yPercent: 150,
-      stagger: 0.05,
-      ease: "expo.out",
-      duration: 1
-    }, ">"); // right after isScaleUp ends
 
-    // 스크롤 유도 버튼: 썸네일과 동일 타이밍에 등장
+  /* GSAP Timeline — only splash part */
+  const tl = gsap.timeline({
+    defaults: { ease: "expo.inOut" },
+    onStart: () => container.classList.remove('is--hidden')
+  });
+
+  /* 0. Splash Animation (Logo) */
+  const splash     = container.querySelector(".crisp-splash");
+  const splashLogo = container.querySelector(".crisp-splash__logo");
+
+  if (splash && splashLogo) {
+    tl.to(splashLogo, { opacity: 1, scale: 1, duration: 1, ease: "power2.out" })
+      .to(splashLogo, { opacity: 0, scale: 1.1, duration: 0.6, ease: "power2.in" }, "+=0.2")
+      .to(splash, { autoAlpha: 0, duration: 0.5 }, "-=0.1");
+  }
+
+  /* After splash → trigger WebGL intro, then animate text + nav in callback */
+  tl.call(function () {
     const scrollBtn = document.querySelector('.hero-scrolldown');
-    if (scrollBtn) {
-      tl.fromTo(scrollBtn,
-        { opacity: 0, y: 16 },
-        {
-          opacity: 1,
-          y: 0,
-          ease: "power2.out",
-          duration: 0.8
-        },
-        "<" // sliderNav 애니메이션과 동시 시작
-      );
-    }
-  }
-  
-  if (split && split.chars && split.chars.length) {
-    // 1. Revert container opacity to 1 immediately so child animations can be seen.
-    gsap.set(headings, { opacity: 1 });
-    // 2. Hide all chars initially to prevent any flashes.
-    gsap.set(split.chars, { opacity: 0 });
 
-    // 3. Characters fade in from the center (staggered)
-    tl.fromTo(split.chars, 
-      { opacity: 0 }, 
-      {
-        duration: 1.2,
-        opacity: 1,
-        ease: "power1.inOut",
-        stagger: { from: "center", each: 0.04 }
-      }, 
-      "<"
-    );
-    
-    // 4. Words spring up (the 'explosion' effect)
-    tl.from(split.words, 
-      {
-        duration: 3,
-        y: (i) => (i * 100) - 50,
-        ease: "expo.out"
-      }, 
-      "<"
-    );
-    
-  } else if (headings.length) {
-    tl.to(headings, { opacity: 1, duration: 0.8 }, "<");
-  }
-  
+    function revealTextAndNav() {
+      /* Remove loading overlay */
+      container.classList.remove('is--loading');
+
+      /* Nav header slides down */
+      if (mainHeader) {
+        gsap.fromTo(mainHeader,
+          { opacity: 0, y: -30 },
+          { opacity: 1, y: 0, pointerEvents: "auto", ease: "power2.out", duration: 1 }
+        );
+      }
+
+      /* Thumbnail nav slides up */
+      if (sliderNav.length) {
+        gsap.from(sliderNav, { yPercent: 150, stagger: 0.05, ease: "expo.out", duration: 1 });
+      }
+
+      /* Scroll button */
+      if (scrollBtn) {
+        gsap.fromTo(scrollBtn,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, ease: "power2.out", duration: 0.8 }
+        );
+      }
+
+      /* Hero heading — chars fade in from center */
+      if (split && split.chars && split.chars.length) {
+        gsap.set(headings, { opacity: 1 });
+        gsap.set(split.chars, { opacity: 0 });
+        gsap.fromTo(split.chars,
+          { opacity: 0 },
+          { duration: 1.2, opacity: 1, ease: "power1.inOut", stagger: { from: "center", each: 0.04 } }
+        );
+        gsap.from(split.words,
+          { duration: 3, y: (i) => (i * 100) - 50, ease: "expo.out" }
+        );
+      } else if (headings.length) {
+        gsap.to(headings, { opacity: 1, duration: 0.8 });
+      }
+
+      if (smallElements.length) {
+        gsap.to(smallElements, { opacity: 1, y: 0, pointerEvents: "auto", ease: "power1.inOut", duration: 0.8 });
+      }
+
+      /* Start WebGL autoplay after intro completes */
+      if (window._heroWebGLInstance) {
+        window._heroWebGLInstance.startAutoplay();
+      }
+    }
+
+    /* Wait for WebGL textures to load (usually done by now), then run intro wipe */
+    function runWebGLIntro() {
+      if (window._heroWebGLInstance) {
+        window._heroWebGLInstance.introTransition(revealTextAndNav);
+      } else {
+        /* Fallback: no WebGL — reveal immediately */
+        revealTextAndNav();
+      }
+    }
+
+    if (window._heroWebGLIsReady) {
+      runWebGLIntro();
+    } else {
+      /* Textures still loading — queue callback */
+      window._heroWebGLReadyCallback = runWebGLIntro;
+    }
+  }, null, ">");   // fires right after splash ends
+
   if (smallElements.length) {
-    tl.to(smallElements, {
-      opacity: 1,
-      y: 0,
-      pointerEvents: "auto",
-      ease: "power1.inOut",
-      duration: 0.8
-    }, "<");
+    gsap.set(smallElements, { opacity: 0, y: 10, pointerEvents: "none" });
   }
 }
+
 
 // Initialize Crisp Loading Animation
 function _skipIntro() {

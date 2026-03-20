@@ -321,3 +321,61 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
   display: inline-block;
   margin-right: 0.25em;
 }
+
+/* ─────────────────────────────────────────────
+   WebGL Hero Canvas & Progress Bar
+───────────────────────────────────────────── */
+
+/* WebGL 캔버스 컨테이너: hero 섹션 뒤를 꽉 채움 */
+#hero-webgl {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #000;
+}
+#hero-webgl canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+/* hero 섹션 콘텐츠(텍스트, 네비)가 canvas 위에 표시되도록 */
+.crisp-header__content {
+  position: relative;
+  z-index: 2;
+}
+.hero-scrolldown {
+  position: relative;
+  z-index: 2;
+}
+.crisp-splash {
+  position: relative;
+  z-index: 10;
+}
+
+/* ── 프로그레스 바 (흰색 라인) ── */
+#hero-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 0 2.5rem 1.8rem;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+#hero-progress-line {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  width: 0%;
+  border-radius: 1px;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 767px) {
+  #hero-progress-bar {
+    padding: 0 1.2rem 1.2rem;
+  }
+}
