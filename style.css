@@ -2127,19 +2127,18 @@ body.dark-mode .split-layout .answer-text {
     padding: 0 !important;
 }
 .sc-slider-bar {
-    --accent-50: #FFF0E6;   /* 연한 오렌지 */
-    --accent-a: #FF6B1A;    /* 진한 오렌지 (활성 텍스트) */
+    --accent-50: #FFF0E6;
+    --accent-a: #FF6B1A;
     --dur: 0.4s;
     --tv: 200%;
     background: #fff;
-    border-radius: 2.5rem;
-    padding: 0.6rem;
-    display: inline-block;
+    border-radius: 2rem;
     width: 100%;
-    max-width: 440px;
+    max-width: 520px;
     margin: 0 auto;
     user-select: none;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+    overflow: hidden;
 }
 .sc-slider-wrapper {
     position: relative;
@@ -2151,26 +2150,32 @@ ul.sc-slider-tabs {
     margin: 0;
 }
 ul.sc-slider-tabs li {
-    display: inline-flex;
-    position: relative;
-    padding: 0.9rem 1.5rem;
     flex: 1;
+    position: relative;
     z-index: 1;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    padding: 0.65rem 0;
 }
-.sc-slider-btn {
-    all: unset;
+/* sc-product-tab.active 검정 배경 오버라이드 */
+.sc-slider-btn,
+.sc-slider-btn.active {
+    all: unset !important;
     cursor: pointer;
     font-weight: 800;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-family: 'Pretendard', sans-serif;
     letter-spacing: -0.02em;
-    color: #aaa;
+    color: #bbb;
     transition: color var(--dur) ease;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
     -webkit-tap-highlight-color: transparent;
 }
 .sc-slider-btn.active {
-    color: var(--accent-a);
+    color: var(--accent-a) !important;
 }
 /* 슬라이더: 배경 원 (탭 뒤에서 슬라이딩) */
 .sc-main-slider {
@@ -2178,21 +2183,19 @@ ul.sc-slider-tabs li {
     position: absolute;
     top: 0;
     left: 0;
-    width: 25%;        /* 탭 1개 너비 */
+    width: 25%;
     height: 100%;
-    padding: 0.9rem 1.5rem;
+    padding: 0.3rem;    /* 원 여백 */
     z-index: 0;
     transition: transform var(--dur) cubic-bezier(0.23, 1, 0.32, 1);
     transform: translateX(var(--tv));
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    box-sizing: border-box;
 }
-/* 슬라이딩 원: 탭 뒤 파스텔 배경 */
+/* 슬라이딩 원: 파스텔 배경 */
 .sc-main-circle {
     width: 100%;
     height: 100%;
-    border-radius: 2rem;
+    border-radius: 1.5rem;
     background: var(--accent-50);
 }
 /* 젤로 애니메이션 */
