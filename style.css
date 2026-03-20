@@ -5811,6 +5811,12 @@ ul.sc-slider-tabs li {
     gap: 0.8rem;
 }
 
+/* 오른쪽 정렬 (3구좌, 6구좌) */
+.sc-pill-stack--right {
+    left: auto;
+    right: 1.5rem;
+    align-items: flex-end;
+}
 
 @media (max-width: 480px) {
     .sc-pill-stack {
@@ -5819,7 +5825,11 @@ ul.sc-slider-tabs li {
         bottom: 1rem;
         left: 1rem;
     }
-    
+    .sc-pill-stack--right {
+        transform-origin: bottom right;
+        left: auto;
+        right: 1rem;
+    }
 }
 
 @media (min-width: 768px) {
@@ -5829,7 +5839,11 @@ ul.sc-slider-tabs li {
         bottom: 2rem;
         left: 2.5rem;
     }
-
+    .sc-pill-stack--right {
+        transform-origin: bottom right;
+        left: auto;
+        right: 2.5rem;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -5839,7 +5853,11 @@ ul.sc-slider-tabs li {
         bottom: 3.5rem;
         left: 4rem;
     }
-
+    .sc-pill-stack--right {
+        transform-origin: bottom right;
+        left: auto;
+        right: 4rem;
+    }
 }
 
 .sc-pill {
