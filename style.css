@@ -6630,132 +6630,143 @@ body {
 
 
 /* Floating Action Button (CTA) */
+/* ── 선택한 상품 하단 고정 CTA ── */
 .floating-cta {
     position: fixed;
-    bottom: -100px;
-    left: auto;
-    right: max(1.5rem, calc(50% - 200px));
-    margin: 0;
+    bottom: -200px;
+    left: 50%;
+    transform: translateX(-50%);
     width: calc(100% - 3rem);
-    max-width: 400px;
-    height: 64px;
-    background: #ff1f5d;
-    color: #fff;
+    max-width: 720px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.06);
     z-index: 9999;
-    padding: 0 1.5rem;
-    border-radius: 32px;
-    box-shadow: 0 10px 30px rgba(255, 31, 93, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    padding: 1rem 1.25rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-decoration: none;
-    transition: bottom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s;
+    flex-direction: column;
+    gap: 0.85rem;
     opacity: 0;
     pointer-events: none;
+    transition: bottom 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s;
 }
-
-.f-cta-toggle-btn {
-    position: absolute;
-    top: -46px;
-    right: 0;
-    left: auto;
-    background: #ff1f5d;
-    border: none;
-    color: #fff;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    z-index: 10;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-}
-
-.f-cta-toggle-btn:hover {
-    transform: scale(1.1);
-    background: #f01450;
-}
-
-.floating-cta.is-minimized {
-    padding: 0;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.floating-cta.is-minimized .f-cta-info,
-.floating-cta.is-minimized .f-cta-action span {
-    display: none;
-}
-
-.floating-cta.is-minimized .f-cta-toggle-btn {
-    top: -46px;
-    right: 0;
-    transform: none;
-    background: #ff1f5d;
-    color: #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    width: 36px;
-    height: 36px;
-}
-
 .floating-cta.active {
-    bottom: 2rem;
+    bottom: 1.5rem;
     opacity: 1;
     pointer-events: auto;
 }
 
-.f-cta-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.1rem;
-    z-index: 1;
-}
-
-
-.f-cta-plan {
-    font-size: 11px;
-    font-weight: 500;
-    opacity: 0.9;
-}
-
-.f-cta-divider {
-    display: none;
-}
-
-.f-cta-prod {
-    font-size: 15px;
-    font-weight: 800;
-}
-
-.f-cta-action {
+/* 상품 정보 행 */
+.f-cta-product-row {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.85rem;
+}
+
+/* 썸네일 */
+.f-cta-thumb {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: #f3f4f6;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.f-cta-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 텍스트 */
+.f-cta-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.f-cta-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+.f-cta-plan-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: #2563eb;
+    background: #eff6ff;
+    border-radius: 20px;
+    padding: 2px 8px;
+    white-space: nowrap;
+}
+.f-cta-model {
+    font-size: 11px;
+    color: #9ca3af;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.f-cta-prod-name {
     font-size: 14px;
     font-weight: 800;
+    color: #111827;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 취소 버튼 */
+.f-cta-cancel {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    transition: color 0.2s;
+}
+.f-cta-cancel:hover { color: #374151; }
+
+/* 신청 버튼 */
+.f-cta-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2563eb;
     color: #fff !important;
     text-decoration: none !important;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 30px;
-    backdrop-filter: blur(5px);
-    transition: background 0.3s;
+    font-size: 16px;
+    font-weight: 800;
+    border-radius: 14px;
+    padding: 0.85rem 1.5rem;
+    letter-spacing: -0.01em;
+    transition: background 0.2s, transform 0.15s;
+}
+.f-cta-action-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
 }
 
-.f-cta-action:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-@media (max-width: 480px) {
-    .floating-cta.active {
-        bottom: 1.5rem;
+@media (max-width: 640px) {
+    .floating-cta {
+        width: calc(100% - 2rem);
+        border-radius: 16px;
+        bottom: -200px;
+        padding: 0.9rem 1rem;
     }
+    .floating-cta.active { bottom: 1rem; }
+    .f-cta-prod-name { font-size: 13px; }
+    .f-cta-action-btn { font-size: 15px; padding: 0.8rem 1rem; }
 }
+
 
 /* Device Selection & Receipt UI */
 .sc-calc-wrap {
