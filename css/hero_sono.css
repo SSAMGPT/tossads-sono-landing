@@ -341,19 +341,21 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
   object-fit: cover;
 }
 
-/* hero 섹션 콘텐츠(텍스트, 네비)가 canvas 위에 표시되도록 */
+/* crisp-header__content: WebGL canvas(z-index:0) 위에 텍스트가 보이도록 z-index 확보 */
 .crisp-header__content {
   position: relative;
-  z-index: 2;
+  z-index: 100;
+}
+/* 하단 썸네일 네비 숨김 */
+.crisp-header__slider-nav {
+  display: none !important;
 }
 .hero-scrolldown {
   position: relative;
   z-index: 2;
 }
-.crisp-splash {
-  position: relative;
-  z-index: 10;
-}
+/* crisp-splash는 position:absolute(전체화면)이 원래 CSS에 있으므로 별도 오버라이드 불필요 */
+/* z-index는 원래 20000으로 이미 WebGL(z-index:0) 위에 있음 */
 
 /* ── 프로그레스 바 (흰색 라인) ── */
 #hero-progress-bar {
