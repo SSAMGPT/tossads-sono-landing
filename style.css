@@ -2149,38 +2149,38 @@ ul.sc-slider-tabs {
     padding: 0;
     margin: 0;
 }
+/* sc-product-tab.active 오버라이드 - all:unset 없이 필요한 것만 */
 ul.sc-slider-tabs li {
     flex: 1;
     position: relative;
     z-index: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 0.65rem 0;
+    align-items: center;   /* 수직 중앙 */
+    padding: 0;            /* li 패딩 제거, 버튼에서 처리 */
+    margin: 0;
 }
-/* sc-product-tab.active 검정 배경 오버라이드 */
-.sc-slider-btn,
-.sc-slider-btn.active {
-    all: unset !important;
-    display: inline-flex !important;
+.sc-slider-btn {
+    display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    cursor: pointer !important;
+    padding: 0.7rem 1.4rem !important;
     font-weight: 700 !important;
     font-size: 0.95rem !important;
-    font-family: 'Pretendard', -apple-system, sans-serif !important;
-    letter-spacing: -0.02em !important;
     color: #1d1d1f !important;
     background: transparent !important;
     box-shadow: none !important;
-    border: none !important;
+    border-radius: 40px !important;
     transition: color 0.3s ease !important;
-    -webkit-tap-highlight-color: transparent !important;
-    line-height: 1 !important;
+    cursor: pointer !important;
+    line-height: normal !important;
 }
 .sc-slider-btn.active {
     color: var(--accent-a) !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
+
 
 /* 슬라이더: 배경 원 (탭 뒤에서 슬라이딩) */
 .sc-main-slider {
