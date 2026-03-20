@@ -5727,6 +5727,27 @@ ul.sc-slider-tabs li {
     color: #2563eb;
 }
 
+/* ── 장례 서비스(light) · 회원 혜택(mint) 카드: 텍스트 ÷1.2 ── */
+.trust-card--light .trust-card__tag,
+.trust-card--mint  .trust-card__tag  { font-size: 12px; }
+
+.trust-card--light .trust-card__title,
+.trust-card--mint  .trust-card__title { font-size: 18px; }
+
+.trust-card--light .trust-card__desc,
+.trust-card--mint  .trust-card__desc  { font-size: 13px; }
+
+.trust-card--light .trust-card__list li,
+.trust-card--mint  .trust-card__list li { font-size: 12.5px; }
+
+.trust-card--light .trust-card__list li::before,
+.trust-card--mint  .trust-card__list li::before { font-size: 14px; }
+
+.trust-card--light .trust-card__promise { font-size: 14px; }
+
+.trust-card--light .trust-card__footnote,
+.trust-card--mint  .trust-card__footnote { font-size: 11px; }
+
 /* SVG 일러스트: 절대 우하단 */
 .trust-card__illust {
     position: absolute;
