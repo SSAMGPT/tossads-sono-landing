@@ -5955,6 +5955,15 @@ ul.sc-slider-tabs li {
     background: #f0f0f0;
 }
 
+/* 소형 값 텍스트 (납입 방식 등) */
+.sc-price-value-sm {
+    font-size: var(--font-small);
+    font-weight: 600;
+    color: #1d1d1f;
+    text-align: right;
+    letter-spacing: -0.01em;
+}
+
 
 /* Refund Notice Box */
 .sc-refund-box {
