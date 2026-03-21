@@ -1,0 +1,25 @@
+{
+  "330X2": [
+    { "name": "LG 공기청정기", "fullName": "LG 퓨리케어 공기청정기 (AS305DWWA)", "img": "img/스마트케어330x2_lg_공기청정기_AS305DWWA.jpg" },
+    { "name": "LG 정수기",     "fullName": "LG 퓨리케어 정수기 (WD220MCB)",        "img": "img/스마트케어330x2_LG_정수기_WD220MCB.avif" },
+    { "name": "SK 정수기",     "fullName": "SK매직 스스로 직수 정수기 (WPUIAC414SPS)", "img": "img/스마트케어330x2_SK_정수기_WPUIAC414SPS.png" }
+  ],
+  "330X3": [
+    { "name": "LG 공기청정기", "fullName": "LG 퓨리케어 공기청정기 (AS355NSNA)",   "img": "img/스마트케어330x3_lg_공기청정기_AS355NSNA.jpg" },
+    { "name": "LG 냉장고",     "fullName": "LG 디오스 냉장고 (S836MRQ112)",         "img": "img/스마트케어330x3_LG_냉장고_S836MRQ112.avif" },
+    { "name": "LG TV",         "fullName": "LG 올레드 TV (OLED55B5KNA)",            "img": "img/스마트케어330x3_LG_TV_OLED55B5KNA.avif" }
+  ],
+  "330X4": [
+    { "name": "LG 건조기",   "fullName": "LG 트롬 건조기 (Z509MHHF23)",          "img": "img/스마트케어330x4_LG_건조기_Z509MHHF23.avif" },
+    { "name": "LG 냉장고",   "fullName": "LG 디오스 냉장고 (Z509MHHF23)",         "img": "img/스마트케어330x4_LG_냉장고_Z509MHHF23.avif" },
+    { "name": "LG 로봇청소기", "fullName": "LG 코드제로 로봇청소기 (B95AWBH)",    "img": "img/스마트케어330x4_LG_로봇청소기_B95AWBH.jpg" },
+    { "name": "LG 에어컨",   "fullName": "LG 휘센 에어컨 (FQ18HDWHY2)",           "img": "img/스마트케어330x4_lg_에어컨_FQ18HDWHY2.jpg" }
+  ],
+  "330X6": [
+    { "name": "바디프랜드",    "fullName": "바디프랜드 안마의자 (BFR-7211)",         "img": "img/스마트케어330x6_바디프렌드_안마의자_BFR-7211.jpg" },
+    { "name": "삼성 냉장고",   "fullName": "삼성 비스포크 냉장고 (RM80F91K1XJ)",    "img": "img/스마트케어330x6_삼성_냉장고_RM80F91K1XJ.jfif" },
+    { "name": "세라젬 V6",     "fullName": "세라젬 마스터 V6 (MB-1901)",             "img": "img/스마트케어330x6_세라젬_안마의자_CGM MB-1901.jpg" },
+    { "name": "MacBook Pro M3", "fullName": "MacBook Pro M3 (Space Black)",           "img": "img/스마트케어330x6_애플_노트북_MX2H3KHA(Space Black).png" },
+    { "name": "LG 워시타워",   "fullName": "LG 워시타워 (FX25GNR+RD20GNG)",          "img": "img/스마트케어330x6_lg_세탁기+건조기_FX25GNR+RD20GNG.jpg" }
+  ]
+}
