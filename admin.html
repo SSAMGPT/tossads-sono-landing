@@ -6,386 +6,652 @@
 <title>가전 제품 관리 — 소노 스마트케어</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&display=swap');
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  :root{
-    --blue:#0039E3;--blue-light:#e8effe;--red:#FF6242;--gray:#f5f5f7;
-    --dark:#1d1d1f;--border:#e0e0e0;--white:#fff;
-    --radius:14px;--shadow:0 4px 24px rgba(0,0,0,0.10);
-  }
-  body{font-family:'Pretendard',sans-serif;background:#f0f2f5;color:var(--dark);min-height:100vh;}
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blue:#0039E3;--blue-l:#e8effe;--red:#FF6242;--red-l:#fff0ed;
+  --dark:#1d1d1f;--gray:#f0f2f5;--border:#e0e0e0;--white:#fff;
+  --radius:14px;--shadow:0 4px 24px rgba(0,0,0,.09);
+  --green:#22c55e;--orange:#f97316;--purple:#a855f7;--sky:#0ea5e9;
+}
+body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark);min-height:100vh;}
 
-  .admin-header{
-    background:var(--white);border-bottom:1px solid var(--border);
-    padding:0 2rem;height:60px;
-    display:flex;align-items:center;justify-content:space-between;
-    position:sticky;top:0;z-index:100;
-    box-shadow:0 2px 8px rgba(0,0,0,0.06);
-  }
-  .admin-header h1{font-size:1rem;font-weight:700;color:var(--blue);}
-  .admin-header h1 span{color:var(--dark);font-weight:400;}
-  .header-right{display:flex;align-items:center;gap:12px;}
-  .status-dot{width:8px;height:8px;border-radius:50%;background:#ccc;flex-shrink:0;}
-  .status-dot.ok{background:#4caf50;}
-  .status-dot.err{background:var(--red);}
-  .status-text{font-size:0.8rem;color:#888;}
+/* ── 헤더 ── */
+.hd{
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:0 1.5rem;height:60px;
+  display:flex;align-items:center;gap:1rem;
+  position:sticky;top:0;z-index:200;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+.hd__logo{font-size:.95rem;font-weight:800;color:var(--blue);white-space:nowrap;}
+.hd__logo span{color:var(--dark);font-weight:500;}
+.hd__search{
+  flex:1;max-width:360px;
+  display:flex;align-items:center;gap:8px;
+  background:var(--gray);border:1.5px solid var(--border);
+  border-radius:100px;padding:6px 14px;
+}
+.hd__search input{
+  border:none;background:none;outline:none;
+  font-size:.9rem;font-family:inherit;width:100%;
+}
+.hd__search-icon{color:#aaa;font-size:16px;flex-shrink:0;}
+.hd__status{display:flex;align-items:center;gap:6px;margin-left:auto;white-space:nowrap;}
+.dot{width:8px;height:8px;border-radius:50%;background:#ccc;flex-shrink:0;}
+.dot.ok{background:var(--green);}
+.dot.err{background:var(--red);}
+.hd__status-txt{font-size:.8rem;color:#888;}
 
-  .plan-tabs{
-    display:flex;gap:0;background:var(--white);
-    border-bottom:2px solid var(--border);padding:0 2rem;
-  }
-  .plan-tab{
-    padding:14px 28px;cursor:pointer;font-size:0.95rem;font-weight:700;
-    border:none;background:none;color:#888;border-bottom:3px solid transparent;
-    margin-bottom:-2px;transition:all .2s;
-  }
-  .plan-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+/* ── 플랜 탭 ── */
+.tabs{
+  display:flex;background:var(--white);
+  border-bottom:2px solid var(--border);padding:0 1.5rem;
+  overflow-x:auto;gap:0;
+}
+.tab{
+  padding:13px 22px;cursor:pointer;font-size:.9rem;font-weight:700;
+  border:none;background:none;color:#999;
+  border-bottom:3px solid transparent;margin-bottom:-2px;
+  transition:all .2s;white-space:nowrap;flex-shrink:0;
+}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.tab:hover:not(.active){color:var(--dark);}
+.tab__count{
+  display:inline-block;background:#f0f2f5;color:#888;
+  font-size:.72rem;padding:1px 7px;border-radius:100px;margin-left:5px;
+}
+.tab.active .tab__count{background:var(--blue-l);color:var(--blue);}
 
-  .main-wrap{display:flex;gap:2rem;padding:2rem;max-width:1400px;margin:0 auto;}
+/* ── 메인 ── */
+.main{display:flex;gap:1.5rem;padding:1.5rem;max-width:1500px;margin:0 auto;}
 
-  .products-section{flex:1;min-width:0;}
-  .section-title{font-size:1rem;font-weight:700;margin-bottom:1rem;}
-  .section-title span{font-size:0.8rem;font-weight:400;color:#888;margin-left:8px;}
+/* ── 그리드 ── */
+.grid-sec{flex:1;min-width:0;}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.sec-hd h2{font-size:.95rem;font-weight:700;}
+.sec-hd span{font-size:.8rem;color:#888;}
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px;
+}
 
-  .product-grid{
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;
-  }
-  .prod-card{
-    background:var(--white);border-radius:var(--radius);overflow:hidden;
-    box-shadow:var(--shadow);border:2px solid transparent;
-    transition:border-color .2s,transform .2s;position:relative;
-  }
-  .prod-card:hover{border-color:var(--blue);transform:translateY(-2px);}
-  .prod-card__img{
-    width:100%;aspect-ratio:1;background:#f8f8f8;
-    display:flex;align-items:center;justify-content:center;overflow:hidden;
-  }
-  .prod-card__img img{width:100%;height:100%;object-fit:contain;padding:8px;}
-  .prod-card__body{padding:10px 12px 12px;}
-  .prod-card__name{font-size:0.85rem;font-weight:700;margin-bottom:4px;line-height:1.3;}
-  .prod-card__full{font-size:0.7rem;color:#888;line-height:1.3;}
-  .prod-card__del{
-    position:absolute;top:8px;right:8px;
-    width:24px;height:24px;border-radius:50%;
-    background:rgba(0,0,0,.55);border:none;cursor:pointer;
-    color:#fff;font-size:14px;
-    display:flex;align-items:center;justify-content:center;
-    opacity:0;transition:opacity .2s;
-  }
-  .prod-card:hover .prod-card__del{opacity:1;}
-  .prod-card__del:hover{background:var(--red);}
-  .empty-msg{grid-column:1/-1;text-align:center;padding:3rem;color:#aaa;font-size:0.9rem;}
-  .loading-msg{grid-column:1/-1;text-align:center;padding:3rem;color:#888;font-size:0.9rem;}
+/* ── 제품 카드 ── */
+.pcard{
+  background:var(--white);border-radius:12px;overflow:hidden;
+  box-shadow:var(--shadow);border:2px solid transparent;
+  transition:.2s;position:relative;cursor:pointer;
+}
+.pcard:hover{border-color:var(--blue);transform:translateY(-2px);}
+.pcard__img{
+  aspect-ratio:1;background:#f8f8f8;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.pcard__img img{width:100%;height:100%;object-fit:contain;padding:10px;}
+.pcard__body{padding:10px 11px 12px;}
+.pcard__badges{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;}
+.badge{
+  font-size:.65rem;font-weight:700;padding:2px 7px;
+  border-radius:100px;white-space:nowrap;display:inline-block;
+}
+.badge--brand{background:#E8F5E9;color:#2E7D32;}
+.badge--cat{background:var(--blue-l);color:var(--blue);}
+.pcard__name{font-size:.82rem;font-weight:700;line-height:1.3;margin-bottom:2px;}
+.pcard__full{font-size:.68rem;color:#aaa;line-height:1.3;}
+.pcard__actions{
+  position:absolute;top:7px;right:7px;
+  display:flex;gap:4px;opacity:0;transition:opacity .2s;
+}
+.pcard:hover .pcard__actions{opacity:1;}
+.act-btn{
+  width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+  background:rgba(0,0,0,.55);color:#fff;transition:background .2s;
+}
+.act-btn:hover.edit{background:var(--blue);}
+.act-btn:hover.del{background:var(--red);}
+.empty{grid-column:1/-1;text-align:center;padding:3rem;color:#bbb;font-size:.9rem;}
 
-  .add-panel{
-    width:300px;flex-shrink:0;
-    background:var(--white);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:1.5rem;
-    height:fit-content;position:sticky;top:80px;
-  }
-  .add-panel h2{font-size:1rem;font-weight:700;margin-bottom:1.25rem;}
+/* ── 추가 패널 ── */
+.panel{
+  width:290px;flex-shrink:0;
+  background:var(--white);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:1.25rem;
+  height:fit-content;position:sticky;top:76px;
+}
+.panel__title{font-size:.95rem;font-weight:700;margin-bottom:1.1rem;display:flex;align-items:center;gap:6px;}
 
-  .drop-zone{
-    border:2px dashed var(--border);border-radius:10px;
-    padding:2rem 1rem;text-align:center;cursor:pointer;
-    transition:border-color .2s,background .2s;margin-bottom:1rem;
-    position:relative;
-  }
-  .drop-zone.drag-over{border-color:var(--blue);background:var(--blue-light);}
-  .drop-zone input[type=file]{
-    position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
-  }
-  .drop-zone__icon{font-size:2rem;margin-bottom:8px;display:block;}
-  .drop-zone__text{font-size:0.85rem;color:#888;line-height:1.5;}
-  .drop-zone__text strong{color:var(--blue);}
+/* ── 드롭존 ── */
+.drop{
+  border:2px dashed var(--border);border-radius:10px;
+  padding:1.5rem .75rem;text-align:center;cursor:pointer;
+  transition:.2s;margin-bottom:.9rem;position:relative;min-height:90px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+}
+.drop.over{border-color:var(--blue);background:var(--blue-l);}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.drop__ico{font-size:1.6rem;}
+.drop__txt{font-size:.8rem;color:#888;line-height:1.4;}
+.drop__txt strong{color:var(--blue);}
+.preview{
+  width:100%;aspect-ratio:1;background:#f8f8f8;border-radius:8px;
+  overflow:hidden;margin-bottom:.8rem;display:none;
+  align-items:center;justify-content:center;
+}
+.preview.show{display:flex;}
+.preview img{max-width:100%;max-height:100%;object-fit:contain;padding:8px;}
 
-  .preview-wrap{
-    width:100%;aspect-ratio:1;background:#f8f8f8;border-radius:8px;
-    overflow:hidden;margin-bottom:1rem;display:none;
-    align-items:center;justify-content:center;
-  }
-  .preview-wrap.show{display:flex;}
-  .preview-wrap img{max-width:100%;max-height:100%;object-fit:contain;padding:8px;}
+/* ── 칩 선택 ── */
+.chips-label{font-size:.78rem;font-weight:700;margin-bottom:6px;color:#555;display:block;}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:.9rem;}
+.chip{
+  padding:5px 11px;border-radius:100px;font-size:.78rem;font-weight:600;
+  border:1.5px solid var(--border);background:var(--white);
+  cursor:pointer;transition:.15s;color:#666;font-family:inherit;
+}
+.chip.sel{border-color:var(--blue);background:var(--blue-l);color:var(--blue);}
+.chip:hover:not(.sel){border-color:#aaa;}
 
-  .form-group{margin-bottom:1rem;}
-  .form-group label{font-size:0.8rem;font-weight:700;display:block;margin-bottom:6px;color:#555;}
-  .form-group input{
-    width:100%;padding:10px 12px;border:1.5px solid var(--border);
-    border-radius:8px;font-size:0.9rem;font-family:inherit;
-    outline:none;transition:border-color .2s;
-  }
-  .form-group input:focus{border-color:var(--blue);}
-  .form-hint{font-size:0.72rem;color:#aaa;margin-top:4px;}
+/* ── 폼 ── */
+.fg{margin-bottom:.85rem;}
+.fg label{font-size:.78rem;font-weight:700;display:block;margin-bottom:5px;color:#555;}
+.fg input{
+  width:100%;padding:9px 11px;border:1.5px solid var(--border);
+  border-radius:8px;font-size:.88rem;font-family:inherit;outline:none;transition:.2s;
+}
+.fg input:focus{border-color:var(--blue);}
+.fg-hint{font-size:.7rem;color:#aaa;margin-top:3px;}
 
-  .add-btn{
-    width:100%;padding:12px;background:var(--blue);color:var(--white);
-    border:none;border-radius:10px;font-size:0.95rem;font-weight:700;
-    cursor:pointer;transition:opacity .2s;font-family:inherit;
-  }
-  .add-btn:hover{opacity:.85;}
-  .add-btn:disabled{opacity:.4;cursor:default;}
+.upstatus{font-size:.78rem;text-align:center;margin:.2rem 0 .6rem;min-height:18px;color:#888;}
+.upstatus.ok{color:var(--green);}
+.upstatus.err{color:var(--red);}
 
-  .upload-status{font-size:0.8rem;text-align:center;margin-top:8px;min-height:20px;color:#888;}
-  .upload-status.ok{color:#4caf50;}
-  .upload-status.err{color:var(--red);}
+.add-btn{
+  width:100%;padding:11px;background:var(--blue);color:var(--white);
+  border:none;border-radius:10px;font-size:.92rem;font-weight:700;
+  cursor:pointer;transition:.2s;font-family:inherit;
+}
+.add-btn:hover:not(:disabled){opacity:.85;}
+.add-btn:disabled{opacity:.4;cursor:default;}
 
-  .toast{
-    position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);
-    background:var(--dark);color:var(--white);
-    padding:12px 24px;border-radius:100px;font-size:0.9rem;font-weight:600;
-    box-shadow:0 8px 32px rgba(0,0,0,.25);opacity:0;
-    transition:opacity .3s;pointer-events:none;z-index:9999;
-  }
-  .toast.show{opacity:1;}
+/* ── 편집 모달 ── */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);
+  z-index:500;display:none;align-items:center;justify-content:center;padding:1rem;
+}
+.modal-bg.open{display:flex;}
+.modal{
+  background:var(--white);border-radius:18px;
+  width:100%;max-width:480px;max-height:90vh;overflow-y:auto;
+  padding:1.75rem;box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+.modal__hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+.modal__hd h2{font-size:1rem;font-weight:800;}
+.modal__close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:#888;padding:4px;}
+.modal__img-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.1rem;}
+.modal__thumb{
+  width:80px;height:80px;background:#f8f8f8;border-radius:10px;
+  overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+}
+.modal__thumb img{width:100%;height:100%;object-fit:contain;padding:4px;}
+.modal__img-btns{display:flex;flex-direction:column;gap:6px;}
+.img-change-btn{
+  padding:7px 14px;border-radius:8px;font-size:.82rem;font-weight:700;
+  cursor:pointer;font-family:inherit;border:1.5px solid var(--border);
+  background:var(--white);color:var(--dark);transition:.2s;position:relative;
+}
+.img-change-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.img-change-btn:hover{border-color:var(--blue);color:var(--blue);}
+.modal__save{
+  width:100%;padding:11px;background:var(--blue);color:var(--white);
+  border:none;border-radius:10px;font-size:.9rem;font-weight:700;
+  cursor:pointer;transition:.2s;margin-top:.5rem;font-family:inherit;
+}
+.modal__save:hover{opacity:.85;}
+.modal__del{
+  width:100%;padding:9px;background:none;color:var(--red);
+  border:1.5px solid var(--red);border-radius:10px;font-size:.85rem;font-weight:700;
+  cursor:pointer;transition:.2s;margin-top:.5rem;font-family:inherit;
+}
+.modal__del:hover{background:var(--red-l);}
 
-  @media(max-width:800px){
-    .main-wrap{flex-direction:column;}
-    .add-panel{width:100%;position:static;}
-  }
+/* ── 토스트 ── */
+.toast{
+  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);
+  background:var(--dark);color:var(--white);
+  padding:11px 22px;border-radius:100px;font-size:.88rem;font-weight:600;
+  box-shadow:0 8px 32px rgba(0,0,0,.25);opacity:0;
+  transition:opacity .3s;pointer-events:none;z-index:9999;white-space:nowrap;
+}
+.toast.show{opacity:1;}
+
+@media(max-width:860px){
+  .main{flex-direction:column;}
+  .panel{width:100%;position:static;}
+}
 </style>
 </head>
 <body>
 
-<header class="admin-header">
-  <h1>🛠 가전 관리 <span>소노 스마트케어</span></h1>
-  <div class="header-right">
-    <span class="status-dot" id="statusDot"></span>
-    <span class="status-text" id="statusText">연결 중...</span>
+<!-- 헤더 -->
+<header class="hd">
+  <div class="hd__logo">🛠 가전 관리 <span>소노 스마트케어</span></div>
+  <div class="hd__search">
+    <span class="hd__search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="제품명, 브랜드, 카테고리 검색...">
+  </div>
+  <div class="hd__status">
+    <span class="dot" id="dot"></span>
+    <span class="hd__status-txt" id="statusTxt">연결 중...</span>
   </div>
 </header>
 
-<nav class="plan-tabs" id="planTabs">
-  <button class="plan-tab active" data-plan="330X2">330X2</button>
-  <button class="plan-tab" data-plan="330X3">330X3</button>
-  <button class="plan-tab" data-plan="330X4">330X4</button>
-  <button class="plan-tab" data-plan="330X6">330X6</button>
+<!-- 플랜 탭 -->
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-plan="전체">전체 <span class="tab__count" id="cnt-all">0</span></button>
+  <button class="tab" data-plan="330X2">330X2 <span class="tab__count" id="cnt-330X2">0</span></button>
+  <button class="tab" data-plan="330X3">330X3 <span class="tab__count" id="cnt-330X3">0</span></button>
+  <button class="tab" data-plan="330X4">330X4 <span class="tab__count" id="cnt-330X4">0</span></button>
+  <button class="tab" data-plan="330X6">330X6 <span class="tab__count" id="cnt-330X6">0</span></button>
 </nav>
 
-<div class="main-wrap">
-  <section class="products-section">
-    <p class="section-title">등록된 가전 제품 <span id="prodCount"></span></p>
-    <div class="product-grid" id="productGrid">
-      <p class="loading-msg">⏳ 데이터 불러오는 중...</p>
+<!-- 메인 -->
+<div class="main">
+  <!-- 그리드 -->
+  <section class="grid-sec">
+    <div class="sec-hd">
+      <h2 id="gridTitle">전체 제품</h2>
+      <span id="gridSub"></span>
     </div>
+    <div class="grid" id="grid"><p class="empty">⏳ 불러오는 중...</p></div>
   </section>
 
-  <aside class="add-panel">
-    <h2>➕ 새 제품 추가</h2>
+  <!-- 추가 패널 -->
+  <aside class="panel">
+    <p class="panel__title">➕ 새 제품 추가</p>
 
-    <div class="drop-zone" id="dropZone">
+    <!-- 플랜 선택 -->
+    <span class="chips-label">플랜 선택 *</span>
+    <div class="chips" id="planChips">
+      <button class="chip" data-val="330X2">330X2</button>
+      <button class="chip" data-val="330X3">330X3</button>
+      <button class="chip" data-val="330X4">330X4</button>
+      <button class="chip" data-val="330X6">330X6</button>
+    </div>
+
+    <!-- 브랜드 선택 -->
+    <span class="chips-label">브랜드 선택 *</span>
+    <div class="chips" id="brandChips">
+      <button class="chip" data-val="LG">LG</button>
+      <button class="chip" data-val="삼성">삼성</button>
+      <button class="chip" data-val="바디프렌드">바디프렌드</button>
+      <button class="chip" data-val="다이슨">다이슨</button>
+      <button class="chip" data-val="기타">기타</button>
+    </div>
+
+    <!-- 카테고리 선택 -->
+    <span class="chips-label">카테고리 선택 *</span>
+    <div class="chips" id="catChips">
+      <button class="chip" data-val="TV">TV</button>
+      <button class="chip" data-val="냉장고">냉장고</button>
+      <button class="chip" data-val="세탁기">세탁기</button>
+      <button class="chip" data-val="안마의자">안마의자</button>
+      <button class="chip" data-val="스타일러">스타일러</button>
+      <button class="chip" data-val="에어컨">에어컨</button>
+      <button class="chip" data-val="공기청정기">공기청정기</button>
+      <button class="chip" data-val="청소기">청소기</button>
+      <button class="chip" data-val="노트북">노트북</button>
+      <button class="chip" data-val="정수기">정수기</button>
+    </div>
+
+    <!-- 이미지 업로드 -->
+    <div class="drop" id="dropZone">
       <input type="file" id="fileInput" accept="image/*">
-      <span class="drop-zone__icon">🖼️</span>
-      <p class="drop-zone__text">
-        <strong>클릭 또는 드래그앤드롭</strong><br>
-        이미지를 여기에 올려주세요<br>
-        <small style="color:#bbb">(jpg, png, avif, webp 등)</small>
-      </p>
+      <span class="drop__ico">🖼️</span>
+      <p class="drop__txt"><strong>클릭 또는 드래그앤드롭</strong><br>jpg, png, avif, webp 등</p>
     </div>
+    <div class="preview" id="preview"><img id="previewImg" src="" alt="미리보기"></div>
+    <p class="upstatus" id="upStatus"></p>
 
-    <div class="preview-wrap" id="previewWrap">
-      <img id="previewImg" src="" alt="미리보기">
+    <div class="fg">
+      <label>짧은 이름 (카드 표시용) *</label>
+      <input type="text" id="iName" placeholder="예: LG 공기청정기">
+      <p class="fg-hint">카드에 짧게 표시될 이름</p>
     </div>
-    <p class="upload-status" id="uploadStatus"></p>
-
-    <div class="form-group">
-      <label>짧은 이름 (카드에 표시)</label>
-      <input type="text" id="inputName" placeholder="예: LG 공기청정기">
-      <p class="form-hint">카드 하단에 표시될 짧은 이름</p>
-    </div>
-    <div class="form-group">
-      <label>전체 모델명 (선택사항)</label>
-      <input type="text" id="inputFullName" placeholder="예: LG 퓨리케어 공기청정기 (AS305DWWA)">
+    <div class="fg">
+      <label>전체 모델명 (선택)</label>
+      <input type="text" id="iFullName" placeholder="예: LG 퓨리케어 (AS305DWWA)">
     </div>
 
     <button class="add-btn" id="addBtn" disabled>이미지를 먼저 업로드하세요</button>
   </aside>
 </div>
 
+<!-- 편집 모달 -->
+<div class="modal-bg" id="editModal">
+  <div class="modal">
+    <div class="modal__hd">
+      <h2>✏️ 제품 수정</h2>
+      <button class="modal__close" id="modalClose">✕</button>
+    </div>
+
+    <div class="modal__img-row">
+      <div class="modal__thumb"><img id="mThumb" src="" alt=""></div>
+      <div class="modal__img-btns">
+        <button class="img-change-btn">
+          <input type="file" id="mFileInput" accept="image/*">
+          🖼 이미지 변경
+        </button>
+        <p class="upstatus" id="mUpStatus" style="margin:0;text-align:left;"></p>
+      </div>
+    </div>
+
+    <span class="chips-label">플랜 *</span>
+    <div class="chips" id="mPlanChips" style="margin-bottom:.9rem;">
+      <button class="chip" data-val="330X2">330X2</button>
+      <button class="chip" data-val="330X3">330X3</button>
+      <button class="chip" data-val="330X4">330X4</button>
+      <button class="chip" data-val="330X6">330X6</button>
+    </div>
+
+    <span class="chips-label">브랜드 *</span>
+    <div class="chips" id="mBrandChips" style="margin-bottom:.9rem;">
+      <button class="chip" data-val="LG">LG</button>
+      <button class="chip" data-val="삼성">삼성</button>
+      <button class="chip" data-val="바디프렌드">바디프렌드</button>
+      <button class="chip" data-val="다이슨">다이슨</button>
+      <button class="chip" data-val="기타">기타</button>
+    </div>
+
+    <span class="chips-label">카테고리 *</span>
+    <div class="chips" id="mCatChips" style="margin-bottom:.9rem;">
+      <button class="chip" data-val="TV">TV</button>
+      <button class="chip" data-val="냉장고">냉장고</button>
+      <button class="chip" data-val="세탁기">세탁기</button>
+      <button class="chip" data-val="안마의자">안마의자</button>
+      <button class="chip" data-val="스타일러">스타일러</button>
+      <button class="chip" data-val="에어컨">에어컨</button>
+      <button class="chip" data-val="공기청정기">공기청정기</button>
+      <button class="chip" data-val="청소기">청소기</button>
+      <button class="chip" data-val="노트북">노트북</button>
+      <button class="chip" data-val="정수기">정수기</button>
+    </div>
+
+    <div class="fg"><label>짧은 이름 *</label><input type="text" id="mName"></div>
+    <div class="fg"><label>전체 모델명</label><input type="text" id="mFullName"></div>
+
+    <button class="modal__save" id="mSave">변경사항 저장</button>
+    <button class="modal__del" id="mDel">이 제품 삭제</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Supabase 연결 설정 ─────────────────────────────────────
+// ── Supabase 연결 ─────────────────────────────────────────
 const SUPABASE_URL = 'https://rbliwhiibewihqlpmihd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_n0rEJFTn6Qu12Ui_qDO8bw_sSVJbTR-';
 const BUCKET = 'product-images';
 const TABLE  = 'products';
-
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ── 상태 ──────────────────────────────────────────────────
-let currentPlan = '330X2';
-let uploadedUrl = '';
+// ── 상태 ─────────────────────────────────────────────────
+let allProducts = [];       // 전체 캐시
+let currentPlan = '전체';
+let uploadedUrl  = '';
+let editId       = null;
+let editImgUrl   = '';
 
-// ── 연결 상태 표시 ─────────────────────────────────────────
-function setStatus(ok, msg) {
-  document.getElementById('statusDot').className = 'status-dot ' + (ok ? 'ok' : 'err');
-  document.getElementById('statusText').textContent = msg;
+// ── 연결 상태 ────────────────────────────────────────────
+function setConn(ok, msg){
+  document.getElementById('dot').className = 'dot ' + (ok?'ok':'err');
+  document.getElementById('statusTxt').textContent = msg;
 }
 
-// ── 제품 목록 로드 ─────────────────────────────────────────
-async function loadProducts() {
-  const grid = document.getElementById('productGrid');
-  grid.innerHTML = '<p class="loading-msg">⏳ 불러오는 중...</p>';
+// ── 전체 로드 ─────────────────────────────────────────────
+async function loadAll(){
+  const { data, error } = await db.from(TABLE).select('*')
+    .order('plan').order('sort_order').order('created_at');
+  if(error){ setConn(false,'연결 오류'); return; }
+  setConn(true,'Supabase 연결됨');
+  allProducts = data || [];
+  updateCounts();
+  renderGrid();
+}
 
-  const { data, error } = await db
-    .from(TABLE)
-    .select('*')
-    .eq('plan', currentPlan)
-    .order('sort_order', { ascending: true })
-    .order('created_at', { ascending: true });
+// ── 탭 카운트 업데이트 ────────────────────────────────────
+function updateCounts(){
+  const plans = ['330X2','330X3','330X4','330X6'];
+  document.getElementById('cnt-all').textContent = allProducts.length;
+  plans.forEach(p => {
+    const el = document.getElementById('cnt-'+p);
+    if(el) el.textContent = allProducts.filter(x=>x.plan===p).length;
+  });
+}
 
-  if (error) {
-    setStatus(false, '연결 오류: ' + error.message);
-    grid.innerHTML = '<p class="empty-msg">❌ 데이터를 불러올 수 없습니다.<br>' + error.message + '</p>';
+// ── 그리드 렌더 ──────────────────────────────────────────
+function renderGrid(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  let list = currentPlan === '전체'
+    ? [...allProducts]
+    : allProducts.filter(p => p.plan === currentPlan);
+  if(q) list = list.filter(p =>
+    (p.name||'').toLowerCase().includes(q) ||
+    (p.full_name||'').toLowerCase().includes(q) ||
+    (p.brand||'').toLowerCase().includes(q) ||
+    (p.category||'').toLowerCase().includes(q)
+  );
+
+  const title = currentPlan === '전체' ? '전체 제품' : currentPlan + ' 제품';
+  document.getElementById('gridTitle').textContent = title + (q ? ` — "${q}" 검색` : '');
+  document.getElementById('gridSub').textContent = `${list.length}개`;
+
+  const grid = document.getElementById('grid');
+  if(!list.length){
+    grid.innerHTML = `<p class="empty">${q ? '검색 결과가 없습니다.' : '등록된 제품이 없습니다.<br>오른쪽에서 추가해주세요.'}</p>`;
     return;
   }
-
-  setStatus(true, 'Supabase 연결됨');
-  document.getElementById('prodCount').textContent = `(${data.length}개)`;
-
-  if (!data.length) {
-    grid.innerHTML = '<p class="empty-msg">등록된 제품이 없습니다.<br>오른쪽에서 추가해주세요.</p>';
-    return;
-  }
-
-  grid.innerHTML = data.map(p => `
-    <div class="prod-card">
-      <div class="prod-card__img">
+  grid.innerHTML = list.map(p => `
+    <div class="pcard" data-id="${p.id}">
+      <div class="pcard__img">
         <img src="${p.img_url}" alt="${p.name}"
           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%2260%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2240%22>📦</text></svg>'">
       </div>
-      <div class="prod-card__body">
-        <p class="prod-card__name">${p.name}</p>
-        <p class="prod-card__full">${p.full_name || ''}</p>
+      <div class="pcard__body">
+        <div class="pcard__badges">
+          ${p.brand ? `<span class="badge badge--brand">${p.brand}</span>` : ''}
+          ${p.category ? `<span class="badge badge--cat">${p.category}</span>` : ''}
+          <span class="badge" style="background:#f3f4f6;color:#666;">${p.plan}</span>
+        </div>
+        <p class="pcard__name">${p.name}</p>
+        <p class="pcard__full">${p.full_name||''}</p>
       </div>
-      <button class="prod-card__del" onclick="deleteProduct(${p.id})" title="삭제">✕</button>
+      <div class="pcard__actions">
+        <button class="act-btn edit" onclick="openEdit(${p.id})" title="수정">✏️</button>
+        <button class="act-btn del" onclick="quickDel(${p.id})" title="삭제">✕</button>
+      </div>
     </div>
   `).join('');
 }
 
-// ── 플랜 탭 전환 ──────────────────────────────────────────
-document.getElementById('planTabs').addEventListener('click', e => {
-  const tab = e.target.closest('.plan-tab');
-  if (!tab) return;
-  document.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active'));
+// ── 탭 전환 ──────────────────────────────────────────────
+document.getElementById('tabs').addEventListener('click', e => {
+  const tab = e.target.closest('.tab');
+  if(!tab) return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   tab.classList.add('active');
   currentPlan = tab.dataset.plan;
-  loadProducts();
+  renderGrid();
 });
+
+// ── 실시간 검색 ──────────────────────────────────────────
+document.getElementById('searchInput').addEventListener('input', renderGrid);
+
+// ── 칩 선택 헬퍼 ─────────────────────────────────────────
+function setupChips(containerId, onSelect){
+  document.getElementById(containerId).addEventListener('click', e => {
+    const chip = e.target.closest('.chip');
+    if(!chip) return;
+    chip.closest('.chips').querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+    chip.classList.add('sel');
+    if(onSelect) onSelect(chip.dataset.val);
+  });
+}
+function getChipVal(containerId){
+  const sel = document.querySelector(`#${containerId} .chip.sel`);
+  return sel ? sel.dataset.val : '';
+}
+function setChipVal(containerId, val){
+  document.querySelectorAll(`#${containerId} .chip`).forEach(c => {
+    c.classList.toggle('sel', c.dataset.val === val);
+  });
+}
+
+setupChips('planChips');
+setupChips('brandChips');
+setupChips('catChips');
 
 // ── 이미지 업로드 ─────────────────────────────────────────
-const dropZone   = document.getElementById('dropZone');
-const fileInput  = document.getElementById('fileInput');
-const statusEl   = document.getElementById('uploadStatus');
-const previewWrap = document.getElementById('previewWrap');
-const previewImg  = document.getElementById('previewImg');
-const addBtn      = document.getElementById('addBtn');
+async function uploadImg(file, statusEl, onDone){
+  if(!file || !file.type.startsWith('image/')) return;
+  statusEl.textContent='⏫ 업로드 중...'; statusEl.className='upstatus';
+  const ext  = file.name.split('.').pop();
+  const name = `${Date.now()}.${ext}`;
+  const { error } = await db.storage.from(BUCKET).upload(name, file, {upsert:false});
+  if(error){ statusEl.textContent='❌ 실패: '+error.message; statusEl.className='upstatus err'; return; }
+  const { data } = db.storage.from(BUCKET).getPublicUrl(name);
+  statusEl.textContent='✅ 완료'; statusEl.className='upstatus ok';
+  onDone(data.publicUrl);
+}
 
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-dropZone.addEventListener('drop', e => {
-  e.preventDefault(); dropZone.classList.remove('drag-over');
-  if (e.dataTransfer.files[0]) uploadFile(e.dataTransfer.files[0]);
-});
-fileInput.addEventListener('change', e => { if (e.target.files[0]) uploadFile(e.target.files[0]); });
+// ── 추가 패널 드롭존 ─────────────────────────────────────
+const dz = document.getElementById('dropZone');
+const fi = document.getElementById('fileInput');
+dz.addEventListener('dragover', e=>{ e.preventDefault(); dz.classList.add('over'); });
+dz.addEventListener('dragleave', ()=>dz.classList.remove('over'));
+dz.addEventListener('drop', e=>{ e.preventDefault(); dz.classList.remove('over'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+fi.addEventListener('change', e=>{ if(e.target.files[0]) handleFile(e.target.files[0]); });
 
-async function uploadFile(file) {
-  if (!file.type.startsWith('image/')) { setUploadStatus('이미지 파일만 가능합니다.', 'err'); return; }
-  setUploadStatus('⏫ 업로드 중...', '');
-  addBtn.disabled = true;
-
-  // 로컬 미리보기
+function handleFile(file){
   const reader = new FileReader();
-  reader.onload = e => { previewImg.src = e.target.result; previewWrap.classList.add('show'); };
+  reader.onload = e=>{ document.getElementById('previewImg').src=e.target.result; document.getElementById('preview').classList.add('show'); };
   reader.readAsDataURL(file);
-
-  // 파일명: 타임스탬프 + 원본명 (중복 방지)
-  const ext = file.name.split('.').pop();
-  const safeName = `${Date.now()}.${ext}`;
-
-  const { data, error } = await db.storage
-    .from(BUCKET)
-    .upload(safeName, file, { upsert: false });
-
-  if (error) {
-    setUploadStatus('❌ 업로드 실패: ' + error.message, 'err');
-    return;
-  }
-
-  // 공개 URL 생성
-  const { data: urlData } = db.storage.from(BUCKET).getPublicUrl(safeName);
-  uploadedUrl = urlData.publicUrl;
-
-  setUploadStatus('✅ 업로드 완료!', 'ok');
-  addBtn.disabled = false;
-  addBtn.textContent = '제품 추가하기';
-}
-
-function setUploadStatus(msg, type) {
-  statusEl.textContent = msg;
-  statusEl.className = 'upload-status ' + type;
-}
-
-// ── 제품 추가 ────────────────────────────────────────────
-addBtn.addEventListener('click', async () => {
-  const name     = document.getElementById('inputName').value.trim();
-  const fullName = document.getElementById('inputFullName').value.trim();
-  if (!name) { showToast('❗ 짧은 이름을 입력하세요.'); return; }
-  if (!uploadedUrl) { showToast('❗ 이미지를 먼저 업로드하세요.'); return; }
-
-  addBtn.disabled = true;
-  addBtn.textContent = '저장 중...';
-
-  const { error } = await db.from(TABLE).insert({
-    plan: currentPlan,
-    name,
-    full_name: fullName || name,
-    img_url: uploadedUrl,
-    sort_order: 0
+  uploadImg(file, document.getElementById('upStatus'), url=>{
+    uploadedUrl = url;
+    const btn = document.getElementById('addBtn');
+    btn.disabled = false; btn.textContent = '제품 추가하기';
   });
+}
 
-  if (error) {
-    showToast('❌ 저장 실패: ' + error.message);
-    addBtn.disabled = false;
-    addBtn.textContent = '제품 추가하기';
-    return;
-  }
-
-  // 폼 초기화
-  document.getElementById('inputName').value = '';
-  document.getElementById('inputFullName').value = '';
-  uploadedUrl = '';
-  previewWrap.classList.remove('show');
-  previewImg.src = '';
-  addBtn.disabled = true;
-  addBtn.textContent = '이미지를 먼저 업로드하세요';
-  setUploadStatus('', '');
-  fileInput.value = '';
-
+// ── 제품 추가 ─────────────────────────────────────────────
+document.getElementById('addBtn').addEventListener('click', async ()=>{
+  const plan = getChipVal('planChips');
+  const brand= getChipVal('brandChips');
+  const cat  = getChipVal('catChips');
+  const name = document.getElementById('iName').value.trim();
+  const full = document.getElementById('iFullName').value.trim();
+  if(!plan){showToast('❗ 플랜을 선택하세요'); return;}
+  if(!brand){showToast('❗ 브랜드를 선택하세요'); return;}
+  if(!cat){showToast('❗ 카테고리를 선택하세요'); return;}
+  if(!name){showToast('❗ 짧은 이름을 입력하세요'); return;}
+  if(!uploadedUrl){showToast('❗ 이미지를 업로드하세요'); return;}
+  const btn = document.getElementById('addBtn');
+  btn.disabled=true; btn.textContent='저장 중...';
+  const { error } = await db.from(TABLE).insert({plan,brand,category:cat,name,full_name:full||name,img_url:uploadedUrl});
+  if(error){ showToast('❌ 저장 실패: '+error.message); btn.disabled=false; btn.textContent='제품 추가하기'; return; }
+  // 초기화
+  document.getElementById('iName').value='';
+  document.getElementById('iFullName').value='';
+  document.getElementById('preview').classList.remove('show');
+  document.getElementById('previewImg').src='';
+  document.getElementById('upStatus').textContent='';
+  document.getElementById('upStatus').className='upstatus';
+  document.getElementById('fileInput').value='';
+  uploadedUrl='';
+  btn.disabled=true; btn.textContent='이미지를 먼저 업로드하세요';
   showToast('✅ 제품이 추가됐습니다!');
-  loadProducts();
+  await loadAll();
 });
 
-// ── 제품 삭제 ────────────────────────────────────────────
-window.deleteProduct = async function(id) {
-  if (!confirm('이 제품을 삭제할까요?')) return;
-  const { error } = await db.from(TABLE).delete().eq('id', id);
-  if (error) { showToast('❌ 삭제 실패: ' + error.message); return; }
+// ── 빠른 삭제 ─────────────────────────────────────────────
+window.quickDel = async function(id){
+  if(!confirm('이 제품을 삭제할까요?')) return;
+  const { error } = await db.from(TABLE).delete().eq('id',id);
+  if(error){ showToast('❌ 삭제 실패'); return; }
   showToast('🗑 삭제됐습니다.');
-  loadProducts();
+  await loadAll();
 };
 
+// ── 편집 모달 열기 ────────────────────────────────────────
+window.openEdit = function(id){
+  const p = allProducts.find(x=>x.id===id);
+  if(!p) return;
+  editId = id; editImgUrl = p.img_url;
+  document.getElementById('mThumb').src = p.img_url;
+  document.getElementById('mName').value = p.name||'';
+  document.getElementById('mFullName').value = p.full_name||'';
+  setChipVal('mPlanChips',  p.plan||'');
+  setChipVal('mBrandChips', p.brand||'기타');
+  setChipVal('mCatChips',   p.category||'');
+  document.getElementById('mUpStatus').textContent='';
+  document.getElementById('editModal').classList.add('open');
+};
+
+// 모달 닫기
+document.getElementById('modalClose').addEventListener('click', ()=>document.getElementById('editModal').classList.remove('open'));
+document.getElementById('editModal').addEventListener('click', e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
+
+// 모달 내 이미지 변경
+document.getElementById('mFileInput').addEventListener('change', e=>{
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev=>document.getElementById('mThumb').src = ev.target.result;
+  reader.readAsDataURL(file);
+  uploadImg(file, document.getElementById('mUpStatus'), url=>{ editImgUrl=url; });
+});
+
+// 수정 저장
+document.getElementById('mSave').addEventListener('click', async ()=>{
+  const plan = getChipVal('mPlanChips');
+  const brand= getChipVal('mBrandChips');
+  const cat  = getChipVal('mCatChips');
+  const name = document.getElementById('mName').value.trim();
+  const full = document.getElementById('mFullName').value.trim();
+  if(!plan||!name){ showToast('❗ 필수 항목을 입력하세요'); return; }
+  const btn = document.getElementById('mSave');
+  btn.textContent='저장 중...';
+  const { error } = await db.from(TABLE).update({
+    plan, brand, category:cat, name, full_name:full||name, img_url:editImgUrl
+  }).eq('id', editId);
+  btn.textContent='변경사항 저장';
+  if(error){ showToast('❌ 수정 실패: '+error.message); return; }
+  document.getElementById('editModal').classList.remove('open');
+  showToast('✅ 수정됐습니다!');
+  await loadAll();
+});
+
+// 모달에서 삭제
+document.getElementById('mDel').addEventListener('click', async ()=>{
+  if(!confirm('이 제품을 삭제할까요?')) return;
+  const { error } = await db.from(TABLE).delete().eq('id',editId);
+  if(error){ showToast('❌ 삭제 실패'); return; }
+  document.getElementById('editModal').classList.remove('open');
+  showToast('🗑 삭제됐습니다.');
+  await loadAll();
+});
+
 // ── 토스트 ───────────────────────────────────────────────
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
 }
 
-// ── 초기 로드 ────────────────────────────────────────────
-loadProducts();
+// ── 시작 ─────────────────────────────────────────────────
+setupChips('mPlanChips');
+setupChips('mBrandChips');
+setupChips('mCatChips');
+loadAll();
 </script>
 </body>
 </html>
