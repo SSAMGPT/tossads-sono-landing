@@ -2233,6 +2233,7 @@ ul.sc-slider-tabs li {
     max-width: 100%;
 }
 
+
 @media (max-width: 768px) {
     .sc-product-tabs-nav,
     .benefits__tabs-nav {
@@ -5151,6 +5152,170 @@ ul.sc-slider-tabs li {
     padding: 0;
 }
 
+.sc-brand-filter {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin: 0 auto 1rem;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+/* ── 카테고리 필터 ── */
+.sc-cat-filter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto 1rem;
+    background-color: #f5f5f7;
+    border-radius: 10px;
+    padding: 6px;
+    gap: 2px;
+}
+
+.sc-ct-btn {
+    background-color: transparent;
+    border: none;
+    padding: 8px 12px;
+    color: #1d1d1f;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: 'Pretendard', sans-serif;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.sc-ct-btn:not(:active):hover,
+.sc-ct-btn:focus {
+    background-color: #e8e8ed;
+    outline: none;
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+.sc-ct-btn:focus,
+.sc-ct-btn:active {
+    background-color: #e0e0e5;
+    outline: none;
+}
+
+.sc-ct-btn.active {
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    font-weight: 700;
+}
+
+/* 호버 시 비선택 형제들 blur */
+.sc-cat-filter:hover > .sc-ct-btn:not(:hover) {
+    transition: 300ms;
+    filter: blur(1px);
+    transform: scale(0.95, 0.95);
+}
+
+
+.sc-bf-btn {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    color: #1d1d1f;
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Pretendard', sans-serif;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    transition: background-color 0.2s, filter 0.3s, transform 0.3s;
+}
+
+.sc-bf-btn:not(:active):hover,
+.sc-bf-btn:focus {
+    background-color: #ebebeb;
+    outline: none;
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+.sc-bf-btn:focus,
+.sc-bf-btn:active {
+    background-color: #e0e0e0;
+    outline: none;
+}
+
+.sc-bf-btn.active {
+    background-color: #e0e0e0;
+    font-weight: 700;
+}
+
+/* 호버 시 비선택 형제들 blur (원본 코드 그대로) */
+.sc-brand-filter:hover > .sc-bf-btn:not(:hover) {
+    transition: 300ms;
+    filter: blur(1px);
+    transform: scale(0.95, 0.95);
+}
+
+/* 카드 필터 숨김 */
+.sc-prod-card.bf-hidden {
+    display: none !important;
+}
+
+/* 빈 결과 안내 */
+.sc-empty-msg {
+    display: none;
+    width: 100%;
+    padding: 2.5rem 1rem;
+    text-align: center;
+    color: #aaa;
+    font-size: 0.92rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+.sc-empty-msg.visible {
+    display: block;
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+    .sc-brand-filter {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .sc-brand-filter::-webkit-scrollbar { display: none; }
+    .sc-bf-btn {
+        padding: 8px;
+        font-size: 0.78rem;
+    }
+
+    /* 카테고리 필터: 모바일에서 두 줄 */
+    .sc-cat-filter {
+        flex-wrap: wrap;
+        max-width: 340px;
+        justify-content: center;
+    }
+    .sc-ct-btn {
+        padding: 7px 10px;
+        font-size: 0.76rem;
+    }
+}
+
+
+
 /* ─── sc-hero-card (스마트케어 인트로 - 참고 이미지 스타일) ─── */
 
 /* 메인 카드: 밝은 블루 배경, 상대 위치 (캐릭터 절대 배치용) */
@@ -6109,7 +6274,6 @@ ul.sc-slider-tabs li {
     margin-top: 1.5rem;
     text-align: center;
     animation: fadeInTab 0.4s ease-out;
-    box-shadow: 0 8px 32px rgba(0, 122, 255, 0.3);
 }
 
 .sc-refund-title {

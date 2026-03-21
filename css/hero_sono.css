@@ -319,7 +319,9 @@ body:has(.crisp-header.is--loading) > *:not(.crisp-header):not(script) {
   display: inline-block !important;
   margin-right: 0.25em;
 }
-.crisp-header__h1 .split-word:last-child {
+/* 줄 끝 단어 (전역 마지막 + br 직전) trailing margin 제거 */
+.crisp-header__h1 .split-word:last-child,
+.crisp-header__h1 .split-word:has(+ br) {
   margin-right: 0;
 }
 .crisp-header__h1 .split-char {
