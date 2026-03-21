@@ -6656,7 +6656,7 @@ body {
     transition: bottom 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s;
 }
 .floating-cta.active {
-    bottom: 1.5rem;
+    bottom: 0;
     opacity: 1;
     pointer-events: auto;
 }
@@ -6746,6 +6746,14 @@ body {
 }
 .f-cta-cancel:hover { color: #374151; }
 
+/* 취소+신청 버튼 묶음 */
+.f-cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
 /* 신청 버튼 */
 .f-cta-action-btn {
     display: flex;
@@ -6770,12 +6778,13 @@ body {
     transform: translateY(-1px);
 }
 
-/* 데스크탑: 전체 너비 바 형태 (플로팅 버튼 완전 가림) */
+/* 데스크탑: 전체 너비 탭바 형태 */
 @media (min-width: 641px) {
     .floating-cta {
         flex-direction: row;
         align-items: center;
-        padding: 0.85rem clamp(1.5rem, 4vw, 3rem);
+        padding: 0.75rem clamp(1.5rem, 4vw, 3rem);
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
         border-radius: 0;
         border-top: 1px solid rgba(0,0,0,0.07);
         box-shadow: 0 -4px 24px rgba(0,0,0,0.10);
@@ -6783,8 +6792,12 @@ body {
     .f-cta-product-row {
         flex: 1;
         min-width: 0;
-        max-width: 640px;
-        margin: 0 auto;
+    }
+    .f-cta-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-shrink: 0;
     }
     .f-cta-action-btn {
         padding: 0.7rem 1.5rem;
