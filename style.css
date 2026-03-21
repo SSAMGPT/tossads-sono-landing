@@ -6639,13 +6639,13 @@ body {
 .floating-cta {
     position: fixed;
     bottom: -200px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 3rem);
-    max-width: 720px;
+    left: 0;
+    transform: none;
+    width: 100%;
+    max-width: none;
     background: #fff;
     border-radius: 20px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.06);
+    box-shadow: 0 -4px 32px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
     z-index: 9999;
     padding: 1rem 1.25rem;
     display: flex;
@@ -6770,16 +6770,21 @@ body {
     transform: translateY(-1px);
 }
 
-/* 데스크탑: 가로 레이아웃 (상품 좌 / 버튼 우) */
+/* 데스크탑: 전체 너비 바 형태 (플로팅 버튼 완전 가림) */
 @media (min-width: 641px) {
     .floating-cta {
         flex-direction: row;
         align-items: center;
-        padding: 0.85rem 1.25rem;
+        padding: 0.85rem clamp(1.5rem, 4vw, 3rem);
+        border-radius: 0;
+        border-top: 1px solid rgba(0,0,0,0.07);
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.10);
     }
     .f-cta-product-row {
         flex: 1;
         min-width: 0;
+        max-width: 640px;
+        margin: 0 auto;
     }
     .f-cta-action-btn {
         padding: 0.7rem 1.5rem;
