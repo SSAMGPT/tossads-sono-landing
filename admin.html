@@ -228,6 +228,95 @@ body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark
   .main{flex-direction:column;}
   .panel{width:100%;position:static;}
 }
+
+/* ── 옵션 관리 버튼 ── */
+.opts-btn {
+  margin-left: auto;
+  padding: 7px 14px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: opacity .2s;
+}
+.opts-btn:hover { opacity: .85; }
+
+/* ── 옵션 섹션 ── */
+.opts-section {
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.opts-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .75rem;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.opts-hd > span { font-size: .88rem; font-weight: 700; }
+.opts-add-row { display: flex; gap: 6px; flex: 1; justify-content: flex-end; }
+.opts-input {
+  padding: 6px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: .84rem;
+  font-family: inherit;
+  outline: none;
+  width: 130px;
+  transition: border-color .2s;
+}
+.opts-input:focus { border-color: var(--blue); }
+.opts-add-btn {
+  padding: 6px 12px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity .2s;
+  white-space: nowrap;
+}
+.opts-add-btn:hover { opacity: .85; }
+
+/* ── 옵션 아이템 리스트 ── */
+.opts-list { display: flex; flex-wrap: wrap; gap: 6px; min-height: 28px; }
+.opt-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--gray);
+  border-radius: 100px;
+  padding: 4px 10px 4px 12px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+.opt-del {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,.12);
+  color: #555;
+  cursor: pointer;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+  flex-shrink: 0;
+}
+.opt-del:hover { background: var(--red); color: #fff; }
 </style>
 </head>
 <body>
@@ -243,6 +332,7 @@ body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark
     <span class="dot" id="dot"></span>
     <span class="hd__status-txt" id="statusTxt">연결 중...</span>
   </div>
+  <button class="opts-btn" id="optsBtn">⚙️ 옵션 관리</button>
 </header>
 
 <!-- 플랜 탭 -->
@@ -271,37 +361,15 @@ body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark
 
     <!-- 플랜 선택 -->
     <span class="chips-label">플랜 선택 *</span>
-    <div class="chips" id="planChips">
-      <button class="chip" data-val="330X2">330X2</button>
-      <button class="chip" data-val="330X3">330X3</button>
-      <button class="chip" data-val="330X4">330X4</button>
-      <button class="chip" data-val="330X6">330X6</button>
-    </div>
+    <div class="chips" id="planChips"></div>
 
     <!-- 브랜드 선택 -->
     <span class="chips-label">브랜드 선택 *</span>
-    <div class="chips" id="brandChips">
-      <button class="chip" data-val="LG">LG</button>
-      <button class="chip" data-val="삼성">삼성</button>
-      <button class="chip" data-val="바디프렌드">바디프렌드</button>
-      <button class="chip" data-val="다이슨">다이슨</button>
-      <button class="chip" data-val="기타">기타</button>
-    </div>
+    <div class="chips" id="brandChips"></div>
 
     <!-- 카테고리 선택 -->
     <span class="chips-label">카테고리 선택 *</span>
-    <div class="chips" id="catChips">
-      <button class="chip" data-val="TV">TV</button>
-      <button class="chip" data-val="냉장고">냉장고</button>
-      <button class="chip" data-val="세탁기">세탁기</button>
-      <button class="chip" data-val="안마의자">안마의자</button>
-      <button class="chip" data-val="스타일러">스타일러</button>
-      <button class="chip" data-val="에어컨">에어컨</button>
-      <button class="chip" data-val="공기청정기">공기청정기</button>
-      <button class="chip" data-val="청소기">청소기</button>
-      <button class="chip" data-val="노트북">노트북</button>
-      <button class="chip" data-val="정수기">정수기</button>
-    </div>
+    <div class="chips" id="catChips"></div>
 
     <!-- 이미지 업로드 -->
     <div class="drop" id="dropZone">
@@ -346,35 +414,13 @@ body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark
     </div>
 
     <span class="chips-label">플랜 *</span>
-    <div class="chips" id="mPlanChips" style="margin-bottom:.9rem;">
-      <button class="chip" data-val="330X2">330X2</button>
-      <button class="chip" data-val="330X3">330X3</button>
-      <button class="chip" data-val="330X4">330X4</button>
-      <button class="chip" data-val="330X6">330X6</button>
-    </div>
+    <div class="chips" id="mPlanChips" style="margin-bottom:.9rem;"></div>
 
     <span class="chips-label">브랜드 *</span>
-    <div class="chips" id="mBrandChips" style="margin-bottom:.9rem;">
-      <button class="chip" data-val="LG">LG</button>
-      <button class="chip" data-val="삼성">삼성</button>
-      <button class="chip" data-val="바디프렌드">바디프렌드</button>
-      <button class="chip" data-val="다이슨">다이슨</button>
-      <button class="chip" data-val="기타">기타</button>
-    </div>
+    <div class="chips" id="mBrandChips" style="margin-bottom:.9rem;"></div>
 
     <span class="chips-label">카테고리 *</span>
-    <div class="chips" id="mCatChips" style="margin-bottom:.9rem;">
-      <button class="chip" data-val="TV">TV</button>
-      <button class="chip" data-val="냉장고">냉장고</button>
-      <button class="chip" data-val="세탁기">세탁기</button>
-      <button class="chip" data-val="안마의자">안마의자</button>
-      <button class="chip" data-val="스타일러">스타일러</button>
-      <button class="chip" data-val="에어컨">에어컨</button>
-      <button class="chip" data-val="공기청정기">공기청정기</button>
-      <button class="chip" data-val="청소기">청소기</button>
-      <button class="chip" data-val="노트북">노트북</button>
-      <button class="chip" data-val="정수기">정수기</button>
-    </div>
+    <div class="chips" id="mCatChips" style="margin-bottom:.9rem;"></div>
 
     <div class="fg"><label>짧은 이름 *</label><input type="text" id="mName"></div>
     <div class="fg"><label>전체 모델명</label><input type="text" id="mFullName"></div>
@@ -386,68 +432,260 @@ body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark
 
 <div class="toast" id="toast"></div>
 
+<!-- ── 옵션 관리 모달 ── -->
+<div class="modal-bg" id="optsModal">
+  <div class="modal" style="max-width:600px;">
+    <div class="modal__hd">
+      <h2>⚙️ 옵션 관리</h2>
+      <button class="modal__close" id="optsClose">✕</button>
+    </div>
+    <p style="font-size:.8rem;color:#888;margin-bottom:1.2rem;">플랜·브랜드·카테고리를 추가/삭제하면 어드민 칩과 랜딩 필터에 실시간 반영됩니다.</p>
+
+    <div class="opts-section">
+      <div class="opts-hd"><span>📋 플랜</span>
+        <div class="opts-add-row">
+          <input class="opts-input" id="newPlanInput" placeholder="예: 330X8">
+          <button class="opts-add-btn" id="addPlanBtn">+ 추가</button>
+        </div>
+      </div>
+      <div class="opts-list" id="optsList-plan"></div>
+    </div>
+
+    <div class="opts-section">
+      <div class="opts-hd"><span>🏷 브랜드</span>
+        <div class="opts-add-row">
+          <input class="opts-input" id="newBrandInput" placeholder="예: 다이슨">
+          <button class="opts-add-btn" id="addBrandBtn">+ 추가</button>
+        </div>
+      </div>
+      <div class="opts-list" id="optsList-brand"></div>
+    </div>
+
+    <div class="opts-section">
+      <div class="opts-hd"><span>📦 카테고리</span>
+        <div class="opts-add-row">
+          <input class="opts-input" id="newCategoryInput" placeholder="예: 식기세척기">
+          <button class="opts-add-btn" id="addCategoryBtn">+ 추가</button>
+        </div>
+      </div>
+      <div class="opts-list" id="optsList-category"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 삭제 확인 모달 ── -->
+<div class="modal-bg" id="confirmModal">
+  <div class="modal" style="max-width:360px;">
+    <div class="modal__hd">
+      <h2>⚠️ 삭제 확인</h2>
+      <button class="modal__close" id="confirmClose">✕</button>
+    </div>
+    <p id="confirmMsg" style="margin-bottom:1.5rem;font-size:.92rem;line-height:1.6;color:#374151;"></p>
+    <button class="modal__save" id="confirmOk" style="background:var(--red);margin-bottom:.5rem;">네, 삭제합니다</button>
+    <button class="modal__del" id="confirmCancel" style="color:#666;border-color:#ddd;">취소</button>
+  </div>
+</div>
+
+
 <script>
 // ── Supabase 연결 ─────────────────────────────────────────
 const SUPABASE_URL = 'https://rbliwhiibewihqlpmihd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_n0rEJFTn6Qu12Ui_qDO8bw_sSVJbTR-';
 const BUCKET = 'product-images';
 const TABLE  = 'products';
+const OPTS   = 'options';
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ── 상태 ─────────────────────────────────────────────────
-let allProducts = [];       // 전체 캐시
+let allProducts = [];
+let allOptions  = { plan: [], brand: [], category: [] };
 let currentPlan = '전체';
-let uploadedUrl  = '';
-let editId       = null;
-let editImgUrl   = '';
+let uploadedUrl = '';
+let editId      = null;
+let editImgUrl  = '';
 
 // ── 연결 상태 ────────────────────────────────────────────
-function setConn(ok, msg){
-  document.getElementById('dot').className = 'dot ' + (ok?'ok':'err');
+function setConn(ok, msg) {
+  document.getElementById('dot').className = 'dot ' + (ok ? 'ok' : 'err');
   document.getElementById('statusTxt').textContent = msg;
 }
 
-// ── 전체 로드 ─────────────────────────────────────────────
-async function loadAll(){
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  OPTIONS  (플랜 / 브랜드 / 카테고리)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+// options 테이블 로드
+async function loadOptions() {
+  const { data, error } = await db.from(OPTS).select('*').order('type').order('sort_order').order('label');
+  if (error) { console.warn('options 테이블 없음, 하드코딩 사용:', error.message); useHardcoded(); return; }
+  allOptions.plan     = data.filter(r => r.type === 'plan');
+  allOptions.brand    = data.filter(r => r.type === 'brand');
+  allOptions.category = data.filter(r => r.type === 'category');
+  renderAllChips();
+  renderOptsList();
+}
+
+// 하드코딩 폴백 (options 테이블 없을 때)
+function useHardcoded() {
+  const mk = (t, vals) => vals.map(v => ({ type: t, label: v, value: v }));
+  allOptions.plan     = mk('plan', ['330X2','330X3','330X4','330X6']);
+  allOptions.brand    = mk('brand', ['전체','LG','삼성','바디프렌드','다이슨','기타']);
+  allOptions.category = mk('category', ['전체','TV','냉장고','세탁기','안마의자','스타일러','에어컨','공기청정기','청소기','노트북','정수기']);
+  renderAllChips();
+}
+
+// 칩 렌더링 (추가 패널 + 편집 모달)
+function renderAllChips() {
+  renderChipGroup('planChips',   allOptions.plan.filter(o => o.value !== '전체'));
+  renderChipGroup('mPlanChips',  allOptions.plan.filter(o => o.value !== '전체'));
+  renderChipGroup('brandChips',  allOptions.brand.filter(o => o.value !== '전체'));
+  renderChipGroup('mBrandChips', allOptions.brand.filter(o => o.value !== '전체'));
+  renderChipGroup('catChips',    allOptions.category.filter(o => o.value !== '전체'));
+  renderChipGroup('mCatChips',   allOptions.category.filter(o => o.value !== '전체'));
+  // 플랜 탭도 업데이트
+  renderPlanTabs();
+  setupChips('planChips');
+  setupChips('brandChips');
+  setupChips('catChips');
+  setupChips('mPlanChips');
+  setupChips('mBrandChips');
+  setupChips('mCatChips');
+}
+
+function renderChipGroup(containerId, opts) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = opts.map(o => `<button class="chip" data-val="${o.value}">${o.label}</button>`).join('');
+}
+
+function renderPlanTabs() {
+  const tabsEl = document.getElementById('tabs');
+  const plans = allOptions.plan;
+  tabsEl.innerHTML = `<button class="tab active" data-plan="전체">전체 <span class="tab__count" id="cnt-all">0</span></button>` +
+    plans.map(p => `<button class="tab" data-plan="${p.value}">${p.label} <span class="tab__count" id="cnt-${p.value}">0</span></button>`).join('');
+  document.getElementById('tabs').addEventListener('click', e => {
+    const tab = e.target.closest('.tab');
+    if (!tab) return;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentPlan = tab.dataset.plan;
+    renderGrid();
+  });
+  updateCounts();
+}
+
+// 옵션 관리 모달 리스트 렌더링
+function renderOptsList() {
+  ['plan','brand','category'].forEach(type => {
+    const el = document.getElementById(`optsList-${type}`);
+    if (!el) return;
+    const items = allOptions[type];
+    if (!items.length) { el.innerHTML = '<span style="color:#bbb;font-size:.8rem;">항목 없음</span>'; return; }
+    el.innerHTML = items.map(o => `
+      <span class="opt-item">
+        ${o.label}
+        <button class="opt-del" title="삭제" onclick="confirmDeleteOption(${o.id},'${type}','${o.label}')">✕</button>
+      </span>
+    `).join('');
+  });
+}
+
+// 옵션 추가
+window.addOption = async function(type) {
+  const inputId = { plan:'newPlanInput', brand:'newBrandInput', category:'newCategoryInput' }[type];
+  const input = document.getElementById(inputId);
+  const val = input.value.trim();
+  if (!val) { showToast('❗ 값을 입력하세요'); return; }
+
+  const { error } = await db.from(OPTS).insert({ type, label: val, value: val, sort_order: 99 });
+  if (error) { showToast('❌ 추가 실패: ' + error.message); return; }
+  input.value = '';
+  showToast(`✅ "${val}" 추가됐습니다!`);
+  await loadOptions();
+};
+
+// 옵션 삭제 재확인
+window.confirmDeleteOption = function(id, type, label) {
+  const typeKo = { plan:'플랜', brand:'브랜드', category:'카테고리' }[type];
+  document.getElementById('confirmMsg').innerHTML =
+    `<strong>"${label}"</strong> ${typeKo}을 삭제하시겠습니까?<br><span style="color:var(--red);font-size:.82rem;">⚠️ 이 옵션이 적용된 제품의 ${typeKo} 값은 유지되지만, 필터 목록에서 사라집니다.</span>`;
+
+  const modal = document.getElementById('confirmModal');
+  modal.classList.add('open');
+
+  const okBtn = document.getElementById('confirmOk');
+  const newOk = okBtn.cloneNode(true); // 이전 이벤트 제거
+  okBtn.parentNode.replaceChild(newOk, okBtn);
+  newOk.addEventListener('click', async () => {
+    modal.classList.remove('open');
+    const { error } = await db.from(OPTS).delete().eq('id', id);
+    if (error) { showToast('❌ 삭제 실패: ' + error.message); return; }
+    showToast(`🗑 "${label}" 삭제됐습니다.`);
+    await loadOptions();
+  });
+};
+
+// 옵션 관리 버튼 이벤트
+document.getElementById('optsBtn').addEventListener('click', () => {
+  renderOptsList();
+  document.getElementById('optsModal').classList.add('open');
+});
+document.getElementById('optsClose').addEventListener('click', () => document.getElementById('optsModal').classList.remove('open'));
+document.getElementById('optsModal').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+
+// 확인 모달 취소
+document.getElementById('confirmClose').addEventListener('click', () => document.getElementById('confirmModal').classList.remove('open'));
+document.getElementById('confirmCancel').addEventListener('click', () => document.getElementById('confirmModal').classList.remove('open'));
+
+// 추가 버튼 이벤트
+document.getElementById('addPlanBtn').addEventListener('click', () => addOption('plan'));
+document.getElementById('addBrandBtn').addEventListener('click', () => addOption('brand'));
+document.getElementById('addCategoryBtn').addEventListener('click', () => addOption('category'));
+
+// Enter 키로도 추가
+['newPlanInput','newBrandInput','newCategoryInput'].forEach(id => {
+  const el = document.getElementById(id);
+  const type = id.replace('new','').replace('Input','').toLowerCase();
+  if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') addOption(type.replace('plan','plan').replace('brand','brand').replace('category','category')); });
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  PRODUCTS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+async function loadAll() {
   const { data, error } = await db.from(TABLE).select('*')
     .order('plan').order('sort_order').order('created_at');
-  if(error){ setConn(false,'연결 오류'); return; }
-  setConn(true,'Supabase 연결됨');
+  if (error) { setConn(false, '연결 오류'); return; }
+  setConn(true, 'Supabase 연결됨');
   allProducts = data || [];
   updateCounts();
   renderGrid();
 }
 
-// ── 탭 카운트 업데이트 ────────────────────────────────────
-function updateCounts(){
-  const plans = ['330X2','330X3','330X4','330X6'];
+function updateCounts() {
   document.getElementById('cnt-all').textContent = allProducts.length;
-  plans.forEach(p => {
-    const el = document.getElementById('cnt-'+p);
-    if(el) el.textContent = allProducts.filter(x=>x.plan===p).length;
+  allOptions.plan.forEach(p => {
+    const el = document.getElementById('cnt-' + p.value);
+    if (el) el.textContent = allProducts.filter(x => x.plan === p.value).length;
   });
 }
 
-// ── 그리드 렌더 ──────────────────────────────────────────
-function renderGrid(){
+function renderGrid() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  let list = currentPlan === '전체'
-    ? [...allProducts]
-    : allProducts.filter(p => p.plan === currentPlan);
-  if(q) list = list.filter(p =>
+  let list = currentPlan === '전체' ? [...allProducts] : allProducts.filter(p => p.plan === currentPlan);
+  if (q) list = list.filter(p =>
     (p.name||'').toLowerCase().includes(q) ||
     (p.full_name||'').toLowerCase().includes(q) ||
     (p.brand||'').toLowerCase().includes(q) ||
     (p.category||'').toLowerCase().includes(q)
   );
-
   const title = currentPlan === '전체' ? '전체 제품' : currentPlan + ' 제품';
   document.getElementById('gridTitle').textContent = title + (q ? ` — "${q}" 검색` : '');
   document.getElementById('gridSub').textContent = `${list.length}개`;
-
   const grid = document.getElementById('grid');
-  if(!list.length){
+  if (!list.length) {
     grid.innerHTML = `<p class="empty">${q ? '검색 결과가 없습니다.' : '등록된 제품이 없습니다.<br>오른쪽에서 추가해주세요.'}</p>`;
     return;
   }
@@ -474,69 +712,56 @@ function renderGrid(){
   `).join('');
 }
 
-// ── 탭 전환 ──────────────────────────────────────────────
-document.getElementById('tabs').addEventListener('click', e => {
-  const tab = e.target.closest('.tab');
-  if(!tab) return;
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  tab.classList.add('active');
-  currentPlan = tab.dataset.plan;
-  renderGrid();
-});
-
-// ── 실시간 검색 ──────────────────────────────────────────
 document.getElementById('searchInput').addEventListener('input', renderGrid);
 
 // ── 칩 선택 헬퍼 ─────────────────────────────────────────
-function setupChips(containerId, onSelect){
-  document.getElementById(containerId).addEventListener('click', e => {
+function setupChips(containerId, onSelect) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.addEventListener('click', e => {
     const chip = e.target.closest('.chip');
-    if(!chip) return;
-    chip.closest('.chips').querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+    if (!chip) return;
+    chip.closest('.chips').querySelectorAll('.chip').forEach(c => c.classList.remove('sel'));
     chip.classList.add('sel');
-    if(onSelect) onSelect(chip.dataset.val);
+    if (onSelect) onSelect(chip.dataset.val);
   });
 }
-function getChipVal(containerId){
+function getChipVal(containerId) {
   const sel = document.querySelector(`#${containerId} .chip.sel`);
   return sel ? sel.dataset.val : '';
 }
-function setChipVal(containerId, val){
+function setChipVal(containerId, val) {
   document.querySelectorAll(`#${containerId} .chip`).forEach(c => {
     c.classList.toggle('sel', c.dataset.val === val);
   });
 }
 
-setupChips('planChips');
-setupChips('brandChips');
-setupChips('catChips');
-
 // ── 이미지 업로드 ─────────────────────────────────────────
-async function uploadImg(file, statusEl, onDone){
-  if(!file || !file.type.startsWith('image/')) return;
-  statusEl.textContent='⏫ 업로드 중...'; statusEl.className='upstatus';
+async function uploadImg(file, statusEl, onDone) {
+  if (!file || !file.type.startsWith('image/')) return;
+  statusEl.textContent = '⏫ 업로드 중...'; statusEl.className = 'upstatus';
   const ext  = file.name.split('.').pop();
   const name = `${Date.now()}.${ext}`;
-  const { error } = await db.storage.from(BUCKET).upload(name, file, {upsert:false});
-  if(error){ statusEl.textContent='❌ 실패: '+error.message; statusEl.className='upstatus err'; return; }
+  const { error } = await db.storage.from(BUCKET).upload(name, file, { upsert: false });
+  if (error) { statusEl.textContent = '❌ 실패: ' + error.message; statusEl.className = 'upstatus err'; return; }
   const { data } = db.storage.from(BUCKET).getPublicUrl(name);
-  statusEl.textContent='✅ 완료'; statusEl.className='upstatus ok';
+  statusEl.textContent = '✅ 완료'; statusEl.className = 'upstatus ok';
   onDone(data.publicUrl);
 }
 
-// ── 추가 패널 드롭존 ─────────────────────────────────────
+// ── 드롭존 ───────────────────────────────────────────────
 const dz = document.getElementById('dropZone');
 const fi = document.getElementById('fileInput');
-dz.addEventListener('dragover', e=>{ e.preventDefault(); dz.classList.add('over'); });
-dz.addEventListener('dragleave', ()=>dz.classList.remove('over'));
-dz.addEventListener('drop', e=>{ e.preventDefault(); dz.classList.remove('over'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
-fi.addEventListener('change', e=>{ if(e.target.files[0]) handleFile(e.target.files[0]); });
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('over'); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+fi.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
 
-function handleFile(file){
+function handleFile(file) {
   const reader = new FileReader();
-  reader.onload = e=>{ document.getElementById('previewImg').src=e.target.result; document.getElementById('preview').classList.add('show'); };
+  reader.onload = e => { document.getElementById('previewImg').src = e.target.result; document.getElementById('preview').classList.add('show'); };
   reader.readAsDataURL(file);
-  uploadImg(file, document.getElementById('upStatus'), url=>{
+  uploadImg(file, document.getElementById('upStatus'), url => {
     uploadedUrl = url;
     const btn = document.getElementById('addBtn');
     btn.disabled = false; btn.textContent = '제품 추가하기';
@@ -544,114 +769,115 @@ function handleFile(file){
 }
 
 // ── 제품 추가 ─────────────────────────────────────────────
-document.getElementById('addBtn').addEventListener('click', async ()=>{
-  const plan = getChipVal('planChips');
-  const brand= getChipVal('brandChips');
-  const cat  = getChipVal('catChips');
-  const name = document.getElementById('iName').value.trim();
-  const full = document.getElementById('iFullName').value.trim();
-  if(!plan){showToast('❗ 플랜을 선택하세요'); return;}
-  if(!brand){showToast('❗ 브랜드를 선택하세요'); return;}
-  if(!cat){showToast('❗ 카테고리를 선택하세요'); return;}
-  if(!name){showToast('❗ 짧은 이름을 입력하세요'); return;}
-  if(!uploadedUrl){showToast('❗ 이미지를 업로드하세요'); return;}
+document.getElementById('addBtn').addEventListener('click', async () => {
+  const plan  = getChipVal('planChips');
+  const brand = getChipVal('brandChips');
+  const cat   = getChipVal('catChips');
+  const name  = document.getElementById('iName').value.trim();
+  const full  = document.getElementById('iFullName').value.trim();
+  if (!plan)  { showToast('❗ 플랜을 선택하세요'); return; }
+  if (!brand) { showToast('❗ 브랜드를 선택하세요'); return; }
+  if (!cat)   { showToast('❗ 카테고리를 선택하세요'); return; }
+  if (!name)  { showToast('❗ 짧은 이름을 입력하세요'); return; }
+  if (!uploadedUrl) { showToast('❗ 이미지를 업로드하세요'); return; }
   const btn = document.getElementById('addBtn');
-  btn.disabled=true; btn.textContent='저장 중...';
-  const { error } = await db.from(TABLE).insert({plan,brand,category:cat,name,full_name:full||name,img_url:uploadedUrl});
-  if(error){ showToast('❌ 저장 실패: '+error.message); btn.disabled=false; btn.textContent='제품 추가하기'; return; }
-  // 초기화
-  document.getElementById('iName').value='';
-  document.getElementById('iFullName').value='';
+  btn.disabled = true; btn.textContent = '저장 중...';
+  const { error } = await db.from(TABLE).insert({ plan, brand, category: cat, name, full_name: full || name, img_url: uploadedUrl });
+  if (error) { showToast('❌ 저장 실패: ' + error.message); btn.disabled = false; btn.textContent = '제품 추가하기'; return; }
+  document.getElementById('iName').value = '';
+  document.getElementById('iFullName').value = '';
   document.getElementById('preview').classList.remove('show');
-  document.getElementById('previewImg').src='';
-  document.getElementById('upStatus').textContent='';
-  document.getElementById('upStatus').className='upstatus';
-  document.getElementById('fileInput').value='';
-  uploadedUrl='';
-  btn.disabled=true; btn.textContent='이미지를 먼저 업로드하세요';
+  document.getElementById('previewImg').src = '';
+  document.getElementById('upStatus').textContent = '';
+  document.getElementById('upStatus').className = 'upstatus';
+  document.getElementById('fileInput').value = '';
+  uploadedUrl = '';
+  btn.disabled = true; btn.textContent = '이미지를 먼저 업로드하세요';
   showToast('✅ 제품이 추가됐습니다!');
   await loadAll();
 });
 
-// ── 빠른 삭제 ─────────────────────────────────────────────
-window.quickDel = async function(id){
-  if(!confirm('이 제품을 삭제할까요?')) return;
-  const { error } = await db.from(TABLE).delete().eq('id',id);
-  if(error){ showToast('❌ 삭제 실패'); return; }
-  showToast('🗑 삭제됐습니다.');
-  await loadAll();
+// ── 빠른 삭제 (재확인) ────────────────────────────────────
+window.quickDel = function(id) {
+  const p = allProducts.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('confirmMsg').innerHTML =
+    `제품 <strong>"${p.name}"</strong>을 삭제하시겠습니까?<br><span style="color:var(--red);font-size:.82rem;">⚠️ 삭제 후 복구할 수 없습니다.</span>`;
+  const modal = document.getElementById('confirmModal');
+  modal.classList.add('open');
+  const okBtn = document.getElementById('confirmOk');
+  const newOk = okBtn.cloneNode(true);
+  okBtn.parentNode.replaceChild(newOk, okBtn);
+  newOk.addEventListener('click', async () => {
+    modal.classList.remove('open');
+    const { error } = await db.from(TABLE).delete().eq('id', id);
+    if (error) { showToast('❌ 삭제 실패'); return; }
+    showToast('🗑 삭제됐습니다.');
+    await loadAll();
+  });
 };
 
-// ── 편집 모달 열기 ────────────────────────────────────────
-window.openEdit = function(id){
-  const p = allProducts.find(x=>x.id===id);
-  if(!p) return;
+// ── 편집 모달 ─────────────────────────────────────────────
+window.openEdit = function(id) {
+  const p = allProducts.find(x => x.id === id);
+  if (!p) return;
   editId = id; editImgUrl = p.img_url;
   document.getElementById('mThumb').src = p.img_url;
-  document.getElementById('mName').value = p.name||'';
-  document.getElementById('mFullName').value = p.full_name||'';
-  setChipVal('mPlanChips',  p.plan||'');
-  setChipVal('mBrandChips', p.brand||'기타');
-  setChipVal('mCatChips',   p.category||'');
-  document.getElementById('mUpStatus').textContent='';
+  document.getElementById('mName').value = p.name || '';
+  document.getElementById('mFullName').value = p.full_name || '';
+  setChipVal('mPlanChips',  p.plan || '');
+  setChipVal('mBrandChips', p.brand || '기타');
+  setChipVal('mCatChips',   p.category || '');
+  document.getElementById('mUpStatus').textContent = '';
   document.getElementById('editModal').classList.add('open');
 };
 
-// 모달 닫기
-document.getElementById('modalClose').addEventListener('click', ()=>document.getElementById('editModal').classList.remove('open'));
-document.getElementById('editModal').addEventListener('click', e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
+document.getElementById('modalClose').addEventListener('click', () => document.getElementById('editModal').classList.remove('open'));
+document.getElementById('editModal').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
 
-// 모달 내 이미지 변경
-document.getElementById('mFileInput').addEventListener('change', e=>{
-  const file = e.target.files[0]; if(!file) return;
+document.getElementById('mFileInput').addEventListener('change', e => {
+  const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = ev=>document.getElementById('mThumb').src = ev.target.result;
+  reader.onload = ev => document.getElementById('mThumb').src = ev.target.result;
   reader.readAsDataURL(file);
-  uploadImg(file, document.getElementById('mUpStatus'), url=>{ editImgUrl=url; });
+  uploadImg(file, document.getElementById('mUpStatus'), url => { editImgUrl = url; });
 });
 
-// 수정 저장
-document.getElementById('mSave').addEventListener('click', async ()=>{
-  const plan = getChipVal('mPlanChips');
-  const brand= getChipVal('mBrandChips');
-  const cat  = getChipVal('mCatChips');
-  const name = document.getElementById('mName').value.trim();
-  const full = document.getElementById('mFullName').value.trim();
-  if(!plan||!name){ showToast('❗ 필수 항목을 입력하세요'); return; }
+document.getElementById('mSave').addEventListener('click', async () => {
+  const plan  = getChipVal('mPlanChips');
+  const brand = getChipVal('mBrandChips');
+  const cat   = getChipVal('mCatChips');
+  const name  = document.getElementById('mName').value.trim();
+  const full  = document.getElementById('mFullName').value.trim();
+  if (!plan || !name) { showToast('❗ 필수 항목을 입력하세요'); return; }
   const btn = document.getElementById('mSave');
-  btn.textContent='저장 중...';
-  const { error } = await db.from(TABLE).update({
-    plan, brand, category:cat, name, full_name:full||name, img_url:editImgUrl
-  }).eq('id', editId);
-  btn.textContent='변경사항 저장';
-  if(error){ showToast('❌ 수정 실패: '+error.message); return; }
+  btn.textContent = '저장 중...';
+  const { error } = await db.from(TABLE).update({ plan, brand, category: cat, name, full_name: full || name, img_url: editImgUrl }).eq('id', editId);
+  btn.textContent = '변경사항 저장';
+  if (error) { showToast('❌ 수정 실패: ' + error.message); return; }
   document.getElementById('editModal').classList.remove('open');
   showToast('✅ 수정됐습니다!');
   await loadAll();
 });
 
-// 모달에서 삭제
-document.getElementById('mDel').addEventListener('click', async ()=>{
-  if(!confirm('이 제품을 삭제할까요?')) return;
-  const { error } = await db.from(TABLE).delete().eq('id',editId);
-  if(error){ showToast('❌ 삭제 실패'); return; }
+document.getElementById('mDel').addEventListener('click', async () => {
   document.getElementById('editModal').classList.remove('open');
-  showToast('🗑 삭제됐습니다.');
-  await loadAll();
+  window.quickDel(editId);
 });
 
 // ── 토스트 ───────────────────────────────────────────────
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
 }
 
 // ── 시작 ─────────────────────────────────────────────────
-setupChips('mPlanChips');
-setupChips('mBrandChips');
-setupChips('mCatChips');
-loadAll();
+(async () => {
+  await loadOptions();
+  await loadAll();
+})();
 </script>
+
 </body>
 </html>

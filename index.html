@@ -2903,70 +2903,71 @@
                         applyFilter();
                     })();
 
-                    const prodCards = document.querySelectorAll('.sc-prod-card');
+                    /* ── 카드 클릭: 이벤트 위임 (동적 렌더링 대응) ── */
+                    document.getElementById('smartcare').addEventListener('click', (e) => {
+                        const card = e.target.closest('.sc-prod-card');
+                        if (!card) return;
 
-                    prodCards.forEach(card => {
-                        card.addEventListener('click', () => {
-                            const wrap = card.closest('.sc-calc-wrap');
-                            // 선택된 스타일 적용
-                            wrap.querySelectorAll('.sc-prod-card').forEach(c => c.classList.remove('selected'));
-                            card.classList.add('selected');
+                        const wrap = card.closest('.sc-calc-wrap');
+                        // 선택된 스타일 적용
+                        wrap.querySelectorAll('.sc-prod-card').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
 
-                            // 영수증에 가전 이름 반영
-                            const productName = card.getAttribute('data-name');
-                            const receiptProduct = wrap.querySelector('.sc-receipt-product');
+                        // 영수증에 가전 이름 반영
+                        const productName = card.getAttribute('data-name');
+                        const receiptProduct = wrap.querySelector('.sc-receipt-product');
 
-                            receiptProduct.innerHTML = productName;
-                            receiptProduct.style.color = '#1d1d1f';
+                        receiptProduct.innerHTML = productName;
+                        receiptProduct.style.color = '#1d1d1f';
 
-                            // 영수증 등장 애니메이션
-                            const receiptBox = wrap.querySelector('.sc-receipt-box');
-                            gsap.fromTo(receiptBox,
-                                { y: 15, scale: 0.98, opacity: 0.8, boxShadow: '0 4px 10px rgba(0,0,0,0.05)' },
-                                { y: 0, scale: 1, opacity: 1, boxShadow: '0 10px 30px rgba(0,0,0,0.08)', duration: 0.4, ease: 'back.out(2)' }
-                            );
+                        // 영수증 등장 애니메이션
+                        const receiptBox = wrap.querySelector('.sc-receipt-box');
+                        gsap.fromTo(receiptBox,
+                            { y: 15, scale: 0.98, opacity: 0.8, boxShadow: '0 4px 10px rgba(0,0,0,0.05)' },
+                            { y: 0, scale: 1, opacity: 1, boxShadow: '0 10px 30px rgba(0,0,0,0.08)', duration: 0.4, ease: 'back.out(2)' }
+                        );
 
-                            /* 모바일: 가전 선택 시 신청하기 탭 버튼 표시 */
-                            receiptBox.classList.add('tab-visible');
+                        /* 모바일: 가전 선택 시 신청하기 탭 버튼 표시 */
+                        receiptBox.classList.add('tab-visible');
 
-                             // ── 플로팅 CTA 업데이트 ──
-                             const floatingCTA = document.getElementById('floating-cta');
+                         // ── 플로팅 CTA 업데이트 ──
+                         const floatingCTA = document.getElementById('floating-cta');
 
-                             // 플랜명 → 구좌 배지
-                             const planNameRaw = card.closest('.sc-tab-pane').querySelector('.sc-price-name').innerText;
-                             const planBadgeMap = {'330X2':'2구좌','330X3':'3구좌','330X4':'4구좌','330X6':'6구좌'};
-                             let planBadge = '구좌';
-                             for (const [k, v] of Object.entries(planBadgeMap)) {
-                                 if (planNameRaw.includes(k)) { planBadge = v; break; }
-                             }
-                             document.getElementById('f-cta-plan-badge').textContent = planBadge;
+                         // 플랜명 → 구좌 배지
+                         const planPane = card.closest('.sc-tab-pane');
+                         const planNameRaw = planPane ? (planPane.querySelector('.sc-price-name') || {}).innerText || '' : '';
+                         const planBadgeMap = {'330X2':'2구좌','330X3':'3구좌','330X4':'4구좌','330X6':'6구좌'};
+                         let planBadge = '구좌';
+                         for (const [k, v] of Object.entries(planBadgeMap)) {
+                             if (planNameRaw.includes(k)) { planBadge = v; break; }
+                         }
+                         document.getElementById('f-cta-plan-badge').textContent = planBadge;
 
-                             // 모델번호 (괄호 안)
-                             const mMatch = productName.match(/\(([^)]+)\)/);
-                             document.getElementById('f-cta-model').textContent = mMatch ? mMatch[1] : '';
+                         // 모델번호 (괄호 안)
+                         const mMatch = productName.match(/\(([^)]+)\)/);
+                         document.getElementById('f-cta-model').textContent = mMatch ? mMatch[1] : '';
 
-                             // 상품명
-                             const shortName = productName.split('(')[0].trim();
-                             document.getElementById('f-cta-prod-name').textContent = shortName;
+                         // 상품명
+                         const shortName = productName.split('(')[0].trim();
+                         document.getElementById('f-cta-prod-name').textContent = shortName;
 
-                             // 썸네일
-                             const cardImg = card.querySelector('img');
-                             if (cardImg) {
-                                 const thumbEl = document.getElementById('f-cta-thumb-img');
-                                 thumbEl.src = cardImg.src;
-                                 thumbEl.alt = shortName;
-                             }
+                         // 썸네일
+                         const cardImg = card.querySelector('img');
+                         if (cardImg) {
+                             const thumbEl = document.getElementById('f-cta-thumb-img');
+                             thumbEl.src = cardImg.src;
+                             thumbEl.alt = shortName;
+                         }
 
-                             if (!floatingCTA.classList.contains('active')) {
-                                 floatingCTA.classList.add('active');
-                                 gsap.fromTo(floatingCTA,
-                                     { y: 80, opacity: 0 },
-                                     { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
-                                 );
-                             } else {
-                                 gsap.fromTo(floatingCTA, { scale: 0.98 }, { scale: 1, duration: 0.25, ease: 'back.out(2)' });
-                             }
-                        });
+                         if (!floatingCTA.classList.contains('active')) {
+                             floatingCTA.classList.add('active');
+                             gsap.fromTo(floatingCTA,
+                                 { y: 80, opacity: 0 },
+                                 { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
+                             );
+                         } else {
+                             gsap.fromTo(floatingCTA, { scale: 0.98 }, { scale: 1, duration: 0.25, ease: 'back.out(2)' });
+                         }
                     });
 
                     // 자동 스크롤 캐러셀 로직
@@ -5659,15 +5660,16 @@
             });
         });
 
-        document.querySelectorAll('.sc-prod-card').forEach(function(card) {
-            card.addEventListener('click', function() {
-                _scActiveFull  = this.getAttribute('data-name') || '';
-                _scActiveShort = this.querySelector('.sc-prod-name') ? this.querySelector('.sc-prod-name').textContent.trim() : '';
-                if (!_scActivePlan) {
-                    var activeTab = document.querySelector('.sc-product-tab.active');
-                    if (activeTab) _scActivePlan = activeTab.textContent.trim();
-                }
-            });
+        /* ── _scActiveFull / _scActiveShort 갱신: 이벤트 위임 ── */
+        document.getElementById('smartcare').addEventListener('click', function(e) {
+            const card = e.target.closest('.sc-prod-card');
+            if (!card) return;
+            _scActiveFull  = card.getAttribute('data-name') || '';
+            _scActiveShort = card.querySelector('.sc-prod-name') ? card.querySelector('.sc-prod-name').textContent.trim() : '';
+            if (!_scActivePlan) {
+                var activeTab = document.querySelector('.sc-product-tab.active');
+                if (activeTab) _scActivePlan = activeTab.textContent.trim();
+            }
         });
 
         /* ── 플로팅 버튼 & 기존 버튼들 → 모달 오픈 ── */
@@ -5712,23 +5714,25 @@
 
     <!-- Floating Action Button (CTA) -->
     <div id="floating-cta" class="floating-cta">
-        <div class="f-cta-product-row">
-            <div class="f-cta-thumb">
-                <img id="f-cta-thumb-img" src="" alt="">
-            </div>
-            <div class="f-cta-info">
-                <div class="f-cta-meta">
-                    <span class="f-cta-plan-badge" id="f-cta-plan-badge">2구좌</span>
-                    <span class="f-cta-model" id="f-cta-model"></span>
+        <div class="f-cta-inner">
+            <div class="f-cta-product-row">
+                <div class="f-cta-thumb">
+                    <img id="f-cta-thumb-img" src="" alt="">
                 </div>
-                <p class="f-cta-prod-name" id="f-cta-prod-name">가전을 선택해주세요</p>
+                <div class="f-cta-info">
+                    <div class="f-cta-meta">
+                        <span class="f-cta-plan-badge" id="f-cta-plan-badge">2구좌</span>
+                        <span class="f-cta-model" id="f-cta-model"></span>
+                    </div>
+                    <p class="f-cta-prod-name" id="f-cta-prod-name">가전을 선택해주세요</p>
+                </div>
+                <button class="f-cta-cancel" id="f-cta-cancel">취소</button>
             </div>
-        </div>
-        <div class="f-cta-actions">
-            <button class="f-cta-cancel" id="f-cta-cancel">취소</button>
-            <button id="f-cta-apply-btn" class="f-cta-action-btn">
-                선택한 상품으로 신청하기 →
-            </button>
+            <div class="f-cta-actions">
+                <button id="f-cta-apply-btn" class="f-cta-action-btn">
+                    선택한 상품으로 신청하기 →
+                </button>
+            </div>
         </div>
     </div>
     <script src="js/SplitText.min.js"></script>
