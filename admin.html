@@ -14,7 +14,67 @@
   --radius:14px;--shadow:0 4px 24px rgba(0,0,0,.09);
   --green:#22c55e;--orange:#f97316;--purple:#a855f7;--sky:#0ea5e9;
 }
-body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark);min-height:100vh;}
+body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark);min-height:100vh;visibility:hidden;}
+body.authed{visibility:visible;}
+
+/* ── 인증 오버레이 ── */
+.auth-overlay{
+  position:fixed;inset:0;z-index:99999;
+  background:linear-gradient(135deg,#0039E3 0%,#0055ff 50%,#003acc 100%);
+  display:flex;align-items:center;justify-content:center;
+  visibility:visible;
+}
+.auth-overlay.hidden{display:none;}
+.auth-card{
+  background:#fff;border-radius:24px;padding:2.5rem 2rem;
+  width:100%;max-width:380px;
+  box-shadow:0 24px 80px rgba(0,0,0,.25);
+  text-align:center;
+}
+.auth-logo{
+  font-size:1.05rem;font-weight:800;color:var(--blue);
+  margin-bottom:0.4rem;letter-spacing:-.02em;
+}
+.auth-title{
+  font-size:1.35rem;font-weight:800;color:var(--dark);
+  margin-bottom:0.35rem;
+}
+.auth-sub{font-size:.84rem;color:#888;margin-bottom:1.75rem;line-height:1.5;}
+.auth-input-wrap{
+  position:relative;margin-bottom:0.85rem;
+}
+.auth-input{
+  width:100%;padding:14px 44px 14px 16px;
+  border:2px solid var(--border);border-radius:12px;
+  font-size:.95rem;font-family:inherit;outline:none;
+  transition:border-color .2s;
+  background:#fafafa;
+}
+.auth-input:focus{border-color:var(--blue);background:#fff;}
+.auth-input.error{border-color:var(--red);}
+.auth-eye{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;font-size:18px;color:#bbb;
+  transition:color .2s;padding:0;
+}
+.auth-eye:hover{color:var(--dark);}
+.auth-btn{
+  width:100%;padding:14px;
+  background:var(--blue);color:#fff;
+  border:none;border-radius:12px;
+  font-size:1rem;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:opacity .2s;margin-top:0.35rem;
+}
+.auth-btn:hover{opacity:.88;}
+.auth-btn:disabled{opacity:.5;cursor:not-allowed;}
+.auth-err{color:var(--red);font-size:.82rem;margin-top:0.5rem;min-height:18px;}
+.auth-hint{color:#aaa;font-size:.78rem;margin-top:1.25rem;}
+.auth-logout{
+  font-size:.78rem;color:#bbb;cursor:pointer;background:none;border:none;
+  font-family:inherit;margin-top:0.75rem;text-decoration:underline;
+  display:block;margin-left:auto;margin-right:auto;
+}
+.auth-logout:hover{color:var(--red);}
 
 /* ── 헤더 ── */
 .hd{
@@ -344,7 +404,66 @@ body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark
 </head>
 <body>
 
-<!-- 헤더 -->
+<!-- ── 인증 오버레이 ── -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-card">
+    <div class="auth-logo">🛠 소노 스마트케어</div>
+
+    <!-- 로그인 화면 -->
+    <div id="loginView">
+      <h1 class="auth-title">관리자 로그인</h1>
+      <p class="auth-sub">어드민 페이지에 접근하려면<br>비밀번호를 입력하세요.</p>
+      <div class="auth-input-wrap">
+        <input class="auth-input" type="password" id="loginPwd" placeholder="비밀번호" autocomplete="current-password">
+        <button class="auth-eye" id="loginEye" tabindex="-1">👁</button>
+      </div>
+      <div class="auth-err" id="loginErr"></div>
+      <button class="auth-btn" id="loginBtn">로그인</button>
+      <p class="auth-hint">비밀번호를 잊으셨나요? 관리자에게 문의하세요.</p>
+    </div>
+
+    <!-- 최초 비밀번호 설정 화면 -->
+    <div id="setupView" style="display:none;">
+      <h1 class="auth-title">비밀번호 설정</h1>
+      <p class="auth-sub">처음 접속하셨습니다.<br>사용할 관리자 비밀번호를 설정해주세요.</p>
+      <div class="auth-input-wrap">
+        <input class="auth-input" type="password" id="setupPwd" placeholder="새 비밀번호 (8자 이상)" autocomplete="new-password">
+        <button class="auth-eye" id="setupEye1" tabindex="-1">👁</button>
+      </div>
+      <div class="auth-input-wrap">
+        <input class="auth-input" type="password" id="setupPwd2" placeholder="비밀번호 확인" autocomplete="new-password">
+        <button class="auth-eye" id="setupEye2" tabindex="-1">👁</button>
+      </div>
+      <div class="auth-err" id="setupErr"></div>
+      <button class="auth-btn" id="setupBtn">비밀번호 설정 완료</button>
+    </div>
+
+    <!-- 비밀번호 변경 링크 (로그인 화면 하단) -->
+    <button class="auth-logout" id="resetPwdLink" style="display:none;">비밀번호 재설정</button>
+  </div>
+</div>
+
+<!-- ── 비밀번호 변경 모달 ── -->
+<div class="modal-bg" id="changePwdModal">
+  <div class="modal" style="max-width:380px;">
+    <div class="modal__hd">
+      <h2>🔐 비밀번호 변경</h2>
+      <button class="modal__close" id="changePwdClose">✕</button>
+    </div>
+    <div class="auth-input-wrap" style="margin-bottom:.7rem;">
+      <input class="auth-input" type="password" id="cpCurrent" placeholder="현재 비밀번호">
+    </div>
+    <div class="auth-input-wrap" style="margin-bottom:.7rem;">
+      <input class="auth-input" type="password" id="cpNew" placeholder="새 비밀번호 (8자 이상)">
+    </div>
+    <div class="auth-input-wrap" style="margin-bottom:.7rem;">
+      <input class="auth-input" type="password" id="cpNew2" placeholder="새 비밀번호 확인">
+    </div>
+    <div class="auth-err" id="cpErr" style="margin-bottom:.5rem;"></div>
+    <button class="modal__save" id="cpSave">비밀번호 변경</button>
+  </div>
+</div>
+
 <header class="hd">
   <div class="hd__logo">🛠 가전 관리 <span>소노 스마트케어</span></div>
   <div class="hd__search">
@@ -354,6 +473,7 @@ body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark
   <div class="hd__status">
     <span class="dot" id="dot"></span>
     <span class="hd__status-txt" id="statusTxt">연결 중...</span>
+    <button class="opts-btn" id="changePwdBtn" style="background:#f3f4f6;color:#555;margin-right:6px;font-size:.78rem;padding:6px 10px;">🔐 비번변경</button>
     <button class="opts-btn" id="optsBtn">⚙️ 옵션 관리</button>
   </div>
 </header>
@@ -529,8 +649,133 @@ const SUPABASE_KEY = 'sb_publishable_n0rEJFTn6Qu12Ui_qDO8bw_sSVJbTR-';
 const BUCKET = 'product-images';
 const TABLE  = 'products';
 const OPTS   = 'options';
+const PWD_FILE = '_admin_config.json';
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  인증 시스템
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function loadPwdConfig() {
+  const { data, error } = await db.storage.from(BUCKET).download(PWD_FILE);
+  if (error || !data) return null;
+  try { return JSON.parse(await data.text()); } catch { return null; }
+}
+
+async function savePwdConfig(config) {
+  const blob = new Blob([JSON.stringify(config)], { type: 'application/json' });
+  await db.storage.from(BUCKET).upload(PWD_FILE, blob, { upsert: true });
+}
+
+function showAdmin() {
+  document.getElementById('authOverlay').classList.add('hidden');
+  document.body.classList.add('authed');
+}
+
+// 토글 비밀번호 보기
+function bindEye(eyeId, inputId) {
+  document.getElementById(eyeId).addEventListener('click', () => {
+    const inp = document.getElementById(inputId);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+  });
+}
+bindEye('loginEye', 'loginPwd');
+bindEye('setupEye1', 'setupPwd');
+bindEye('setupEye2', 'setupPwd2');
+
+// ── 인증 초기화 ────────────────────────────────────────────
+async function initAuth() {
+  // 세션 유효하면 바로 진입
+  if (sessionStorage.getItem('admin_authed') === 'true') { showAdmin(); return; }
+
+  const config = await loadPwdConfig();
+
+  if (!config || !config.hash) {
+    // 최초: 비밀번호 설정 화면
+    document.getElementById('loginView').style.display = 'none';
+    document.getElementById('setupView').style.display = '';
+    document.getElementById('resetPwdLink').style.display = 'none';
+    document.getElementById('setupPwd').focus();
+  } else {
+    // 이미 설정됨: 로그인 화면
+    document.getElementById('loginView').style.display = '';
+    document.getElementById('setupView').style.display = 'none';
+    document.getElementById('resetPwdLink').style.display = '';
+    document.getElementById('loginPwd').focus();
+  }
+}
+
+// ── 로그인 ────────────────────────────────────────────────
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  const pwd = document.getElementById('loginPwd').value;
+  const errEl = document.getElementById('loginErr');
+  if (!pwd) { errEl.textContent = '비밀번호를 입력하세요.'; return; }
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = '확인 중...';
+  const config = await loadPwdConfig();
+  const hash = await sha256(pwd);
+  if (config && config.hash === hash) {
+    sessionStorage.setItem('admin_authed', 'true');
+    showAdmin();
+  } else {
+    errEl.textContent = '비밀번호가 올바르지 않습니다.';
+    document.getElementById('loginPwd').classList.add('error');
+    btn.disabled = false; btn.textContent = '로그인';
+    setTimeout(() => { errEl.textContent=''; document.getElementById('loginPwd').classList.remove('error'); }, 2500);
+  }
+});
+document.getElementById('loginPwd').addEventListener('keydown', e => { if (e.key==='Enter') document.getElementById('loginBtn').click(); });
+
+// ── 최초 비밀번호 설정 ─────────────────────────────────────
+document.getElementById('setupBtn').addEventListener('click', async () => {
+  const pwd  = document.getElementById('setupPwd').value;
+  const pwd2 = document.getElementById('setupPwd2').value;
+  const errEl = document.getElementById('setupErr');
+  if (pwd.length < 8) { errEl.textContent = '비밀번호는 8자 이상이어야 합니다.'; return; }
+  if (pwd !== pwd2)   { errEl.textContent = '비밀번호가 일치하지 않습니다.'; return; }
+  const btn = document.getElementById('setupBtn');
+  btn.disabled = true; btn.textContent = '저장 중...';
+  const hash = await sha256(pwd);
+  await savePwdConfig({ hash });
+  sessionStorage.setItem('admin_authed', 'true');
+  showAdmin();
+});
+
+// ── 비밀번호 변경 모달 ─────────────────────────────────────
+document.getElementById('changePwdBtn').addEventListener('click', () => document.getElementById('changePwdModal').classList.add('open'));
+document.getElementById('changePwdClose').addEventListener('click', () => document.getElementById('changePwdModal').classList.remove('open'));
+
+document.getElementById('cpSave').addEventListener('click', async () => {
+  const cur   = document.getElementById('cpCurrent').value;
+  const nw    = document.getElementById('cpNew').value;
+  const nw2   = document.getElementById('cpNew2').value;
+  const errEl = document.getElementById('cpErr');
+  if (!cur || !nw) { errEl.textContent = '모든 항목을 입력하세요.'; return; }
+  if (nw.length < 8) { errEl.textContent = '새 비밀번호는 8자 이상이어야 합니다.'; return; }
+  if (nw !== nw2)  { errEl.textContent = '새 비밀번호가 일치하지 않습니다.'; return; }
+  const config = await loadPwdConfig();
+  const curHash = await sha256(cur);
+  if (!config || config.hash !== curHash) { errEl.textContent = '현재 비밀번호가 올바르지 않습니다.'; return; }
+  const newHash = await sha256(nw);
+  await savePwdConfig({ hash: newHash });
+  document.getElementById('changePwdModal').classList.remove('open');
+  document.getElementById('cpCurrent').value = '';
+  document.getElementById('cpNew').value = '';
+  document.getElementById('cpNew2').value = '';
+  errEl.textContent = '';
+  showToast('✅ 비밀번호가 변경됐습니다!');
+});
+
+// ── 비밀번호 재설정 (초기화) ──────────────────────────────
+document.getElementById('resetPwdLink').addEventListener('click', () => {
+  if (!confirm('비밀번호를 재설정하려면 Supabase Storage에서 _admin_config.json 파일을 직접 삭제해야 합니다.\n\n관리자에게 문의하세요.')) return;
+});
 
 // ── 상태 ─────────────────────────────────────────────────
 let allProducts = [];
@@ -949,8 +1194,9 @@ function showToast(msg) {
 
 // ── 시작 ─────────────────────────────────────────────────
 (async () => {
-  await loadOptions();
-  await loadAll();
+  await initAuth();             // 1) 인증 먼저
+  await loadOptions();          // 2) 옵션 로드
+  await loadAll();              // 3) 제품 로드
 })();
 </script>
 
