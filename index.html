@@ -2132,6 +2132,37 @@
                 </div>
             </div>
 
+            <!-- 브랜드 + 가전 필터 바 -->
+            <div class="sc-filter-bar" id="scFilterBar">
+                <div class="sc-filter-row">
+                    <span class="sc-filter-label">브랜드</span>
+                    <div class="sc-filter-chips">
+                        <button class="sc-fc active" data-fbrand="전체">전체</button>
+                        <button class="sc-fc" data-fbrand="LG">LG</button>
+                        <button class="sc-fc" data-fbrand="삼성">삼성</button>
+                        <button class="sc-fc" data-fbrand="바디프렌드">바디프렌드</button>
+                        <button class="sc-fc" data-fbrand="다이슨">다이슨</button>
+                        <button class="sc-fc" data-fbrand="기타">기타</button>
+                    </div>
+                </div>
+                <div class="sc-filter-row">
+                    <span class="sc-filter-label">가전</span>
+                    <div class="sc-filter-chips">
+                        <button class="sc-fc active" data-fcat="전체">전체</button>
+                        <button class="sc-fc" data-fcat="TV">TV</button>
+                        <button class="sc-fc" data-fcat="냉장고">냉장고</button>
+                        <button class="sc-fc" data-fcat="세탁기">세탁기</button>
+                        <button class="sc-fc" data-fcat="안마의자">안마의자</button>
+                        <button class="sc-fc" data-fcat="스타일러">스타일러</button>
+                        <button class="sc-fc" data-fcat="에어컨">에어컨</button>
+                        <button class="sc-fc" data-fcat="공기청정기">공기청정기</button>
+                        <button class="sc-fc" data-fcat="청소기">청소기</button>
+                        <button class="sc-fc" data-fcat="노트북">노트북</button>
+                        <button class="sc-fc" data-fcat="정수기">정수기</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="sc-product-tabs-content" style="margin-bottom: 5rem;">
 
                 <div class="sc-tab-pane" id="sc-pane-330x2">
@@ -2167,24 +2198,20 @@
                     </div>
                     <!-- 가전 선택 및 계산기 UI (330x2) -->
                     <div class="sc-calc-wrap">
-                        <div class="sc-brand-filter">
-                            <button class="sc-brand-btn active">전체</button>
-                            <button class="sc-brand-btn">LG전자</button>
-                            <button class="sc-brand-btn">삼성/기타</button>
-                        </div>
+
 
                         <div class="sc-prod-swiper">
-                            <div class="sc-prod-card" data-name="LG 퓨리케어 공기청정기 (AS305DWWA)">
+                            <div class="sc-prod-card" data-name="LG 퓨리케어 공기청정기 (AS305DWWA)" data-brand="LG" data-category="공기청정기">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x2_lg_공기청정기_AS305DWWA.jpg"
                                         alt="LG 퓨리케어 공기청정기 (AS305DWWA)"></div>
                                 <p class="sc-prod-name">LG 공기청정기</p>
                             </div>
-                            <div class="sc-prod-card" data-name="LG 퓨리케어 정수기 (WD220MCB)">
+                            <div class="sc-prod-card" data-name="LG 퓨리케어 정수기 (WD220MCB)" data-brand="LG" data-category="정수기">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x2_LG_정수기_WD220MCB.avif"
                                         alt="LG 퓨리케어 정수기 (WD220MCB)"></div>
                                 <p class="sc-prod-name">LG 정수기</p>
                             </div>
-                            <div class="sc-prod-card" data-name="SK매직 스스로 직수 정수기 (WPUIAC414SPS)">
+                            <div class="sc-prod-card" data-name="SK매직 스스로 직수 정수기 (WPUIAC414SPS)" data-brand="기타" data-category="정수기">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x2_SK_정수기_WPUIAC414SPS.png"
                                         alt="SK매직 스스로 직수 정수기 (WPUIAC414SPS)"></div>
                                 <p class="sc-prod-name">SK 정수기</p>
@@ -2294,24 +2321,20 @@
 
                     <!-- 가전 선택 및 계산기 UI (330x3) -->
                     <div class="sc-calc-wrap">
-                        <div class="sc-brand-filter">
-                            <button class="sc-brand-btn active">전체</button>
-                            <button class="sc-brand-btn">LG전자</button>
-                            <button class="sc-brand-btn">삼성/기타</button>
-                        </div>
+
 
                         <div class="sc-prod-swiper">
-                            <div class="sc-prod-card" data-name="LG 퓨리케어 공기청정기 (AS355NSNA)">
+                            <div class="sc-prod-card" data-name="LG 퓨리케어 공기청정기 (AS355NSNA)" data-brand="LG" data-category="공기청정기">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x3_lg_공기청정기_AS355NSNA.jpg"
                                         alt="LG 퓨리케어 공기청정기 (AS355NSNA)"></div>
                                 <p class="sc-prod-name">LG 공기청정기</p>
                             </div>
-                            <div class="sc-prod-card" data-name="LG 디오스 냉장고 (S836MRQ112)">
+                            <div class="sc-prod-card" data-name="LG 디오스 냉장고 (S836MRQ112)" data-brand="LG" data-category="냉장고">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x3_LG_냉장고_S836MRQ112.avif"
                                         alt="LG 디오스 냉장고 (S836MRQ112)"></div>
                                 <p class="sc-prod-name">LG 냉장고</p>
                             </div>
-                            <div class="sc-prod-card" data-name="LG 올레드 TV (OLED55B5KNA)">
+                            <div class="sc-prod-card" data-name="LG 올레드 TV (OLED55B5KNA)" data-brand="LG" data-category="TV">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x3_LG_TV_OLED55B5KNA.avif"
                                         alt="LG 올레드 TV (OLED55B5KNA)"></div>
                                 <p class="sc-prod-name">LG TV</p>
@@ -2421,29 +2444,25 @@
 
                     <!-- 가전 선택 및 계산기 UI (330x4) -->
                     <div class="sc-calc-wrap">
-                        <div class="sc-brand-filter">
-                            <button class="sc-brand-btn active">전체</button>
-                            <button class="sc-brand-btn">LG전자</button>
-                            <button class="sc-brand-btn">삼성/기타</button>
-                        </div>
+
 
                         <div class="sc-prod-swiper">
-                            <div class="sc-prod-card" data-name="LG 트롬 건조기 (Z509MHHF23)">
+                            <div class="sc-prod-card" data-name="LG 트롬 건조기 (Z509MHHF23)" data-brand="LG" data-category="세탁기">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x4_LG_건조기_Z509MHHF23.avif"
                                         alt="LG 트롬 건조기 (Z509MHHF23)"></div>
                                 <p class="sc-prod-name">LG 건조기</p>
                             </div>
-                            <div class="sc-prod-card" data-name="LG 디오스 냉장고 (Z509MHHF23)">
+                            <div class="sc-prod-card" data-name="LG 디오스 냉장고 (Z509MHHF23)" data-brand="LG" data-category="냉장고">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x4_LG_냉장고_Z509MHHF23.avif"
                                         alt="LG 디오스 냉장고 (Z509MHHF23)"></div>
                                 <p class="sc-prod-name">LG 냉장고</p>
                             </div>
-                            <div class="sc-prod-card" data-name="LG 코드제로 로봇청소기 (B95AWBH)">
+                            <div class="sc-prod-card" data-name="LG 코드제로 로봇청소기 (B95AWBH)" data-brand="LG" data-category="청소기">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x4_LG_로봇청소기_B95AWBH.jpg"
                                         alt="LG 코드제로 로봇청소기 (B95AWBH)"></div>
                                 <p class="sc-prod-name">LG 로봇청소기</p>
                             </div>
-                            <div class="sc-prod-card" data-name="LG 휘센 에어컨 (FQ18HDWHY2)">
+                            <div class="sc-prod-card" data-name="LG 휘센 에어컨 (FQ18HDWHY2)" data-brand="LG" data-category="에어컨">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x4_lg_에어컨_FQ18HDWHY2.jpg"
                                         alt="LG 휘센 에어컨 (FQ18HDWHY2)"></div>
                                 <p class="sc-prod-name">LG 에어컨</p>
@@ -2553,34 +2572,30 @@
 
                     <!-- 가전 선택 및 계산기 UI (330x6) -->
                     <div class="sc-calc-wrap">
-                        <div class="sc-brand-filter">
-                            <button class="sc-brand-btn active">전체</button>
-                            <button class="sc-brand-btn">LG전자</button>
-                            <button class="sc-brand-btn">삼성/기타</button>
-                        </div>
+
 
                         <div class="sc-prod-swiper">
-                            <div class="sc-prod-card" data-name="바디프랜드 안마의자 (BFR-7211)">
+                            <div class="sc-prod-card" data-name="바디프랜드 안마의자 (BFR-7211)" data-brand="바디프렌드" data-category="안마의자">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x6_바디프렌드_안마의자_BFR-7211.jpg"
                                         alt="바디프랜드 안마의자 (BFR-7211)"></div>
                                 <p class="sc-prod-name">바디프랜드</p>
                             </div>
-                            <div class="sc-prod-card" data-name="삼성 비스포크 냉장고 (RM80F91K1XJ)">
+                            <div class="sc-prod-card" data-name="삼성 비스포크 냉장고 (RM80F91K1XJ)" data-brand="삼성" data-category="냉장고">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x6_삼성_냉장고_RM80F91K1XJ.jfif"
                                         alt="삼성 비스포크 냉장고 (RM80F91K1XJ)"></div>
                                 <p class="sc-prod-name">삼성 냉장고</p>
                             </div>
-                            <div class="sc-prod-card" data-name="세라젬 마스터 V6 (MB-1901)">
+                            <div class="sc-prod-card" data-name="세라젬 마스터 V6 (MB-1901)" data-brand="기타" data-category="안마의자">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x6_세라젬_안마의자_CGM MB-1901.jpg"
                                         alt="세라젬 마스터 V6 (MB-1901)"></div>
                                 <p class="sc-prod-name">세라젬 V6</p>
                             </div>
-                            <div class="sc-prod-card" data-name="MacBook Pro M3 (Space Black)">
+                            <div class="sc-prod-card" data-name="MacBook Pro M3 (Space Black)" data-brand="기타" data-category="노트북">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x6_애플_노트북_MX2H3KHA(Space Black).png"
                                         alt="MacBook Pro M3 (Space Black)"></div>
                                 <p class="sc-prod-name">맥북 프로</p>
                             </div>
-                            <div class="sc-prod-card" data-name="LG 워시타워 (FX25GNR+RD20GNG)">
+                            <div class="sc-prod-card" data-name="LG 워시타워 (FX25GNR+RD20GNG)" data-brand="LG" data-category="세탁기">
                                 <div class="sc-prod-img"><img src="./img/스마트케어330x6_lg_세탁기+건조기_FX25GNR+RD20GNG.jpg"
                                         alt="LG 워시타워 (FX25GNR+RD20GNG)"></div>
                                 <p class="sc-prod-name">LG 워시타워</p>
@@ -2772,7 +2787,64 @@
 
                     /* 탭바 sticky: CSS position:sticky 사용 (JS 불필요) */
 
+                    /* ── 브랜드 + 카테고리 필터 ── */
+                    (function() {
+                        var activeBrand = '전체';
+                        var activeCat   = '전체';
+
+                        function getActivePaneId() {
+                            var activeTab = document.querySelector('.sc-product-tab.active, .sc-slider-btn.active');
+                            if (!activeTab) return null;
+                            return 'sc-pane-' + activeTab.dataset.sctab;
+                        }
+
+                        function applyFilter() {
+                            var paneId = getActivePaneId();
+                            var cards  = paneId
+                                ? document.querySelectorAll('#' + paneId + ' .sc-prod-card')
+                                : document.querySelectorAll('.sc-prod-card');
+
+                            cards.forEach(function(card) {
+                                var brand = card.dataset.brand || '';
+                                var cat   = card.dataset.category || '';
+                                var brandOk = activeBrand === '전체' || brand === activeBrand;
+                                var catOk   = activeCat   === '전체' || cat   === activeCat;
+                                card.classList.toggle('filter-hidden', !(brandOk && catOk));
+                            });
+                        }
+
+                        /* 브랜드 칩 */
+                        document.querySelectorAll('#scFilterBar [data-fbrand]').forEach(function(btn) {
+                            btn.addEventListener('click', function() {
+                                document.querySelectorAll('#scFilterBar [data-fbrand]').forEach(function(b){ b.classList.remove('active'); });
+                                btn.classList.add('active');
+                                activeBrand = btn.dataset.fbrand;
+                                applyFilter();
+                            });
+                        });
+
+                        /* 카테고리 칩 */
+                        document.querySelectorAll('#scFilterBar [data-fcat]').forEach(function(btn) {
+                            btn.addEventListener('click', function() {
+                                document.querySelectorAll('#scFilterBar [data-fcat]').forEach(function(b){ b.classList.remove('active'); });
+                                btn.classList.add('active');
+                                activeCat = btn.dataset.fcat;
+                                applyFilter();
+                            });
+                        });
+
+                        /* 플랜 탭 바뀔 때 필터 재적용 */
+                        document.querySelectorAll('.sc-product-tab, .sc-slider-btn').forEach(function(tab) {
+                            tab.addEventListener('click', function() {
+                                setTimeout(applyFilter, 50);
+                            });
+                        });
+
+                        applyFilter();
+                    })();
+
                     const prodCards = document.querySelectorAll('.sc-prod-card');
+
                     prodCards.forEach(card => {
                         card.addEventListener('click', () => {
                             const wrap = card.closest('.sc-calc-wrap');

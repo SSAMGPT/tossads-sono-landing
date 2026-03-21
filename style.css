@@ -6876,6 +6876,65 @@ body {
     border-color: #1d1d1f;
 }
 
+/* ── 공통 필터 바 (브랜드 + 가전) ── */
+.sc-filter-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.1rem 1.5rem;
+    background: #f8f8fa;
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 0.5rem;
+}
+.sc-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+.sc-filter-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #999;
+    white-space: nowrap;
+    min-width: 32px;
+}
+.sc-filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.sc-fc {
+    padding: 5px 13px;
+    border-radius: 100px;
+    border: 1.5px solid #e0e0e0;
+    background: #fff;
+    color: #666;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Pretendard', sans-serif;
+    white-space: nowrap;
+}
+.sc-fc:hover:not(.active) {
+    border-color: #aaa;
+    color: #333;
+}
+.sc-fc.active {
+    border-color: #0039E3;
+    background: #0039E3;
+    color: #fff;
+}
+/* 해당 플랜에 없는 필터 칩은 흐리게 (선택 가능하지만 결과 없음 표시) */
+.sc-fc.no-match {
+    opacity: 0.35;
+}
+/* 필터로 숨겨진 카드 */
+.sc-prod-card.filter-hidden {
+    display: none !important;
+}
+
 .sc-prod-swiper {
     display: flex;
     overflow-x: auto;
