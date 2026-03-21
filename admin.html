@@ -63,6 +63,29 @@ body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark
 }
 .tab.active .tab__count{background:var(--blue-l);color:var(--blue);}
 
+/* ── 필터 바 ── */
+.filter-bar{
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:0.6rem 1.5rem;display:flex;flex-direction:column;gap:0.45rem;
+}
+.filter-row{
+  display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;
+}
+.filter-label{
+  font-size:.74rem;font-weight:700;color:#aaa;
+  white-space:nowrap;min-width:50px;
+}
+.fchip{
+  padding:3px 11px;border-radius:100px;
+  border:1.5px solid var(--border);background:var(--white);
+  font-size:.78rem;font-weight:600;color:#666;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+  font-family:inherit;
+}
+.fchip:hover{border-color:var(--blue);color:var(--blue);}
+.fchip.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+
 /* ── 메인 ── */
 .main{display:flex;gap:1.5rem;padding:1.5rem;max-width:1500px;margin:0 auto;}
 
@@ -344,6 +367,18 @@ body{font-family:'Pretendard',sans-serif;background:var(--gray);color:var(--dark
   <button class="tab" data-plan="330X6">330X6 <span class="tab__count" id="cnt-330X6">0</span></button>
 </nav>
 
+<!-- 필터 바 -->
+<div class="filter-bar" id="filterBar">
+  <div class="filter-row">
+    <span class="filter-label">브랜드</span>
+    <div id="brandFilter" style="display:flex;gap:0.4rem;flex-wrap:wrap;"></div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">카테고리</span>
+    <div id="catFilter" style="display:flex;gap:0.4rem;flex-wrap:wrap;"></div>
+  </div>
+</div>
+
 <!-- 메인 -->
 <div class="main">
   <!-- 그리드 -->
@@ -500,7 +535,9 @@ const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 // ── 상태 ─────────────────────────────────────────────────
 let allProducts = [];
 let allOptions  = { plan: [], brand: [], category: [] };
-let currentPlan = '전체';
+let currentPlan     = '전체';
+let currentBrand    = '전체';
+let currentCategory = '전체';
 let uploadedUrl = '';
 let editId      = null;
 let editImgUrl  = '';
@@ -543,14 +580,45 @@ function renderAllChips() {
   renderChipGroup('mBrandChips', allOptions.brand.filter(o => o.value !== '전체'));
   renderChipGroup('catChips',    allOptions.category.filter(o => o.value !== '전체'));
   renderChipGroup('mCatChips',   allOptions.category.filter(o => o.value !== '전체'));
-  // 플랜 탭도 업데이트
   renderPlanTabs();
+  renderFilterBar();
   setupChips('planChips');
   setupChips('brandChips');
   setupChips('catChips');
   setupChips('mPlanChips');
   setupChips('mBrandChips');
   setupChips('mCatChips');
+}
+
+// 필터 바 렌더링 (브랜드 + 카테고리)
+function renderFilterBar() {
+  // 브랜드
+  const brands = ['전체', ...allOptions.brand.filter(o => o.value !== '전체').map(o => o.value)];
+  const bf = document.getElementById('brandFilter');
+  bf.innerHTML = brands.map(v =>
+    `<button class="fchip${currentBrand === v ? ' active' : ''}" data-brand="${v}">${v}</button>`
+  ).join('');
+  bf.querySelectorAll('.fchip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentBrand = btn.dataset.brand;
+      renderFilterBar();
+      renderGrid();
+    });
+  });
+
+  // 카테고리
+  const cats = ['전체', ...allOptions.category.filter(o => o.value !== '전체').map(o => o.value)];
+  const cf = document.getElementById('catFilter');
+  cf.innerHTML = cats.map(v =>
+    `<button class="fchip${currentCategory === v ? ' active' : ''}" data-cat="${v}">${v}</button>`
+  ).join('');
+  cf.querySelectorAll('.fchip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentCategory = btn.dataset.cat;
+      renderFilterBar();
+      renderGrid();
+    });
+  });
 }
 
 function renderChipGroup(containerId, opts) {
@@ -675,13 +743,20 @@ function updateCounts() {
 function renderGrid() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
   let list = currentPlan === '전체' ? [...allProducts] : allProducts.filter(p => p.plan === currentPlan);
+  if (currentBrand    !== '전체') list = list.filter(p => p.brand    === currentBrand);
+  if (currentCategory !== '전체') list = list.filter(p => p.category === currentCategory);
   if (q) list = list.filter(p =>
     (p.name||'').toLowerCase().includes(q) ||
     (p.full_name||'').toLowerCase().includes(q) ||
     (p.brand||'').toLowerCase().includes(q) ||
     (p.category||'').toLowerCase().includes(q)
   );
-  const title = currentPlan === '전체' ? '전체 제품' : currentPlan + ' 제품';
+  const parts = [
+    currentPlan !== '전체' ? currentPlan : '',
+    currentBrand !== '전체' ? currentBrand : '',
+    currentCategory !== '전체' ? currentCategory : '',
+  ].filter(Boolean);
+  const title = parts.length ? parts.join(' · ') + ' 제품' : '전체 제품';
   document.getElementById('gridTitle').textContent = title + (q ? ` — "${q}" 검색` : '');
   document.getElementById('gridSub').textContent = `${list.length}개`;
   const grid = document.getElementById('grid');
