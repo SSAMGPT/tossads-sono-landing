@@ -6783,8 +6783,8 @@ body {
     .floating-cta {
         flex-direction: row;
         align-items: center;
-        padding: 0.75rem clamp(1.5rem, 4vw, 3rem);
-        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+        padding: 1.25rem clamp(1.5rem, 4vw, 3rem);
+        padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
         border-radius: 0;
         border-top: 1px solid rgba(0,0,0,0.07);
         box-shadow: 0 -4px 24px rgba(0,0,0,0.10);
