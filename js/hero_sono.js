@@ -243,7 +243,26 @@ function _skipIntro() {
   if (scrollBtn) gsap.set(scrollBtn, { opacity: 1, y: 0 });
   const splash = container ? container.querySelector('.crisp-splash') : null;
   if (splash) gsap.set(splash, { autoAlpha: 0 });
+
+  // ── WebGL: 인트로 스킵 시 첫 이미지를 즉시 표시 (회색 캔버스 방지) ──
+  function _webglShowFirstAndAutoplay() {
+    var w = window._heroWebGLInstance;
+    if (!w || !w.textures || !w.textures[0]) return;
+    // 애니메이션 없이 첫 번째 이미지를 바로 표시
+    w.material.uniforms.texture1.value = w.textures[0];
+    w.material.uniforms.texture2.value = w.textures[0];
+    w.material.uniforms.progress.value = 0;
+    w._resize();
+    w.startAutoplay();
+  }
+  if (window._heroWebGLIsReady) {
+    _webglShowFirstAndAutoplay();
+  } else {
+    // 텍스처 로딩 중이면 준비 완료 시 실행
+    window._heroWebGLReadyCallback = _webglShowFirstAndAutoplay;
+  }
 }
+
 
 document.fonts.ready.then(() => {
   const run = () => {

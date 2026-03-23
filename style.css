@@ -3201,7 +3201,7 @@ ul.sc-slider-tabs li {
 
     .hybrid__step-text {
         /* 큰 숫자의 시각적 상단 여백에 맞춰 텍스트를 내림 */
-        padding-top: 1.8rem;
+        padding-top: 1.5rem;
     }
 
     .hybrid__step-num {
@@ -4001,6 +4001,7 @@ ul.sc-slider-tabs li {
 /* Strength & Review Section */
 .strength-review {
     padding: 0 0 10rem;
+    margin-top: -4rem;
     background: #ffffff !important;  /* 어떤 GSAP body 전환도 덮어씌우지 못하게 고정 */
     text-align: center;
     position: relative;
@@ -4326,7 +4327,7 @@ ul.sc-slider-tabs li {
 
 /* --- Consultation Section --- */
 .section--consult {
-    padding: 10rem 0 12rem;
+    padding: 10rem 0 2rem;
     background: #fff;
     /* Updated to white */
     position: relative;
@@ -4863,8 +4864,7 @@ ul.sc-slider-tabs li {
     background-color: #fff;
     /* Updated to white */
     padding: 5rem 0 3rem;
-    border-top: 1px solid #eee;
-    /* Added border to separate from white sections */
+    border-top: none;
     color: #666;
     font-size: 0.9rem;
 }
@@ -5141,7 +5141,7 @@ ul.sc-slider-tabs li {
    스마트케어 기획전 섹션 (Smart Care Selection)
    ========================================================================= */
 .smartcare-section {
-    padding: 6rem 0;
+    padding: 2rem 0 6rem;
     background: transparent; /* body lightTl이 #000 → #fdfdfd 전환 — 섹션 자체는 투명 */
 }
 
@@ -5152,128 +5152,75 @@ ul.sc-slider-tabs li {
     padding: 0;
 }
 
-.sc-brand-filter {
-    display: flex;
-    flex-direction: row;
-    width: fit-content;
-    margin: 0 auto 1rem;
-    background-color: transparent;
-    border: none;
-    border-radius: 8px;
-    padding: 4px;
-}
+/* ═══════════════════════════════════════════
+   브랜드 / 카테고리 필터
+════════════════════════════════════════════ */
 
-/* ── 카테고리 필터 ── */
+/* 공통 컨테이너 */
+.sc-brand-filter,
 .sc-cat-filter {
+    position: relative;
     display: flex;
-    flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
-    width: fit-content;
-    margin: 0 auto 1rem;
-    background-color: #f5f5f7;
+    align-items: stretch;
+    width: 100%;
     border-radius: 10px;
-    padding: 6px;
-    gap: 2px;
+    background-color: #fff;
+    color: #000;
+    overflow: hidden;
+    border: 1px solid rgba(53, 52, 52, 0.226);
+    box-sizing: border-box;
 }
 
+.sc-brand-filter { margin-bottom: 0.75rem; }
+.sc-cat-filter   { margin-bottom: 1rem; }
+
+/* 공통 버튼 */
+.sc-bf-btn,
 .sc-ct-btn {
-    background-color: transparent;
-    border: none;
-    padding: 8px 12px;
-    color: #1d1d1f;
-    display: flex;
-    align-items: center;
-    position: relative;
+    flex: 1;
+    min-width: 0;
+    padding: 10px 8px;
     cursor: pointer;
-    border-radius: 6px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    font-family: 'Pretendard', sans-serif;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-    transition: background-color 0.2s, transform 0.2s;
-}
-
-.sc-ct-btn:not(:active):hover,
-.sc-ct-btn:focus {
-    background-color: #e8e8ed;
-    outline: none;
-    transform: scale(1.1);
-    z-index: 1;
-}
-
-.sc-ct-btn:focus,
-.sc-ct-btn:active {
-    background-color: #e0e0e5;
-    outline: none;
-}
-
-.sc-ct-btn.active {
-    background-color: #ffffff;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
-    font-weight: 700;
-}
-
-/* 호버 시 비선택 형제들 blur */
-.sc-cat-filter:hover > .sc-ct-btn:not(:hover) {
-    transition: 300ms;
-    filter: blur(1px);
-    transform: scale(0.95, 0.95);
-}
-
-
-.sc-bf-btn {
-    background-color: transparent;
-    border: none;
-    padding: 10px;
-    color: #1d1d1f;
     display: flex;
+    justify-content: center;
     align-items: center;
-    position: relative;
-    gap: 5px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    font-family: 'Pretendard', sans-serif;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-    transition: background-color 0.2s, filter 0.3s, transform 0.3s;
-}
-
-.sc-bf-btn:not(:active):hover,
-.sc-bf-btn:focus {
-    background-color: #ebebeb;
-    outline: none;
-    transform: scale(1.1);
     z-index: 1;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    font-size: 14px;
+    font-family: 'Pretendard', sans-serif;
+    white-space: nowrap;
+    background: transparent;
+    border: none;
+    color: #000;
+    transition: color 0.15s ease;
+    position: relative;
 }
 
-.sc-bf-btn:focus,
-.sc-bf-btn:active {
-    background-color: #e0e0e0;
-    outline: none;
+.sc-bf-btn.active,
+.sc-ct-btn.active { color: #fff; font-weight: 700; }
+
+.sc-bf-btn:hover:not(.active),
+.sc-ct-btn:hover:not(.active) { color: #146DEF; }
+
+/* 슬라이딩 인디케이터 */
+.sc-selection {
+    display: block;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #146DEF;
+    z-index: 0;
+    transition: left 0.15s ease, width 0.15s ease;
+    pointer-events: none;
 }
 
-.sc-bf-btn.active {
-    background-color: #e0e0e0;
-    font-weight: 700;
-}
+/* 카드 숨김 */
+.sc-prod-card.bf-hidden { display: none !important; }
 
-/* 호버 시 비선택 형제들 blur (원본 코드 그대로) */
-.sc-brand-filter:hover > .sc-bf-btn:not(:hover) {
-    transition: 300ms;
-    filter: blur(1px);
-    transform: scale(0.95, 0.95);
-}
-
-/* 카드 필터 숨김 */
-.sc-prod-card.bf-hidden {
-    display: none !important;
-}
-
-/* 빈 결과 안내 */
+/* 빈 결과 */
 .sc-empty-msg {
     display: none;
     width: 100%;
@@ -5284,35 +5231,78 @@ ul.sc-slider-tabs li {
     font-weight: 500;
     letter-spacing: -0.01em;
 }
-.sc-empty-msg.visible {
-    display: block;
-}
+.sc-empty-msg.visible { display: block; }
 
-/* 모바일 */
+/* ─── 모바일: 필터 레이아웃 ─── */
 @media (max-width: 600px) {
+
+    /* 브랜드: 1행 flex (6등분 균등) */
     .sc-brand-filter {
+        display: flex;
         flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
     }
-    .sc-brand-filter::-webkit-scrollbar { display: none; }
     .sc-bf-btn {
-        padding: 8px;
-        font-size: 0.78rem;
+        flex: 1;
+        min-width: 0;
+        padding: 10px 2px;
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sc-brand-filter .sc-bf-btn[data-brand="전체"] {
+        border-right: 1px solid rgba(53, 52, 52, 0.15);
     }
 
-    /* 카테고리 필터: 모바일에서 두 줄 */
+    /* 카테고리: 2행 grid (전체는 2행 span) */
     .sc-cat-filter {
-        flex-wrap: wrap;
-        max-width: 340px;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        overflow: hidden;
     }
     .sc-ct-btn {
-        padding: 7px 10px;
-        font-size: 0.76rem;
+        width: 100%;
+        min-width: 0;
+        padding: 10px 2px;
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: none;
+    }
+    .sc-cat-filter .sc-ct-btn[data-cat="전체"] {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        border-right: 1px solid rgba(53, 52, 52, 0.15);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -7037,11 +7027,7 @@ body {
     animation: fadeInTab 0.4s ease-out;
 }
 
-.sc-brand-filter {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-}
+
 
 .sc-brand-btn {
     padding: 0.5rem 1rem;
@@ -7153,16 +7139,44 @@ body {
     mix-blend-mode: darken;
 }
 
-/* 제품명 */
+/* 짧은 이름 */
 .sc-prod-name {
-    font-size: 12px;
-    font-weight: 700;
-    color: #333;
+    font-size: 11px;
+    font-weight: 500;
+    color: #999;
     text-align: center;
-    margin: 0;
+    margin: 2px 0 0;
     line-height: 1.3;
     word-break: keep-all;
 }
+
+/* 브랜드 pill 배지 */
+.sc-prod-brand {
+    display: inline-block;
+    margin: 4px auto 3px;
+    padding: 2px 10px;
+    border-radius: 100px;
+    background: #1d1d1f;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    font-family: 'Pretendard', sans-serif;
+    text-align: center;
+}
+
+/* 전체 모델명 */
+.sc-prod-fullname {
+    font-size: 11px;
+    font-weight: 600;
+    color: #444;
+    text-align: center;
+    margin: 2px 0 0;
+    line-height: 1.4;
+    word-break: keep-all;
+    padding: 0 4px;
+}
+
 
 /* =========================================================================
    Receipt UI (영수증 스타일 계산기)
@@ -7788,38 +7802,39 @@ body {
 
 /* ── 스크롤 등장: 통통 튀며 올라오는 키프레임 ── */
 @keyframes floatBtnScrollIn {
-    0%   { opacity: 0; transform: translateY(50px) scale(0.6); }
-    45%  { opacity: 1; transform: translateY(-16px) scale(1.2, 0.82); }
-    62%  { transform: translateY(7px) scale(0.9, 1.14); }
-    75%  { transform: translateY(-6px) scale(1.07, 0.94); }
-    85%  { transform: translateY(3px) scale(0.97, 1.03); }
-    92%  { transform: translateY(-1px) scale(1.02, 0.99); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+    0%   { opacity: 0; transform: translateX(-50%) translateY(50px) scale(0.6); }
+    45%  { opacity: 1; transform: translateX(-50%) translateY(-16px) scale(1.2, 0.82); }
+    62%  { transform: translateX(-50%) translateY(7px) scale(0.9, 1.14); }
+    75%  { transform: translateX(-50%) translateY(-6px) scale(1.07, 0.94); }
+    85%  { transform: translateX(-50%) translateY(3px) scale(0.97, 1.03); }
+    92%  { transform: translateX(-50%) translateY(-1px) scale(1.02, 0.99); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
 }
 
 /* ── 스크롤 사라짐: 통통 튀며 내려가는 키프레임 ── */
 @keyframes floatBtnScrollOut {
-    0%   { opacity: 1; transform: translateY(0) scale(1); }
-    15%  { transform: translateY(-8px) scale(1.08, 0.88); }
-    35%  { transform: translateY(5px) scale(0.95, 1.06); }
-    55%  { opacity: 0.6; transform: translateY(28px) scale(0.85, 0.9); }
-    100% { opacity: 0; transform: translateY(50px) scale(0.6); }
+    0%   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    15%  { transform: translateX(-50%) translateY(-8px) scale(1.08, 0.88); }
+    35%  { transform: translateX(-50%) translateY(5px) scale(0.95, 1.06); }
+    55%  { opacity: 0.6; transform: translateX(-50%) translateY(28px) scale(0.85, 0.9); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(50px) scale(0.6); }
 }
+
 
 #floatingConsultBtn {
     position: fixed;
     bottom: 2.4rem;
-    left: 2.4rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(50px) scale(0.6);
     z-index: 3000;
     opacity: 0;
-    transform: translateY(50px) scale(0.6);
     pointer-events: none;
     transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 #floatingConsultBtn.is-visible {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateX(-50%) translateY(0) scale(1);
     pointer-events: auto;
 }
 
@@ -7838,7 +7853,7 @@ body {
 /* 패널 열릴 때: 부드럽게 사라짐 (transition 기반) */
 #floatingConsultBtn.panel-open {
     opacity: 0 !important;
-    transform: translateY(16px) scale(0.9) !important;
+    transform: translateX(-50%) translateY(16px) scale(0.9) !important;
     pointer-events: none !important;
 }
 
@@ -7925,7 +7940,8 @@ body {
 @media (max-width: 768px) {
     #floatingConsultBtn {
         bottom: 1.6rem;
-        left: 1.2rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(50px) scale(0.6);
     }
     .float-consult-btn {
         width: 148px;
