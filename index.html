@@ -3834,7 +3834,7 @@
                                 <span class="checkmark"></span>
                                 개인정보 수집 및 이용 동의 <span class="required">*</span>
                             </label>
-                            <button type="button" class="btn-detail-large" id="openPrivacyFooter">전문 보기</button>
+                            <button type="button" class="btn-detail-large" id="openPrivacyConsult">전문 보기</button>
                         </div>
                     </div>
 
@@ -5119,7 +5119,7 @@
             /* 이벤트 위임: ffpPrivacyOpen / scPrivacyOpen은 이 스크립트 실행 시점에
                아직 DOM에 없으므로 document 전체에서 클릭을 위임하여 감지 */
             document.addEventListener('click', function(e) {
-                if (e.target.id === 'ffpPrivacyOpen' || e.target.id === 'scPrivacyOpen') {
+                if (e.target.id === 'ffpPrivacyOpen' || e.target.id === 'scPrivacyOpen' || e.target.id === 'openPrivacyConsult') {
                     openModal();
                 }
             });

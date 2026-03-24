@@ -4726,13 +4726,13 @@ ul.sc-slider-tabs li {
 }
 
 .checkbox-container .checkmark:after {
-    left: 7px;
-    top: 3px;
-    width: 5px;
-    height: 10px;
+    left: 50%;
+    top: 46%; /* 시각적 중앙값 (L모양 특성상 살짝 위) */
+    width: 6px;
+    height: 11px;
     border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+    border-width: 0 2.5px 2.5px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .btn-detail {
@@ -4830,12 +4830,11 @@ ul.sc-slider-tabs li {
         border-radius: 4px; /* 박스가 작아졌으므로 곡률도 살짝 조정 */
     }
 
-    /* 18px 박스용 체크 표시 위치 보정 */
+    /* 18px 박스용 체크 표시 비례 축소 */
     .checkbox-container .checkmark:after {
-        left: 5px;
-        top: 2px;
-        width: 4px;
-        height: 8px;
+        width: 4.5px;
+        height: 9px;
+        border-width: 0 2px 2px 0;
     }
 
     .btn-detail {
