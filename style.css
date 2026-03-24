@@ -4771,8 +4771,56 @@ ul.sc-slider-tabs li {
     }
 
     .consult__row {
-        flex-direction: column;
-        gap: 2.5rem;
+        flex-direction: row; /* 모바일에서도 2열 유지 */
+        gap: 0.8rem;
+    }
+
+    .consult__group label {
+        font-size: 0.95rem; /* 라벨 폰트 축소 */
+    }
+
+    .consult__group input,
+    .consult__group select {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    /* 하단 정렬: 시간 + 동의항목 무조건 한 줄 */
+    .consult__row--bottom {
+        flex-direction: row !important;
+        align-items: flex-end;
+    }
+
+    .consult__group--time {
+        flex: 1 !important;
+    }
+
+    .consult__agreement {
+        flex: 1.5;
+        padding-bottom: 0.5rem;
+        margin-left: 0.5rem;
+    }
+
+    .agree-text {
+        font-size: 0.75rem; /* 긴 텍스트 축소 */
+        white-space: nowrap;
+    }
+
+    .checkmark {
+        height: 20px;
+        width: 20px;
+        margin-right: 0.5rem;
+    }
+
+    .btn-detail {
+        font-size: 0.7rem;
+        padding: 0.2rem;
+    }
+
+    .consult__submit {
+        padding: 1.2rem;
+        font-size: 1.15rem;
+        margin-top: 0.5rem;
     }
 
     .appliance-grid {
