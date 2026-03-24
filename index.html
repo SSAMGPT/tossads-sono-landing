@@ -4206,10 +4206,9 @@
                             }
                         );
                         gsap.from(split.words, {
-                            y: 40,
-                            duration: 2.5, 
+                            y: (i) => (i * 100) - 50,
+                            duration: 3, 
                             ease: 'expo.out',
-                            stagger: 0.02,
                             overwrite: true
                         });
                     },
@@ -4247,10 +4246,9 @@
                             }
                         );
                         gsap.from(scSplit.words, {
-                            y: 40,
-                            duration: 2.5, 
+                            y: (i) => (i * 100) - 50,
+                            duration: 3, 
                             ease: 'expo.out',
-                            stagger: 0.02,
                             overwrite: true
                         });
                     },
@@ -4290,10 +4288,9 @@
                             }
                         );
                         gsap.from(trustSplit.words, {
-                            y: 40,
-                            duration: 2.5, 
+                            y: (i) => (i * 100) - 50,
+                            duration: 3, 
                             ease: 'expo.out',
-                            stagger: 0.02,
                             overwrite: true
                         });
                     },
@@ -4336,10 +4333,9 @@
                               overwrite: true }
                         );
                         gsap.from(rvSplit.words, { 
-                            y: 30, 
-                            duration: 2.0, 
+                            y: (i) => (i * 80) - 40, 
+                            duration: 2.5, 
                             ease: 'expo.out',
-                            stagger: 0.02,
                             overwrite: true 
                         });
                     },
@@ -4473,7 +4469,7 @@
                     onEnter: () => {
                         gsap.fromTo(split2.chars, { opacity: 0 },
                             { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: true });
-                        gsap.from(split2.words, { y: 40, duration: 2.5, ease: 'expo.out', stagger: 0.02, overwrite: true });
+                        gsap.from(split2.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out', overwrite: true });
                     },
                     onLeaveBack: () => { gsap.to(split2.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: true }); }
                 });
@@ -4495,7 +4491,7 @@
                     onEnter: () => {
                         gsap.fromTo(split3.chars, { opacity: 0 },
                             { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: true });
-                        gsap.from(split3.words, { y: 40, duration: 2.5, ease: 'expo.out', stagger: 0.02, overwrite: true });
+                        gsap.from(split3.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out', overwrite: true });
                     },
                     onLeaveBack: () => { gsap.to(split3.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: true }); }
                 });
@@ -4517,7 +4513,7 @@
                     onEnter: () => {
                         gsap.fromTo(split4.chars, { opacity: 0 },
                             { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: true });
-                        gsap.from(split4.words, { y: 40, duration: 2.5, ease: 'expo.out', stagger: 0.02, overwrite: true });
+                        gsap.from(split4.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out', overwrite: true });
                     },
                     onLeaveBack: () => { gsap.to(split4.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: true }); }
                 });
