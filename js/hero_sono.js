@@ -34,7 +34,7 @@ if (typeof SplitText !== 'undefined' && typeof CustomEase !== 'undefined') {
 var HERO_TEXTS = [
   ['소노아임레디', '스마트케어'],                // 0: sono-hero-01
   ['쓴 만큼 고스란히', '만기 환급형 가전 렌탈'],    // 1: sono-hero-02
-  ['상조도 소노와 함께', '프리미엄으로 준비'],     // 2: sono-hero-03
+  ['월 납입 부담은 나누고', '만기 혜택은 분명하게'], // 2: sono-hero-03
   ['당신의 일상을', '더 특별하게.'],           // 3: sono-hero-04
   ['소노의 모든 공간', '특별한 멤버십 혜택'],       // 4: sono-hero-05
 ];
@@ -94,6 +94,17 @@ window._heroSlideTextChange = function(slideIndex) {
     gsap.from(s.words,
       { duration: 3, y: function(i) { return (i * 100) - 50; }, ease: 'expo.out' }
     );
+  }
+
+  /* 세 번째 슬라이드 전용 안내 문구 (Subtitle) 처리 */
+  var sub = document.getElementById('hero-subtitle');
+  if (sub) {
+    if (slideIndex === 2) {
+      sub.textContent = "스마트케어 330 결합 플랜 안내";
+      sub.classList.add('is--active');
+    } else {
+      sub.classList.remove('is--active');
+    }
   }
 };
 

@@ -7711,6 +7711,28 @@ body {
     opacity: 0; /* GSAP이 썸네일과 동시에 등장 제어 */
 }
 
+/* 세 번째 슬라이드 전용 안내 문구 전용 스타일 */
+.hero-subtitle {
+    position: absolute;
+    bottom: 18rem; 
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    color: #FF6242; /* 브랜드 오렌지 */
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem); /* h1의 약 2/3 수준 */
+    font-weight: 800;
+    text-align: center;
+    z-index: 10003;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+    font-family: 'Pretendard', sans-serif;
+    letter-spacing: -0.01em;
+}
+.hero-subtitle.is--active {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
 .scrolldown {
     --color: white;
     --sizeX: 30px;
