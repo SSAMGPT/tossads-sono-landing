@@ -4086,6 +4086,14 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/TextPlugin.min.js"></script>
     <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+    <script src="js/SplitText.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
+    <script src="js/three.js"></script>
+    <script src="js/hero_webgl.js"></script>
+    <script src="js/hero_sono.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./js/smartcare.js"></script>
+    <script src="./js/sc-supabase.js"></script>
 
     <!-- Navigation Menu Overlay -->
     <nav class="menu" id="mainMenu" style="font-family: 'Pretendard', sans-serif;">
@@ -4105,8 +4113,70 @@
     </nav>
 
     <script>
-        // ScrollTrigger & SplitText는 바디 끝에 로드되므로 window load 이후 실행 보장
-        gsap.registerPlugin(ScrollTrigger);
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, TextPlugin, SplitText);
+
+        const initPrivacyModal = () => {
+            const modal = document.getElementById('privacyModal');
+            const closeBtn = document.getElementById('closePrivacy');
+            if (!modal) return;
+
+            const openModal = () => {
+                modal.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeModal = () => {
+                modal.classList.remove('is-open');
+                document.body.style.overflow = '';
+            };
+
+            // 모든 전문 보기 버튼(js-privacy-open 클래스)에 대해 통합 위임
+            document.addEventListener('click', (e) => {
+                const trigger = e.target.closest('.js-privacy-open, #openPrivacyFooter, #scPrivacyOpen, #cmPrivacyOpen, #openPrivacyConsult');
+                if (trigger) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openModal();
+                }
+            });
+
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            window.openPrivacyModal = openModal; // 전역 함수로 공개
+        };
+
+        const initNoticeModal = () => {
+            const openBtn = document.getElementById('openNotice');
+            const modal = document.getElementById('noticeModal');
+            const closeBtn = document.getElementById('closeNotice');
+            if (!modal) return;
+
+            const openModal = () => {
+                modal.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeModal = () => {
+                modal.classList.remove('is-open');
+                document.body.style.overflow = '';
+            };
+
+            document.addEventListener('click', (e) => {
+                const trigger = e.target.closest('#openNotice');
+                if (trigger) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openModal();
+                }
+            });
+
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        };
+
+        // 약관/공지사항은 어떤 충돌 상황에서도 실행되어야 하므로 가장 먼저 독립 호출
+        initPrivacyModal();
+        initNoticeModal();
 
 
 
@@ -5098,59 +5168,9 @@
             }
         };
 
-        const initPrivacyModal = () => {
-            const modal = document.getElementById('privacyModal');
-            const closeBtn = document.getElementById('closePrivacy');
-            if (!modal) return;
 
-            const openModal = () => {
-                modal.classList.add('is-open');
-                document.body.style.overflow = 'hidden';
-            };
 
-            const closeModal = () => {
-                modal.classList.remove('is-open');
-                document.body.style.overflow = '';
-            };
 
-            // 모든 전문 보기 버튼(js-privacy-open 클래스)에 대해 통합 위임
-            document.addEventListener('click', (e) => {
-                const trigger = e.target.closest('.js-privacy-open, #openPrivacyFooter, #scPrivacyOpen, #cmPrivacyOpen, #openPrivacyConsult');
-                if (trigger) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    openModal();
-                }
-            });
-
-            if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-            window.openPrivacyModal = openModal; // 전역 함수로 공개
-        };
-
-        const initNoticeModal = () => {
-            const openBtn = document.getElementById('openNotice');
-            const modal = document.getElementById('noticeModal');
-            const closeBtn = document.getElementById('closeNotice');
-
-            const openModal = () => {
-                modal.classList.add('is-open');
-                document.body.style.overflow = 'hidden';
-            };
-
-            const closeModal = () => {
-                modal.classList.remove('is-open');
-                document.body.style.overflow = '';
-            };
-
-            if (openBtn) openBtn.addEventListener('click', openModal);
-            if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            if (modal) {
-                window.addEventListener('click', (e) => {
-                    if (e.target === modal) closeModal();
-                });
-            }
-        };
 
         /* Navigation Menu Logic */
         class NavigationMenu {
@@ -5250,8 +5270,7 @@
             initReviewCarousel();
             initPromotionAnimation();
             initFAQ();
-            initPrivacyModal();
-            initNoticeModal();
+            // initPrivacyModal / initNoticeModal은 최상단에서 이미 실행됨
             initFinalTypoAnimation();
             new NavigationMenu();
         };
