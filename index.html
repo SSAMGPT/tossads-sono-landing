@@ -2283,7 +2283,7 @@
                             <h4 class="sc-price-name">스마트케어 330X3</h4>
                             <div class="sc-price-row">
                                 <span class="sc-price-label">월 정액</span>
-                                <p class="sc-price-value-mo">33,000원</p>
+                                <p class="sc-price-value-mo">49,500원</p>
                             </div>
                             <div class="sc-price-divider"></div>
                             <div class="sc-price-row">
@@ -2425,7 +2425,7 @@
                             <h4 class="sc-price-name">스마트케어 330X4 <span class="sc-tab-best">Best</span></h4>
                             <div class="sc-price-row">
                                 <span class="sc-price-label">월 정액</span>
-                                <p class="sc-price-value-mo">33,000원</p>
+                                <p class="sc-price-value-mo">66,000원</p>
                             </div>
                             <div class="sc-price-divider"></div>
                             <div class="sc-price-row">
@@ -2572,7 +2572,7 @@
                             <h4 class="sc-price-name">스마트케어 330X6</h4>
                             <div class="sc-price-row">
                                 <span class="sc-price-label">월 정액</span>
-                                <p class="sc-price-value-mo">33,000원</p>
+                                <p class="sc-price-value-mo">99,000원</p>
                             </div>
                             <div class="sc-price-divider"></div>
                             <div class="sc-price-row">
@@ -4619,6 +4619,7 @@
 
                 // ── 호버 인 (마우스) ──
                 link.addEventListener('mouseenter', function (ev) {
+                    item.classList.add('is-active');
                     const r = item.getBoundingClientRect();
                     const edge = findClosestEdge(ev.clientX - r.left, ev.clientY - r.top, r.width, r.height);
                     gsap.timeline({ defaults: animDef })
@@ -4629,6 +4630,7 @@
 
                 // ── 호버 아웃 (마우스) ──
                 link.addEventListener('mouseleave', function (ev) {
+                    item.classList.remove('is-active');
                     const r = item.getBoundingClientRect();
                     const edge = findClosestEdge(ev.clientX - r.left, ev.clientY - r.top, r.width, r.height);
                     gsap.timeline({ defaults: animDef })
@@ -4661,12 +4663,14 @@
 
                     if (!fmTouched) {
                         fmTouched = true;
+                        item.classList.add('is-active');
                         gsap.timeline({ defaults: animDef })
                             .set(marquee, { y: '101%' }, 0)
                             .set(inner,   { y: '-101%' }, 0)
                             .to([marquee, inner], { y: '0%' }, 0);
                     } else {
                         fmTouched = false;
+                        item.classList.remove('is-active');
                         gsap.timeline({ defaults: animDef })
                             .to(marquee, { y: '101%' }, 0)
                             .to(inner,   { y: '-101%' }, 0);
@@ -4734,100 +4738,43 @@
         };
         initBenefitTabs();
 
-        // --- Premium Cards Accordion ---
+        // --- Premium Cards Modal ---
         const initPremiumCards = () => {
             const cards = document.querySelectorAll('.prem-card');
             const details = document.querySelectorAll('.prem-detail');
 
             if (!cards.length || !details.length) return;
 
+            // Create overlay
+            let overlay = document.querySelector('.prem-modal-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'prem-modal-overlay';
+                document.body.appendChild(overlay);
+            }
+
             const closeAll = () => {
                 cards.forEach(c => c.classList.remove('is-active'));
-                details.forEach(detail => {
-                    if (detail.classList.contains('is-open')) {
-                        gsap.to(detail, {
-                            height: 0,
-                            opacity: 0,
-                            paddingTop: 0,
-                            paddingBottom: 0,
-                            marginTop: 0,
-                            marginBottom: 0,
-                            duration: 0.4,
-                            ease: "power2.inOut",
-                            clearProps: "all",
-                            onComplete: () => detail.classList.remove('is-open')
-                        });
-                    }
-                });
+                details.forEach(detail => detail.classList.remove('is-open'));
+                overlay.classList.remove('is-open');
+                document.body.style.overflow = '';
             };
 
-            /* 즉시 닫기: 위치 측정 전 레이아웃 확정용 */
-            const closeAllInstant = () => {
-                cards.forEach(c => c.classList.remove('is-active'));
-                details.forEach(detail => {
-                    if (detail.classList.contains('is-open')) {
-                        gsap.killTweensOf(detail);
-                        gsap.set(detail, {
-                            height: 0, opacity: 0,
-                            paddingTop: 0, paddingBottom: 0,
-                            marginTop: 0, marginBottom: 0
-                        });
-                        detail.classList.remove('is-open');
-                    }
-                });
-            };
-
+            overlay.addEventListener('click', closeAll);
 
             cards.forEach(card => {
                 card.addEventListener('click', (e) => {
+                    e.preventDefault();
                     const targetId = card.getAttribute('data-target');
                     const target = document.getElementById(targetId);
                     if (!target) return;
 
-                    const isOpen = target.classList.contains('is-open');
-
-                    // If it's already open, just close it
-                    if (isOpen) {
-                        closeAll();
-                        return;
-                    }
-
-                    // 다른 패널 즉시 닫기 → 레이아웃 즉시 확정
-                    closeAllInstant();
+                    closeAll();
 
                     target.classList.add('is-open');
                     card.classList.add('is-active');
-
-                    // 1단계: 패널을 opacity:0 상태로 즉시 완전히 열기 (레이아웃 확정)
-                    gsap.set(target, {
-                        height: 'auto',
-                        opacity: 0,
-                        paddingTop: '2.5rem',
-                        paddingBottom: '2.5rem',
-                        marginTop: '0.5rem',
-                        marginBottom: '1rem'
-                    });
-
-                    // 2단계: 레이아웃 리플로우 강제 발생 → 정확한 위치 측정
-                    void target.offsetHeight;
-
-                    // 3단계: 패널의 실제 문서 위치 계산
-                    const hdr = document.querySelector('.main-header');
-                    const headerH = hdr ? hdr.offsetHeight : 0;
-                    const targetDocTop = target.getBoundingClientRect().top + window.scrollY;
-                    const scrollTarget = Math.max(0, targetDocTop - headerH - 12);
-
-                    // 4단계: 스크롤 + 페이드인 동시 실행
-                    gsap.to(window, {
-                        duration: 0.55,
-                        scrollTo: { y: scrollTarget, autoKill: false },
-                        ease: "power2.out"
-                    });
-                    gsap.to(target, {
-                        opacity: 1,
-                        duration: 0.35,
-                        ease: "power2.out"
-                    });
+                    overlay.classList.add('is-open');
+                    document.body.style.overflow = 'hidden';
                 });
             });
 
@@ -6034,11 +5981,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    document.querySelectorAll('[data-tab]').forEach(function(tabBtn) {
+    document.querySelectorAll('[data-tab], [data-sctab]').forEach(function(tabBtn) {
         tabBtn.addEventListener('click', function() {
             setTimeout(function() {
                 document.querySelectorAll('.sc-brand-filter, .sc-cat-filter').forEach(updateFilterSelection);
             }, 60);
+        });
+    });
+
+    window.addEventListener('resize', function() {
+        requestAnimationFrame(function() {
+            document.querySelectorAll('.sc-brand-filter, .sc-cat-filter').forEach(updateFilterSelection);
         });
     });
 });
