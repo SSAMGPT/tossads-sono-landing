@@ -3896,6 +3896,11 @@
                 submitBtn.textContent = '✅ 신청 완료! 곧 연락드리겠습니다.';
                 submitBtn.style.background = '#00a86b';
                 form.querySelectorAll('input, select').forEach(function (el) { el.disabled = true; });
+
+                /* 2초 후 페이지 이동 */
+                setTimeout(function () {
+                    window.location.href = 'https://ssamgpt.github.io/sono-appliances/';
+                }, 2000);
             });
         })();
     </script>
@@ -5711,7 +5716,11 @@
                 submitBtn.disabled = true;
                 submitBtn.classList.add('is-done');
                 if (submitLabel) submitLabel.textContent = '✅ 신청 완료! 곧 연락드리겠습니다.';
-                setTimeout(closeConsultModal, 2500);
+                
+                /* 2초 후 페이지 이동 */
+                setTimeout(function () {
+                    window.location.href = 'https://ssamgpt.github.io/sono-appliances/';
+                }, 2000);
             });
         }
 
@@ -5898,6 +5907,11 @@
                     submit.disabled = true;
                     card.querySelectorAll('input').forEach(function (el) { el.disabled = true; });
                     if (cancel) cancel.style.display = 'none';
+
+                    /* 2초 후 페이지 이동 */
+                    setTimeout(function () {
+                        window.location.href = 'https://ssamgpt.github.io/sono-appliances/';
+                    }, 2000);
                 });
             }
         })();
