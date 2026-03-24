@@ -4827,6 +4827,15 @@ ul.sc-slider-tabs li {
         height: 18px;
         width: 18px;
         margin-right: 0.4rem;
+        border-radius: 4px; /* 박스가 작아졌으므로 곡률도 살짝 조정 */
+    }
+
+    /* 18px 박스용 체크 표시 위치 보정 */
+    .checkbox-container .checkmark:after {
+        left: 5px;
+        top: 2px;
+        width: 4px;
+        height: 8px;
     }
 
     .btn-detail {
