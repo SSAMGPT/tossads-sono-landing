@@ -4179,12 +4179,16 @@
             const introDarkHeading = document.getElementById('intro-dark-heading');
             if (introDarkHeading && typeof SplitText !== 'undefined') {
                 gsap.registerPlugin(SplitText);
+                if (introDarkHeading._gsapSplit) introDarkHeading._gsapSplit.revert();
+                introDarkHeading.innerHTML = introDarkHeading.innerHTML;
 
                 const split = new SplitText(introDarkHeading, {
-                    type: 'words,chars',
+                    type: 'lines,words,chars',
+                    linesClass: 'split-line',
                     wordsClass: 'split-word',
                     charsClass: 'split-char'
                 });
+                introDarkHeading._gsapSplit = split;
 
                 gsap.set(introDarkHeading, { opacity: 1 });
                 gsap.set(split.chars, { opacity: 0 });
@@ -4198,17 +4202,19 @@
                             {
                                 opacity: 1, duration: 1.2, ease: 'power1.inOut',
                                 stagger: { from: 'center', each: 0.04 },
-                                overwrite: 'auto'
+                                overwrite: true
                             }
                         );
                         gsap.from(split.words, {
-                            y: (i) => (i * 100) - 50,
-                            duration: 3, ease: 'expo.out',
-                            overwrite: 'auto'
+                            y: 40,
+                            duration: 2.5, 
+                            ease: 'expo.out',
+                            stagger: 0.02,
+                            overwrite: true
                         });
                     },
                     onLeaveBack: () => {
-                        gsap.to(split.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: 'auto' });
+                        gsap.to(split.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: true });
                     }
                 });
             }
@@ -4216,11 +4222,16 @@
             // --- 스마트케어 플랜 섹션 타이틀 애니메이션 (intro-dark-heading과 동일) ---
             const scHeading = document.getElementById('smartcare-section-heading');
             if (scHeading && typeof SplitText !== 'undefined') {
+                if (scHeading._gsapSplit) scHeading._gsapSplit.revert();
+                scHeading.innerHTML = scHeading.innerHTML;
+
                 const scSplit = new SplitText(scHeading, {
-                    type: 'words,chars',
+                    type: 'lines,words,chars',
+                    linesClass: 'split-line',
                     wordsClass: 'split-word',
                     charsClass: 'split-char'
                 });
+                scHeading._gsapSplit = scSplit;
                 gsap.set(scHeading, { opacity: 1 });
                 gsap.set(scSplit.chars, { opacity: 0 });
                 ScrollTrigger.create({
@@ -4232,17 +4243,19 @@
                             {
                                 opacity: 1, duration: 1.2, ease: 'power1.inOut',
                                 stagger: { from: 'center', each: 0.04 },
-                                overwrite: 'auto'
+                                overwrite: true
                             }
                         );
                         gsap.from(scSplit.words, {
-                            y: (i) => (i * 100) - 50,
-                            duration: 3, ease: 'expo.out',
-                            overwrite: 'auto'
+                            y: 40,
+                            duration: 2.5, 
+                            ease: 'expo.out',
+                            stagger: 0.02,
+                            overwrite: true
                         });
                     },
                     onLeaveBack: () => {
-                        gsap.to(scSplit.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: 'auto' });
+                        gsap.to(scSplit.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: true });
                     }
                 });
             }
@@ -4250,13 +4263,20 @@
             // --- Trust 섹션 타이틀 애니메이션 (스마트케어 플랜과 동일) ---
             const trustHeading = document.getElementById('trust-section-heading');
             if (trustHeading && typeof SplitText !== 'undefined') {
+                if (trustHeading._gsapSplit) trustHeading._gsapSplit.revert();
+                trustHeading.innerHTML = trustHeading.innerHTML; // DOM 초기화
+
                 const trustSplit = new SplitText(trustHeading, {
-                    type: 'words,chars',
+                    type: 'lines,words,chars',
+                    linesClass: 'split-line',
                     wordsClass: 'split-word',
                     charsClass: 'split-char'
                 });
+                trustHeading._gsapSplit = trustSplit;
+
                 gsap.set(trustHeading, { opacity: 1 });
                 gsap.set(trustSplit.chars, { opacity: 0 });
+
                 ScrollTrigger.create({
                     trigger: trustHeading,
                     start: 'top 80%',
@@ -4266,13 +4286,15 @@
                             {
                                 opacity: 1, duration: 1.2, ease: 'power1.inOut',
                                 stagger: { from: 'center', each: 0.04 },
-                                overwrite: 'auto'
+                                overwrite: true
                             }
                         );
                         gsap.from(trustSplit.words, {
-                            y: (i) => (i * 100) - 50,
-                            duration: 3, ease: 'expo.out',
-                            overwrite: 'auto'
+                            y: 40,
+                            duration: 2.5, 
+                            ease: 'expo.out',
+                            stagger: 0.02,
+                            overwrite: true
                         });
                     },
                     onLeaveBack: () => {
@@ -4280,7 +4302,7 @@
                             opacity: 0, 
                             duration: 0.4, 
                             ease: 'power1.in',
-                            overwrite: 'auto' 
+                            overwrite: true 
                         });
                     }
                 });
@@ -4289,13 +4311,20 @@
             // --- REAL REVIEW 타이틀 애니메이션 ---
             const reviewHeading = document.getElementById('review-section-heading');
             if (reviewHeading && typeof SplitText !== 'undefined') {
+                if (reviewHeading._gsapSplit) reviewHeading._gsapSplit.revert();
+                reviewHeading.innerHTML = reviewHeading.innerHTML; // DOM 초기화
+
                 const rvSplit = new SplitText(reviewHeading, {
-                    type: 'words,chars',
+                    type: 'lines,words,chars',
+                    linesClass: 'split-line',
                     wordsClass: 'split-word',
                     charsClass: 'split-char'
                 });
+                reviewHeading._gsapSplit = rvSplit;
+
                 gsap.set(reviewHeading, { opacity: 1 });
                 gsap.set(rvSplit.chars, { opacity: 0 });
+
                 ScrollTrigger.create({
                     trigger: reviewHeading,
                     start: 'top 82%',
@@ -4304,20 +4333,21 @@
                             { opacity: 0 },
                             { opacity: 1, duration: 1.0, ease: 'power1.inOut',
                               stagger: { from: 'center', each: 0.04 },
-                              overwrite: 'auto' }
+                              overwrite: true }
                         );
                         gsap.from(rvSplit.words, { 
-                            y: (i) => (i * 80) - 40, 
-                            duration: 2.5, 
+                            y: 30, 
+                            duration: 2.0, 
                             ease: 'expo.out',
-                            overwrite: 'auto' 
+                            stagger: 0.02,
+                            overwrite: true 
                         });
                     },
                     onLeaveBack: () => {
                         gsap.to(rvSplit.chars, { 
                             opacity: 0, 
                             duration: 0.3, 
-                            overwrite: 'auto' 
+                            overwrite: true 
                         });
                     }
                 });
@@ -4430,51 +4460,66 @@
             // --- 두 번째 헤딩 ---
             const heading2 = document.getElementById('intro-dark-heading2');
             if (heading2 && typeof SplitText !== 'undefined') {
-                const split2 = new SplitText(heading2, { type: 'words,chars', wordsClass: 'split-word', charsClass: 'split-char' });
+                if (heading2._gsapSplit) heading2._gsapSplit.revert();
+                heading2.innerHTML = heading2.innerHTML;
+
+                const split2 = new SplitText(heading2, { type: 'lines,words,chars', linesClass: 'split-line', wordsClass: 'split-word', charsClass: 'split-char' });
+                heading2._gsapSplit = split2;
+
                 gsap.set(heading2, { opacity: 1 });
                 gsap.set(split2.chars, { opacity: 0 });
                 ScrollTrigger.create({
                     trigger: heading2, start: 'top 80%',
                     onEnter: () => {
                         gsap.fromTo(split2.chars, { opacity: 0 },
-                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: 'auto' });
-                        gsap.from(split2.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out', overwrite: 'auto' });
+                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: true });
+                        gsap.from(split2.words, { y: 40, duration: 2.5, ease: 'expo.out', stagger: 0.02, overwrite: true });
                     },
-                    onLeaveBack: () => { gsap.to(split2.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: 'auto' }); }
+                    onLeaveBack: () => { gsap.to(split2.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: true }); }
                 });
             }
 
             // --- 세 번째 헤딩 ---
             const heading3 = document.getElementById('intro-dark-heading3');
             if (heading3 && typeof SplitText !== 'undefined') {
-                const split3 = new SplitText(heading3, { type: 'words,chars', wordsClass: 'split-word', charsClass: 'split-char' });
+                if (heading3._gsapSplit) heading3._gsapSplit.revert();
+                heading3.innerHTML = heading3.innerHTML;
+
+                const split3 = new SplitText(heading3, { type: 'lines,words,chars', linesClass: 'split-line', wordsClass: 'split-word', charsClass: 'split-char' });
+                heading3._gsapSplit = split3;
+
                 gsap.set(heading3, { opacity: 1 });
                 gsap.set(split3.chars, { opacity: 0 });
                 ScrollTrigger.create({
                     trigger: heading3, start: 'top 80%',
                     onEnter: () => {
                         gsap.fromTo(split3.chars, { opacity: 0 },
-                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: 'auto' });
-                        gsap.from(split3.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out', overwrite: 'auto' });
+                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: true });
+                        gsap.from(split3.words, { y: 40, duration: 2.5, ease: 'expo.out', stagger: 0.02, overwrite: true });
                     },
-                    onLeaveBack: () => { gsap.to(split3.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: 'auto' }); }
+                    onLeaveBack: () => { gsap.to(split3.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: true }); }
                 });
             }
 
             // --- 네 번째 헤딩: 통합 라이프케어 서비스 ---
             const heading4 = document.getElementById('intro-dark-heading4');
             if (heading4 && typeof SplitText !== 'undefined') {
-                const split4 = new SplitText(heading4, { type: 'words,chars', wordsClass: 'split-word', charsClass: 'split-char' });
+                if (heading4._gsapSplit) heading4._gsapSplit.revert();
+                heading4.innerHTML = heading4.innerHTML;
+
+                const split4 = new SplitText(heading4, { type: 'lines,words,chars', linesClass: 'split-line', wordsClass: 'split-word', charsClass: 'split-char' });
+                heading4._gsapSplit = split4;
+
                 gsap.set(heading4, { opacity: 1 });
                 gsap.set(split4.chars, { opacity: 0 });
                 ScrollTrigger.create({
                     trigger: heading4, start: 'top 80%',
                     onEnter: () => {
                         gsap.fromTo(split4.chars, { opacity: 0 },
-                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: 'auto' });
-                        gsap.from(split4.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out', overwrite: 'auto' });
+                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: true });
+                        gsap.from(split4.words, { y: 40, duration: 2.5, ease: 'expo.out', stagger: 0.02, overwrite: true });
                     },
-                    onLeaveBack: () => { gsap.to(split4.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: 'auto' }); }
+                    onLeaveBack: () => { gsap.to(split4.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: true }); }
                 });
             }
 
