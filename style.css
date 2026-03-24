@@ -1152,6 +1152,35 @@ body {
     mask-image: none !important;
 }
 
+/* ── 모바일 전용: 심플 '>>' 클릭 유도 UI ── */
+@media (max-width: 767px) {
+    .fm-item::after {
+        content: '>>';
+        position: absolute;
+        bottom: clamp(10px, 2vh, 20px);
+        right: clamp(15px, 4vw, 30px);
+        color: rgba(255, 255, 255, 0.7);
+        font-family: 'Pretendard', sans-serif;
+        font-size: 14px;
+        font-weight: 800;
+        z-index: 1; /* 링크 내용 위에 표시 */
+        pointer-events: none;
+        letter-spacing: 0.1em;
+        animation: fmPulse 1.5s infinite ease-in-out;
+        transition: opacity 0.3s;
+    }
+
+    /* 마키가 열렸을 때는 숨김 */
+    .fm-item.is-active::after {
+        opacity: 0;
+    }
+}
+
+@keyframes fmPulse {
+    0%, 100% { opacity: 0.4; transform: translateX(0); }
+    50% { opacity: 0.9; transform: translateX(5px); }
+}
+
 /* 마키 오버레이 */
 .fm-marquee {
     position: absolute;
