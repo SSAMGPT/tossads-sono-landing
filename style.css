@@ -1268,6 +1268,25 @@ body {
     box-sizing: border-box;
 }
 
+/* ── 버튼 상단 유도 문구 ── */
+.sc-cta-text {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.4;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.02em;
+    font-family: 'Pretendard', sans-serif;
+}
+.sc-cta-text span {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 0.6rem;
+    color: rgba(255,255,255,0.7);
+}
+
 /* ── 기본 버튼 ── */
 .sc-btn {
     background: transparent;
@@ -1278,10 +1297,7 @@ body {
     font-size: 17px;
     font-weight: 700;
     padding: 14px 44px;
-    margin-top: 8rem; /* 한 번 더 내려서 8rem으로 여유 있게 조정 */
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
+    margin-top: 0; /* 문구가 밀고 내려오므로 0으로 조정 */
     letter-spacing: 0.04em;
     transition: border-color 0.4s ease;
 }
