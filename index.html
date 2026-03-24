@@ -1879,7 +1879,7 @@
                     </span>
                     <input type="checkbox" id="scAgree" style="display:none;">
                     <span class="sc-agree__text">개인정보 수집 및 이용에 동의합니다. <button type="button" class="sc-privacy-link"
-                            id="scPrivacyOpen">전문 보기</button></span>
+                            id="scPrivacyOpen" class="sc-privacy-link js-privacy-open">전문 보기</button></span>
                 </div>
 
                 <!-- 신청/취소 -->
@@ -3834,7 +3834,7 @@
                                 <span class="checkmark"></span>
                                 개인정보 수집 및 이용 동의 <span class="required">*</span>
                             </label>
-                            <button type="button" class="btn-detail-large" id="openPrivacyConsult">전문 보기</button>
+                            <button type="button" class="btn-detail-large js-privacy-open" id="openPrivacyConsult">전문 보기</button>
                         </div>
                     </div>
 
@@ -5099,10 +5099,9 @@
         };
 
         const initPrivacyModal = () => {
-            const detailBtn = document.querySelector('.btn-detail');
-            const footerPrivacyBtn = document.getElementById('openPrivacyFooter');
             const modal = document.getElementById('privacyModal');
             const closeBtn = document.getElementById('closePrivacy');
+            if (!modal) return;
 
             const openModal = () => {
                 modal.classList.add('is-open');
@@ -5114,21 +5113,19 @@
                 document.body.style.overflow = '';
             };
 
-            if (detailBtn) detailBtn.addEventListener('click', openModal);
-            if (footerPrivacyBtn) footerPrivacyBtn.addEventListener('click', openModal);
-            /* 이벤트 위임: ffpPrivacyOpen / scPrivacyOpen은 이 스크립트 실행 시점에
-               아직 DOM에 없으므로 document 전체에서 클릭을 위임하여 감지 */
-            document.addEventListener('click', function(e) {
-                if (e.target.id === 'ffpPrivacyOpen' || e.target.id === 'scPrivacyOpen' || e.target.id === 'openPrivacyConsult') {
+            // 모든 전문 보기 버튼(js-privacy-open 클래스)에 대해 통합 위임
+            document.addEventListener('click', (e) => {
+                const trigger = e.target.closest('.js-privacy-open, #openPrivacyFooter, #scPrivacyOpen, #cmPrivacyOpen, #openPrivacyConsult');
+                if (trigger) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     openModal();
                 }
             });
+
             if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            if (modal) {
-                window.addEventListener('click', (e) => {
-                    if (e.target === modal) closeModal();
-                });
-            }
+            window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            window.openPrivacyModal = openModal; // 전역 함수로 공개
         };
 
         const initNoticeModal = () => {
@@ -5374,7 +5371,7 @@
                         </span>
                         <span class="cm-agree-text">[필수] 개인정보 수집 및 이용에 동의합니다.</span>
                     </label>
-                    <button type="button" class="cm-privacy-btn" id="cmPrivacyOpen">전문 보기</button>
+                    <button type="button" class="cm-privacy-btn js-privacy-open" id="cmPrivacyOpen">전문 보기</button>
                 </div>
             </div>
 
