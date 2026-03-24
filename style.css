@@ -4411,6 +4411,14 @@ ul.sc-slider-tabs li {
     font-weight: 600;
 }
 
+.consult__guide {
+    margin-top: 1.25rem;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #4e4e51;
+    font-weight: 500;
+}
+
 .consult__card {
     background: #fff;
     border-radius: 20px;
