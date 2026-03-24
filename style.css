@@ -1278,7 +1278,7 @@ body {
     font-size: 17px;
     font-weight: 700;
     padding: 14px 44px;
-    margin-top: 5.5rem; /* 4.5rem에서 5.5rem으로 살짝 더 아래로 이동 */
+    margin-top: 6.5rem; /* 한 번 더 살짝 아래로 (6.5rem) */
     cursor: pointer;
     position: relative;
     overflow: hidden;
