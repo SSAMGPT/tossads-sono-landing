@@ -1302,6 +1302,10 @@ body {
     margin-top: 1.5rem;   /* 문구 아래 적절한 거리 유지 */
     letter-spacing: 0.04em;
     transition: border-color 0.4s ease;
+    /* ▼ 복구된 필수 속성 */
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
 }
 .sc-btn::before {
     content: '';
@@ -1309,7 +1313,7 @@ body {
     top: 0; left: -10%;
     width: 120%; height: 100%;
     background: #FF6242;
-    transform: skew(30deg) translateX(-110%);
+    transform: skew(30deg) translateX(-150%);
     transition: transform 0.45s cubic-bezier(0.3, 1, 0.8, 1);
     z-index: 0;
 }
