@@ -1275,10 +1275,10 @@ body {
     border-radius: 500px;
     color: #ffffff;
     font-family: 'Pretendard', sans-serif;
-    font-size: 24px;
-    font-weight: 800;
-    padding: 22px 64px;
-    margin-top: 4rem; /* 위치를 아래로 4rem 이동 */
+    font-size: 17px;
+    font-weight: 700;
+    padding: 14px 44px;
+    margin-top: 4.5rem; /* 크기는 복구하고 위치만 아래로 유지 */
     cursor: pointer;
     position: relative;
     overflow: hidden;
