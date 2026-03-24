@@ -1152,26 +1152,36 @@ body {
     mask-image: none !important;
 }
 
-/* ── 모바일 전용: 도그 이어 (Dog-ear) 폴더 탭 유도 UI ── */
+/* ── 모바일 전용: 사실적인 도그 이어 (Realistic Dog-ear) ── */
 @media (max-width: 767px) {
+    .fm-item {
+        background: #000; /* 뒤에 비쳐 보일 때 대비 */
+    }
+
+    .fm-link {
+        background-color: #0039E3;
+        /* 하단 우측 삼각형 도려내기 */
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%);
+        z-index: 5;
+        position: relative;
+    }
+
+    /* 도그 이어 접힌 면 (삼각형) */
     .fm-item::after {
         content: '';
         position: absolute;
         bottom: 0;
         right: 0;
-        width: 0;
-        height: 0;
-        /* 하단 우측 삼각형 (접힌 종이 느낌) */
-        border-style: solid;
-        border-width: 0 0 24px 24px;
-        border-color: transparent transparent rgba(255, 255, 255, 0.8) transparent;
-        z-index: 1; /* 링크와 같은 레벨, 마키보다는 아래 */
+        width: 28px;
+        height: 28px;
+        /* 접힌 종이의 뒷면 느낌 (그라데이션으로 입체감) */
+        background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(200,200,200,1) 50%, rgba(0,0,0,0) 50%);
+        z-index: 6; /* fm-link(5) 보다는 위 */
         pointer-events: none;
-        box-shadow: -3px -3px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: -2px -2px 4px rgba(0,0,0,0.2);
         transition: opacity 0.3s;
     }
-    
-    /* 마키가 열렸을 때는 도그 이어를 숨김 */
+
     .fm-item.is-active::after {
         opacity: 0;
     }
@@ -1186,7 +1196,6 @@ body {
     height: 100%;
     overflow: hidden;
     pointer-events: none;
-    /* transform은 GSAP에서 초기화 */
     background: #ffffff;
     z-index: 2;
     will-change: transform;

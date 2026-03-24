@@ -4598,8 +4598,14 @@
                 if (!link || !marquee || !inner || !part) return;
 
                 // GSAP으로 초기 위치 설정
-                gsap.set(marquee, { y: '101%' });
-                gsap.set(inner, { y: '-101%' });
+                if (isMobile()) {
+                    // 모바일: 평소엔 링크(5) 뒤에 마키(1)를 깔아서 틈으로 비치게 함
+                    gsap.set(marquee, { y: '0%', zIndex: 1 });
+                    gsap.set(inner, { y: '0%' });
+                } else {
+                    gsap.set(marquee, { y: '101%', zIndex: 2 });
+                    gsap.set(inner, { y: '-101%' });
+                }
 
                 // 마키 무한 스크롤 설정
                 function setupMarquee() {
@@ -4623,7 +4629,8 @@
                     const r = item.getBoundingClientRect();
                     const edge = findClosestEdge(ev.clientX - r.left, ev.clientY - r.top, r.width, r.height);
                     gsap.timeline({ defaults: animDef })
-                        .set(marquee, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+                        // 활성화 시엔 다시 위로(zIndex: 10) 올려서 덮음
+                        .set(marquee, { y: edge === 'top' ? '-101%' : '101%', zIndex: 10 }, 0)
                         .set(inner, { y: edge === 'top' ? '101%' : '-101%' }, 0)
                         .to([marquee, inner], { y: '0%' }, 0);
                 });
@@ -4634,8 +4641,13 @@
                     const r = item.getBoundingClientRect();
                     const edge = findClosestEdge(ev.clientX - r.left, ev.clientY - r.top, r.width, r.height);
                     gsap.timeline({ defaults: animDef })
-                        .to(marquee, { y: edge === 'top' ? '-101%' : '101%' }, 0)
-                        .to(inner, { y: edge === 'top' ? '101%' : '-101%' }, 0);
+                        .to(marquee, { y: edge === 'top' ? '-101%' : '101%', onComplete: () => {
+                            // 다시 뒤로(zIndex: 1) 숨김 (모바일만)
+                            if (isMobile()) gsap.set(marquee, { zIndex: 1, y: '0%' });
+                        }}, 0)
+                        .to(inner, { y: edge === 'top' ? '101%' : '-101%', onComplete: () => {
+                            if (isMobile()) gsap.set(inner, { y: '0%' });
+                        }}, 0);
                 });
             });
 
@@ -4665,15 +4677,19 @@
                         fmTouched = true;
                         item.classList.add('is-active');
                         gsap.timeline({ defaults: animDef })
-                            .set(marquee, { y: '101%' }, 0)
+                            .set(marquee, { y: '101%', zIndex: 10 }, 0)
                             .set(inner,   { y: '-101%' }, 0)
                             .to([marquee, inner], { y: '0%' }, 0);
                     } else {
                         fmTouched = false;
                         item.classList.remove('is-active');
                         gsap.timeline({ defaults: animDef })
-                            .to(marquee, { y: '101%' }, 0)
-                            .to(inner,   { y: '-101%' }, 0);
+                            .to(marquee, { y: '101%', onComplete: () => {
+                                gsap.set(marquee, { zIndex: 1, y: '0%' });
+                            }}, 0)
+                            .to(inner,   { y: '-101%', onComplete: () => {
+                                gsap.set(inner, { y: '0%' });
+                            }}, 0);
                     }
                 });
             });
