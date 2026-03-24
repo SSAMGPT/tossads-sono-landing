@@ -32,11 +32,11 @@ if (typeof SplitText !== 'undefined' && typeof CustomEase !== 'undefined') {
 
 /* 슬라이드별 텍스트 (hero_webgl.js IMAGES 배열 순서와 동일) */
 var HERO_TEXTS = [
-  ['당신의 일상을', '더 특별하게.'],           // 0: sono-hero-04
+  ['소노아임레디', '스마트케어'],                // 0: sono-hero-01
   ['쓴 만큼 고스란히', '만기 환급형 가전 렌탈'],    // 1: sono-hero-02
   ['상조도 소노와 함께', '프리미엄으로 준비'],     // 2: sono-hero-03
-  ['소노의 모든 공간', '특별한 멤버십 혜택'],       // 3: sono-hero-05
-  ['소노아임레디', '스마트케어'],                // 4: sono-hero-01
+  ['당신의 일상을', '더 특별하게.'],           // 3: sono-hero-04
+  ['소노의 모든 공간', '특별한 멤버십 혜택'],       // 4: sono-hero-05
 ];
 
 /* h1에 새 텍스트를 주입하고 SplitText 적용 후 글로벌 저장 */

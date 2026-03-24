@@ -6,11 +6,11 @@
   'use strict';
 
   var IMAGES = [
-    'img/sono-hero-04.jpeg',   // 0  (default current)
+    'img/sono-hero-01.jpeg',   // 0  (first shown)
     'img/sono-hero-02.jpeg',   // 1
     'img/sono-hero-03.jpeg',   // 2
-    'img/sono-hero-05.jpeg',   // 3
-    'img/sono-hero-01.jpeg',   // 4
+    'img/sono-hero-04.jpeg',   // 3
+    'img/sono-hero-05.jpeg',   // 4
   ];
 
   var AUTO_INTERVAL    = 5000;   // ms between auto-transitions
