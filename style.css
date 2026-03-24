@@ -4755,7 +4755,7 @@ ul.sc-slider-tabs li {
     display: block;
     width: fit-content;
     min-width: 180px; 
-    margin: 1.5rem auto 0;
+    margin: 3.5rem auto 0; /* 기존 1.5rem -> 3.5rem으로 하향 이동 */
     background-color: #0039E3;
     color: #fff;
     font-size: 1.25rem;
@@ -4847,7 +4847,7 @@ ul.sc-slider-tabs li {
         padding: 1.1rem 2rem;
         font-size: 1.2rem;
         min-width: 180px;
-        margin-top: 1rem;
+        margin-top: 2rem; /* 기존 1rem -> 2rem으로 하향 이동 */
         border-radius: 12px;
     }
 
