@@ -3814,14 +3814,12 @@
                         </div>
                         <div class="consult__group">
                             <label for="c_phone">연락처 <span class="required">*</span></label>
-                            <input type="tel" id="c_phone" placeholder="'-' 없이 숫자만 입력" required>
+                            <input type="tel" id="c_phone" placeholder="'-' 없이 숫자만" required>
                         </div>
                     </div>
 
-
-
-                    <div class="consult__row">
-                        <div class="consult__group" style="width: 100%;">
+                    <div class="consult__row consult__row--bottom">
+                        <div class="consult__group consult__group--time">
                             <label for="c_time">연락 가능 시간 <span class="required">*</span></label>
                             <select id="c_time" required>
                                 <option value="" disabled selected>선택해주세요</option>
@@ -3830,15 +3828,14 @@
                                 <option value="afternoon">오후(12-18시)</option>
                             </select>
                         </div>
-                    </div>
-
-                    <div class="consult__agreement">
-                        <label class="checkbox-container">
-                            <input type="checkbox" required>
-                            <span class="checkmark"></span>
-                            <span class="agree-text">[필수] 개인정보 수집 및 이용 동의</span>
-                        </label>
-                        <button type="button" class="btn-detail">전문 보기</button>
+                        <div class="consult__agreement">
+                            <label class="checkbox-container">
+                                <input type="checkbox" required>
+                                <span class="checkmark"></span>
+                                <span class="agree-text">개인정보 수집 및 이용 동의 [필수]</span>
+                            </label>
+                            <button type="button" class="btn-detail">전문 보기</button>
+                        </div>
                     </div>
 
                     <button type="submit" class="consult__submit">무료 상담 신청하기</button>
