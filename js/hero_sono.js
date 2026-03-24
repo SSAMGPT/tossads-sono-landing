@@ -110,17 +110,32 @@ window._heroSlideTextChange = function(slideIndex) {
   var sub = document.getElementById('hero-subtitle');
   if (sub) {
     if (slideIndex === 2) {
-      sub.textContent = "스마트케어 330 결합 플랜 안내";
+      sub.innerHTML = "스마트케어 330<br>결합 플랜 안내";
       sub.classList.add('is--active');
       gsap.set(sub, { opacity: 1 });
       
       if (typeof SplitText !== 'undefined') {
-        var subSplit = new SplitText(sub, { type: 'chars', charsClass: 'split-char' });
+        var subSplit = new SplitText(sub, { 
+          type: 'words,chars', 
+          wordsClass: 'split-word',
+          charsClass: 'split-char' 
+        });
+        removeWordTextNodes(sub);
+        
         gsap.set(subSplit.chars, { opacity: 0 });
         gsap.fromTo(subSplit.chars, 
           { opacity: 0 }, 
           { duration: 1.2, opacity: 1, stagger: { from: 'center', each: 0.04 }, ease: 'power1.inOut', delay: 0.2 }
         );
+        
+        if (subSplit.words && subSplit.words.length) {
+          gsap.from(subSplit.words, {
+            y: (i) => (i * 40) - 20, // subtitle 크기에 맞춰 약간 축소된 y-spring
+            duration: 2.5,
+            ease: 'expo.out',
+            delay: 0.2
+          });
+        }
       }
     } else {
       sub.classList.remove('is--active');

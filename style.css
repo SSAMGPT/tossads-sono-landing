@@ -7395,10 +7395,7 @@ body {
     margin-bottom: 0.8rem;
 }
 
-/* Added .hero-subtitle CSS as per instruction */
-.hero-subtitle {
-    font-size: 2em; /* 2x larger */
-}
+
 
 .sc-receipt-check { display: none; }
 
@@ -7722,8 +7719,8 @@ body {
     bottom: 18rem; 
     left: 50%;
     transform: translateX(-50%) translateY(10px);
-    color: #FF6242; /* 브랜드 오렌지 */
-    font-size: clamp(2.4rem, 5vw, 3.5rem); /* 기존 대비 2배 가량 확대 */
+    color: #ffffff;
+    font-size: clamp(2rem, 4.1vw, 2.9rem); /* 기존 대비 1.2배 축소 */
     font-weight: 800;
     text-align: center;
     z-index: 10003;
@@ -7733,6 +7730,9 @@ body {
     font-family: 'Pretendard', sans-serif;
     letter-spacing: -0.01em;
     width: 100%; /* 너비 확보 */
+}
+.hero-subtitle .split-word {
+    display: inline-block !important;
 }
 .hero-subtitle.is--active {
     opacity: 1;
