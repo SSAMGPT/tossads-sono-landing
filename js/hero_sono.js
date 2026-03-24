@@ -75,6 +75,16 @@ window._heroTextFadeOut = function() {
       stagger: { from: 'center', each: 0.02 }
     });
   }
+  /* Subtitle 페이드 아웃 로직 */
+  var sub = document.getElementById('hero-subtitle');
+  if (sub) {
+    var subChars = sub.querySelectorAll('.split-char');
+    if (subChars.length) {
+      gsap.to(subChars, { opacity: 0, duration: 0.3, stagger: { from: 'center', each: 0.01 } });
+    } else {
+      gsap.to(sub, { opacity: 0, duration: 0.3 });
+    }
+  }
 };
 
 /* 이미지 전환 완료 후 새 텍스트 등장 (초기와 동일한 SplitText 애니메이션) */
@@ -102,8 +112,19 @@ window._heroSlideTextChange = function(slideIndex) {
     if (slideIndex === 2) {
       sub.textContent = "스마트케어 330 결합 플랜 안내";
       sub.classList.add('is--active');
+      gsap.set(sub, { opacity: 1 });
+      
+      if (typeof SplitText !== 'undefined') {
+        var subSplit = new SplitText(sub, { type: 'chars', charsClass: 'split-char' });
+        gsap.set(subSplit.chars, { opacity: 0 });
+        gsap.fromTo(subSplit.chars, 
+          { opacity: 0 }, 
+          { duration: 1.2, opacity: 1, stagger: { from: 'center', each: 0.04 }, ease: 'power1.inOut', delay: 0.2 }
+        );
+      }
     } else {
       sub.classList.remove('is--active');
+      gsap.to(sub, { opacity: 0, duration: 0.4, onComplete: function() { sub.innerHTML = ""; } });
     }
   }
 };
