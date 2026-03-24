@@ -4197,16 +4197,18 @@
                             { opacity: 0 },
                             {
                                 opacity: 1, duration: 1.2, ease: 'power1.inOut',
-                                stagger: { from: 'center', each: 0.04 }
+                                stagger: { from: 'center', each: 0.04 },
+                                overwrite: 'auto'
                             }
                         );
                         gsap.from(split.words, {
                             y: (i) => (i * 100) - 50,
-                            duration: 3, ease: 'expo.out'
+                            duration: 3, ease: 'expo.out',
+                            overwrite: 'auto'
                         });
                     },
                     onLeaveBack: () => {
-                        gsap.to(split.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' });
+                        gsap.to(split.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: 'auto' });
                     }
                 });
             }
@@ -4229,16 +4231,18 @@
                             { opacity: 0 },
                             {
                                 opacity: 1, duration: 1.2, ease: 'power1.inOut',
-                                stagger: { from: 'center', each: 0.04 }
+                                stagger: { from: 'center', each: 0.04 },
+                                overwrite: 'auto'
                             }
                         );
                         gsap.from(scSplit.words, {
                             y: (i) => (i * 100) - 50,
-                            duration: 3, ease: 'expo.out'
+                            duration: 3, ease: 'expo.out',
+                            overwrite: 'auto'
                         });
                     },
                     onLeaveBack: () => {
-                        gsap.to(scSplit.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' });
+                        gsap.to(scSplit.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: 'auto' });
                     }
                 });
             }
@@ -4261,16 +4265,23 @@
                             { opacity: 0 },
                             {
                                 opacity: 1, duration: 1.2, ease: 'power1.inOut',
-                                stagger: { from: 'center', each: 0.04 }
+                                stagger: { from: 'center', each: 0.04 },
+                                overwrite: 'auto'
                             }
                         );
                         gsap.from(trustSplit.words, {
                             y: (i) => (i * 100) - 50,
-                            duration: 3, ease: 'expo.out'
+                            duration: 3, ease: 'expo.out',
+                            overwrite: 'auto'
                         });
                     },
                     onLeaveBack: () => {
-                        gsap.to(trustSplit.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' });
+                        gsap.to(trustSplit.chars, { 
+                            opacity: 0, 
+                            duration: 0.4, 
+                            ease: 'power1.in',
+                            overwrite: 'auto' 
+                        });
                     }
                 });
             }
@@ -4292,12 +4303,22 @@
                         gsap.fromTo(rvSplit.chars,
                             { opacity: 0 },
                             { opacity: 1, duration: 1.0, ease: 'power1.inOut',
-                              stagger: { from: 'center', each: 0.04 } }
+                              stagger: { from: 'center', each: 0.04 },
+                              overwrite: 'auto' }
                         );
-                        gsap.from(rvSplit.words, { y: (i) => (i * 80) - 40, duration: 2.5, ease: 'expo.out' });
+                        gsap.from(rvSplit.words, { 
+                            y: (i) => (i * 80) - 40, 
+                            duration: 2.5, 
+                            ease: 'expo.out',
+                            overwrite: 'auto' 
+                        });
                     },
                     onLeaveBack: () => {
-                        gsap.to(rvSplit.chars, { opacity: 0, duration: 0.3 });
+                        gsap.to(rvSplit.chars, { 
+                            opacity: 0, 
+                            duration: 0.3, 
+                            overwrite: 'auto' 
+                        });
                     }
                 });
             }
@@ -4416,10 +4437,10 @@
                     trigger: heading2, start: 'top 80%',
                     onEnter: () => {
                         gsap.fromTo(split2.chars, { opacity: 0 },
-                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 } });
-                        gsap.from(split2.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out' });
+                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: 'auto' });
+                        gsap.from(split2.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out', overwrite: 'auto' });
                     },
-                    onLeaveBack: () => { gsap.to(split2.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' }); }
+                    onLeaveBack: () => { gsap.to(split2.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: 'auto' }); }
                 });
             }
 
@@ -4433,10 +4454,10 @@
                     trigger: heading3, start: 'top 80%',
                     onEnter: () => {
                         gsap.fromTo(split3.chars, { opacity: 0 },
-                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 } });
-                        gsap.from(split3.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out' });
+                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: 'auto' });
+                        gsap.from(split3.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out', overwrite: 'auto' });
                     },
-                    onLeaveBack: () => { gsap.to(split3.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' }); }
+                    onLeaveBack: () => { gsap.to(split3.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: 'auto' }); }
                 });
             }
 
@@ -4450,10 +4471,10 @@
                     trigger: heading4, start: 'top 80%',
                     onEnter: () => {
                         gsap.fromTo(split4.chars, { opacity: 0 },
-                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 } });
-                        gsap.from(split4.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out' });
+                            { opacity: 1, duration: 1.2, ease: 'power1.inOut', stagger: { from: 'center', each: 0.04 }, overwrite: 'auto' });
+                        gsap.from(split4.words, { y: (i) => (i * 100) - 50, duration: 3, ease: 'expo.out', overwrite: 'auto' });
                     },
-                    onLeaveBack: () => { gsap.to(split4.chars, { opacity: 0, duration: 0.4, ease: 'power1.in' }); }
+                    onLeaveBack: () => { gsap.to(split4.chars, { opacity: 0, duration: 0.4, ease: 'power1.in', overwrite: 'auto' }); }
                 });
             }
 
@@ -4575,6 +4596,10 @@
                 });
             })();
 
+            // 모든 리소스 로드 후 스크롤 트리거 위치 재계산 (정확도 향상)
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 500);
         });
 
 
