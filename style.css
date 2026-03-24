@@ -4648,15 +4648,31 @@ ul.sc-slider-tabs li {
     padding-left: 0.5rem;
 }
 
-.consult__agreement {
-    flex: 1.5;
+.btn-detail-large {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background-color: #f5f6f8; /* 살짝 연한 배경으로 구분 */
+    color: #444;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    padding: 0 0 0 0.5rem;
-    height: 48px; /* Select 박스 높이와 유사하게 수동 압축 */
-    border-top: none;
-    margin-top: 0;
+}
+
+.btn-detail-large:hover {
+    background-color: #f0f1f4;
+    border-color: #d1d5db;
+}
+
+.btn-detail-large::after {
+    content: "〉";
+    font-size: 0.9rem;
+    color: #888;
 }
 
 .checkbox-container {
@@ -4793,30 +4809,24 @@ ul.sc-slider-tabs li {
     /* 하단 정렬: 시간 + 동의항목 무조건 한 줄 */
     .consult__row--bottom {
         flex-direction: row !important;
-        align-items: flex-end;
+        align-items: stretch;
     }
 
-    .consult__group--time {
-        flex: 1 !important;
+    .btn-detail-large {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
     }
 
-    .consult__agreement {
-        flex: 1.5;
-        padding-bottom: 0;
-        margin-left: 0.3rem;
-        height: 40px; /* 모바일 select 높이에 맞춤 */
-    }
-
-    .agree-text {
-        font-size: 0.7rem; 
+    .checkbox-container {
+        font-size: 0.85rem;
+        font-weight: 700;
         white-space: nowrap;
-        letter-spacing: -0.02em;
     }
 
     .checkmark {
         height: 18px;
         width: 18px;
-        margin-right: 0.3rem;
+        margin-right: 0.4rem;
     }
 
     .btn-detail {
