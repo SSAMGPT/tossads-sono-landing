@@ -5633,10 +5633,19 @@
                 return;
             }
             var html = '<div class="cm-appliance-grid">';
-            var foundPreset = false;
+            var foundItem = null;
+            
             items.forEach(function(item) {
-                var isPreset = presetFull && item.fullName === presetFull;
-                if (isPreset) { foundPreset = true; }
+                var isPreset = false;
+                // 부분 일치 검증 (예: "FQ18HDWHY2" 가 "LG 휘센 에어컨 (FQ18HDWHY2)" 안에 포함되어 있으면 일치)
+                if (presetFull && item.fullName.indexOf(presetFull) !== -1) {
+                    isPreset = true;
+                } else if (presetShort && item.name.indexOf(presetShort) !== -1) {
+                    isPreset = true;
+                }
+                
+                if (isPreset) { foundItem = item; }
+                
                 html += '<button class="cm-app-card' + (isPreset ? ' is-selected' : '') + '" ';
                 html += 'data-full="' + item.fullName + '" data-short="' + item.name + '" type="button">';
                 html += '<div class="cm-app-img-wrap"><img src="' + item.img + '" alt="' + item.name + '" loading="lazy"></div>';
@@ -5647,9 +5656,9 @@
             html += '</div>';
             appWrap.innerHTML = html;
 
-            if (foundPreset) {
-                _cmSelectedAppliance = presetShort;
-                _cmSelectedApplianceFull = presetFull;
+            if (foundItem) {
+                _cmSelectedAppliance = foundItem.name;
+                _cmSelectedApplianceFull = foundItem.fullName;
             }
 
             // 카드 클릭 이벤트
