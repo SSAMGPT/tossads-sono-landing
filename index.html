@@ -5632,33 +5632,72 @@
                 appWrap.innerHTML = '<p class="cm-appliance-placeholder">해당 구좌의 가전 목록이 없습니다.</p>';
                 return;
             }
+            
+            var MAX_INITIAL = 6;
             var html = '<div class="cm-appliance-grid">';
             var foundItem = null;
             
-            items.forEach(function(item) {
+            items.forEach(function(item, idx) {
                 var isPreset = false;
-                // 부분 일치 검증 (예: "FQ18HDWHY2" 가 "LG 휘센 에어컨 (FQ18HDWHY2)" 안에 포함되어 있으면 일치)
+                // 부분 일치 검증
                 if (presetFull && item.fullName.indexOf(presetFull) !== -1) {
                     isPreset = true;
                 } else if (presetShort && item.name.indexOf(presetShort) !== -1) {
                     isPreset = true;
                 }
-                
                 if (isPreset) { foundItem = item; }
                 
-                html += '<button class="cm-app-card' + (isPreset ? ' is-selected' : '') + '" ';
-                html += 'data-full="' + item.fullName + '" data-short="' + item.name + '" type="button">';
+                var extClass = (idx >= MAX_INITIAL) ? ' is-extended' : '';
+                html += '<button class="cm-app-card' + extClass + (isPreset ? ' is-selected' : '') + '" ';
+                html += 'data-full="' + item.fullName + '" data-short="' + item.name + '" type="button"';
+                // 펼치기 전에는 선택된 항목 제외하고 숨김 처리
+                if (idx >= MAX_INITIAL && !isPreset) html += ' style="display: none;"';
+                html += '>';
                 html += '<div class="cm-app-img-wrap"><img src="' + item.img + '" alt="' + item.name + '" loading="lazy"></div>';
                 html += '<p class="cm-app-name">' + item.name + '</p>';
                 html += '<span class="cm-app-check"><svg viewBox="0 0 12 10" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 5 4.5 9 11 1"></polyline></svg></span>';
                 html += '</button>';
             });
             html += '</div>';
+
+            // 초과 시 더보기 버튼 추가
+            if (items.length > MAX_INITIAL) {
+                html += '<div class="cm-more-btn-wrap" style="text-align: center; margin-top: 15px;">';
+                html += '<button type="button" class="cm-more-btn" style="padding: 10px 24px; background: #fff; border: 1px solid #ddd; border-radius: 20px; font-size: 14px; font-weight: 500; color: #555; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 4px; width: 100%; max-width: 200px; -webkit-tap-highlight-color: transparent;">';
+                html += '<span>가전 더보기</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="cm-more-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+                html += '</button></div>';
+            }
+
             appWrap.innerHTML = html;
 
             if (foundItem) {
                 _cmSelectedAppliance = foundItem.name;
                 _cmSelectedApplianceFull = foundItem.fullName;
+            }
+
+            // 더보기 토글 이벤트
+            var moreBtn = appWrap.querySelector('.cm-more-btn');
+            if (moreBtn) {
+                moreBtn.addEventListener('click', function() {
+                    var isExpanded = this.classList.contains('is-expanded');
+                    var extCards = appWrap.querySelectorAll('.cm-app-card.is-extended');
+                    var txtSpan = this.querySelector('span');
+                    var icon = this.querySelector('.cm-more-icon');
+                    
+                    if (isExpanded) {
+                        extCards.forEach(function(c) {
+                            if (!c.classList.contains('is-selected')) c.style.display = 'none';
+                        });
+                        this.classList.remove('is-expanded');
+                        txtSpan.textContent = '가전 더보기';
+                        icon.innerHTML = '<polyline points="6 9 12 15 18 9"></polyline>';
+                    } else {
+                        extCards.forEach(function(c) { c.style.display = ''; });
+                        this.classList.add('is-expanded');
+                        txtSpan.textContent = '가전 닫기';
+                        icon.innerHTML = '<polyline points="18 15 12 9 6 15"></polyline>';
+                    }
+                });
             }
 
             // 카드 클릭 이벤트
