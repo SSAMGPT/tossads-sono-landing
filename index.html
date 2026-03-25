@@ -3892,28 +3892,27 @@
                 console.log('[하단폼 상담신청]', payload);
 
                 /* 구글 시트 전송 */
-                var formData = new URLSearchParams();
+                var formData = new FormData();
                 for (var key in payload) {
                     formData.append(key, payload[key]);
                 }
 
-                fetch(GOOGLE_SHEET_URL, {
-                    method:  'POST',
-                    mode:    'no-cors',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body:    formData.toString()
-                }).catch(function (err) { console.error('전송 오류:', err); });
-
-                /* 완료 처리 */
+                /* 완료 처리 (UI 즉시 변경) */
                 submitBtn.disabled    = true;
                 submitBtn.textContent = '✅ 신청 완료! 곧 연락드리겠습니다.';
                 submitBtn.style.background = '#00a86b';
                 form.querySelectorAll('input, select').forEach(function (el) { el.disabled = true; });
 
-                /* 2초 후 페이지 이동 */
-                setTimeout(function () {
+                fetch(GOOGLE_SHEET_URL, {
+                    method:  'POST',
+                    mode:    'no-cors',
+                    body:    formData
+                }).then(function() {
                     window.location.href = 'https://ssamgpt.github.io/sono-appliances/';
-                }, 2000);
+                }).catch(function (err) { 
+                    console.error('전송 오류:', err); 
+                    window.location.href = 'https://ssamgpt.github.io/sono-appliances/';
+                });
             });
         })();
     </script>
@@ -5745,27 +5744,27 @@
                 console.log('[모달 상담신청]', submitData);
 
                 // 구글 시트 전송
-                var formData = new URLSearchParams();
+                var formData = new FormData();
                 for (var key in submitData) {
                     formData.append(key, submitData[key]);
                 }
 
-                fetch('https://script.google.com/macros/s/AKfycbwESnLWVMxBEBrXe3HD1baK38PzLnBu1oPxww1HrV7B-71qhfIkcOGhQgsn4wqgKP1B/exec', {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData.toString()
-                }).catch(function(err) { console.error('전송 오류:', err); });
-
-                /* 완료 처리 */
+                /* 완료 처리 (UI 즉시 변경) */
                 submitBtn.disabled = true;
                 submitBtn.classList.add('is-done');
                 if (submitLabel) submitLabel.textContent = '✅ 신청 완료! 곧 연락드리겠습니다.';
-                
-                /* 2초 후 페이지 이동 */
-                setTimeout(function () {
+
+                // 구글 시트 전송
+                fetch('https://script.google.com/macros/s/AKfycbwESnLWVMxBEBrXe3HD1baK38PzLnBu1oPxww1HrV7B-71qhfIkcOGhQgsn4wqgKP1B/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                }).then(function() {
                     window.location.href = 'https://ssamgpt.github.io/sono-appliances/';
-                }, 2000);
+                }).catch(function(err) { 
+                    console.error('전송 오류:', err); 
+                    window.location.href = 'https://ssamgpt.github.io/sono-appliances/';
+                });
             });
         }
 
@@ -5957,17 +5956,10 @@
                         source:      '랜딩 CTA1 제품 미선택'
                     };
 
-                    var formData = new URLSearchParams();
+                    var formData = new FormData();
                     for (var key in payload) {
                         formData.append(key, payload[key]);
                     }
-
-                    fetch('https://script.google.com/macros/s/AKfycbwESnLWVMxBEBrXe3HD1baK38PzLnBu1oPxww1HrV7B-71qhfIkcOGhQgsn4wqgKP1B/exec', {
-                        method:  'POST',
-                        mode:    'no-cors',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body:    formData.toString()
-                    }).catch(function (err) { console.error('전송 오류:', err); });
 
                     submit.textContent = '✅ 신청 완료! 곧 연락드리겠습니다.';
                     submit.style.cssText = 'background:#00a86b !important; cursor:default !important; width:100%; padding:18px !important; border:none !important; border-radius:20px !important; color:#fff !important; font-size:16px !important; font-weight:700 !important; font-family:Pretendard,sans-serif !important; box-shadow:none !important; transform:none !important;';
@@ -5975,10 +5967,16 @@
                     card.querySelectorAll('input').forEach(function (el) { el.disabled = true; });
                     if (cancel) cancel.style.display = 'none';
 
-                    /* 2초 후 페이지 이동 */
-                    setTimeout(function () {
+                    fetch('https://script.google.com/macros/s/AKfycbwESnLWVMxBEBrXe3HD1baK38PzLnBu1oPxww1HrV7B-71qhfIkcOGhQgsn4wqgKP1B/exec', {
+                        method:  'POST',
+                        mode:    'no-cors',
+                        body:    formData
+                    }).then(function() {
                         window.location.href = 'https://ssamgpt.github.io/sono-appliances/';
-                    }, 2000);
+                    }).catch(function (err) { 
+                        console.error('전송 오류:', err); 
+                        window.location.href = 'https://ssamgpt.github.io/sono-appliances/';
+                    });
                 });
             }
         })();
