@@ -1858,7 +1858,7 @@
                 <!-- 이름 inputt -->
                 <div class="sc-input">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="rgba(255,255,255,0.45)" stroke-width="1.8" stroke-linecap="round"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="8" r="4" />
                         <path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" />
@@ -1869,7 +1869,7 @@
                 <!-- 연락처 input -->
                 <div class="sc-input">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="rgba(255,255,255,0.45)" stroke-width="1.8" stroke-linecap="round"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path
                             d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 0112 18.85a19.5 19.5 0 01-7.82-7.82 19.79 19.79 0 01-3.07-8.68A2 2 0 013 2.18h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z" />
@@ -3858,14 +3858,14 @@
     </section>
 
     <script>
-        /* ── 무료 상담 신청 폼 핸들러 (Google Sheets 연동 준비) ── */
+        /* ── 무료 상담 신청 폼 핸들러 (Google Sheets 연동) ── */
         (function () {
             var form    = document.getElementById('consultForm');
             var submitBtn = form ? form.querySelector('.consult__submit') : null;
             if (!form || !submitBtn) return;
 
-            /* ▼ 구글 시트 연동 시 아래 URL을 Apps Script 배포 URL로 교체 */
-            var GOOGLE_SHEET_URL = ''; /* TODO: Google Apps Script Web App URL */
+            /* 구글 시트 연동 URL */
+            var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwESnLWVMxBEBrXe3HD1baK38PzLnBu1oPxww1HrV7B-71qhfIkcOGhQgsn4wqgKP1B/exec';
 
             submitBtn.addEventListener('click', function () {
                 var name  = (form.querySelector('#c_name').value  || '').trim();
@@ -3882,23 +3882,22 @@
 
                 /* 수집 데이터 */
                 var payload = {
-                    timestamp:   new Date().toLocaleString('ko-KR'),
                     name:        name,
-                    phone:       tel,
+                    phone:       "'" + tel,
                     contactTime: time,
-                    source:      'landing_consult_form'
+                    plan:        '',
+                    appliance:   '',
+                    source:      '하단_직접입력_폼'
                 };
-                console.log('[상담신청 데이터]', payload);
+                console.log('[하단폼 상담신청]', payload);
 
-                /* Google Sheets 연동 (URL 설정 후 활성화) */
-                if (GOOGLE_SHEET_URL) {
-                    fetch(GOOGLE_SHEET_URL, {
-                        method:  'POST',
-                        mode:    'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body:    JSON.stringify(payload)
-                    }).catch(function (err) { console.error('전송 오류:', err); });
-                }
+                /* 구글 시트 전송 */
+                fetch(GOOGLE_SHEET_URL, {
+                    method:  'POST',
+                    mode:    'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify(payload)
+                }).catch(function (err) { console.error('전송 오류:', err); });
 
                 /* 완료 처리 */
                 submitBtn.disabled    = true;
@@ -5189,12 +5188,21 @@
         /* Navigation Menu Logic */
         class NavigationMenu {
             constructor() {
-                this.menuEl = document.getElementById('mainMenu');
-                this.openBtn = document.getElementById('openMenu');
-                this.closeBtn = document.getElementById('closeMenu');
-                this.menuItems = this.menuEl.querySelectorAll('.menu__item');
-                this.menuLinks = this.menuEl.querySelectorAll('.menu__item-link');
-                this.init();
+                try {
+                    this.menuEl = document.getElementById('mainMenu');
+                    this.openBtn = document.getElementById('openMenu');
+                    this.closeBtn = document.getElementById('closeMenu');
+                    
+                    if (this.menuEl) {
+                        this.menuItems = this.menuEl.querySelectorAll('.menu__item');
+                        this.menuLinks = this.menuEl.querySelectorAll('.menu__item-link');
+                        this.init();
+                    } else {
+                        console.error('[NavigationMenu] mainMenu element not found.');
+                    }
+                } catch (e) {
+                    console.error('[NavigationMenu] Error in constructor:', e);
+                }
             }
 
             init() {
@@ -5278,15 +5286,24 @@
         };
 
         const initApp = () => {
-            initPremiumCards();
-            initTypographyAnimations();
-            initJoinProcessAnimation();
-            initReviewCarousel();
-            initPromotionAnimation();
-            initFAQ();
-            // initPrivacyModal / initNoticeModal은 최상단에서 이미 실행됨
-            initFinalTypoAnimation();
-            new NavigationMenu();
+            const safeInit = (fn, name) => {
+                try { fn(); } catch (e) { console.error(`[initApp] Failed to init ${name}:`, e); }
+            };
+
+            safeInit(initPremiumCards, 'PremiumCards');
+            safeInit(initTypographyAnimations, 'TypographyAnimations');
+            safeInit(initJoinProcessAnimation, 'JoinProcessAnimation');
+            safeInit(initReviewCarousel, 'ReviewCarousel');
+            safeInit(initPromotionAnimation, 'PromotionAnimation');
+            safeInit(initFAQ, 'FAQ');
+            safeInit(initFinalTypoAnimation, 'FinalTypoAnimation');
+            
+            // NavigationMenu initialization
+            try {
+                new NavigationMenu();
+            } catch (e) {
+                console.error('[initApp] Failed to init NavigationMenu:', e);
+            }
         };
 
         initApp();
@@ -5538,8 +5555,10 @@
 
         if (!modal) return;
 
+        var _cmSelectedSource = ''; // 유입 소스 저장용
         /* ── 모달 열기 ── */
-        function openConsultModal(presetPlan, presetApplianceFull, presetApplianceShort) {
+        function openConsultModal(presetPlan, presetApplianceFull, presetApplianceShort, source) {
+            _cmSelectedSource = source || '미분류_모달';
             // 폼 초기화
             var nameEl = document.getElementById('cmName');
             var phoneEl = document.getElementById('cmPhone');
@@ -5709,17 +5728,24 @@
                 if (tel.length < 10){ alert('올바른 연락처를 입력해 주세요.');      return; }
                 if (!agree)         { alert('개인정보 수집 및 이용에 동의해 주세요.'); return; }
 
-                /* ── 데이터 구조화 (향후 Google Sheets 연동) ── */
+                /* ── 데이터 구조화 및 구글 시트 전항 ── */
                 var submitData = {
-                    timestamp:    new Date().toISOString(),
                     plan:         _cmSelectedPlan      ? '소노 스마트케어 ' + _cmSelectedPlan : '미선택',
                     appliance:    _cmSelectedApplianceFull || '미선택',
                     name:         name,
-                    phone:        tel,
+                    phone:        "'" + tel,
                     contactTime:  time,
-                    source:       'landing_page'
+                    source:       _cmSelectedSource
                 };
-                console.log('[상담신청 데이터]', JSON.stringify(submitData, null, 2));
+                console.log('[모달 상담신청]', submitData);
+
+                // 구글 시트 전송
+                fetch('https://script.google.com/macros/s/AKfycbwESnLWVMxBEBrXe3HD1baK38PzLnBu1oPxww1HrV7B-71qhfIkcOGhQgsn4wqgKP1B/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(submitData)
+                }).catch(function(err) { console.error('전송 오류:', err); });
 
                 /* 완료 처리 */
                 submitBtn.disabled = true;
@@ -5768,20 +5794,20 @@
             }
         });
 
-        /* ── 플로팅 버튼 & 기존 버튼들 → 모달 오픈 ── */
-        // 플로팅 버튼 (floatingConsultBtn)
+        /* ── 각 버튼 유입 경로 구분하여 모달 오픈 ── */
+        // 1. 플로팅 원형 버튼 (floatingConsultBtn)
         var floatTrigger = document.getElementById('floatConsultTrigger');
         if (floatTrigger) {
             floatTrigger.addEventListener('click', function() {
-                openConsultModal(_scActivePlan, _scActiveFull, _scActiveShort);
+                openConsultModal(_scActivePlan, _scActiveFull, _scActiveShort, '플로팅_원형_버튼');
             });
         }
 
-        // "선택한 상품으로 신청하기" CTA 버튼
+        // 2. 가전 선택 시 하단 플로팅 CTA 바 버튼
         document.addEventListener('click', function(e) {
             if (e.target.closest && e.target.closest('#f-cta-apply-btn')) {
                 e.preventDefault();
-                openConsultModal(_scActivePlan, _scActiveFull, _scActiveShort);
+                openConsultModal(_scActivePlan, _scActiveFull, _scActiveShort, '하단_선택상담_바');
             }
         });
 
@@ -5911,8 +5937,25 @@
                     if (tel.length < 10) { alert('올바른 연락처를 입력해 주세요.'); return; }
                     if (!agree) { alert('개인정보 수집 및 이용에 동의해 주세요.'); return; }
 
+                    /* 보조 데이터: 구글 시트 전송 */
+                    var payload = {
+                        name:        name,
+                        phone:       "'" + tel,
+                        contactTime: '',
+                        plan:        '',
+                        appliance:   '',
+                        source:      '중간_상담유도_버튼'
+                    };
+
+                    fetch('https://script.google.com/macros/s/AKfycbwESnLWVMxBEBrXe3HD1baK38PzLnBu1oPxww1HrV7B-71qhfIkcOGhQgsn4wqgKP1B/exec', {
+                        method:  'POST',
+                        mode:    'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body:    JSON.stringify(payload)
+                    }).catch(function (err) { console.error('전송 오류:', err); });
+
                     submit.textContent = '✅ 신청 완료! 곧 연락드리겠습니다.';
-                    submit.style.cssText = 'background:#00a86b !important; cursor:default !important; width:100%; padding:15px !important; border:none !important; border-radius:40px !important; color:#fff !important; font-size:16px !important; font-weight:700 !important; font-family:Pretendard,sans-serif !important;';
+                    submit.style.cssText = 'background:#00a86b !important; cursor:default !important; width:100%; padding:18px !important; border:none !important; border-radius:20px !important; color:#fff !important; font-size:16px !important; font-weight:700 !important; font-family:Pretendard,sans-serif !important; box-shadow:none !important; transform:none !important;';
                     submit.disabled = true;
                     card.querySelectorAll('input').forEach(function (el) { el.disabled = true; });
                     if (cancel) cancel.style.display = 'none';
