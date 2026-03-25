@@ -5786,6 +5786,11 @@
                 if (_cmSelectedApplianceFull || _cmSelectedAppliance) {
                     var bStr = _cmSelectedApplianceBrand ? _cmSelectedApplianceBrand + ' ' : '';
                     var nStr = _cmSelectedAppliance ? _cmSelectedAppliance : '';
+                    
+                    if (_cmSelectedApplianceBrand && nStr.toUpperCase().indexOf(_cmSelectedApplianceBrand.toUpperCase()) === 0) {
+                        bStr = '';
+                    }
+
                     var fStr = _cmSelectedApplianceFull ? ' (' + _cmSelectedApplianceFull + ')' : '';
                     combinedApplianceStr = bStr + nStr + fStr;
                 }
