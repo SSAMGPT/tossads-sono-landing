@@ -5429,12 +5429,12 @@
                 <div class="cm-summary" id="cmSummary">
                     <div class="cm-summary-item">
                         <span class="cm-summary-key">구좌</span>
-                        <span class="cm-summary-val" id="cmSumPlan">미선택</span>
+                        <span class="cm-summary-val" id="cmSumPlan"></span>
                     </div>
                     <div class="cm-summary-divider"></div>
                     <div class="cm-summary-item">
                         <span class="cm-summary-key">가전</span>
-                        <span class="cm-summary-val" id="cmSumAppliance">미선택</span>
+                        <span class="cm-summary-val" id="cmSumAppliance"></span>
                     </div>
                 </div>
                 <button class="cm-submit-btn" id="cmSubmit" type="button">
@@ -5679,8 +5679,8 @@
 
         /* ── 하단 요약 업데이트 ── */
         function updateSummary() {
-            if (sumPlan)  sumPlan.textContent  = _cmSelectedPlan      ? '소노 스마트케어 ' + _cmSelectedPlan : '미선택';
-            if (sumAppl)  sumAppl.textContent  = _cmSelectedAppliance || '미선택';
+            if (sumPlan)  sumPlan.textContent  = _cmSelectedPlan      ? '소노 스마트케어 ' + _cmSelectedPlan : '';
+            if (sumAppl)  sumAppl.textContent  = _cmSelectedAppliance || '';
         }
 
         /* ── 구좌 버튼 클릭 ── */
@@ -5729,8 +5729,8 @@
 
                 /* ── 데이터 구조화 및 구글 시트 전항 ── */
                 var submitData = {
-                    plan:         _cmSelectedPlan      ? '소노 스마트케어 ' + _cmSelectedPlan : '미선택',
-                    appliance:    _cmSelectedApplianceFull || '미선택',
+                    plan:         _cmSelectedPlan      ? '소노 스마트케어 ' + _cmSelectedPlan : '',
+                    appliance:    _cmSelectedApplianceFull || '',
                     name:         name,
                     phone:        "'" + tel,
                     contactTime:  time,
