@@ -5783,9 +5783,11 @@
 
                 /* ── 데이터 구조화 및 구글 시트 전항 ── */
                 var combinedApplianceStr = '';
-                if (_cmSelectedApplianceFull) {
-                    var bStr = _cmSelectedApplianceBrand ? '[' + _cmSelectedApplianceBrand + '] ' : '';
-                    combinedApplianceStr = bStr + _cmSelectedApplianceFull;
+                if (_cmSelectedApplianceFull || _cmSelectedAppliance) {
+                    var bStr = _cmSelectedApplianceBrand ? _cmSelectedApplianceBrand + ' ' : '';
+                    var nStr = _cmSelectedAppliance ? _cmSelectedAppliance : '';
+                    var fStr = _cmSelectedApplianceFull ? ' (' + _cmSelectedApplianceFull + ')' : '';
+                    combinedApplianceStr = bStr + nStr + fStr;
                 }
 
                 var submitData = {
