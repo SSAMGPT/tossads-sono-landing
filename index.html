@@ -3887,7 +3887,7 @@
                     contactTime: time,
                     plan:        '',
                     appliance:   '',
-                    source:      '하단_직접입력_폼'
+                    source:      '랜딩 CTA4 제품 미선택'
                 };
                 console.log('[하단폼 상담신청]', payload);
 
@@ -5799,7 +5799,7 @@
         var floatTrigger = document.getElementById('floatConsultTrigger');
         if (floatTrigger) {
             floatTrigger.addEventListener('click', function() {
-                openConsultModal(_scActivePlan, _scActiveFull, _scActiveShort, '플로팅_원형_버튼');
+                openConsultModal(_scActivePlan, _scActiveFull, _scActiveShort, '랜딩 CTA2 제품 선택');
             });
         }
 
@@ -5807,7 +5807,7 @@
         document.addEventListener('click', function(e) {
             if (e.target.closest && e.target.closest('#f-cta-apply-btn')) {
                 e.preventDefault();
-                openConsultModal(_scActivePlan, _scActiveFull, _scActiveShort, '하단_선택상담_바');
+                openConsultModal(_scActivePlan, _scActiveFull, _scActiveShort, '랜딩 CTA3 제품 선택');
             }
         });
 
@@ -5944,7 +5944,7 @@
                         contactTime: '',
                         plan:        '',
                         appliance:   '',
-                        source:      '중간_상담유도_버튼'
+                        source:      '랜딩 CTA1 제품 미선택'
                     };
 
                     fetch('https://script.google.com/macros/s/AKfycbwESnLWVMxBEBrXe3HD1baK38PzLnBu1oPxww1HrV7B-71qhfIkcOGhQgsn4wqgKP1B/exec', {
