@@ -5781,17 +5781,48 @@
             });
         });
 
-        /* ── _scActiveFull / _scActiveShort 갱신: 이벤트 위임 ── */
+        /* ── _scActiveFull / _scActiveShort 갱신 및 상태 연동: 이벤트 위임 ── */
         document.getElementById('smartcare').addEventListener('click', function(e) {
             const card = e.target.closest('.sc-prod-card');
             if (!card) return;
+
             _scActiveFull  = card.getAttribute('data-name') || '';
             _scActiveShort = card.querySelector('.sc-prod-name') ? card.querySelector('.sc-prod-name').textContent.trim() : '';
+            
             if (!_scActivePlan) {
                 var activeTab = document.querySelector('.sc-product-tab.active');
                 if (activeTab) _scActivePlan = activeTab.textContent.trim();
             }
+
+            /* ── 플로팅 CTA 바 시각적 업데이트 ── */
+            var fCta = document.getElementById('floating-cta');
+            if (fCta) {
+                var imgEl = card.querySelector('.sc-prod-img img');
+                var thumb = document.getElementById('f-cta-thumb-img');
+                if (imgEl && thumb) thumb.src = imgEl.src;
+
+                var badge = document.getElementById('f-cta-plan-badge');
+                if (badge) badge.textContent = _scActivePlan ? _scActivePlan : '선택 중';
+
+                var model = document.getElementById('f-cta-model');
+                if (model) model.textContent = _scActiveFull;
+
+                var nameEl = document.getElementById('f-cta-prod-name');
+                if (nameEl) nameEl.textContent = _scActiveShort || _scActiveFull;
+
+                fCta.classList.add('active');
+            }
         });
+
+        /* ── 플로팅 CTA 취소 버튼 ── */
+        var ctaCancel = document.getElementById('f-cta-cancel');
+        if (ctaCancel) {
+            ctaCancel.addEventListener('click', function(e) {
+                e.preventDefault();
+                var fCta = document.getElementById('floating-cta');
+                if (fCta) fCta.classList.remove('active');
+            });
+        }
 
         /* ── 각 버튼 유입 경로 구분하여 모달 오픈 ── */
         // 1. 플로팅 원형 버튼 (floatingConsultBtn)
