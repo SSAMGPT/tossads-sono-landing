@@ -124,7 +124,8 @@
         window.CM_APPLIANCES[p.plan].push({
           name: p.name || p.full_name,
           fullName: p.full_name || p.name,
-          img: p.img_url || ''
+          img: p.img_url || '',
+          brand: p.brand || ''
         });
       });
       console.info('[sc-supabase] ✅ 모달창 CM_APPLIANCES 동기화 완료');

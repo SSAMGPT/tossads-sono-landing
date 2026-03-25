@@ -5540,6 +5540,7 @@
         var _cmSelectedPlan      = '';
         var _cmSelectedAppliance = '';
         var _cmSelectedApplianceFull = '';
+        var _cmSelectedApplianceBrand = '';
 
         var modal    = document.getElementById('consultModal');
         var closeBtn = document.getElementById('cmClose');
@@ -5578,6 +5579,7 @@
                 _cmSelectedPlan = '';
                 _cmSelectedAppliance = '';
                 _cmSelectedApplianceFull = '';
+                _cmSelectedApplianceBrand = '';
                 resetPlanBtns();
                 resetAppliances();
             }
@@ -5649,7 +5651,7 @@
                 
                 var extClass = (idx >= MAX_INITIAL) ? ' is-extended' : '';
                 html += '<button class="cm-app-card' + extClass + (isPreset ? ' is-selected' : '') + '" ';
-                html += 'data-full="' + item.fullName + '" data-short="' + item.name + '" type="button"';
+                html += 'data-full="' + item.fullName + '" data-short="' + item.name + '" data-brand="' + (item.brand || '') + '" type="button"';
                 // 펼치기 전에는 선택된 항목 제외하고 숨김 처리
                 if (idx >= MAX_INITIAL && !isPreset) html += ' style="display: none;"';
                 html += '>';
@@ -5673,6 +5675,7 @@
             if (foundItem) {
                 _cmSelectedAppliance = foundItem.name;
                 _cmSelectedApplianceFull = foundItem.fullName;
+                _cmSelectedApplianceBrand = foundItem.brand || '';
             }
 
             // 더보기 토글 이벤트
@@ -5705,14 +5708,17 @@
                 card.addEventListener('click', function() {
                     var full  = this.getAttribute('data-full');
                     var short = this.getAttribute('data-short');
+                    var brand = this.getAttribute('data-brand') || '';
                     // 토글: 이미 선택된 거 다시 누르면 해제
                     if (_cmSelectedApplianceFull === full) {
                         _cmSelectedAppliance = '';
                         _cmSelectedApplianceFull = '';
+                        _cmSelectedApplianceBrand = '';
                         appWrap.querySelectorAll('.cm-app-card').forEach(function(c) { c.classList.remove('is-selected'); });
                     } else {
                         _cmSelectedAppliance = short;
                         _cmSelectedApplianceFull = full;
+                        _cmSelectedApplianceBrand = brand;
                         appWrap.querySelectorAll('.cm-app-card').forEach(function(c) { c.classList.remove('is-selected'); });
                         this.classList.add('is-selected');
                     }
@@ -5776,9 +5782,18 @@
                 if (!agree)         { alert('개인정보 수집 및 이용에 동의해 주세요.'); return; }
 
                 /* ── 데이터 구조화 및 구글 시트 전항 ── */
+                var combinedApplianceStr = '';
+                if (_cmSelectedApplianceFull) {
+                    var bStr = _cmSelectedApplianceBrand ? '[' + _cmSelectedApplianceBrand + '] ' : '';
+                    combinedApplianceStr = bStr + _cmSelectedApplianceFull;
+                }
+
                 var submitData = {
                     plan:         _cmSelectedPlan      ? '소노 스마트케어 ' + _cmSelectedPlan : '',
-                    appliance:    _cmSelectedApplianceFull || '',
+                    appliance:    combinedApplianceStr,
+                    brand:        _cmSelectedApplianceBrand || '',
+                    productName:  _cmSelectedAppliance || '',
+                    productModel: _cmSelectedApplianceFull || '',
                     name:         name,
                     phone:        "'" + tel,
                     contactTime:  time,
