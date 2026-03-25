@@ -8102,7 +8102,9 @@ body {
 
 .float-consult-btn {
     position: relative;
-    width: 160px;
+    width: auto;
+    min-width: 160px;
+    padding: 0 28px;
     height: 56px;
     border-radius: 45px;
     border: none;
@@ -8166,7 +8168,9 @@ body {
         transform: translateX(-50%) translateY(50px) scale(0.6);
     }
     .float-consult-btn {
-        width: 148px;
+        width: auto;
+        min-width: 148px;
+        padding: 0 22px;
         height: 50px;
         font-size: 14px;
     }
