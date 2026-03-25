@@ -112,6 +112,24 @@
       return;
     }
 
+    // 4. 모달창 속 하드코딩된 리스트(CM_APPLIANCES)를 DB 데이터로 실시간 덮어쓰기 동기화
+    if (window.CM_APPLIANCES) {
+      // 플랜별 배열 리셋
+      Object.keys(window.CM_APPLIANCES).forEach(k => { window.CM_APPLIANCES[k] = []; });
+      
+      data.forEach(p => {
+        if (!window.CM_APPLIANCES[p.plan]) {
+            window.CM_APPLIANCES[p.plan] = [];
+        }
+        window.CM_APPLIANCES[p.plan].push({
+          name: p.name || p.full_name,
+          fullName: p.full_name || p.name,
+          img: p.img_url || ''
+        });
+      });
+      console.info('[sc-supabase] ✅ 모달창 CM_APPLIANCES 동기화 완료');
+    }
+
     renderProducts(data, optionsRes.data || []);
 
     // 필터 재초기화 (smartcare.js의 함수 호출)

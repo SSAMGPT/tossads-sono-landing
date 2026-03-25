@@ -5511,7 +5511,7 @@
 
         /* ── 2. 상담 신청 모달 ── */
 
-        var CM_APPLIANCES = {
+        window.CM_APPLIANCES = {
             '330X2': [
                 { name: 'LG 퓨리케어 공기청정기', fullName: 'LG 퓨리케어 공기청정기 (AS305DWWA)', img: './img/스마트케어330x2_lg_공기청정기_AS305DWWA.jpg' },
                 { name: 'LG 퓨리케어 정수기',     fullName: 'LG 퓨리케어 정수기 (WD220MCB)',        img: './img/스마트케어330x2_LG_정수기_WD220MCB.avif' },
@@ -5627,7 +5627,7 @@
         /* ── 가전 카드 렌더링 ── */
         function renderAppliances(plan, presetFull, presetShort) {
             if (!appWrap) return;
-            var items = CM_APPLIANCES[plan] || [];
+            var items = window.CM_APPLIANCES[plan] || [];
             if (!items.length) {
                 appWrap.innerHTML = '<p class="cm-appliance-placeholder">해당 구좌의 가전 목록이 없습니다.</p>';
                 return;
