@@ -5312,7 +5312,7 @@
     <!-- ── 플로팅 상담 신청하기 버튼 ── -->
     <div id="floatingConsultBtn" aria-label="무료 상담 신청하기">
         <button class="float-consult-btn" id="floatConsultTrigger">
-            가전 선택해서 신청하기
+            가전제품 고른 후 상담하기
         </button>
     </div>
 
@@ -5458,9 +5458,20 @@
         var _consultVisible = false;
 
         function checkConsultBtn() {
-            var rect       = trigger.getBoundingClientRect();
-            var vh         = window.innerHeight;
-            var shouldShow = rect.bottom < vh * 0.33;
+            var rect           = trigger.getBoundingClientRect();
+            var smartcareSec   = document.getElementById('smartcare');
+            var vh             = window.innerHeight;
+            
+            var shouldShowByTrigger = rect.bottom < vh * 0.33;
+            var isInSmartcare = false;
+            
+            if (smartcareSec) {
+                var sRect = smartcareSec.getBoundingClientRect();
+                // 섹션이 화면에 조금이라도 걸쳐있으면 true
+                isInSmartcare = (sRect.top < vh && sRect.bottom > 0);
+            }
+
+            var shouldShow = shouldShowByTrigger && !isInSmartcare;
 
             if (shouldShow && !_consultVisible) {
                 _consultVisible = true;
