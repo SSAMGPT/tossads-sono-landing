@@ -7565,11 +7565,13 @@ body {
     border-radius: 1.25rem;
 }
 
+/* [FLIP DISABLED] 플립 효과 비활성화 - 복원 시 아래 주석 해제
 .refund-card:hover .refund-card-inner,
 .refund-card.is--flipped .refund-card-inner {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
+*/
 
 /* 앞면 / 뒷면 공통 */
 .refund-card__first,
@@ -7836,7 +7838,7 @@ body {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 1rem;
-    margin: 2.5rem auto 0;
+    margin: 0 auto 0;
     max-width: min(820px, 92vw);
     /* 그리드 전체 높이 고정: 1fr 행이 제대로 작동하려면 필수 */
     height: min(520px, 60vw);
@@ -7986,6 +7988,18 @@ body {
     .bento-right {
         grid-column: 1;
         min-height: 160px;
+    }
+    .bento-right--gray {
+        min-height: 42px;
+        padding: 0 1rem;
+        align-items: center;
+    }
+    .bento-right--gray .bento-right__title {
+        font-size: 1rem;
+        margin: 0;
+    }
+    .bento-right--gray .bento-right__illust-img {
+        margin-right: 0.2rem;
     }
 }
 /* ─────────────────────────────────────────────

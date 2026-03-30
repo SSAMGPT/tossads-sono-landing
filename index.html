@@ -1333,151 +1333,8 @@
         padding-right: clamp(1.5rem, 5vw, 8rem);
         box-sizing: border-box;
     ">
-        <h2 id="intro-dark-heading" style="
-            font-size: clamp(1.5rem, calc(3vw + 3dvh), 3.75rem);
-            font-weight: 800;
-            color: #ffffff;
-            line-height: 1.25;
-            letter-spacing: -0.03em;
-            word-break: keep-all;
-            margin: 0;
-            opacity: 0;
-            font-family: 'Pretendard', sans-serif;
-        ">가전제품 구매,<br>이런 고민 해보셨나요?</h2>
-
-        <!-- 자동 캐러셀 카드 (좌측 무한 이동) -->
-        <div class="dark-carousel-wrapper">
-            <div class="dark-carousel-track">
-                <!-- 원본 카드 4장 -->
-                <div class="dark-card">
-                    <img src="img/ca-01.jpeg" alt="가전제품 구매 고민" class="dark-card__img">
-                    <p>가전제품, 꼭 목돈있어야<br>살 수 있나요?</p>
-                </div>
-                <div class="dark-card">
-                    <img src="img/ca-03.jpeg" alt="렌탈비 고민" class="dark-card__img">
-                    <p>렌탈비 60개월 내면<br>내 돈은 다 어디 가나요?</p>
-                </div>
-                <div class="dark-card">
-                    <img src="img/ca-04.jpeg" alt="낸 돈 돌려받기" class="dark-card__img">
-                    <p>가전도 받고, 낸 돈도<br>돌려받는 방법이 있나요?</p>
-                </div>
-                <div class="dark-card">
-                    <img src="img/ca-02.jpeg" alt="적금 할부 고민" class="dark-card__img">
-                    <p>적금처럼 모으기는 부담되고,<br>할부 이자는 아깝고.</p>
-                </div>
-                <!-- 무한 루프용 복제 카드 4장 -->
-                <div class="dark-card" aria-hidden="true">
-                    <img src="img/ca-01.jpeg" alt="" class="dark-card__img">
-                    <p>가전제품, 꼭 목돈있어야<br>살 수 있나요?</p>
-                </div>
-                <div class="dark-card" aria-hidden="true">
-                    <img src="img/ca-03.jpeg" alt="" class="dark-card__img">
-                    <p>렌탈비 60개월 내면<br>내 돈은 다 어디 가나요?</p>
-                </div>
-                <div class="dark-card" aria-hidden="true">
-                    <img src="img/ca-04.jpeg" alt="" class="dark-card__img">
-                    <p>가전도 받고, 낸 돈도<br>돌려받는 방법이 있나요?</p>
-                </div>
-                <div class="dark-card" aria-hidden="true">
-                    <img src="img/ca-02.jpeg" alt="" class="dark-card__img">
-                    <p>적금처럼 모으기는 부담되고,<br>할부 이자는 아깝고.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 캐러셀 아래 결론 텍스트 1 -->
-        <h2 id="intro-dark-heading2" style="
-            font-size: clamp(1.5rem, calc(3vw + 3dvh), 3.75rem);
-            font-weight: 800;
-            color: #ffffff;
-            line-height: 1.25;
-            letter-spacing: -0.03em;
-            word-break: keep-all;
-            margin: 14vh 0 0;
-            opacity: 0;
-            font-family: 'Pretendard', sans-serif;
-        ">구매하는 렌탈이 아닌,<br>돌려받는 렌탈</h2>
-
-        <!-- 캐러셀 아래 결론 텍스트 2 -->
-        <h2 id="intro-dark-heading3" style="
-            font-size: clamp(1.5rem, calc(3vw + 3dvh), 3.75rem);
-            font-weight: 800;
-            color: #ffffff;
-            line-height: 1.25;
-            letter-spacing: -0.03em;
-            word-break: keep-all;
-            margin: 10vh 0 0;
-            opacity: 0;
-            font-family: 'Pretendard', sans-serif;
-        ">똑똑한 <span style="color:#FF6242;">소노 스마트케어</span>로<br>해결이 가능합니다.</h2>
-
-        <!-- ② 두 번째 캐러셀 (이미지는 추후 추가) -->
-        <div class="dark-carousel-wrapper" style="margin-top: 8vh;">
-            <div class="dark-carousel-track"
-                style="animation-name: darkCarouselScroll; animation-duration: 22s; animation-direction: reverse;">
-                <!-- 원본 카드 4장 -->
-                <div class="dark-card dark-card--placeholder">
-                    <img src="img/ca-01-01.jpeg" alt="가전 선수령" class="dark-card__img">
-                    <div class="dark-card__content">
-                        <span class="dark-card__pill">목돈 없이 프리미엄 가전 시작</span>
-                        <p>월 33,000원부터<br>다음 달 가전 먼저 수령</p>
-                    </div>
-                </div>
-                <div class="dark-card dark-card--placeholder">
-                    <img src="img/ca-03-03.jpeg" alt="만기 환급" class="dark-card__img">
-                    <div class="dark-card__content">
-                        <span class="dark-card__pill">만기 시 100% 환급</span>
-                        <p>일반 렌탈과 달리 만기 시,<br>낸 돈 100% 환급</p>
-                    </div>
-                </div>
-                <div class="dark-card dark-card--placeholder">
-                    <img src="img/ca-02-02.jpeg" alt="렌탈금 전액지원" class="dark-card__img">
-                    <div class="dark-card__content">
-                        <span class="dark-card__pill">사라지지않는 렌탈금</span>
-                        <p>만기납입 익월 전액환급 시<br>렌탈금 전액지원</p>
-                    </div>
-                </div>
-                <div class="dark-card dark-card--placeholder">
-                    <img src="img/ca-04-04.jpeg" alt="가족 양도" class="dark-card__img">
-                    <div class="dark-card__content">
-                        <span class="dark-card__pill">양도 가능</span>
-                        <p>구좌별로 가족에게<br>양도도 가능해요.</p>
-                    </div>
-                </div>
-                <!-- 무한 루프용 복제 4장 -->
-                <div class="dark-card dark-card--placeholder" aria-hidden="true">
-                    <img src="img/ca-01-01.jpeg" alt="" class="dark-card__img">
-                    <div class="dark-card__content">
-                        <span class="dark-card__pill">목돈 없이 프리미엄 가전 시작</span>
-                        <p>월 33,000원부터<br>다음 달 가전 먼저 수령</p>
-                    </div>
-                </div>
-                <div class="dark-card dark-card--placeholder" aria-hidden="true">
-                    <img src="img/ca-03-03.jpeg" alt="" class="dark-card__img">
-                    <div class="dark-card__content">
-                        <span class="dark-card__pill">만기 시 100% 환급</span>
-                        <p>일반 렌탈과 달리 만기 시,<br>낸 돈 100% 환급</p>
-                    </div>
-                </div>
-                <div class="dark-card dark-card--placeholder" aria-hidden="true">
-                    <img src="img/ca-02-02.jpeg" alt="" class="dark-card__img">
-                    <div class="dark-card__content">
-                        <span class="dark-card__pill">사라지지않는 렌탈금</span>
-                        <p>만기납입 익월 전액환급 시<br>렌탈금 전액지원</p>
-                    </div>
-                </div>
-                <div class="dark-card dark-card--placeholder" aria-hidden="true">
-                    <img src="img/ca-04-04.jpeg" alt="" class="dark-card__img">
-                    <div class="dark-card__content">
-                        <span class="dark-card__pill">양도 가능</span>
-                        <p>구좌별로 가족에게<br>양도도 가능해요.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- 통합 라이프케어 블록 (커서 애니메이션 포함) -->
-        <div id="lifecycle-block" style="position: relative; width: 100%; margin-top: 20vh;">
+        <div id="lifecycle-block" style="position: relative; width: 100%; margin-top: 0;">
 
             <!-- 통합 라이프케어 서비스 타이틀 -->
             <h2 id="intro-dark-heading4" style="
@@ -1492,7 +1349,7 @@
                 font-family: 'Pretendard', sans-serif;
                 text-align: center;
                 width: 100%;
-            ">통합 라이프케어 서비스</h2>
+            ">하나 가입으로 5가지,<br class="mo-br"> 따로 가입하면 손해</h2>
 
             <!-- 서브 텍스트 1 -->
             <h3 id="intro-dark-sub1" style="
@@ -1507,7 +1364,7 @@
                 font-family: 'Pretendard', sans-serif;
                 text-align: center;
                 width: 100%;
-            ">소노 스마트케어<br>하나에 담긴 5가지</h3>
+            "><span id="kw-1">가전</span> · <span id="kw-2">환급</span> · <span id="kw-3">리조트</span> · <span id="kw-4">여행</span> · <span id="kw-5">상조</span> 결합하면 전부 됩니다</h3>
 
             <!-- 서브 텍스트 2 -->
             <h3 id="intro-dark-sub2" style="
@@ -1522,8 +1379,7 @@
                 font-family: 'Pretendard', sans-serif;
                 text-align: center;
                 width: 100%;
-            "><span id="kw-1">가전</span>·<span id="kw-2">환급</span>·<span id="kw-3">상조</span>·<span
-                    id="kw-4">리조트</span>·<span id="kw-5">여행</span><br>한 번에 해결됩니다.</h3>
+            ">만일의 상황, 상조까지 함께 준비됩니다.</h3>
 
             <!-- 유령 커서 -->
             <div id="ghost-cursor"
@@ -1570,34 +1426,7 @@
                 </div>
             </div>
 
-            <div class="fm-item">
-                <a class="fm-link" href="javascript:void(0)">
-                    <div class="fm-avatar"><img class="fm-char" src="img/ca-03-03 1.png" alt=""></div>
-                    매달 내는 렌탈비, 버리는 돈 같나요?
-                </a>
-                <div class="fm-marquee">
-                    <div class="fm-marquee-inner">
-                        <div class="fm-part"><span>만기 시 전액 환급</span>
-                            <div class="fm-thumb" style="background-image:url('img/ca-03-03 1.png')"></div>
-                        </div>
-                        <div class="fm-part"><span>만기 시 전액 환급</span>
-                            <div class="fm-thumb" style="background-image:url('img/ca-03-03 1.png')"></div>
-                        </div>
-                        <div class="fm-part"><span>만기 시 전액 환급</span>
-                            <div class="fm-thumb" style="background-image:url('img/ca-03-03 1.png')"></div>
-                        </div>
-                        <div class="fm-part"><span>만기 시 전액 환급</span>
-                            <div class="fm-thumb" style="background-image:url('img/ca-03-03 1.png')"></div>
-                        </div>
-                        <div class="fm-part"><span>만기 시 전액 환급</span>
-                            <div class="fm-thumb" style="background-image:url('img/ca-03-03 1.png')"></div>
-                        </div>
-                        <div class="fm-part"><span>만기 시 전액 환급</span>
-                            <div class="fm-thumb" style="background-image:url('img/ca-03-03 1.png')"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <div class="fm-item">
                 <a class="fm-link" href="javascript:void(0)">
@@ -1839,6 +1668,151 @@
         })();
         </script>
 
+        <h2 id="intro-dark-heading" style="
+            font-size: clamp(1.5rem, calc(3vw + 3dvh), 3.75rem);
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.25;
+            letter-spacing: -0.03em;
+            word-break: keep-all;
+            margin: 15vh 0 0;
+            opacity: 0;
+            font-family: 'Pretendard', sans-serif;
+        ">가전 · 환급 · 리조트<br class="mo-br">여행 · 상조 결합<br class="mo-br">따로 가입하면 비싸고..</h2>
+
+        <!-- 자동 캐러셀 카드 (좌측 무한 이동) -->
+        <div class="dark-carousel-wrapper">
+            <div class="dark-carousel-track">
+                <!-- 원본 카드 4장 -->
+                <div class="dark-card">
+                    <img src="img/ca-01.jpeg" alt="가전제품 구매 고민" class="dark-card__img">
+                    <p>가전제품, 꼭 목돈있어야<br>살 수 있나요?</p>
+                </div>
+                <div class="dark-card">
+                    <img src="img/ca-03.jpeg" alt="렌탈비 고민" class="dark-card__img">
+                    <p>렌탈비 60개월 내면<br>내 돈은 다 어디 가나요?</p>
+                </div>
+                <div class="dark-card">
+                    <img src="img/ca-04.jpeg" alt="낸 돈 돌려받기" class="dark-card__img">
+                    <p>가전도 받고, 낸 돈도<br>돌려받는 방법이 있나요?</p>
+                </div>
+                <div class="dark-card">
+                    <img src="img/ca-02.jpeg" alt="적금 할부 고민" class="dark-card__img">
+                    <p>적금처럼 모으기는 부담되고,<br>할부 이자는 아깝고.</p>
+                </div>
+                <!-- 무한 루프용 복제 카드 4장 -->
+                <div class="dark-card" aria-hidden="true">
+                    <img src="img/ca-01.jpeg" alt="" class="dark-card__img">
+                    <p>가전제품, 꼭 목돈있어야<br>살 수 있나요?</p>
+                </div>
+                <div class="dark-card" aria-hidden="true">
+                    <img src="img/ca-03.jpeg" alt="" class="dark-card__img">
+                    <p>렌탈비 60개월 내면<br>내 돈은 다 어디 가나요?</p>
+                </div>
+                <div class="dark-card" aria-hidden="true">
+                    <img src="img/ca-04.jpeg" alt="" class="dark-card__img">
+                    <p>가전도 받고, 낸 돈도<br>돌려받는 방법이 있나요?</p>
+                </div>
+                <div class="dark-card" aria-hidden="true">
+                    <img src="img/ca-02.jpeg" alt="" class="dark-card__img">
+                    <p>적금처럼 모으기는 부담되고,<br>할부 이자는 아깝고.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 캐러셀 아래 결론 텍스트 1 -->
+        <h2 id="intro-dark-heading2" style="
+            font-size: clamp(1.5rem, calc(3vw + 3dvh), 3.75rem);
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.25;
+            letter-spacing: -0.03em;
+            word-break: keep-all;
+            margin: 14vh 0 0;
+            opacity: 0;
+            font-family: 'Pretendard', sans-serif;
+        ">묶으면 전부 됩니다.<br class="mo-br"><span style="color:#FF6242;">소노 스마트케어,</span></h2>
+
+        <!-- 캐러셀 아래 결론 텍스트 2 -->
+        <h2 id="intro-dark-heading3" style="
+            font-size: clamp(1.5rem, calc(3vw + 3dvh), 3.75rem);
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.25;
+            letter-spacing: -0.03em;
+            word-break: keep-all;
+            margin: 10vh 0 0;
+            opacity: 0;
+            font-family: 'Pretendard', sans-serif;
+        ">170만 회원이 선택한<br class="mo-br">올인원 결합 플랜.</h2>
+
+        <!-- ② 두 번째 캐러셀 (이미지는 추후 추가) -->
+        <div class="dark-carousel-wrapper" style="margin-top: 8vh;">
+            <div class="dark-carousel-track"
+                style="animation-name: darkCarouselScroll; animation-duration: 22s; animation-direction: reverse;">
+                <!-- 원본 카드 4장 -->
+                <div class="dark-card dark-card--placeholder">
+                    <img src="img/ca-01-01.jpeg" alt="가전 선수령" class="dark-card__img">
+                    <div class="dark-card__content">
+                        <span class="dark-card__pill">목돈 없이 프리미엄 가전 시작</span>
+                        <p>월 33,000원부터<br>다음 달 가전 먼저 수령</p>
+                    </div>
+                </div>
+                <div class="dark-card dark-card--placeholder">
+                    <img src="img/ca-03-03.jpeg" alt="만기 환급" class="dark-card__img">
+                    <div class="dark-card__content">
+                        <span class="dark-card__pill">만기 시 100% 환급</span>
+                        <p>일반 렌탈과 달리 만기 시,<br>낸 돈 100% 환급</p>
+                    </div>
+                </div>
+                <div class="dark-card dark-card--placeholder">
+                    <img src="img/ca-02-02.jpeg" alt="렌탈금 전액지원" class="dark-card__img">
+                    <div class="dark-card__content">
+                        <span class="dark-card__pill">사라지지않는 렌탈금</span>
+                        <p>만기납입 익월 전액환급 시<br>렌탈금 전액지원</p>
+                    </div>
+                </div>
+                <div class="dark-card dark-card--placeholder">
+                    <img src="img/ca-04-04.jpeg" alt="가족 양도" class="dark-card__img">
+                    <div class="dark-card__content">
+                        <span class="dark-card__pill">양도 가능</span>
+                        <p>구좌별로 가족에게<br>양도도 가능해요.</p>
+                    </div>
+                </div>
+                <!-- 무한 루프용 복제 4장 -->
+                <div class="dark-card dark-card--placeholder" aria-hidden="true">
+                    <img src="img/ca-01-01.jpeg" alt="" class="dark-card__img">
+                    <div class="dark-card__content">
+                        <span class="dark-card__pill">목돈 없이 프리미엄 가전 시작</span>
+                        <p>월 33,000원부터<br>다음 달 가전 먼저 수령</p>
+                    </div>
+                </div>
+                <div class="dark-card dark-card--placeholder" aria-hidden="true">
+                    <img src="img/ca-03-03.jpeg" alt="" class="dark-card__img">
+                    <div class="dark-card__content">
+                        <span class="dark-card__pill">만기 시 100% 환급</span>
+                        <p>일반 렌탈과 달리 만기 시,<br>낸 돈 100% 환급</p>
+                    </div>
+                </div>
+                <div class="dark-card dark-card--placeholder" aria-hidden="true">
+                    <img src="img/ca-02-02.jpeg" alt="" class="dark-card__img">
+                    <div class="dark-card__content">
+                        <span class="dark-card__pill">사라지지않는 렌탈금</span>
+                        <p>만기납입 익월 전액환급 시<br>렌탈금 전액지원</p>
+                    </div>
+                </div>
+                <div class="dark-card dark-card--placeholder" aria-hidden="true">
+                    <img src="img/ca-04-04.jpeg" alt="" class="dark-card__img">
+                    <div class="dark-card__content">
+                        <span class="dark-card__pill">양도 가능</span>
+                        <p>구좌별로 가족에게<br>양도도 가능해요.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         <div class="sono-consult" id="sonoConsult">
 
             <!-- [0] 버튼 유도 문구 -->
@@ -1910,7 +1884,7 @@
                 margin: 0 0 0.5rem;
                 opacity: 0;
                 font-family: 'Pretendard', sans-serif;
-            ">자유로운 구좌 활용으로 돌려받는</p>
+            ">내가 낸 돈, 만기에 전액 돌려받습니다</p>
             <h3 id="intro-dark-refund-main" style="
                 font-size: clamp(1.5rem, calc(3vw + 3dvh), 3.75rem);
                 font-weight: 800;
@@ -1921,7 +1895,7 @@
                 margin: 0;
                 opacity: 0;
                 font-family: 'Pretendard', sans-serif;
-            ">최대 환급금액<br class="mo-br"> <span style="color:#FF6242;">19,800,000</span>원!</h3>
+            ">1구좌 기준 월 <span style="color:#FF6242;">33,000원</span> → 만기 시 <span style="color:#FF6242;">660만원</span> 환급</h3>
             <p id="intro-dark-refund-range" style="
                 margin-top: 1rem;
                 font-size: clamp(1rem, calc(1.8vw + 1dvh), 1.6rem);
@@ -1930,7 +1904,7 @@
                 letter-spacing: -0.02em;
                 font-family: 'Pretendard', sans-serif;
                 opacity: 0;
-            ">(ex: 6,600,000원 ~ 19,800,000원)</p>
+            ">결합 구좌 추가 시 환급금도 비례 증가</p>
 
             <!-- SVG 클로버 clip-path (4개 원의 외곽 아크로 구성된 정확한 4잎 클로버) -->
             <svg width="0" height="0" style="position:absolute;overflow:hidden">
@@ -1996,18 +1970,14 @@
                                         preserveAspectRatio="xMidYMid slice" />
                                 </svg>
                             </div>
-                            <!-- 뒷면 암시 화살표 -->
-                            <div class="refund-card__arrow">
-                                <span></span><span></span><span></span>
-                            </div>
+
                         </div>
-                        <!-- 뒷면: 앞면과 동일 구조, 반전 컬러 -->
+                        <!-- [FLIP BACK FACE - 주석 처리됨: 플립 효과 구현 시 아래 주석 해제]
                         <div class="refund-card__second">
                             <p class="refund-card__label">1구좌 상조 이용<br>+ 3구좌 부분 환급 OK</p>
                             <div class="refund-card__clover-wrap">
                                 <svg class="refund-card__clover-svg" viewBox="0 -60 200 240"
                                     xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
-                                    <!-- defs 직접 내장: 3D transform 환경에서 크로스-SVG 참조 방지 -->
                                     <defs>
                                         <clipPath id="cloverClip4Back">
                                             <path d="M 100 20 C 130 20 145 45 145 55 C 145 65 180 70 180 100 C 180 130 145 135 145 145 C 145 155 130 180 100 180 C 70 180 55 155 55 145 C 55 135 20 130 20 100 C 20 70 55 65 55 55 C 55 45 70 20 100 20 Z"/>
@@ -2022,20 +1992,13 @@
                                             <rect x="-5" y="-65" width="210" height="145" fill="url(#headFadeGradBack)"/>
                                         </mask>
                                     </defs>
-                                    <!-- 파란 클로버 배경 -->
-                                    <path
-                                        d="M 100 20 C 130 20 145 45 145 55 C 145 65 180 70 180 100 C 180 130 145 135 145 145 C 145 155 130 180 100 180 C 70 180 55 155 55 145 C 55 135 20 130 20 100 C 20 70 55 65 55 55 C 55 45 70 20 100 20 Z"
-                                        fill="#0039E3" />
-                                    <!-- 점선 테두리 (바깥) -->
-                                    <path
-                                        d="M 100 20 C 130 20 145 45 145 55 C 145 65 180 70 180 100 C 180 130 145 135 145 145 C 145 155 130 180 100 180 C 70 180 55 155 55 145 C 55 135 20 130 20 100 C 20 70 55 65 55 55 C 55 45 70 20 100 20 Z"
+                                    <path d="M 100 20 C 130 20 145 45 145 55 C 145 65 180 70 180 100 C 180 130 145 135 145 145 C 145 155 130 180 100 180 C 70 180 55 155 55 145 C 55 135 20 130 20 100 C 20 70 55 65 55 55 C 55 45 70 20 100 20 Z" fill="#0039E3" />
+                                    <path d="M 100 20 C 130 20 145 45 145 55 C 145 65 180 70 180 100 C 180 130 145 135 145 145 C 145 155 130 180 100 180 C 70 180 55 155 55 145 C 55 135 20 130 20 100 C 20 70 55 65 55 55 C 55 45 70 20 100 20 Z"
                                         fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="3"
                                         stroke-dasharray="10 7" stroke-linecap="round" pathLength="380"
                                         transform="translate(100,100) scale(1.1) translate(-100,-100)" />
-                                    <!-- 캐릭터: 클로버 안 (clip-path) -->
                                     <image href="img/refund_back_char.png" x="0" y="-60" width="200" height="240"
                                         clip-path="url(#cloverClip4Back)" preserveAspectRatio="xMidYMid slice" />
-                                    <!-- 캐릭터 머리: 클로버 위 (headMask) -->
                                     <image href="img/refund_back_char.png" x="0" y="-60" width="200" height="240"
                                         mask="url(#headMaskBack)" preserveAspectRatio="xMidYMid slice" />
                                 </svg>
@@ -2044,6 +2007,7 @@
                                 <span></span><span></span><span></span>
                             </div>
                         </div>
+                        END FLIP BACK FACE -->
                     </div>
                 </div><!-- /.refund-card.bento-main -->
                 <!-- 벤토 우측 카드 1: 구좌 양도 -->
@@ -4635,82 +4599,97 @@
 
                 let cursorTl = null;
 
-                // offsetTop/Left 누적으로 block 내의 절대 좌표 계산
-                function getOffsetInBlock(el, yRatio) {
-                    let top = 0, left = 0;
-                    let node = el;
-                    while (node && node !== block) {
-                        top += node.offsetTop;
-                        left += node.offsetLeft;
-                        node = node.offsetParent;
-                    }
-                    const ratio = yRatio !== undefined ? yRatio : 0.0;
+                /**
+                 * 핵심: block의 position:relative 기준으로
+                 * cursor(position:absolute)의 x, y를 실시간 계산.
+                 * GSAP x/y는 cursor의 left:0, top:0 기준 translate이므로
+                 * block 좌상단 대비 el의 중심점을 계산해 반환.
+                 */
+                function pos(el, yRatio) {
+                    const r = (yRatio !== undefined) ? yRatio : 0.5;
+                    const blockRect = block.getBoundingClientRect();
+                    const elRect = el.getBoundingClientRect();
                     return {
-                        x: left + el.offsetWidth * 0.5,
-                        y: top + el.offsetHeight * ratio
+                        x: (elRect.left - blockRect.left) + elRect.width * 0.5,
+                        y: (elRect.top  - blockRect.top)  + elRect.height * r
                     };
                 }
 
-
                 function click(tl, colorEl) {
-                    tl.to(cursor, { scale: 0.78, duration: 0.1 });
+                    tl.to(cursor, { scale: 0.78, duration: 0.09 });
                     if (colorEl) {
-                        tl.to(colorEl, { color: '#FF6242', duration: 0.25, ease: 'power2.out' }, '<');
+                        tl.to(colorEl, { color: '#FF6242', duration: 0.2, ease: 'power2.out' }, '<');
                     }
-                    tl.to(cursor, { scale: 1.0, duration: 0.15, ease: 'back.out(3)' });
-                    // (컬러 유지 — 즉각 복귀 없음)
+                    tl.to(cursor, { scale: 1.0, duration: 0.14, ease: 'back.out(3)' });
                 }
 
                 function startLoop() {
                     if (cursorTl) cursorTl.kill();
 
-                    const h4p = getOffsetInBlock(h4, 0.5);
-                    const kwPts = targets.map(el => getOffsetInBlock(el, 0.45));
+                    // 색상 초기화
+                    gsap.set([h4, ...targets], { color: '#ffffff' });
 
-                    cursorTl = gsap.timeline({ repeat: -1, repeatDelay: 1.2 });
+                    cursorTl = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
 
-                    // ① 등장
-                    cursorTl.set(cursor, { x: h4p.x + 180, y: h4p.y + 60, opacity: 0, scale: 1 })
-                        .to(cursor, { opacity: 1, duration: 0.35, ease: 'power1.out' })
-                        // ② 타이틀로 이동 + 클릭 (커러 변환 포함)
-                        .to(cursor, { x: h4p.x, y: h4p.y, duration: 0.9, ease: 'power2.out' });
-                    // 클릭 + 컬러 동시 등장
-                    cursorTl.to(cursor, { scale: 0.78, duration: 0.1 });
-                    cursorTl.to(h4, { color: '#FF6242', duration: 0.25, ease: 'power2.out' }, '<');
-                    cursorTl.to(cursor, { scale: 1.0, duration: 0.15, ease: 'back.out(3)' });
-                    cursorTl.to(cursor, {}, { duration: 0.4 });
+                    // ① 등장: 타이틀 우측 아래에서 나타남
+                    //    → GSAP lazy function: 매 repeat마다 실시간 좌표 계산
+                    cursorTl
+                        .set(cursor, {
+                            x: () => pos(h4).x + 150,
+                            y: () => pos(h4).y + 55,
+                            opacity: 0, scale: 1
+                        })
+                        .to(cursor, { opacity: 1, duration: 0.28, ease: 'power1.out' })
 
-                    // ③ 각 키워드 순서대로 방문 + 클릭 시 컬러 변화
-                    kwPts.forEach((pt, i) => {
-                        const dur = i === 0 ? 0.8 : 0.55;
-                        cursorTl.to(cursor, { x: pt.x, y: pt.y, duration: dur, ease: 'power2.inOut' });
-                        click(cursorTl, targets[i]);   // 해당 span에 컬러 전달
-                        cursorTl.to(cursor, {}, { duration: 0.25 });
+                    // ② "하나 가입으로 5가지, 따로 가입하면 손해" 클릭
+                        .to(cursor, {
+                            x: () => pos(h4).x,
+                            y: () => pos(h4).y,
+                            duration: 0.9, ease: 'power2.out'
+                        });
+
+                    cursorTl.to(cursor,  { scale: 0.78, duration: 0.09 });
+                    cursorTl.to(h4,      { color: '#FF6242', duration: 0.18, ease: 'power2.out' }, '<');
+                    cursorTl.to(cursor,  { scale: 1.0, duration: 0.14, ease: 'back.out(3)' });
+                    cursorTl.to(cursor,  {}, { duration: 0.3 });
+
+                    // ③ 가전 → 환급 → 리조트 → 여행 → 상조 순서대로 클릭
+                    targets.forEach((target, i) => {
+                        cursorTl.to(cursor, {
+                            x: () => pos(target).x,
+                            y: () => pos(target).y,
+                            duration: i === 0 ? 0.72 : 0.48,
+                            ease: 'power2.inOut'
+                        });
+                        click(cursorTl, target);
+                        cursorTl.to(cursor, {}, { duration: 0.18 });
                     });
 
-                    // ④ 사라짐
-                    const lastPt = kwPts[kwPts.length - 1];
+                    // ④ 마지막 키워드 우측 위로 사라짐
                     cursorTl.to(cursor, {
-                        opacity: 0, x: lastPt.x + 80, y: lastPt.y - 50,
-                        duration: 0.55, ease: 'power2.in'
+                        x: () => pos(targets[targets.length - 1]).x + 90,
+                        y: () => pos(targets[targets.length - 1]).y - 45,
+                        opacity: 0,
+                        duration: 0.48, ease: 'power2.in'
                     });
 
-                    // ⑤ 커서 사라진 후 모든 커러를 흰색으로 원복 (h4 포함) + 프레임 사라짐
+                    // ⑤ 색상 원복 (흰색으로)
                     cursorTl.to([h4, ...targets], {
                         color: '#ffffff',
-                        duration: 0.6,
+                        duration: 0.45,
                         ease: 'power1.inOut',
-                        stagger: 0.05
-                    }, '>+0.3');
+                        stagger: 0.04
+                    }, '>+0.15');
                 }
 
                 ScrollTrigger.create({
                     trigger: block,
-                    start: 'top 60%',
-                    onEnter: startLoop,
+                    start: 'top 65%',
+                    onEnter: () => setTimeout(startLoop, 120),
                     onLeaveBack: () => {
                         if (cursorTl) { cursorTl.kill(); cursorTl = null; }
                         gsap.set(cursor, { opacity: 0 });
+                        gsap.set([h4, ...targets], { color: '#ffffff' });
                     }
                 });
             })();

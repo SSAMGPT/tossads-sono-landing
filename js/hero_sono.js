@@ -323,12 +323,12 @@ document.fonts.ready.then(() => {
   // reload시 브라우저 스크롤 복원 기다린 후 판단 (50→150ms)
   _isReload ? setTimeout(run, 150) : run();
 
-  // ── 모바일 카드 플립: 클릭으로 토글 ──
-  document.querySelectorAll('.refund-card').forEach(card => {
-    card.addEventListener('click', function () {
-      this.classList.toggle('is--flipped');
-    });
-  });
+  // ── 모바일 카드 플립: 클릭으로 토글 [FLIP DISABLED - 복원 시 아래 주석 해제]
+  // document.querySelectorAll('.refund-card').forEach(card => {
+  //   card.addEventListener('click', function () {
+  //     this.classList.toggle('is--flipped');
+  //   });
+  // });
 });
 
 // ── Safari/모바일 안전망: fonts.ready가 발화하지 않거나 GSAP 실패 시 ──
