@@ -6193,7 +6193,7 @@ ul.sc-slider-tabs li {
 .sc-price-card-btns {
     display: flex;
     gap: 0.6rem;
-    padding: 1rem 1.25rem 1.25rem;
+    padding: 0.6rem 1.25rem 1.25rem;
     justify-content: space-between;
 }
 
@@ -7274,14 +7274,16 @@ body {
 .sc-prod-card.filter-hidden { display: none !important; }
 
 .sc-prod-swiper {
-    display: flex;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-auto-flow: column;
     overflow-x: auto;
     gap: 1rem;
     padding-top: 5px;
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 1.5rem;
-    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    margin-bottom: 0.8rem;
     scrollbar-width: none;
 }
 .sc-prod-swiper::-webkit-scrollbar { display: none; }
@@ -8891,3 +8893,4 @@ body {
     .cm-appliance-grid { grid-template-columns: repeat(3, 1fr); }
     .cm-header-title { font-size: 18px; }
 }
+.sc-cat-filter { display: none !important; }
