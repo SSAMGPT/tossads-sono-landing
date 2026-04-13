@@ -1342,15 +1342,42 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 36px;
-    padding: 44px 32px 32px;
+    border-radius: 32px;
+    padding: 32px 24px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5), 
                 inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     animation: scCardIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* 성함/연락처 한 줄 배치용 */
+.sc-input-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+.sc-input-row .sc-input {
+    flex: 1;
+    min-width: 0; /* flex 자식 너비 버그 방지 */
+}
+
+@media (max-width: 480px) {
+    .sc-card {
+        padding: 28px 16px;
+        border-radius: 24px;
+    }
+    .sc-input input {
+        padding: 14px 12px 14px 2.8rem !important;
+        font-size: 14px !important;
+    }
+    .sc-input svg {
+        left: 0.8rem;
+        width: 18px;
+        height: 18px;
+    }
 }
 
 @keyframes scCardIn {

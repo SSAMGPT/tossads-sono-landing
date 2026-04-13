@@ -1682,7 +1682,7 @@
 
         <!-- 자동 캐러셀 카드 (좌측 무한 이동) -->
         <div class="dark-carousel-wrapper">
-            <div class="dark-carousel-track">
+            <div class="dark-carousel-track" style="animation-direction: reverse;">
                 <!-- 원본 카드 4장 -->
                 <div class="dark-card">
                     <img src="img/ca-01.jpeg" alt="가전제품 구매 고민" class="dark-card__img">
@@ -1829,27 +1829,30 @@
 
                 <p class="sc-card__label">상담 신청</p>
 
-                <!-- 이름 inputt -->
-                <div class="sc-input">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="8" r="4" />
-                        <path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" />
-                    </svg>
-                    <input type="text" id="scName" placeholder="이름" autocomplete="name">
-                </div>
+                <!-- 성함 + 연락처 한 줄 그룹 -->
+                <div class="sc-input-row">
+                    <!-- 이름 input -->
+                    <div class="sc-input">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" />
+                        </svg>
+                        <input type="text" id="scName" placeholder="이름" autocomplete="name">
+                    </div>
 
-                <!-- 연락처 input -->
-                <div class="sc-input">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path
-                            d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 0112 18.85a19.5 19.5 0 01-7.82-7.82 19.79 19.79 0 01-3.07-8.68A2 2 0 013 2.18h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z" />
-                    </svg>
-                    <input type="tel" id="scPhone" placeholder="01012345678  (- 없이 입력)" maxlength="11"
-                        autocomplete="tel">
+                    <!-- 연락처 input -->
+                    <div class="sc-input">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path
+                                d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 0112 18.85a19.5 19.5 0 01-7.82-7.82 19.79 19.79 0 01-3.07-8.68A2 2 0 013 2.18h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z" />
+                        </svg>
+                        <input type="tel" id="scPhone" placeholder="연락처" maxlength="11"
+                            autocomplete="tel">
+                    </div>
                 </div>
 
                 <!-- 개인정보 동의 -->
@@ -5271,6 +5274,16 @@
             safeInit(initPremiumCards, 'PremiumCards');
             safeInit(initTypographyAnimations, 'TypographyAnimations');
             safeInit(initJoinProcessAnimation, 'JoinProcessAnimation');
+            // 모바일 키보드 가림 방지 로직 추가
+            const inputs = document.querySelectorAll('#scName, #scPhone');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    setTimeout(() => {
+                        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300); // 키보드 올라오는 시간 대기
+                });
+            });
+
             safeInit(initReviewCarousel, 'ReviewCarousel');
             safeInit(initPromotionAnimation, 'PromotionAnimation');
             safeInit(initFAQ, 'FAQ');

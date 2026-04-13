@@ -4,7 +4,7 @@ const path    = require('path');
 const fs      = require('fs');
 
 const app  = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
 const PRODUCTS_FILE = path.join(ROOT, 'products.json');
 const IMG_DIR       = path.join(ROOT, 'img');
